@@ -1,0 +1,5 @@
+Django==1.10.3
+django-allauth==0.29.0
+django-extensions==1.7.5
+haystack==0.36
+Werkzeug==0.11.11
