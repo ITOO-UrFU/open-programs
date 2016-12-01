@@ -181,3 +181,8 @@ LANGUAGES = [
     ('ru', _('Russian')),
     ('en', _('English')),
 ]
+
+#### MEDIA ####
+
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media"
