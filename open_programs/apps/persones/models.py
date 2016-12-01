@@ -7,9 +7,9 @@ class Person(models.Model):
     last_name = models.CharField(_('Фамилия пользователя'), max_length=32, blank=False, default=_('Фамилия'))
     second_name = models.CharField(_('Отчество пользователя'), max_length=32, blank=True, default=_('Отчество'))
     SEXES = (
-        ('U', 'Не выбран',),
-        ('F', 'Женский',),
-        ('M', 'Мужской',),
+        ('U', _('Не выбран')),
+        ('F', _('Женский')),
+        ('M', _('Мужской')),
      )
     sex = models.CharField(max_length=1,
                            choices=SEXES,
