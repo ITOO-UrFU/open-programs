@@ -29,6 +29,7 @@ class Common(Configuration):
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'django.contrib.sites',
+        'django_extensions',
         'reversion',
         'rosetta',
         'dashing',  # Read https://github.com/talpor/django-dashing/
