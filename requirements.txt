@@ -5,3 +5,5 @@ haystack==0.36
 Werkzeug==0.11.11
 elasticsearch==5.0.1
 django-countries==4.0
+Pillow
+django-reversion
