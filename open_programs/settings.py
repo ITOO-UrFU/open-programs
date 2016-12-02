@@ -61,7 +61,7 @@ INSTALLED_APPS = [
     'programs'
 ]
 
-if platform.system() != 'Windows':
+if platform.system() not in  ('Windows', 'Darwin'):
     INSTALLED_APPS.append('haystack')
 
 MIDDLEWARE_CLASSES = [
