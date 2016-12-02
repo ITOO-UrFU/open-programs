@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'reversion',
+    'rosetta',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -58,7 +59,8 @@ INSTALLED_APPS = [
     'journal',
     'persones',
     'professions',
-    'programs'
+    'programs',
+    'modules',
 ]
 
 if platform.system() not in  ('Windows', 'Darwin'):

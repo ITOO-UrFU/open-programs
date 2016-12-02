@@ -26,6 +26,13 @@ class Person(models.Model):
 #   roles = models.ManyToManyField(ROLE)  TODO: Сделать модель 'Роль'
     biography = models.TextField(_('Биография пользователя'), blank=True, default='')
 
+    class Meta:
+        verbose_name = 'персона'
+        verbose_name_plural = 'персоны'
+
+    def __str__(self):
+        return ' '.join(self.first_name, self.last_name)
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
