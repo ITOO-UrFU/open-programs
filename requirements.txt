@@ -8,3 +8,7 @@ django-countries==4.0
 Pillow
 django-reversion
 django-rosetta
+django-mysql
+django-dashing
+django-celery-email
+django-configurations
