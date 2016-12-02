@@ -45,7 +45,7 @@ class Common(Configuration):
         'courses',
         'directories',
         'journal',
-        'persones',
+        'persons',
         'professions',
         'programs',
         'modules',

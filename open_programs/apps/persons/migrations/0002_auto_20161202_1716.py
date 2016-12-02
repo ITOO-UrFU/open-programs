@@ -9,7 +9,7 @@ import django_countries.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('persones', '0001_initial'),
+        ('persons', '0001_initial'),
     ]
 
     operations = [
