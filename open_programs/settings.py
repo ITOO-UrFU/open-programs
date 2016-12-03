@@ -50,6 +50,8 @@ class Common(Configuration):
         'professions',
         'programs',
         'modules',
+        'discipline',
+        'minors'
     ]
 
 

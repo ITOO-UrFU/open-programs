@@ -6,8 +6,8 @@ from .models import Minor, MinorsPool
 
 @admin.register(Minor)
 class MinorAdmin(VersionAdmin):
-    fields = ("title", "description")
-    list_display = ("id", "title", "description")
+    fields = ("title", "description", "courses")
+    list_display = ("id", "title", "description", "get_all_courses")
 
 
 @admin.register(MinorsPool)

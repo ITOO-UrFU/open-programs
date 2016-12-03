@@ -18,21 +18,35 @@ class Module(models.Model):
         return self.title
 
 
-class ModulesPool(models.Model):
+class GeneralBaseModulesPool(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(_("Название пула модулей для траектории образовательной программы"), max_length=256, blank=False, default=_("Название пула"))
+    title = models.CharField(_("Название базового модуля программы"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
     modules = models.ManyToManyField(Module)
 
     class Meta:
-        verbose_name = 'пул модулей'
-        verbose_name_plural = 'пулы модулей'
+        verbose_name = 'базовый модуль программы'
+        verbose_name_plural = 'базовые модули программы'
 
     def get_all(self):
         return "\n".join([str(module)for module in self.modules.all()])
 
 
-class ChoicePool(models.Model):
+class EducationalProgramTrajectoriesPool(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(_("Название пула модулей траектории обр. программ"), max_length=256, blank=False, default=_("Название пула"))
+    description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
+    modules = models.ManyToManyField(Module)
+
+    class Meta:
+        verbose_name = 'пул модулей траектории обр. программ'
+        verbose_name_plural = 'пулы модулей траектории обр. программ'
+
+    def get_all(self):
+        return "\n".join([str(module)for module in self.modules.all()])
+
+
+class ChoiceModulesPool(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название пула модулей по выбору"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")

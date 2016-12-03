@@ -27,7 +27,7 @@ class Course(models.Model):
     points = models.PositiveIntegerField(_("зачётных единиц"), blank=True, null=True)
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return '%s - %s' % (self.slug, self.title)
 
     @models.permalink

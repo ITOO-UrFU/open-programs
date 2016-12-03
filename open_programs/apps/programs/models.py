@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 
-from modules.models import Module, ModulesPool, ChoicePool
+from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 
 
 class Program(models.Model):
@@ -17,7 +17,7 @@ class Program(models.Model):
     """
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    general_base_modules = models.ManyToManyField(Module, verbose_name=_("Общепрофессиональные базовые модули"))
-    educational_program_trajectories = models.ManyToManyField(ModulesPool, verbose_name=_("Траектория образовательной программы"))
-    choice_pool = models.ManyToManyField(ChoicePool, verbose_name=_("Пул модулей по выбору"))
+    general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, verbose_name=_("Общепрофессиональные базовые модули"))
+    educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, verbose_name=_("Траектория образовательной программы"))
+    choice_modules = models.ManyToManyField(ChoiceModulesPool, verbose_name=_("Пул модулей по выбору"))
 

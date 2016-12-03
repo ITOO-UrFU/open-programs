@@ -1,6 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
+from courses.models import Course
+
 import uuid
 
 
@@ -8,7 +10,7 @@ class Minor(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название майнора"), max_length=256, blank=False, default=_("Название майнора"))
     description = models.TextField(_("Описание майнора"), max_length=16384, blank=True, default="")
-    # TODO: M2M Module or Course
+    courses = models.ManyToManyField(Course, verbose_name=_("Варианты реализации майнора"))
 
     def __str__(self):
         return self.title
@@ -17,6 +19,8 @@ class Minor(models.Model):
         verbose_name = 'майнор'
         verbose_name_plural = 'майноры'
 
+    def get_all_courses(self):
+        return "\n".join([str(course)for course in self.courses.all()])
 
 class MinorsPool(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
