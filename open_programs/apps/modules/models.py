@@ -31,6 +31,9 @@ class GeneralBaseModulesPool(ObjectBaseClass):
     def get_all(self):
         return "\n".join([str(module)for module in self.modules.all()])
 
+    def __str__(self):
+        return self.title
+
 
 class EducationalProgramTrajectoriesPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -45,6 +48,9 @@ class EducationalProgramTrajectoriesPool(ObjectBaseClass):
     def get_all(self):
         return "\n".join([str(module)for module in self.modules.all()])
 
+    def __str__(self):
+        return self.title
+
 
 class ChoiceModulesPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -58,3 +64,6 @@ class ChoiceModulesPool(ObjectBaseClass):
 
     def get_all(self):
         return "\n".join([str(module)for module in self.modules.all()])
+
+    def __str__(self):
+        return self.title
