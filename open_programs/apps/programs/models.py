@@ -5,8 +5,24 @@ from django.utils.translation import ugettext_lazy as _
 
 from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 from persons.models import Person
+from minors.models import Minor
 
-class Program(models.Model):
+
+class ObjectBaseClass(models.Model):
+    class Meta:
+        abstract = True
+
+    STATUSES = (
+        ('h', _("Скрыт")),
+        ('p', _("Опубликован")),
+    )
+    archived = models.BooleanField(_("В архиве"), default=False)
+    created = models.DateTimeField(_('Дата создания'), auto_now_add=True)
+    updated = models.DateTimeField(_('Обновлен'), auto_now=True)
+    status = models.CharField(_("Статус публикации"), max_length=1, choices=STATUSES, default='h')
+
+
+class Program(ObjectBaseClass):
     """
     Чё у нас тут есть:
     - общепрофессиональные базовые модули
@@ -32,3 +48,7 @@ class Program(models.Model):
 
     #def get_all_choice_modules(self):
         #return "\n".join([str(module)for module in self.ChoiceModulesPool.all()])
+
+    def minors(self):
+        return Minor.objects.filter(archived=False, status="p")
+
