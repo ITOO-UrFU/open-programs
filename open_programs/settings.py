@@ -199,6 +199,8 @@ class Common(Configuration):
         'ignore_result': True,
     }
 
+    LOGIN_REDIRECT_URL = "/"
+
 
 class Dev(Common):
 
