@@ -1,10 +1,10 @@
-from django.utils.translation import ugettext_lazy as _
-
 from django.db import models
+from base.models import ObjectBaseClass
+from django.utils.translation import ugettext_lazy as _
 import uuid
 
 
-class Module(models.Model):
+class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
@@ -18,7 +18,7 @@ class Module(models.Model):
         return self.title
 
 
-class GeneralBaseModulesPool(models.Model):
+class GeneralBaseModulesPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название базового модуля программы"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
@@ -32,7 +32,7 @@ class GeneralBaseModulesPool(models.Model):
         return "\n".join([str(module)for module in self.modules.all()])
 
 
-class EducationalProgramTrajectoriesPool(models.Model):
+class EducationalProgramTrajectoriesPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название пула модулей траектории обр. программ"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
@@ -46,7 +46,7 @@ class EducationalProgramTrajectoriesPool(models.Model):
         return "\n".join([str(module)for module in self.modules.all()])
 
 
-class ChoiceModulesPool(models.Model):
+class ChoiceModulesPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название пула модулей по выбору"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")

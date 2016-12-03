@@ -31,7 +31,7 @@ class Person(models.Model):
         verbose_name_plural = 'персоны'
 
     def __str__(self):
-        return ' '.join(self.first_name, self.last_name)
+        return ' '.join([self.first_name, self.last_name])
 
 
 @receiver(post_save, sender=User)

@@ -12,5 +12,5 @@ class MinorAdmin(VersionAdmin):
 
 @admin.register(MinorsPool)
 class MinorsPoolAdmin(VersionAdmin):
-    fields = ("title", "description", "modules")
-    list_display = ("id", "title", "description", "get_all")
+    fields = ("title", "description", "modules", "status")
+    list_display = ("id", "title", "description", "get_all", "status")

@@ -1,23 +1,17 @@
 from django.utils.translation import ugettext_lazy as _
 
 from django.db import models
+from base.models import ObjectBaseClass
 from courses.models import Course
 
 import uuid
 
 
-
-
-class Minor(models.Model):
-    STATUSES = (
-        ('h', _("Скрыт")),
-        ('p', _("Опубликован")),
-    )
+class Minor(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название майнора"), max_length=256, blank=False, default=_("Название майнора"))
     description = models.TextField(_("Описание майнора"), max_length=16384, blank=True, default="")
     courses = models.ManyToManyField(Course, verbose_name=_("Варианты реализации майнора"))
-    status = models.CharField(_("Статус публикации"), max_length=1, choices=STATUSES, default='h')
 
     def __str__(self):
         return self.title
@@ -29,7 +23,7 @@ class Minor(models.Model):
     def get_all_courses(self):
         return "\n".join([str(course)for course in self.courses.all()])
 
-class MinorsPool(models.Model):
+class MinorsPool(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название пула майноров"), max_length=256, blank=False, default=_("Название пула"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
