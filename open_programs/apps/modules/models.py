@@ -3,12 +3,17 @@ from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 import uuid
 
+from discipline.models import Discipline
 
 class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
+    disciplines = models.ManyToManyField(Discipline)
     # TODO: M2M Discipline
+
+    def get_all_disciplines(self):
+        return "\n".join([str(discipline)for discipline in self.disciplines.all()])
 
     class Meta:
         verbose_name = 'модуль'

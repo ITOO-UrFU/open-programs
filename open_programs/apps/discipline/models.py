@@ -13,5 +13,8 @@ class Discipline(ObjectBaseClass):
         verbose_name = 'дисциплина'
         verbose_name_plural = 'дисциплины'
 
+    def __str__(self):
+        return self.name
+
     def get_all(self):
         return "\n".join([str(course)for course in self.courses.all()])
