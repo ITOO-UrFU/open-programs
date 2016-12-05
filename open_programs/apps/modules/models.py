@@ -9,7 +9,7 @@ class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
-    disciplines = models.ManyToManyField(Discipline)
+    disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"))
     # TODO: M2M Discipline
 
     def get_all_disciplines(self):
