@@ -28,6 +28,10 @@ class Course(ObjectBaseClass):
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
     sessions = models.ManyToManyField('Session', verbose_name="Сессии", blank=True, null=True)
 
+    class Meta:
+        verbose_name = 'курс'
+        verbose_name_plural = 'курсы'
+
     def __str__(self):
         return '%s - %s' % (self.slug, self.title)
 
@@ -61,6 +65,10 @@ class Session(ObjectBaseClass):
     slug = models.SlugField(_("Код сессии"), help_text=_("Например, winter_2016, fall_2015"))
     startdate = models.DateTimeField(_("Начало сессии курса"))
     enddate = models.DateTimeField(_("Конец сессии курса"))
+
+    class Meta:
+        verbose_name = 'сессия'
+        verbose_name_plural = 'сессии'
 
     def __str__(self):
         return '%s: %s - %s' % (self.slug, self.startdate.strftime("%d %b %Y"), self.enddate.strftime("%d %b %Y"))

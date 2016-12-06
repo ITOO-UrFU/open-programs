@@ -222,7 +222,7 @@ class Common(Configuration):
 
 #### REWRITE ADMIN TITLES ####
     admin.site.site_header = _('Открытые образовательные программы')
-    admin.site.site_title = _('Открытые образовательные программы')
+    admin.site.site_title = _('Администрирование')
     admin.site.index_title = _('Открытые образовательные программы')
 
 
