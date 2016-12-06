@@ -1,6 +1,7 @@
 import os
 import sys
 import platform
+from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
 from configurations import Configuration, values
@@ -205,18 +206,24 @@ class Common(Configuration):
     #### ADMIN REORDER ####
 
     ADMIN_REORDER = (
-    {'app': 'programs', 'label': 'Образовательные программы'},
-    {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
-    {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
-    {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool', 'modules.EducationalProgramTrajectoriesPool', 'modules.ChoiceModulesPool')},
-    {'app': 'auth', 'models': ('auth.User', )},
-    {'app': 'persons', 'label': 'Персоны'},
-    {'app': 'courses', 'label': 'Курсы и запуски курсов'},
-    {'app': 'directories', 'label': 'Справочники'},
-    {'app': 'disciplines', 'label': 'Дисциплины'},
-    {'app': 'journal', 'label': 'Электронный дневник'},
-    {'app': 'professions', 'label': 'Профессии'},
-)
+        {'app': 'programs', 'label': 'Образовательные программы'},
+        {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
+        {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
+        {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool', 'modules.EducationalProgramTrajectoriesPool', 'modules.ChoiceModulesPool')},
+        {'app': 'auth', 'label': 'Пользователи', 'models': ('auth.User', )},
+        {'app': 'persons', 'label': 'Персоны'},
+        {'app': 'courses', 'label': 'Курсы и запуски курсов'},
+        {'app': 'directories', 'label': 'Справочники'},
+        {'app': 'disciplines', 'label': 'Дисциплины'},
+        {'app': 'journal', 'label': 'Электронный дневник'},
+        {'app': 'professions', 'label': 'Профессии'},
+    )
+
+
+#### REWRITE ADMIN TITLES ####
+    admin.site.site_header = _('Открытые образовательные программы')
+    admin.site.site_title = _('Открытые образовательные программы')
+    admin.site.index_title = _('Открытые образовательные программы')
 
 
 class Dev(Common):
