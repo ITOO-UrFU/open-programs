@@ -30,3 +30,7 @@
 `$ ./manage.py compilemessages`
 
 `$ ./manage.py runserver`
+
+## Создание суперпользователя
+
+`$ ./manage.py addroot <username>`
