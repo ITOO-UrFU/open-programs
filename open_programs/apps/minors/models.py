@@ -22,16 +22,16 @@ class Minor(ObjectBaseClass):
 
     def get_all_courses(self):
         return "\n".join([str(course)for course in self.courses.all()])
-
-class MinorsPool(ObjectBaseClass):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(_("Название пула майноров"), max_length=256, blank=False, default=_("Название пула"))
-    description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
-    modules = models.ManyToManyField(Minor)
-
-    def get_all(self):
-        return "\n".join([str(module)for module in self.modules.all()])
-
-    class Meta:
-        verbose_name = 'пул майноров'
-        verbose_name_plural = 'пулы майноров'
+#
+# class MinorsPool(ObjectBaseClass):
+#     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+#     title = models.CharField(_("Название пула майноров"), max_length=256, blank=False, default=_("Название пула"))
+#     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
+#     modules = models.ManyToManyField(Minor)
+#
+#     def get_all(self):
+#         return "\n".join([str(module)for module in self.modules.all()])
+#
+#     class Meta:
+#         verbose_name = 'пул майноров'
+#         verbose_name_plural = 'пулы майноров'

@@ -5,12 +5,25 @@ import uuid
 
 from discipline.models import Discipline
 
+
+class Type(ObjectBaseClass):
+    title = models.CharField(_("Название типа модуля"), max_length=256, blank=False, default=_("Название типа модуля"))
+    description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")
+
+    class Meta:
+        verbose_name = 'тип модуля'
+        verbose_name_plural = 'типы модулей'
+
+    def __str__(self):
+        return self.title
+
+
 class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
     disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"))
-    # TODO: M2M Discipline
+    type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
 
     def get_all_disciplines(self):
         return "\n".join([str(discipline)for discipline in self.disciplines.all()])
