@@ -6,7 +6,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 from persons.models import Person
-from minors.models import Minor
 
 
 class Program(ObjectBaseClass):
@@ -35,9 +34,6 @@ class Program(ObjectBaseClass):
 
     def get_all_choice_modules(self):
         return "\n".join([str(module)for module in self.choice_modules.all()])
-
-    def minors(self):
-        return "\n".join([str(m) for m in Minor.objects.filter(archived=False, status="p")])
 
     class Meta:
         verbose_name = 'программа'

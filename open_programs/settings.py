@@ -51,7 +51,6 @@ class Common(Configuration):
         'programs',
         'modules',
         'discipline',
-        'minors',
         'base',
     ]
 
