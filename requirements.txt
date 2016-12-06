@@ -12,3 +12,4 @@ django-mysql
 django-dashing
 django-celery-email
 django-configurations
+django-modeladmin-reorder

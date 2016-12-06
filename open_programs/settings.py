@@ -34,6 +34,7 @@ class Common(Configuration):
         'rosetta',
         'dashing',  # Read https://github.com/talpor/django-dashing/
         'djcelery_email',
+        'admin_reorder',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
@@ -68,6 +69,7 @@ class Common(Configuration):
         'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
         'django.contrib.messages.middleware.MessageMiddleware',
         'django.middleware.clickjacking.XFrameOptionsMiddleware',
+        'admin_reorder.middleware.ModelAdminReorder',
     ]
 
     ROOT_URLCONF = 'open_programs.urls'
@@ -199,6 +201,22 @@ class Common(Configuration):
     }
 
     LOGIN_REDIRECT_URL = "/"
+
+    #### ADMIN REORDER ####
+
+    ADMIN_REORDER = (
+    {'app': 'programs', 'label': 'Образовательные программы'},
+    {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
+    {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
+    {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool', 'modules.EducationalProgramTrajectoriesPool', 'modules.ChoiceModulesPool')},
+    {'app': 'auth', 'models': ('auth.User', )},
+    {'app': 'persons', 'label': 'Персоны'},
+    {'app': 'courses', 'label': 'Курсы и запуски курсов'},
+    {'app': 'directories', 'label': 'Справочники'},
+    {'app': 'disciplines', 'label': 'Дисциплины'},
+    {'app': 'journal', 'label': 'Электронный дневник'},
+    {'app': 'professions', 'label': 'Профессии'},
+)
 
 
 class Dev(Common):
