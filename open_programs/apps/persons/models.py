@@ -15,12 +15,12 @@ class Person(models.Model):
         ('U', _('Не выбран')),
         ('F', _('Женский')),
         ('M', _('Мужской')),
-     )
+    )
     sex = models.CharField(max_length=1,
                            choices=SEXES,
                            default='U'
                            )
-    alt_email = models.EmailField(_('Альтернативный e-mail'),max_length=254, blank=True)
+    alt_email = models.EmailField(_('Альтернативный e-mail'), max_length=254, blank=True)
     country = CountryField(blank=True, default='Russia')
     birthday_date = models.DateField(_('Дата рождения'), null=True, blank=True)
 #   roles = models.ManyToManyField(ROLE)  TODO: Сделать модель 'Роль'
@@ -32,7 +32,7 @@ class Person(models.Model):
 
     def __str__(self):
         if self.first_name and self.last_name:
-            return ' '.join([self.first_name, self.last_name])
+            return ' '.join([str(self.first_name), str(self.last_name)])
         else:
             return str(self.user)
 
