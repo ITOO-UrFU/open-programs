@@ -3,6 +3,10 @@ import datetime
 from django.db import models
 from base.models import ObjectBaseClass
 
+from permission import add_permission_logic
+from permission.logics import AuthorPermissionLogic
+from permission.logics import CollaboratorsPermissionLogic
+
 from persons.models import Person
 
 from django.utils.translation import ugettext_lazy as _
@@ -27,6 +31,7 @@ class Course(ObjectBaseClass):
     points = models.PositiveIntegerField(_("зачётных единиц"), blank=True, null=True)
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
     sessions = models.ManyToManyField('Session', verbose_name="Сессии", blank=True, null=True)
+    staff = models.ManyToManyField(Person)
 
     class Meta:
         verbose_name = 'курс'
@@ -72,3 +77,12 @@ class Session(ObjectBaseClass):
 
     def __str__(self):
         return '%s: %s - %s' % (self.slug, self.startdate.strftime("%d %b %Y"), self.enddate.strftime("%d %b %Y"))
+
+
+add_permission_logic(Course, AuthorPermissionLogic())
+add_permission_logic(Course, CollaboratorsPermissionLogic(
+    field_name='staff',
+    any_permission=False,
+    change_permission=True,
+    delete_permission=False,
+))

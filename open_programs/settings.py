@@ -35,6 +35,7 @@ class Common(Configuration):
         'rosetta',
         'dashing',  # Read https://github.com/talpor/django-dashing/
         'djcelery_email',
+        'permission',
         'admin_reorder',
         'allauth',
         'allauth.account',
@@ -145,6 +146,7 @@ class Common(Configuration):
     AUTHENTICATION_BACKENDS = (
         'django.contrib.auth.backends.ModelBackend',
         'allauth.account.auth_backends.AuthenticationBackend',
+        'permission.backends.PermissionBackend',
     )
 
     #### HAYSTACK ####
@@ -208,6 +210,9 @@ class Common(Configuration):
     admin.site.site_header = _('Открытые образовательные программы')
     admin.site.site_title = _('Администрирование')
     admin.site.index_title = _('Открытые образовательные программы')
+
+#### PERMISSION ####
+    PERMISSION_CHECK_TEMPLATES_OPTIONS_BUILTINS = False
 
 
 class Dev(Common):
