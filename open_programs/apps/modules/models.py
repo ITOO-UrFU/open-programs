@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 import uuid
 
 from disciplines.models import Discipline
-
+from results.models import Result
 
 class Type(ObjectBaseClass):
     title = models.CharField(_("Название типа модуля"), max_length=256, blank=False, default=_("Название типа модуля"))
@@ -24,6 +24,8 @@ class Module(ObjectBaseClass):
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
     discipliness = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"))
     type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
+    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"))
+    results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
 
     def get_all_discipliness(self):
         return "\n".join([str(disciplines)for disciplines in self.discipliness.all()])
