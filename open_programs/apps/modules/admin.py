@@ -8,7 +8,7 @@ from .models import Module, GeneralBaseModulesPool, EducationalProgramTrajectori
 class ModuleAdmin(VersionAdmin):
     fields = ("title", "description", "discipliness", "status", "archived", "type", "results", "results_text", "dependencies")
     list_display = ("id", "title", "description", "get_all_discipliness", "status", "archived", "type")
-    filter_horizontal = ("dependencies", )
+    filter_horizontal = ("dependencies", "results" )
     list_filter = ('archived', 'created', 'updated', 'type')
 
 

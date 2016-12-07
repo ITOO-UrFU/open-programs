@@ -4,6 +4,7 @@ from reversion.admin import VersionAdmin
 from .models import Competence
 
 
+@admin.register(Competence)
 class CompetenceAdmin(VersionAdmin):
     list_display = (
         "title",
@@ -14,4 +15,3 @@ class CompetenceAdmin(VersionAdmin):
     )
     list_filter = ("archived", "created", "updated")
     filter_horizontal = ("results", )
-admin.site.register(Competence, CompetenceAdmin)
