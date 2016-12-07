@@ -54,6 +54,7 @@ class Common(Configuration):
         'programs',
         'modules',
         'disciplines',
+        "competences",
         'base',
     ]
 

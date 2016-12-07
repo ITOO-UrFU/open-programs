@@ -13,6 +13,10 @@ class Profession(ObjectBaseClass):
     title = models.CharField(_("Название профессии"), max_length=256, blank=False, default=_(""))
     description = models.TextField(_("Описание профессии"), max_length=16384, blank=True, default=_("Здесь должно быть описание профессии"))
 
+    def save(self, *args, **kwargs):
+        self.status = "p"
+        super(Profession, self).save(*args, **kwargs)
+
     class Meta:
         verbose_name = 'профессия'
         verbose_name_plural = 'профессии'
