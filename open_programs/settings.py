@@ -4,7 +4,7 @@ import platform
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from configurations import Configuration, values
+from configurations import Configuration
 
 
 class Common(Configuration):
@@ -56,10 +56,8 @@ class Common(Configuration):
         'base',
     ]
 
-
-    if platform.system() not in  ('Windows', 'Darwin'):
+    if platform.system() not in ('Windows', 'Darwin'):
         INSTALLED_APPS.append('haystack')
-
 
     MIDDLEWARE_CLASSES = [
         'django.middleware.security.SecurityMiddleware',
@@ -105,10 +103,8 @@ class Common(Configuration):
         }
     }
 
-
     # Password validation
     # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-
     AUTH_PASSWORD_VALIDATORS = [
         {
             'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -124,10 +120,8 @@ class Common(Configuration):
         },
     ]
 
-
     # Internationalization
     # https://docs.djangoproject.com/en/1.9/topics/i18n/
-
     LANGUAGE_CODE = 'ru'
 
     TIME_ZONE = 'Asia/Yekaterinburg'
@@ -138,12 +132,7 @@ class Common(Configuration):
 
     USE_TZ = True
 
-
-    # Static files (CSS, JavaScript, Images)
-    # https://docs.djangoproject.com/en/1.9/howto/static-files/
-
     #### STATIC ####
-
     STATIC_URL = '/static/'
     STATICFILES_DIRS = [
         os.path.join(BASE_DIR, "static"),
@@ -164,11 +153,11 @@ class Common(Configuration):
         'default': {
             'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
         },
-         'elasticsearch': {
-             'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-             'URL': 'http://127.0.0.1:9200/',
-             'INDEX_NAME': 'haystack',
-         },
+        'elasticsearch': {
+            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+            'URL': 'http://127.0.0.1:9200/',
+            'INDEX_NAME': 'haystack',
+        },
     }
 
     #### LOCALES ####
@@ -186,30 +175,26 @@ class Common(Configuration):
     MEDIA_ROOT = os.path.join(BASE_DIR, "media")
     MEDIA_URL = "/media/"
 
-
     #### EMAIL ####
-
     EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
-
-    CELERY_EMAIL_TASK_CONFIG = {
-        'queue' : 'email',
-        'rate_limit' : '50/m',  # * CELERY_EMAIL_CHUNK_SIZE (default: 10)
-    }
 
     CELERY_EMAIL_TASK_CONFIG = {
         'name': 'djcelery_email_send',
         'ignore_result': True,
+        'queue': 'email',
+        'rate_limit': '50/m',
     }
 
     LOGIN_REDIRECT_URL = "/"
 
     #### ADMIN REORDER ####
-
     ADMIN_REORDER = (
         {'app': 'programs', 'label': 'Открытые образовательные программы'},
         {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
         {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
-        {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool', 'modules.EducationalProgramTrajectoriesPool', 'modules.ChoiceModulesPool')},
+        {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool',
+                                                                     'modules.EducationalProgramTrajectoriesPool',
+                                                                     'modules.ChoiceModulesPool')},
         {'app': 'auth', 'label': 'Пользователи', 'models': ('auth.User', )},
         {'app': 'persons', 'label': 'Персоны'},
         {'app': 'courses', 'label': 'Курсы и запуски курсов'},
@@ -218,7 +203,6 @@ class Common(Configuration):
         {'app': 'journal', 'label': 'Электронный дневник'},
         {'app': 'professions', 'label': 'Профессии'},
     )
-
 
 #### REWRITE ADMIN TITLES ####
     admin.site.site_header = _('Открытые образовательные программы')
@@ -236,4 +220,3 @@ class Prod(Common):
 
     DEBUG = False
     #INSTALLED_APPS.append('django_mysql') # Read https://django-mysql.readthedocs.io/en/latest/installation.html
-
