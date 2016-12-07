@@ -1,3 +1,17 @@
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 
-# Register your models here.
+from .models import Competence
+
+
+class CompetenceAdmin(VersionAdmin):
+    list_display = (
+        "title",
+        "archived",
+        "created",
+        "updated",
+        "status",
+    )
+    list_filter = ("archived", "created", "updated")
+    filter_horizontal = ("results", )
+admin.site.register(Competence, CompetenceAdmin)

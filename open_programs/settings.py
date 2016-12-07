@@ -206,6 +206,8 @@ class Common(Configuration):
         {'app': 'discipliness', 'label': 'Дисциплины'},
         {'app': 'journal', 'label': 'Электронный дневник'},
         {'app': 'professions', 'label': 'Профессии'},
+        {'app': 'results', 'label': 'Результаты обучения'},
+        {'app': 'competences', 'label': 'Компетенции'},
     )
 
 #### REWRITE ADMIN TITLES ####
