@@ -141,6 +141,12 @@ class Common(Configuration):
         os.path.join(BASE_DIR, "static"),
     ]
 
+    #### FIXTURES ####
+
+    FIXTURE_DIRS = [
+        os.path.join(BASE_DIR, "fixtures"),
+    ]
+
     #### SOCIAL ####
 
     SOCIALACCOUNT_QUERY_EMAIL = True

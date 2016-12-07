@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-#from persons.models import Person
 
 
 class ObjectBaseClass(models.Model):
@@ -16,4 +15,3 @@ class ObjectBaseClass(models.Model):
     created = models.DateTimeField(_('Дата создания'), auto_now_add=True)
     updated = models.DateTimeField(_('Обновлен'), auto_now=True)
     status = models.CharField(_("Статус публикации"), max_length=1, choices=STATUSES, default='h')
-    #creator = models.ForeignKey(Person, null=True, blank=True)
