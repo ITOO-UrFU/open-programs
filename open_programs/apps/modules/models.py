@@ -3,7 +3,7 @@ from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 import uuid
 
-from discipline.models import Discipline
+from disciplines.models import Discipline
 
 
 class Type(ObjectBaseClass):
@@ -22,11 +22,11 @@ class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
-    disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"))
+    discipliness = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"))
     type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
 
-    def get_all_disciplines(self):
-        return "\n".join([str(discipline)for discipline in self.disciplines.all()])
+    def get_all_discipliness(self):
+        return "\n".join([str(disciplines)for disciplines in self.discipliness.all()])
 
     class Meta:
         verbose_name = 'модуль'

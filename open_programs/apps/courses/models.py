@@ -41,6 +41,7 @@ class Course(ObjectBaseClass):
         return '%s - %s' % (self.slug, self.title)
 
     @models.permalink
+    @classmethod
     def get_absolute_url(self):
         return None
 
