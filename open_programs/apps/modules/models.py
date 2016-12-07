@@ -5,6 +5,7 @@ import uuid
 
 from disciplines.models import Discipline
 from results.models import Result
+from competences.models import Competence
 
 class Type(ObjectBaseClass):
     title = models.CharField(_("Название типа модуля"), max_length=256, blank=False, default=_("Название типа модуля"))
@@ -24,9 +25,10 @@ class Module(ObjectBaseClass):
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
     discipliness = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"), blank=True)
     type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
-    dependencies = models.ManyToManyField("Module", verbose_name=_("Зависит от модулей"))
-    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"))
+    dependencies = models.ManyToManyField("Module", verbose_name=_("Зависит от модулей"), blank=True)
+    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
+    competences = models.ManyToManyField(Competence, verbose_name=_("Компетенции"), blank=True)
 
     def get_all_discipliness(self):
         return "\n".join([str(disciplines)for disciplines in self.discipliness.all()])
