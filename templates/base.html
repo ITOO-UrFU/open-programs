@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
   <head>
     <title>{% block head_title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static "css/screen.css" %}">
     {% block extra_head %}
     {% endblock %}
   </head>
