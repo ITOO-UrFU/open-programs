@@ -47,9 +47,9 @@ class Course(ObjectBaseClass):
         for session in self.sessions.filter(enddate__lte=datetime.datetime.now()):
             sessions.append("<p style=\"color:red\">" + str(session) + "</p>")
         for session in self.sessions.filter(startdate__lte=datetime.datetime.now(), enddate__gte=datetime.datetime.now()):
-            sessions.append("<p style=\"color:green\">" + str(session) + "</p>")
-        for session in self.sessions.filter(startdate__gte=datetime.datetime.now()):
             sessions.append("<p style=\"color:blue\">" + str(session) + "</p>")
+        for session in self.sessions.filter(startdate__gte=datetime.datetime.now()):
+            sessions.append("<p style=\"color:green\">" + str(session) + "</p>")
 
 
         return "".join(sessions)

@@ -206,7 +206,7 @@ class Common(Configuration):
     #### ADMIN REORDER ####
 
     ADMIN_REORDER = (
-        {'app': 'programs', 'label': 'Образовательные программы'},
+        {'app': 'programs', 'label': 'Открытые образовательные программы'},
         {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
         {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
         {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool', 'modules.EducationalProgramTrajectoriesPool', 'modules.ChoiceModulesPool')},
