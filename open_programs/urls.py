@@ -24,6 +24,7 @@ import permission
 permission.autodiscover()
 
 urlpatterns = [
+    url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^dashboard/', include(router.urls)),
 ]

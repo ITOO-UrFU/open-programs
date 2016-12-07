@@ -14,3 +14,4 @@ django-celery-email
 django-configurations
 django-modeladmin-reorder
 django-permission
+django-smuggler

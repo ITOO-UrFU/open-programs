@@ -33,7 +33,7 @@ class Course(ObjectBaseClass):
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
     sessions = models.ManyToManyField('Session', verbose_name="Сессии", blank=True)
     staff = models.ManyToManyField(Person, related_name='course_staff', verbose_name=_("Команда курса"), blank=True)  # TODO: auto add course author and course authors
-    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"))
+    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
 
     class Meta:

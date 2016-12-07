@@ -89,7 +89,7 @@ ENV/
 
 *.sqlite3
 .idea/
-media/
+#media/
 
 
 static/.sass-cache/

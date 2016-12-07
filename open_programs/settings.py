@@ -37,6 +37,7 @@ class Common(Configuration):
         'djcelery_email',
         'permission',
         'admin_reorder',
+        'smuggler',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
@@ -223,6 +224,9 @@ class Common(Configuration):
 
 #### PERMISSION ####
     PERMISSION_CHECK_TEMPLATES_OPTIONS_BUILTINS = False
+
+#### SMUGGLER ####
+    SMUGGLER_FIXTURE_DIR = FIXTURE_DIRS[0]
 
 
 class Dev(Common):
