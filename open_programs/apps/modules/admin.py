@@ -6,8 +6,9 @@ from .models import Module, GeneralBaseModulesPool, EducationalProgramTrajectori
 
 @admin.register(Module)
 class ModuleAdmin(VersionAdmin):
-    fields = ("title", "description", "discipliness", "status", "archived", "type")
+    fields = ("title", "description", "discipliness", "status", "archived", "type", "dependencies")
     list_display = ("id", "title", "description", "get_all_discipliness", "status", "archived", "type")
+    filter_horizontal = ("dependencies", )
     list_filter = ('archived', 'created', 'updated', 'type')
 
 
