@@ -6,5 +6,5 @@ from .models import Discipline
 
 @admin.register(Discipline)
 class DisciplineAdmin(VersionAdmin):
-    fields = ("name", "courses", "status", "archived")
+    fields = ("name", "courses", "status", "archived", "results", "results_text")
     list_display = ("name", "get_all", "status", "archived")
