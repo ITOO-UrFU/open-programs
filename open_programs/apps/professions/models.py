@@ -4,8 +4,6 @@ from base.models import ObjectBaseClass
 from permission import add_permission_logic
 from permission.logics import StaffPermissionLogic
 
-from persons.models import Person
-
 from django.utils.translation import ugettext_lazy as _
 
 
