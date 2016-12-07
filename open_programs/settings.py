@@ -53,7 +53,9 @@ class Common(Configuration):
         'professions',
         'programs',
         'modules',
-        'discipline',
+        'disciplines',
+        "competences",
+        "results",
         'base',
     ]
 
@@ -201,7 +203,7 @@ class Common(Configuration):
         {'app': 'persons', 'label': 'Персоны'},
         {'app': 'courses', 'label': 'Курсы и запуски курсов'},
         {'app': 'directories', 'label': 'Справочники'},
-        {'app': 'disciplines', 'label': 'Дисциплины'},
+        {'app': 'discipliness', 'label': 'Дисциплины'},
         {'app': 'journal', 'label': 'Электронный дневник'},
         {'app': 'professions', 'label': 'Профессии'},
     )

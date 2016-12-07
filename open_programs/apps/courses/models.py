@@ -17,7 +17,7 @@ class Course(ObjectBaseClass):
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default=_("Здесь должно быть описание курса"))
     slug = models.SlugField(_("Код курса"), help_text=_("должен быть уникальным в рамках вуза"))
     #university = models.ForeignKey(University, related_name='university_courses', verbose_name=_("Университет"))  TODO: create University model
-    authors = models.ManyToManyField(Person, related_name='authors_courses', verbose_name=_("Автор"), blank=True)
+    authors = models.ManyToManyField(Person, related_name='course_authors', verbose_name=_("Автор"), blank=True)
     authors_ordering = models.CharField(_("Порядок авторов"), max_length=500, blank=True,
                                         help_text=_("id авторов через пробел"))
     about = models.TextField(_("О курсе"), blank=True)
@@ -30,8 +30,8 @@ class Course(ObjectBaseClass):
     workload = models.PositiveIntegerField(_("часов в неделю"), blank=True, null=True)
     points = models.PositiveIntegerField(_("зачётных единиц"), blank=True, null=True)
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
-    sessions = models.ManyToManyField('Session', verbose_name="Сессии", blank=True, null=True)
-    staff = models.ManyToManyField(Person)
+    sessions = models.ManyToManyField('Session', verbose_name="Сессии", blank=True)
+    staff = models.ManyToManyField(Person, related_name='course_staff', verbose_name=_("Команда курса"), blank=True)  # TODO: auto add course author and course authors
 
     class Meta:
         verbose_name = 'курс'
@@ -41,6 +41,7 @@ class Course(ObjectBaseClass):
         return '%s - %s' % (self.slug, self.title)
 
     @models.permalink
+    @classmethod
     def get_absolute_url(self):
         return None
 
