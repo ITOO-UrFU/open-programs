@@ -38,6 +38,7 @@ class Common(Configuration):
         'permission',
         'admin_reorder',
         'smuggler',
+        'codemirror2',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
@@ -227,6 +228,9 @@ class Common(Configuration):
 
 #### SMUGGLER ####
     SMUGGLER_FIXTURE_DIR = FIXTURE_DIRS[0]
+
+#### CODEMIRROR ####
+    CODEMIRROR_PATH = os.path.join(STATICFILES_DIRS[0], "vendor", "codemirror")
 
 
 class Dev(Common):

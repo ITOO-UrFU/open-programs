@@ -1,7 +1,9 @@
 import json
 import datetime
 from django.db import models
-from django.template.defaultfilters import truncatechars
+from django.template.defaultfilters import truncatewords_html
+from django.db.models.signals import pre_delete
+from django.dispatch.dispatcher import receiver
 from base.models import ObjectBaseClass
 
 from permission import add_permission_logic
@@ -64,15 +66,27 @@ class Course(ObjectBaseClass):
 
         return "".join(sessions)
 
-    @property
     def short_description(self):
-        return truncatechars(self.description, 100)
+        return truncatewords_html(self.description, 20)
 
-    @property
     def short_about(self):
-        return truncatechars(self.about, 100)
+        return truncatewords_html(self.about, 20)
+
+    def get_cover(self):
+        if self.cover:
+            return "<img height=\"100\" src=\"" + self.cover.url + "\"></img>"
+        else:
+            return _("Без обложки")
 
     all_sessions_colors.allow_tags = True
+    short_description.allow_tags = True
+    short_about.allow_tags = True
+    get_cover.allow_tags = True
+
+    short_description.short_description = _("Описание курса")
+    short_about.short_description = _("О курсе")
+    get_cover.short_description = _("Обложка")
+    all_sessions_colors.short_description = _("Сессии курса")
     # TODO: active sessions, expired sessions
 
 
@@ -96,3 +110,9 @@ add_permission_logic(Course, CollaboratorsPermissionLogic(
     change_permission=True,
     delete_permission=False,
 ))
+
+
+@receiver(pre_delete, sender=Course)
+def course_delete(sender, instance, **kwargs):
+    # Pass false so FileField doesn't save the model.
+    instance.cover.delete(False)
