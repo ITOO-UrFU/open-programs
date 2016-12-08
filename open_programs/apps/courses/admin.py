@@ -7,7 +7,7 @@ from .models import Course, Session
 @admin.register(Course)
 class CourseAdmin(VersionAdmin):
     fields = ("title", "slug", "description", "about", "staff", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "results", "results_text", "status", "archived")
-    list_display = ("title", "slug", "description", "about", "cover", "video", "video_cover", "workload", "points", "duration", "status", "archived", "all_sessions_colors")
+    list_display = ("title", "slug", "short_description", "short_about", "cover", "video", "video_cover", "workload", "points", "duration", "status", "archived", "all_sessions_colors")
     filter_horizontal = ("sessions", "staff", "results")
     list_filter = ('archived', 'created', 'updated')
     search_fields = ('slug', "title")

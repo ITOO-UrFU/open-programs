@@ -1,6 +1,7 @@
 import json
 import datetime
 from django.db import models
+from django.template.defaultfilters import truncatechars
 from base.models import ObjectBaseClass
 
 from permission import add_permission_logic
@@ -63,8 +64,13 @@ class Course(ObjectBaseClass):
 
         return "".join(sessions)
 
+    @property
+    def short_description(self):
+        return truncatechars(self.description, 100)
 
-    #  "<br />".join([str(session) for session in self.sessions.all()])
+    @property
+    def short_about(self):
+        return truncatechars(self.about, 100)
 
     all_sessions_colors.allow_tags = True
     # TODO: active sessions, expired sessions
