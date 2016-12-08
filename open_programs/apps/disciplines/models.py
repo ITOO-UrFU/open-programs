@@ -7,8 +7,8 @@ from results.models import Result
 
 class Discipline(ObjectBaseClass):
     name = models.CharField(_('Название дисциплины'), max_length=256, blank=False, default='')
-    courses = models.ManyToManyField(Course, verbose_name=_("Варианты реализации дисциплины"))
-    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"))
+    courses = models.ManyToManyField(Course, verbose_name=_("Варианты реализации дисциплины"), blank=True)
+    results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
 
     class Meta:
