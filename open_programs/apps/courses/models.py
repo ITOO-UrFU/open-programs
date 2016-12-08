@@ -17,8 +17,15 @@ from django.utils.translation import ugettext_lazy as _
 
 
 class Course(ObjectBaseClass):
+
+    def get_cover_path(self, filename):
+        return str(self.slug) + "/cover/" + filename
+
+    def get_video_cover_path(self, filename):
+        return str(self.slug) + "/poster/" + filename
+
     title = models.CharField(_("Название курса"), max_length=256, blank=False, default=_("Название курса"))
-    description = models.TextField(_("Описание"), max_length=16384, blank=True, default=_("Здесь должно быть описание курса"))
+    description = models.TextField(_("Короткое описание"), max_length=16384, blank=True, default=_("Здесь должно быть описание курса"))
     slug = models.SlugField(_("Код курса"), help_text=_("должен быть уникальным в рамках вуза"))
     #university = models.ForeignKey(University, related_name='university_courses', verbose_name=_("Университет"))  TODO: create University model
     authors = models.ManyToManyField(Person, related_name='course_authors', verbose_name=_("Автор"), blank=True)
@@ -27,10 +34,10 @@ class Course(ObjectBaseClass):
     about = models.TextField(_("О курсе"), blank=True)
 
     #course_format = models.ForeignKey(Form)  TODO: create&rename Form model
-    cover = models.ImageField(_("Обложка"), upload_to='cover', blank=True)
+    cover = models.ImageField(_("Обложка"), upload_to=get_cover_path, blank=True)
     video = models.URLField(_("Промовидео"), max_length=500, blank=True, default='',
                              help_text=_("URL видео"))
-    video_cover = models.ImageField(_("Картинка для видео"), upload_to='video_cover', blank=True)
+    video_cover = models.ImageField(_("Картинка для видео"), upload_to=get_video_cover_path, blank=True)
     workload = models.PositiveIntegerField(_("часов в неделю"), blank=True, null=True)
     points = models.PositiveIntegerField(_("зачётных единиц"), blank=True, null=True)
     duration = models.PositiveIntegerField(_("Длительность (недель)"), blank=True, null=True)
@@ -78,15 +85,25 @@ class Course(ObjectBaseClass):
         else:
             return _("Без обложки")
 
+    def get_video(self):
+        if self.video and self.video_cover:
+            return "<video controls=\"controls\" poster=\"" + self.video_cover.url + "\"  height=\"100\"><source src=\"" + str(self.video) + "\"></video>"
+        elif self.video and not self.video_cover:
+            return "<video controls=\"controls\" height=\"100\"><source src=\"" + str(self.video) + "\"></video>"
+        else:
+            return "<center><img  height=\"100\" src=\"/static/img/no_video.png\"/></center>"
+
     all_sessions_colors.allow_tags = True
     short_description.allow_tags = True
     short_about.allow_tags = True
+    get_video.allow_tags = True
     get_cover.allow_tags = True
 
-    short_description.short_description = _("Описание курса")
+    short_description.short_description = _("Короткое описание")
     short_about.short_description = _("О курсе")
     get_cover.short_description = _("Обложка")
     all_sessions_colors.short_description = _("Сессии курса")
+    get_video.short_description = _("Промовидео")
     # TODO: active sessions, expired sessions
 
 
