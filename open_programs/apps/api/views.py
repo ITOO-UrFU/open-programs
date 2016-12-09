@@ -1,5 +1,6 @@
 from courses.models import Course
 from rest_framework import viewsets
+from rest_framework import serializers
 from courses.serializers import CourseSerializer
 
 
@@ -11,9 +12,6 @@ class CourseList(viewsets.ModelViewSet):
     serializer_class = CourseSerializer
 
 
-# class CourseDetail(viewsets.ModelViewSet):
-#     """
-#     API endpoint that represents a single user.
-#     """
-#     model = Course
-#     serializer_class = CourseSerializer
+class CourseDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Course

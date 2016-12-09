@@ -25,17 +25,21 @@ from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from api.views import CourseList  # , CourseDetail
+from api.views import CourseList,  CourseDetail
 
 permission.autodiscover()
 
 
-#### API ####
-
 router = routers.DefaultRouter()
 router.register(r'api/courses', CourseList)
 #router.register(r'groups', CourseDetail)
-urlpatterns = router.urls
+
+urlpatterns = [
+     url(r'^admin/', include('smuggler.urls')),
+     url(r'^admin/', admin.site.urls),
+     url(r'^dashboard/', include(router.urls)),
+     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+ ]
 
 
 if 'rosetta' in settings.INSTALLED_APPS:
@@ -47,3 +51,5 @@ if 'rosetta' in settings.INSTALLED_APPS:
 if settings.DEBUG is True:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += router.urls
