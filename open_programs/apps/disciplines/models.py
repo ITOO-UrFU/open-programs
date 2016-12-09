@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from courses.models import Course
 from results.models import Result
 
+
 class Discipline(ObjectBaseClass):
     name = models.CharField(_('Название дисциплины'), max_length=256, blank=False, default='')
     courses = models.ManyToManyField(Course, verbose_name=_("Варианты реализации дисциплины"), blank=True)
