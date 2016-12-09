@@ -7,6 +7,7 @@ from disciplines.models import Discipline
 from results.models import Result
 from competences.models import Competence
 
+
 class Type(ObjectBaseClass):
     title = models.CharField(_("Название типа модуля"), max_length=256, blank=False, default=_("Название типа модуля"))
     description = models.TextField(_("Описание"), max_length=16384, blank=True, default="")

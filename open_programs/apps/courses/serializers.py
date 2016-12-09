@@ -5,7 +5,7 @@ from rest_framework import serializers
 class CourseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Course
-        fields = ("title", "description",  "slug", "authors", "authors_ordering", "about", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description",  "slug", "authors", "authors_ordering", "about", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created", "updated")
 
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):
