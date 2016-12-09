@@ -16,3 +16,6 @@ django-modeladmin-reorder
 django-permission
 django-smuggler
 django-codemirror2
+djangorestframework
+markdown
+django-filter

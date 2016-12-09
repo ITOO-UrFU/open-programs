@@ -38,6 +38,7 @@ class Common(Configuration):
         'permission',
         'admin_reorder',
         'smuggler',
+        'rest_framework',
         'codemirror2',
         'allauth',
         'allauth.account',
@@ -59,6 +60,7 @@ class Common(Configuration):
         "competences",
         "results",
         'base',
+        "api",
     ]
 
     if platform.system() not in ('Windows', 'Darwin'):
@@ -232,7 +234,12 @@ class Common(Configuration):
 #### CODEMIRROR ####
     CODEMIRROR_PATH = os.path.join(STATICFILES_DIRS[0], "vendor", "codemirror")
 
-
+#### REST FRAMEWORK ####
+    REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+        ]
+    }
 class Dev(Common):
 
     DEBUG = True
