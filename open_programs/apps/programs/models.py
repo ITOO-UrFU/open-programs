@@ -25,6 +25,7 @@ class Program(ObjectBaseClass):
     general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, verbose_name=_("Общепрофессиональные базовые модули"))
     educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, verbose_name=_("Траектории образовательной программы"))
     choice_modules = models.ManyToManyField(ChoiceModulesPool, verbose_name=_("Пул модулей по выбору"))
+    module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
 
     def get_all_general_base_modules(self):
         return "\n".join([str(module)for module in self.general_base_modules.all()])
@@ -45,7 +46,13 @@ class ModuleDependency(models.Model):
         ("soft", _("мягкая")),
         ("hard", _("строгая")),
     )
-    program = models.ForeignKey(Program)
-    module = models.ForeignKey(Module)
-    dependencies = models.ManyToManyField(Module)
-    type = models.CharField(_("Тип зависимости"), max_length=4, default="hard")
+    module = models.ForeignKey(Module, related_name="module")
+    dependencies = models.ManyToManyField(Module, related_name="modules")
+    type = models.CharField(_("Тип зависимости"), max_length=4, default="hard", choices=DEPENDENCY_TYPES)
+
+    class Meta:
+        verbose_name = 'зависимость'
+        verbose_name_plural = 'зависимости'
+
+    def __str__(self):
+        return self.type + '-' + str(self.module) + "-" + "-".join([str(module) for module in self.dependencies])
