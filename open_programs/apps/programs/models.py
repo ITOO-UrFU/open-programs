@@ -38,3 +38,14 @@ class Program(ObjectBaseClass):
     class Meta:
         verbose_name = 'программа'
         verbose_name_plural = 'программы'
+
+
+class ModuleDependency(models.Model):
+    DEPENDENCY_TYPES = (
+        ("soft", _("мягкая")),
+        ("hard", _("строгая")),
+    )
+    program = models.ForeignKey(Program)
+    module = models.ForeignKey(Module)
+    dependencies = models.ManyToManyField(Module)
+    type = models.CharField(_("Тип зависимости"), max_length=4, default="hard")
