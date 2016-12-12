@@ -1,11 +1,20 @@
 import uuid
 
 from django.db import models
+from django import forms
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 
 from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 from persons.models import Person
+
+
+class ProgramManager(models.Manager):
+    def all_modules(self):
+        modules = [module for module in self.general_base_modules.all()]
+        modules += [module for module in self.choice_modules.all()]
+        modules += [module for module in [track for track in self.educational_program_trajectories.all()]]
+        return modules
 
 
 class Program(ObjectBaseClass):
@@ -25,20 +34,21 @@ class Program(ObjectBaseClass):
     general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, verbose_name=_("Общепрофессиональные базовые модули"))
     educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, verbose_name=_("Траектории образовательной программы"))
     choice_modules = models.ManyToManyField(ChoiceModulesPool, verbose_name=_("Пул модулей по выбору"))
-    module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
+    #module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
 
     def get_all_general_base_modules(self):
-        return "\n".join([str(module)for module in self.general_base_modules.all()])
+        return "\n".join([str(module) for module in self.general_base_modules.all()])
 
     def get_all_educational_program_trajectories(self):
-        return "\n".join([str(module)for module in self.educational_program_trajectories.all()])
+        return "\n".join([str(module) for module in self.educational_program_trajectories.all()])
 
     def get_all_choice_modules(self):
-        return "\n".join([str(module)for module in self.choice_modules.all()])
+        return "\n".join([str(module) for module in self.choice_modules.all()])
 
     class Meta:
         verbose_name = 'программа'
         verbose_name_plural = 'программы'
+
 
 
 class ModuleDependency(models.Model):
@@ -46,8 +56,9 @@ class ModuleDependency(models.Model):
         ("soft", _("мягкая")),
         ("hard", _("строгая")),
     )
+    program = models.OneToOneField(Program, null=True)
     module = models.ForeignKey(Module, related_name="module")
-    dependencies = models.ManyToManyField(Module, related_name="modules")
+    modules = models.ManyToManyField(Module, related_name="modules")
     type = models.CharField(_("Тип зависимости"), max_length=4, default="hard", choices=DEPENDENCY_TYPES)
 
     class Meta:
@@ -56,3 +67,14 @@ class ModuleDependency(models.Model):
 
     def __str__(self):
         return self.type + '-' + str(self.module) + "-" + "-".join([str(module) for module in self.dependencies])
+
+
+class ModuleDependencyForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ModuleDependencyForm, self).__init__(*args, **kwargs)
+        modules = self.program.all_modules()
+        w = self.fields['modules'].widget
+        choices = []
+        for module in modules:
+            choices.append((module.id, module.name))
+        w.choices = modules

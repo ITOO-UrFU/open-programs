@@ -25,6 +25,6 @@ class ProgramAdmin(VersionAdmin):
 
 @admin.register(ModuleDependency)
 class ModuleDependencyAdmin(VersionAdmin):
-    list_display = ('id', 'module', 'type')
+    list_display = ('id', 'module', 'type', 'program')
     list_filter = ('module',)
-    filter_horizontal = ('dependencies',)  # TODO: list modules from program!!!?
+    filter_horizontal = ('modules',)  # TODO: list modules from program!!!?
