@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Program, ModuleDependency
+from .models import Program, ModuleDependency, ModuleDependencyForm
 
 
 @admin.register(Program)
@@ -25,6 +25,8 @@ class ProgramAdmin(VersionAdmin):
 
 @admin.register(ModuleDependency)
 class ModuleDependencyAdmin(VersionAdmin):
-    list_display = ('id', 'module', 'type', 'program')
-    list_filter = ('module',)
-    filter_horizontal = ('modules',)  # TODO: list modules from program!!!?
+    # list_display = ('id', 'module', 'type', 'program')
+    # list_filter = ('module',)
+    # filter_horizontal = ('modules',)  # TODO: list modules from program!!!?
+
+    form = ModuleDependencyForm

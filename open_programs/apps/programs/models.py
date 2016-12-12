@@ -1,4 +1,5 @@
 import uuid
+from itertools import chain
 
 from django.db import models
 from django import forms
@@ -7,14 +8,6 @@ from django.utils.translation import ugettext_lazy as _
 
 from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 from persons.models import Person
-
-
-class ProgramManager(models.Manager):
-    def all_modules(self):
-        modules = [module for module in self.general_base_modules.all()]
-        modules += [module for module in self.choice_modules.all()]
-        modules += [module for module in [track for track in self.educational_program_trajectories.all()]]
-        return modules
 
 
 class Program(ObjectBaseClass):
@@ -49,6 +42,21 @@ class Program(ObjectBaseClass):
         verbose_name = 'программа'
         verbose_name_plural = 'программы'
 
+    def __str__(self):
+        return self.title
+
+    def all_modules(self):
+        choice_modules = [pull.modules.all().values('id') for pull in self.choice_modules.all()]
+        general_base_modules = [pull.modules.all().values('id') for pull in self.general_base_modules.all()]
+        educational_program_trajectories = [pull.modules.all().values('id') for pull in
+                              [track for track in self.educational_program_trajectories.all()]]
+
+        modules = list(chain(choice_modules, general_base_modules, educational_program_trajectories))
+        print(modules)  # ПОЛОМАТО!
+
+
+        return Module.objects.filter(title__in=modules)
+
 
 
 class ModuleDependency(models.Model):
@@ -56,9 +64,9 @@ class ModuleDependency(models.Model):
         ("soft", _("мягкая")),
         ("hard", _("строгая")),
     )
-    program = models.OneToOneField(Program, null=True)
+    program = models.ForeignKey(Program, null=True)
     module = models.ForeignKey(Module, related_name="module")
-    modules = models.ManyToManyField(Module, related_name="modules")
+    modules = models.ManyToManyField(Module, related_name="modules", blank=True)
     type = models.CharField(_("Тип зависимости"), max_length=4, default="hard", choices=DEPENDENCY_TYPES)
 
     class Meta:
@@ -66,15 +74,37 @@ class ModuleDependency(models.Model):
         verbose_name_plural = 'зависимости'
 
     def __str__(self):
-        return self.type + '-' + str(self.module) + "-" + "-".join([str(module) for module in self.dependencies])
+        try:
+            return self.type + '-' + str(self.module) + "-" + "-".join([str(module) for module in self.modules.all()])
+        except:
+            return self.type
 
 
 class ModuleDependencyForm(forms.ModelForm):
+
+    class Meta:
+        model = ModuleDependency
+        exclude = ['modules', ]
+
+    modules = forms.ModelMultipleChoiceField(
+        Module.objects.none(),
+        required=False,
+    )
+
     def __init__(self, *args, **kwargs):
         super(ModuleDependencyForm, self).__init__(*args, **kwargs)
-        modules = self.program.all_modules()
-        w = self.fields['modules'].widget
-        choices = []
-        for module in modules:
-            choices.append((module.id, module.name))
-        w.choices = modules
+        if hasattr(self, 'instance'):
+            self.fields['modules'].queryset = self.instance.program.all_modules()
+            #     program = Program.objects.get(title=self.instance.program)
+            #     modules = program.all_modules()
+            #     print(modules)
+            #     w = self.fields['modules'].widget
+            #     choices = []
+            #     for module in modules:
+            #         choices.append((module.id, module.title))
+            #     w.choices = modules
+            # except:
+            #     pass
+            #self.initial['modules'] = None  #  self.instance.program.all_modules()
+
+
