@@ -1,1 +1,3 @@
-static/* linguist-vendored
+static/admin/* linguist-vendored
+static/codemirror2/* linguist-vendored
+*.html linguist-vendored
