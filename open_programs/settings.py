@@ -213,7 +213,7 @@ class Common(Configuration):
         {'app': 'persons', 'label': 'Персоны'},
         {'app': 'courses', 'label': 'Курсы и запуски курсов'},
         {'app': 'directories', 'label': 'Справочники'},
-        {'app': 'discipliness', 'label': 'Дисциплины'},
+        {'app': 'disciplines', 'label': 'Дисциплины'},
         {'app': 'journal', 'label': 'Электронный дневник'},
         {'app': 'professions', 'label': 'Профессии'},
         {'app': 'results', 'label': 'Результаты обучения'},
