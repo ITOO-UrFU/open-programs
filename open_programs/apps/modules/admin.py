@@ -8,7 +8,7 @@ from .models import Module, GeneralBaseModulesPool, EducationalProgramTrajectori
 class ModuleAdmin(VersionAdmin):
     fields = ("title",
               "description",
-              "discipliness",
+              "disciplines",
               "status",
               "archived",
               "type",
@@ -17,8 +17,8 @@ class ModuleAdmin(VersionAdmin):
               "dependencies",
               "competences"
     )
-    list_display = ("id", "title", "description", "get_all_discipliness", "status", "archived", "type")
-    filter_horizontal = ("dependencies", "results", "competences")
+    list_display = ("id", "title", "description", "get_all_disciplines", "status", "archived", "type")
+    filter_horizontal = ("dependencies", "results", "competences", "disciplines")
     list_filter = ('archived', 'created', 'updated', 'type')
 
 
@@ -27,6 +27,7 @@ class GeneralBaseModulesPoolAdmin(VersionAdmin):
     fields = ("title", "description", "modules", "status", "archived")
     list_display = ("id", "title", "description", "get_all", "status", "archived")
     list_filter = ('archived', 'created', 'updated')
+    filter_horizontal = ("modules", )
 
 
 @admin.register(EducationalProgramTrajectoriesPool)
@@ -34,6 +35,7 @@ class EducationalProgramTrajectoriesPoolAdmin(VersionAdmin):
     fields = ("title", "description", "modules", "status", "archived")
     list_display = ("id", "title", "description", "get_all", "status", "archived")
     list_filter = ('archived', 'created', 'updated')
+    filter_horizontal = ("modules", )
 
 
 @admin.register(ChoiceModulesPool)
@@ -41,6 +43,7 @@ class ChoiceModulesPoolAdmin(VersionAdmin):
     fields = ("title", "description", "modules", "status", "archived")
     list_display = ("id", "title", "description", "get_all", "status", "archived")
     list_filter = ('archived', 'created', 'updated')
+    filter_horizontal = ("modules", )
 
 
 @admin.register(Type)

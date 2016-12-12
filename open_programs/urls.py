@@ -46,11 +46,10 @@ router.register(r'choicemodulespools', ChoiceModulesPoolList)
 
 
 urlpatterns = [
-     url(r'^admin/', include('smuggler.urls')),
-     url(r'^admin/', admin.site.urls),
-     url(r'^dashboard/', include(router.urls)),
-     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-     url(r'^api/v1/', include(router.urls, namespace='api')),
+    url(r'^admin/', include('smuggler.urls')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/', include(router.urls, namespace='api')),
  ]
 
 
@@ -63,3 +62,9 @@ if 'rosetta' in settings.INSTALLED_APPS:
 if settings.DEBUG is True:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+#### APPS ####
+
+urlpatterns += [
+    url(r'constructor/', include('constructor.urls')),
+]

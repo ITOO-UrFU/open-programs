@@ -656,16 +656,16 @@ div.breadcrumbs {
     padding: 10px 40px;
     border: none;
     font-size: 14px;
-    color: #c4dce8;
+    color: #79aec8;
     text-align: left;
 }
 
 div.breadcrumbs a {
-    color: #fff;
+    color: #000;
 }
 
 div.breadcrumbs a:focus, div.breadcrumbs a:hover {
-    color: #c4dce8;
+    color: #79aec8;
 }
 
 /* ACTION ICONS */

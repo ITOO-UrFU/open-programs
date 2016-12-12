@@ -79,7 +79,7 @@ class Migration(migrations.Migration):
                 ('results_text', models.TextField(blank=True, default='', max_length=16384, verbose_name='Результаты обучения')),
                 ('competences', models.ManyToManyField(blank=True, to='competences.Competence', verbose_name='Компетенции')),
                 ('dependencies', models.ManyToManyField(blank=True, to='modules.Module', verbose_name='Зависит от модулей')),
-                ('discipliness', models.ManyToManyField(blank=True, to='disciplines.Discipline', verbose_name='Дисциплины')),
+                ('disciplines', models.ManyToManyField(blank=True, to='disciplines.Discipline', verbose_name='Дисциплины')),
                 ('results', models.ManyToManyField(blank=True, to='results.Result', verbose_name='Результаты обучения')),
             ],
             options={

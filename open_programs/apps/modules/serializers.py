@@ -5,7 +5,7 @@ from rest_framework import serializers
 class ModuleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Module
-        fields = ("id", "title", "description", "discipliness", "type", "dependencies", "results", "results_text", "competences", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description", "disciplines", "type", "dependencies", "results", "results_text", "competences", "status", "archived", "created", "updated")
 
 
 class TypeSerializer(serializers.HyperlinkedModelSerializer):
