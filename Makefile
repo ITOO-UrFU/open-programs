@@ -6,4 +6,7 @@ db:
 	./manage.py migrate --noinput
 	./manage.py addroot root
 
-all: clean create_database
+server:
+	./manage.py runserver
+
+all: clean create_database server
