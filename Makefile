@@ -4,9 +4,18 @@ clean:
 db:
 	./manage.py makemigrations --noinput
 	./manage.py migrate --noinput
-	./manage.py addroot root
+	-./manage.py addroot root
 
 server:
 	./manage.py runserver
 
-all: clean create_database server
+watch:
+	cd constructor && $(MAKE) watch
+
+setup:
+	cd constructor && $(MAKE) setup
+
+serve:
+	cd constructor && $(MAKE) serve
+
+all: db server setup watch serve
