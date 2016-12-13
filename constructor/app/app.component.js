@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 // import { DinosaurService } from './services/dinosaurService'
 var AppComponent = (function () {
     function AppComponent() {
-        this.name = 'Жопа';
+        this.name = '6666';
     }
     AppComponent = __decorate([
         core_1.Component({
