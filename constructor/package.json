@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
-    "lite": "lite-server",
     "postinstall": "typings install",
+    "sw": "sass-watch sass css",
     "tsc": "tsc",
     "tsc:w": "tsc -w",
-    "typings": "typings"
+    "typings": "typings",
+    "preinstall": "(npm list sass-watch -g || npm install sass-watch -g) && (npm list http-server -g || npm install http-server -g)"
   },
   "license": "ISC",
   "dependencies": {
@@ -33,8 +34,6 @@
     "concurrently": "^2.0.0",
     "lite-server": "^2.2.0",
     "typescript": "^1.8.10",
-    "typings":"^1.0.4",
-    "http-server":"0.9.0"
-
+    "typings":"^1.0.4"
   }
 }

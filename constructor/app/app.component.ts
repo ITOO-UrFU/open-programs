@@ -3,10 +3,10 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'constructor-app',
-  template: `<h1>Hello {{name}}</h1>`
+  template: `<h1>Дима - {{name}}</h1>`
   // providers: [DinosaurService]
 })
 
 export class AppComponent {
-  name:string = 'World'
+  name:string = 'Жопа'
 }

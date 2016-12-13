@@ -1,4 +1,5 @@
 setup:
+	npm run-script preinstall
 	npm install
 
 serve:

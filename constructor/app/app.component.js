@@ -12,12 +12,12 @@ var core_1 = require('@angular/core');
 // import { DinosaurService } from './services/dinosaurService'
 var AppComponent = (function () {
     function AppComponent() {
-        this.name = 'World';
+        this.name = 'Жопа';
     }
     AppComponent = __decorate([
         core_1.Component({
             selector: 'constructor-app',
-            template: "<h1>Hello {{name}}</h1>"
+            template: "<h1>\u0414\u0438\u043C\u0430 - {{name}}</h1>"
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
