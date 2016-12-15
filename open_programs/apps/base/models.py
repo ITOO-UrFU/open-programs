@@ -15,3 +15,5 @@ class ObjectBaseClass(models.Model):
     created = models.DateTimeField(_('Дата создания'), auto_now_add=True)
     updated = models.DateTimeField(_('Обновлен'), auto_now=True)
     status = models.CharField(_("Статус публикации"), max_length=1, choices=STATUSES, default='h')
+
+    # TODO: create non-delete manager
