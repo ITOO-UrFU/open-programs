@@ -20,3 +20,4 @@ djangorestframework
 markdown
 django-filter
 google-api-python-client==1.4.1
+django-cors-headers==1.3.1

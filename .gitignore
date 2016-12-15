@@ -93,3 +93,4 @@ ENV/
 
 
 static/.sass-cache/
+node_modules

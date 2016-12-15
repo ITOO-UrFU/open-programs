@@ -40,6 +40,7 @@ class Common(Configuration):
         'smuggler',
         'rest_framework',
         'codemirror2',
+        'corsheaders',
         'allauth',
         'allauth.account',
         'allauth.socialaccount',
@@ -70,6 +71,7 @@ class Common(Configuration):
     MIDDLEWARE_CLASSES = [
         'django.middleware.security.SecurityMiddleware',
         'django.contrib.sessions.middleware.SessionMiddleware',
+        'corsheaders.middleware.CorsMiddleware',
         'django.middleware.common.CommonMiddleware',
         'django.middleware.csrf.CsrfViewMiddleware',
         'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -84,7 +86,7 @@ class Common(Configuration):
     TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [os.path.join(BASE_DIR, "templates")],
+            'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "constructor")],
             'APP_DIRS': True,
             'OPTIONS': {
                 'context_processors': [
@@ -239,6 +241,35 @@ class Common(Configuration):
         'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
         'PAGINATE_BY': 10
     }
+
+    #### CORS ####
+    CORS_ORIGIN_WHITELIST = (
+        'localhost:8000',
+        '127.0.0.1:8000'
+    )
+
+    CORS_URLS_REGEX = r'^/api/v1/.*$'
+
+    CORS_ALLOW_METHODS = (
+        'DELETE',
+        'GET',
+        'OPTIONS',
+        'PATCH',
+        'POST',
+        'PUT',
+    )
+
+    CORS_ALLOW_HEADERS = (
+        'accept',
+        'accept-encoding',
+        'authorization',
+        'content-type',
+        'dnt',
+        'origin',
+        'user-agent',
+        'x-csrftoken',
+        'x-requested-with',
+    )
 
 
 class Dev(Common):
