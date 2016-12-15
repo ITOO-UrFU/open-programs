@@ -3,6 +3,7 @@ from itertools import chain
 
 from django.db import models
 from django import forms
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 
@@ -27,7 +28,7 @@ class Program(ObjectBaseClass):
     general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, verbose_name=_("Общепрофессиональные базовые модули"))
     educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, verbose_name=_("Траектории образовательной программы"))
     choice_modules = models.ManyToManyField(ChoiceModulesPool, verbose_name=_("Пул модулей по выбору"))
-    #module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
+    module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
 
     def get_all_general_base_modules(self):
         return "\n".join([str(module) for module in self.general_base_modules.all()])
@@ -46,17 +47,21 @@ class Program(ObjectBaseClass):
         return self.title
 
     def all_modules(self):
-        choice_modules = [pull.modules.all().values('id') for pull in self.choice_modules.all()]
-        general_base_modules = [pull.modules.all().values('id') for pull in self.general_base_modules.all()]
-        educational_program_trajectories = [pull.modules.all().values('id') for pull in
-                              [track for track in self.educational_program_trajectories.all()]]
+        choice_modules = []
+        for pull in self.choice_modules.all():
+            choice_modules += list(pull.modules.all().values_list('id', flat=True))
 
-        modules = list(chain(choice_modules, general_base_modules, educational_program_trajectories))
-        print(modules)  # ПОЛОМАТО!
+        general_base_modules = []
+        for pull in self.general_base_modules.all():
+            choice_modules += list(pull.modules.all().values_list('id', flat=True))
 
+        educational_program_trajectories = []
+        for pull in self.educational_program_trajectories.all():
+            choice_modules += list(pull.modules.all().values_list('id', flat=True))
 
-        return Module.objects.filter(title__in=modules)
+        modules = choice_modules + general_base_modules + educational_program_trajectories
 
+        return Module.objects.filter(id__in=modules)
 
 
 class ModuleDependency(models.Model):
@@ -64,7 +69,6 @@ class ModuleDependency(models.Model):
         ("soft", _("мягкая")),
         ("hard", _("строгая")),
     )
-    program = models.ForeignKey(Program, null=True)
     module = models.ForeignKey(Module, related_name="module")
     modules = models.ManyToManyField(Module, related_name="modules", blank=True)
     type = models.CharField(_("Тип зависимости"), max_length=4, default="hard", choices=DEPENDENCY_TYPES)
@@ -93,18 +97,13 @@ class ModuleDependencyForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(ModuleDependencyForm, self).__init__(*args, **kwargs)
-        if hasattr(self, 'instance'):
-            self.fields['modules'].queryset = self.instance.program.all_modules()
-            #     program = Program.objects.get(title=self.instance.program)
-            #     modules = program.all_modules()
-            #     print(modules)
-            #     w = self.fields['modules'].widget
-            #     choices = []
-            #     for module in modules:
-            #         choices.append((module.id, module.title))
-            #     w.choices = modules
-            # except:
-            #     pass
-            #self.initial['modules'] = None  #  self.instance.program.all_modules()
-
-
+        if "initial" not in kwargs and kwargs['instance']:
+            program = Program.objects.get(module_dependencies__in=[self.instance])
+            self.fields['modules'] = forms.ModelMultipleChoiceField(
+                queryset=program.all_modules(),
+                required=False,
+                widget=FilteredSelectMultiple(
+                    verbose_name=_("Модули"),
+                    is_stacked=False
+                )
+            )

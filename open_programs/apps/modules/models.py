@@ -22,11 +22,10 @@ class Type(ObjectBaseClass):
 
 class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(_("Название модуля"), max_length=256, blank=False, default=_("Название модуля"))
+    title = models.CharField(_("Название модуля"), max_length=256, blank=False)
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
     disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"), blank=True)
     type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
-    #dependencies = models.ManyToManyField("Module", verbose_name=_("Зависит от модулей"), blank=True)
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
     competences = models.ManyToManyField(Competence, verbose_name=_("Компетенции"), blank=True)
