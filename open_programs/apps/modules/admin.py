@@ -14,11 +14,10 @@ class ModuleAdmin(VersionAdmin):
               "type",
               "results",
               "results_text",
-              "dependencies",
               "competences"
     )
     list_display = ("id", "title", "description", "get_all_disciplines", "status", "archived", "type")
-    filter_horizontal = ("dependencies", "results", "competences", "disciplines")
+    filter_horizontal = ("results", "competences", "disciplines")
     list_filter = ('archived', 'created', 'updated', 'type')
 
 
