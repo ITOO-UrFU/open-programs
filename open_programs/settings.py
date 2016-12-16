@@ -63,6 +63,7 @@ class Common(Configuration):
         'base',
         "constructor",
         "api",
+        "uni",
     ]
 
     if platform.system() not in ('Windows', 'Darwin'):
@@ -220,6 +221,7 @@ class Common(Configuration):
         {'app': 'professions', 'label': 'Профессии'},
         {'app': 'results', 'label': 'Результаты обучения'},
         {'app': 'competences', 'label': 'Компетенции'},
+        {"app": "uni"},
     )
 
 #### REWRITE ADMIN TITLES ####
