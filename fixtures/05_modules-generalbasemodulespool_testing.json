@@ -1,0 +1,60 @@
+[
+{
+  "model": "modules.generalbasemodulespool",
+  "pk": "4be3a681-c25f-4ef3-ae98-cce0f85996fb",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:28:22.079Z",
+    "updated": "2016-12-15T12:28:22.079Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 1",
+    "description": "",
+    "modules": [
+      "49f6862a-93c0-4da3-8d48-783e8e6e331d",
+      "543a3bcf-3be5-4449-8d24-e0fce572c035",
+      "56ab630b-098d-4a58-952c-59cd17543a0c",
+      "89956859-6b8d-447b-81fd-42493958f45f",
+      "b0e3e33c-30c9-4fa2-a5b4-fd0b29b8d8e9",
+      "bc293e1f-62ae-4d72-8072-09b0bb1da163"
+    ]
+  }
+},
+{
+  "model": "modules.generalbasemodulespool",
+  "pk": "625e2d3d-9550-4e8b-b4b2-9e1a6161ef1a",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:28:45.260Z",
+    "updated": "2016-12-15T12:28:45.261Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 3",
+    "description": "",
+    "modules": [
+      "49f6862a-93c0-4da3-8d48-783e8e6e331d",
+      "5b737875-88e1-45c8-9285-4c421a6d6d44",
+      "752e0f6c-406d-4d12-b2fd-e4ac12dfb350",
+      "bc293e1f-62ae-4d72-8072-09b0bb1da163"
+    ]
+  }
+},
+{
+  "model": "modules.generalbasemodulespool",
+  "pk": "f2afbf05-2e91-4da2-8ce2-21159f48dcd0",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:28:32.555Z",
+    "updated": "2016-12-15T12:28:50.667Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 2",
+    "description": "",
+    "modules": [
+      "49f6862a-93c0-4da3-8d48-783e8e6e331d",
+      "90a6e87b-530e-4ae2-84b8-a922e9112bfe",
+      "bc293e1f-62ae-4d72-8072-09b0bb1da163",
+      "bdb20905-f33e-4487-a4da-264500bc3f9c",
+      "f362e72d-dbe3-43b2-a08d-8e010540e6f8",
+      "fa314345-d88b-4043-a4c4-5cc01c8dfcea"
+    ]
+  }
+}
+]

@@ -23,12 +23,13 @@ class Program(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     title = models.CharField(_('Название образовательной программы'), blank=False, max_length=256, default=_(''))
-    chief = models.OneToOneField(Person, verbose_name=_('Руководитель образовательной программы'), blank=False, null=True)
+    chief = models.OneToOneField(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
 
-    general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, verbose_name=_("Общепрофессиональные базовые модули"))
-    educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, verbose_name=_("Траектории образовательной программы"))
-    choice_modules = models.ManyToManyField(ChoiceModulesPool, verbose_name=_("Пул модулей по выбору"))
-    module_dependencies = models.ManyToManyField("ModuleDependency", verbose_name=_("Зависимости модулей"))
+    #general_base_modules = models.ManyToManyField(GeneralBaseModulesPool, blank=True, verbose_name=_("Общепрофессиональные базовые модули"))
+    modules = models.ManyToManyField(Module, blank=True, verbose_name=_("Модули программы"))
+    educational_program_trajectories = models.ManyToManyField(EducationalProgramTrajectoriesPool, blank=True, verbose_name=_("Траектории образовательной программы"))
+    choice_modules = models.ManyToManyField(ChoiceModulesPool, blank=True, verbose_name=_("Пул модулей по выбору"))
+    module_dependencies = models.ManyToManyField("ModuleDependency", blank=True, verbose_name=_("Зависимости модулей"))
 
     def get_all_general_base_modules(self):
         return "\n".join([str(module) for module in self.general_base_modules.all()])
@@ -47,21 +48,22 @@ class Program(ObjectBaseClass):
         return self.title
 
     def all_modules(self):
-        choice_modules = []
-        for pull in self.choice_modules.all():
-            choice_modules += list(pull.modules.all().values_list('id', flat=True))
 
-        general_base_modules = []
-        for pull in self.general_base_modules.all():
-            choice_modules += list(pull.modules.all().values_list('id', flat=True))
+        # choice_modules = []
+        # for pull in self.choice_modules.all():
+        #     choice_modules += list(pull.modules.all().values_list('id', flat=True))
+        #
+        # general_base_modules = []
+        # for pull in self.general_base_modules.all():
+        #     choice_modules += list(pull.modules.all().values_list('id', flat=True))
+        #
+        # educational_program_trajectories = []
+        # for pull in self.educational_program_trajectories.all():
+        #     choice_modules += list(pull.modules.all().values_list('id', flat=True))
+        #
+        # modules = choice_modules + general_base_modules + educational_program_trajectories
 
-        educational_program_trajectories = []
-        for pull in self.educational_program_trajectories.all():
-            choice_modules += list(pull.modules.all().values_list('id', flat=True))
-
-        modules = choice_modules + general_base_modules + educational_program_trajectories
-
-        return Module.objects.filter(id__in=modules)
+        return self.modules.all()
 
 
 class ModuleDependency(models.Model):

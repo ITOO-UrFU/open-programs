@@ -1,0 +1,61 @@
+[
+{
+  "model": "modules.educationalprogramtrajectoriespool",
+  "pk": "2ae464d6-84d6-48b0-8b72-2b6d20ac4e71",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:29:21.453Z",
+    "updated": "2016-12-15T12:29:21.453Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 2",
+    "description": "",
+    "modules": [
+      "1e2ebde9-261b-4f0a-a3f1-5461a6155490",
+      "543a3bcf-3be5-4449-8d24-e0fce572c035",
+      "5b737875-88e1-45c8-9285-4c421a6d6d44",
+      "89956859-6b8d-447b-81fd-42493958f45f",
+      "b0e3e33c-30c9-4fa2-a5b4-fd0b29b8d8e9"
+    ]
+  }
+},
+{
+  "model": "modules.educationalprogramtrajectoriespool",
+  "pk": "34442620-2990-4653-99b8-19a86797fcd6",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:29:34.653Z",
+    "updated": "2016-12-15T12:29:34.653Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 3",
+    "description": "",
+    "modules": [
+      "49f6862a-93c0-4da3-8d48-783e8e6e331d",
+      "5b737875-88e1-45c8-9285-4c421a6d6d44",
+      "66c9b3a7-db92-4cb3-ad0f-13d1f7630932",
+      "6c3e8903-dffa-487a-ab29-5f9039469c44",
+      "90a6e87b-530e-4ae2-84b8-a922e9112bfe",
+      "aa438c7c-d078-46a8-9d51-88609f4947e4",
+      "bc293e1f-62ae-4d72-8072-09b0bb1da163"
+    ]
+  }
+},
+{
+  "model": "modules.educationalprogramtrajectoriespool",
+  "pk": "d06f458e-1c31-4d54-93ca-560493c98404",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:29:09.773Z",
+    "updated": "2016-12-15T12:29:09.773Z",
+    "status": "p",
+    "title": "\u041f\u0443\u043b 1",
+    "description": "",
+    "modules": [
+      "5b737875-88e1-45c8-9285-4c421a6d6d44",
+      "89956859-6b8d-447b-81fd-42493958f45f",
+      "90a6e87b-530e-4ae2-84b8-a922e9112bfe",
+      "bdb20905-f33e-4487-a4da-264500bc3f9c",
+      "f362e72d-dbe3-43b2-a08d-8e010540e6f8"
+    ]
+  }
+}
+]

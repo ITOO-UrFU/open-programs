@@ -1,0 +1,32 @@
+[
+{
+  "model": "modules.choicemodulespool",
+  "pk": "04adbb5f-9161-48f5-83b8-b85300b904ba",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:31:25.278Z",
+    "updated": "2016-12-15T12:31:25.278Z",
+    "status": "p",
+    "title": "\u0422\u0435\u0441\u0442\u043e\u0432\u044b\u0439 \u043f\u0443\u043b \u043c\u043e\u0434\u0443\u043b\u0435\u0439 \u043f\u043e \u0432\u044b\u0431\u043e\u0440\u0443",
+    "description": "",
+    "modules": [
+      "49f6862a-93c0-4da3-8d48-783e8e6e331d",
+      "543a3bcf-3be5-4449-8d24-e0fce572c035",
+      "5b737875-88e1-45c8-9285-4c421a6d6d44",
+      "66c9b3a7-db92-4cb3-ad0f-13d1f7630932",
+      "752e0f6c-406d-4d12-b2fd-e4ac12dfb350",
+      "89b2a3aa-07a3-4071-be38-4119981a0799",
+      "90a6e87b-530e-4ae2-84b8-a922e9112bfe",
+      "a914e15d-780c-4714-84b4-66cd2885fc4c",
+      "aa438c7c-d078-46a8-9d51-88609f4947e4",
+      "b0e3e33c-30c9-4fa2-a5b4-fd0b29b8d8e9",
+      "b40c988d-0ad1-4879-b1ed-04062be86a26",
+      "bc293e1f-62ae-4d72-8072-09b0bb1da163",
+      "bdb20905-f33e-4487-a4da-264500bc3f9c",
+      "c50e6c52-c4b8-4c49-a6ff-78caf472f869",
+      "f362e72d-dbe3-43b2-a08d-8e010540e6f8",
+      "fa314345-d88b-4043-a4c4-5cc01c8dfcea"
+    ]
+  }
+}
+]

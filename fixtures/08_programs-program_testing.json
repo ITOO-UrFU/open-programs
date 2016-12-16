@@ -1,0 +1,25 @@
+[
+{
+  "model": "programs.program",
+  "pk": "b19a9048-18f5-4e2f-8d77-715477a202c9",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-15T12:32:45.121Z",
+    "updated": "2016-12-15T12:32:45.122Z",
+    "status": "p",
+    "title": "1",
+    "chief": 1,
+    "general_base_modules": [
+      "4be3a681-c25f-4ef3-ae98-cce0f85996fb"
+    ],
+    "educational_program_trajectories": [
+      "2ae464d6-84d6-48b0-8b72-2b6d20ac4e71",
+      "34442620-2990-4653-99b8-19a86797fcd6",
+      "d06f458e-1c31-4d54-93ca-560493c98404"
+    ],
+    "choice_modules": [
+      "04adbb5f-9161-48f5-83b8-b85300b904ba"
+    ]
+  }
+}
+]

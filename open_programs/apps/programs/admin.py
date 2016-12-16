@@ -4,16 +4,16 @@ from reversion.admin import VersionAdmin
 from .models import Program, ModuleDependency, ModuleDependencyForm
 
 
-class ModuleDependencyInline(admin.TabularInline):
-    model = Program.module_dependencies.through
+# class ModuleDependencyInline(admin.TabularInline):
+#     model = Program.module_dependencies.through
 
 
 
 @admin.register(Program)
 class ProgramAdmin(VersionAdmin):
-    inlines = (
-        ModuleDependencyInline,
-    )
+    # inlines = (
+    #     ModuleDependencyInline,
+    # )
     list_display = (
         'title',
         'chief',
@@ -25,9 +25,10 @@ class ProgramAdmin(VersionAdmin):
     )
     list_filter = ('title', 'chief', 'created', 'updated', 'status', 'archived',)
     filter_horizontal = (
-        'general_base_modules',
-        'educational_program_trajectories',
-        'choice_modules',
+        'modules',
+        #'general_base_modules',
+        #'educational_program_trajectories',
+        #'choice_modules',
     )
     exclude = ('module_dependencies', )
 
