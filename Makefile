@@ -1,13 +1,15 @@
 clean:
 	rm -f db.sqlite3
 
+addroot:
+	python manage.py addroot root
+
 db:
-	./manage.py makemigrations --noinput
-	./manage.py migrate --noinput
-	-./manage.py addroot root
+	python manage.py makemigrations --noinput
+	python manage.py migrate --noinput
 
 server:
-	./manage.py runserver
+	python manage.py runserver
 
 watch:
 	cd constructor && $(MAKE) watch
@@ -19,8 +21,8 @@ serve:
 	cd constructor && $(MAKE) serve
 
 
-backend: server
+backend: db server
 
-frontend: setup watch serve
+frontend: watch serve
 
 all: db server setup watch serve
