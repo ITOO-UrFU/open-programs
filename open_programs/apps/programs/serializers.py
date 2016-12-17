@@ -1,22 +1,32 @@
 from .models import Program
-from modules.models import Module
+from modules.serializers import ModuleSerializer, EducationalProgramTrajectoriesPoolSerializer, ChoiceModulesPoolSerializer
+from persons.serializers import PersonSerializer
+
 from rest_framework import serializers
 
 
 class ProgramSerializer(serializers.HyperlinkedModelSerializer):
-    chief = serializers.PrimaryKeyRelatedField(
+    chief = PersonSerializer(
         many=False,
+        read_only=False,
+    )
+
+    modules = serializers.PrimaryKeyRelatedField(
+        many=True,
         read_only=True,
     )
 
-    modules = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=False,
-        view_name='module-detail',
-        queryset=Module.objects.all(),
-        lookup_field="title"
-    )
+    # educational_program_trajectories = EducationalProgramTrajectoriesPoolSerializer(
+    #     many=True,
+    #     read_only=False,
+    # )
+    #
+    # choice_modules = ChoiceModulesPoolSerializer(
+    #     many=True,
+    #     read_only=False,
+    # )
 
     class Meta:
         model = Program
-        fields = ("id", "title", "chief", "modules", "status", "archived", "created", "updated")
+        fields = ("id", "title", "chief", "modules", "module_dependencies", "status", "archived", "created", "updated")
+        # "educational_program_trajectories", "choice_modules",

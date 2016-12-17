@@ -12,20 +12,15 @@ class TypeSerializer(serializers.HyperlinkedModelSerializer):
 
 class ModuleSerializer(serializers.HyperlinkedModelSerializer):
 
-    type = TypeSerializer(
+    type = serializers.PrimaryKeyRelatedField(
         many=False,
-        read_only=False,
-        # view_name='discipline-detail',
-        # queryset=Discipline.objects.all(),
-        # lookup_field="name"
+        read_only=True,
     )
 
-    disciplines = DisciplineSerializer(
+    disciplines = serializers.PrimaryKeyRelatedField(
         many=True,
         read_only=True,
-        # view_name='discipline-detail',
-        # queryset=Discipline.objects.all(),
-        # lookup_field="name"
+
     )
 
     class Meta:
@@ -34,18 +29,36 @@ class ModuleSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class GeneralBaseModulesPoolSerializer(serializers.HyperlinkedModelSerializer):
+
+    modules = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
     class Meta:
         model = GeneralBaseModulesPool
         fields = ("id", "title", "description", "modules", "status", "archived", "created", "updated")
 
 
 class EducationalProgramTrajectoriesPoolSerializer(serializers.HyperlinkedModelSerializer):
+
+    modules = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
     class Meta:
         model = EducationalProgramTrajectoriesPool
         fields = ("id", "title", "description", "modules", "status", "archived", "created", "updated")
 
 
 class ChoiceModulesPoolSerializer(serializers.HyperlinkedModelSerializer):
+
+    modules = serializers.PrimaryKeyRelatedField(
+        many=True,
+        read_only=True,
+    )
+
     class Meta:
         model = ChoiceModulesPool
         fields = ("id", "title", "description", "modules", "status", "archived", "created", "updated")

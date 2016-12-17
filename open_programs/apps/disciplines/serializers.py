@@ -5,12 +5,9 @@ from courses.serializers import CourseSerializer
 
 
 class DisciplineSerializer(serializers.HyperlinkedModelSerializer):
-    courses = CourseSerializer(
+    courses = serializers.PrimaryKeyRelatedField(
         many=True,
-        read_only=False,
-        # view_name='course-detail',
-        #queryset=Course.objects.all(),
-        #lookup_field='id'
+        read_only=True,
     )
 
     results = serializers.HyperlinkedRelatedField(

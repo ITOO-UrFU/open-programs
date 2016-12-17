@@ -77,7 +77,7 @@ class ModuleList(viewsets.ModelViewSet):
 
 
 class TypeList(viewsets.ModelViewSet):
-    queryset = Type.objects.filter(status="p", archived=False)
+    queryset = Type.objects.all()
     serializer_class = TypeSerializer
 
 
