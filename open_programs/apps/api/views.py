@@ -45,7 +45,10 @@ class CoursesIdList(viewsets.ViewSet):
     def list(self, request):
         queryset = Course.objects.filter(status="p", archived=False)
         serializer = CourseIdSerializer(queryset, many=True)
-        return Response(serializer.data)
+        ids = []
+        for id_item in serializer.data:
+            ids.append(id_item["id"])
+        return Response(ids)
 
 
 class SessionList(viewsets.ModelViewSet):
