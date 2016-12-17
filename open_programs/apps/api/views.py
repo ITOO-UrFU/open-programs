@@ -1,5 +1,6 @@
 from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework.response import Response
 
 from django.contrib.auth.models import User
 from courses.models import Course, Session
@@ -8,14 +9,18 @@ from competences.models import Competence
 from results.models import Result
 from disciplines.models import Discipline
 from modules.models import Module, Type, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
+from programs.models import Program
+from disciplines.models import Discipline
 
-from courses.serializers import CourseSerializer, SessionSerializer
+from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
 from competences.serializers import CompetenceSerializer
 from results.serializers import ResultSerializer
 from disciplines.serializers import DisciplineSerializer
 from modules.serializers import ModuleSerializer, TypeSerializer, GeneralBaseModulesPoolSerializer, \
     EducationalProgramTrajectoriesPoolSerializer, ChoiceModulesPoolSerializer
+from programs.serializers import ProgramSerializer
+from disciplines.serializers import DisciplineSerializer
 
 
 class PersonList(viewsets.ModelViewSet):
@@ -31,6 +36,16 @@ class UserList(viewsets.ModelViewSet):
 class CourseList(viewsets.ModelViewSet):
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
+
+
+class CoursesIdList(viewsets.ViewSet):
+    """
+    Courses ids.
+    """
+    def list(self, request):
+        queryset = Course.objects.filter(status="p", archived=False)
+        serializer = CourseIdSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class SessionList(viewsets.ModelViewSet):
@@ -78,6 +93,32 @@ class ChoiceModulesPoolList(viewsets.ModelViewSet):
     serializer_class = ChoiceModulesPoolSerializer
 
 
+class DisciplineList(viewsets.ModelViewSet):
+    model = Discipline
+    serializer_class = DisciplineSerializer
+    queryset = Discipline.objects.filter(status="p", archived=False)
+
+
+class ProgramList(viewsets.ModelViewSet):
+    model = Program
+    serializer_class = ProgramSerializer
+    queryset = Program.objects.filter(status="p", archived=False)
+
+
+
+
+
+
+class DisciplineDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Discipline
+
+
+class ProgramDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Program
+
+
 class ModuleDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Module
@@ -101,11 +142,6 @@ class EducationalProgramTrajectoriesPoolDetail(serializers.HyperlinkedModelSeria
 class ChoiceModulesPoolDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChoiceModulesPool
-
-
-class DisciplineDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Discipline
 
 
 class ResultDetail(serializers.HyperlinkedModelSerializer):

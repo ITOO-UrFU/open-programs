@@ -39,6 +39,7 @@ class Common(Configuration):
         'admin_reorder',
         'smuggler',
         'rest_framework',
+        'rest_framework_swagger',
         'codemirror2',
         'corsheaders',
         'allauth',

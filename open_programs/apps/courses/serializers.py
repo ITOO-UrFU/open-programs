@@ -15,9 +15,29 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
         view_name='person-detail'
     )
 
+    sessions = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='session-detail'
+    )
+
+    results = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='result-detail'
+    )
+
     class Meta:
         model = Course
-        fields = ("id", "title", "description",  "slug", "authors", "authors_ordering", "about", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description", "slug", "authors", "authors_ordering", "about", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created", "updated")
+
+
+class CourseIdSerializer(serializers.ModelSerializer):
+    class Meta:
+        depth = 1
+        model = Course
+        fields = ('id', )
+        read_only_fields = ('id', )
 
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):

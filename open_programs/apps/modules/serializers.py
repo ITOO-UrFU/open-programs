@@ -1,11 +1,21 @@
 from .models import Type, Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
+from disciplines.models import Discipline
 from rest_framework import serializers
 
 
 class ModuleSerializer(serializers.HyperlinkedModelSerializer):
+
+    disciplines = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=False,
+        view_name='discipline-detail',
+        queryset=Discipline.objects.all(),
+        lookup_field="name"
+    )
+
     class Meta:
         model = Module
-        fields = ("id", "title", "description", "disciplines", "type", "dependencies", "results", "results_text", "competences", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description", "disciplines", "type", "results", "results_text", "competences", "status", "archived", "created", "updated")
 
 
 class TypeSerializer(serializers.HyperlinkedModelSerializer):

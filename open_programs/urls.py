@@ -24,6 +24,7 @@ import permission
 from django.contrib.auth.models import User
 from rest_framework import routers, serializers, viewsets
 from rest_framework.urlpatterns import format_suffix_patterns
+from rest_framework_swagger.views import get_swagger_view
 
 from api.views import *
 
@@ -32,11 +33,14 @@ permission.autodiscover()
 
 router = routers.DefaultRouter()
 router.register(r'courses', CourseList)
+router.register(r'courses_ids', CoursesIdList, 'Course')
 router.register(r'sessions', SessionList)
 router.register(r'persons', PersonList)
 router.register(r'users', UserList)
 router.register(r'competences', CompetenceList)
 router.register(r'results', ResultList)
+router.register(r'programs', ProgramList)
+router.register(r'disciplines', DisciplineList)
 
 router.register(r'modules', ModuleList)
 router.register(r'types', TypeList)
@@ -45,11 +49,16 @@ router.register(r'educationalprogramtrajectoriespools', EducationalProgramTrajec
 router.register(r'choicemodulespools', ChoiceModulesPoolList)
 
 
+
+schema_view = get_swagger_view(title='Open programs')
+
+
 urlpatterns = [
     url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/', include(router.urls, namespace='api')),
+    url(r'^api/docs/', schema_view),
  ]
 
 

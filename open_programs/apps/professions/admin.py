@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 
 from .models import Profession
 
+
 @admin.register(Profession)
 class ProfessionAdmin(VersionAdmin):
     fieldsets = (
@@ -12,6 +13,7 @@ class ProfessionAdmin(VersionAdmin):
             'fields': ('title', 'description', 'archived'),
             'description': _("Профессия публикуется автоматически!")
         }),
+        ("Требования", {'fields': ("competences",)})
     )
     list_display = (
         "title",
@@ -22,3 +24,4 @@ class ProfessionAdmin(VersionAdmin):
         "status",
     )
     list_filter = ("archived", "created", "updated")
+    filter_horizontal = ("competences", )
