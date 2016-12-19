@@ -6,7 +6,21 @@
     </head>
     <body>
         <script>
-        var institutes = [];
+        var institutes = [],
+            institutes_array = [];
+
+        function parseTable(table){
+            var info = $(table).find(".main-info"),
+                programArray = [];
+            info.each(function(i, v){
+                programArray[i] = {"program": $(v).find("td:eq(1)").text(), 
+                "spec": $(v).find("td:eq(2)").text(),
+                "science": $(v).find("td:eq(3)").text(),
+                "level": $(v).find("td:eq(4)").text()}
+            }
+            );                
+            return programArray;
+        }
         
         function init(){
             $("h4").each(function(i,v){institutes.push($(v).text())});
@@ -18,13 +32,16 @@
             };
             institutes = institutes_distinct.sort();
             for (i in institutes) {
-                $("h4").each(function(n,v){
-                    if ($(v).text() == institutes[i]){
-                        console.log(institutes[i]);
+                institutes_array[institutes[i]] = [];
+                $(".institute-block").each(function(n,v){
+                    if ($(v).find("h4").text() == institutes[i]){
+                        institutes_array[institutes[i]].push(parseTable($(v).find("table")));
                     }
 
                 })
             };
+
+            console.log(JSON.stringify(institutes_array));
 
             $("td#institutes").html(institutes.join("\<br /\>"));
         };
@@ -40,7 +57,7 @@
                 </tr>
             </table>
         </div>
-        <div id="data" hidden="hidden">
+        <div id="data">
             <div class="institute-block">
                 <!--a href="{institute.link}" target="_blank"><h4 id="institute-{institute.id}">{instituteTitle}</h4></a-->
                 <h4>Институт государственного управления и предпринимательства</h4>
