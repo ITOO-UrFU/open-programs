@@ -1,0 +1,12 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+
+    
+{% block content %}
+{% for program in programs %}
+<div class="program">
+    <div class="program-title">{{program.title}}</div>
+    <div class="program-detail"><a href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
+</div>
+{% endfor %}
+{% endblock %}

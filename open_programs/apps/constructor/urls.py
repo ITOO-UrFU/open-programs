@@ -1,6 +1,13 @@
 from django.conf.urls import url, include
-from django.views.generic import TemplateView
+from .views import index, programs, courses, professions, program_detail, module_detail, discipline_remove
 
 urlpatterns = [
-        url(r'^$', TemplateView.as_view(template_name="index.html"), name='index'),
+        url(r'^$', index, name='index'),
+        url(r'^programs/$', programs, name='programs'),
+        url(r'^courses/$', courses, name='courses'),
+        url(r'^professions/$', professions, name='professions'),
+
+        url(r'^programs/(?P<pk>[0-9A-Za-z-]+)/$', program_detail, name='program_detail'),
+        url(r'^modules/(?P<pk>[0-9A-Za-z-]+)/$', module_detail, name='module_detail'),
+        url(r'^modules/remove/(?P<mod_pk>[0-9A-Za-z-]+)/(?P<disc_pk>[0-9]+)/$', discipline_remove, name='discipline_remove'),
         ]

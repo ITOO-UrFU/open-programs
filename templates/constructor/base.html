@@ -1,0 +1,32 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+</head>
+<body>
+<h1 id="title">{{title}}</h1>
+<nav class="links">
+    <h2 id="openProgramsLink"><a href="{% url "programs" %}">{% trans 'Образовательные программы' %}</a></h2>
+    <h2 id="coursesLink"><a href="{% url "courses" %}">{% trans 'Курсы' %}</a></h2>
+    <h2 id="professionsLink"><a href="{% url "professions" %}">{% trans 'Профессии' %}</a></h2>
+</nav>
+<div id="content">
+{% block content %}
+
+
+
+{% endblock %}
+</div>
+<style type="text/css">
+    nav.links {
+        display: inline-flex;
+    }
+    nav.links h2 {
+        padding-left: 1em;
+        color: darkblue;
+    }
+</style>
+
+</body>
+</html>

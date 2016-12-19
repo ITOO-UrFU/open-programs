@@ -1,29 +1,9 @@
-{% load i18n %}
-<!DOCTYPE html>
-<html>
-<head>
-    <title>{{title}}</title>
-</head>
-<body>
-<h1 id="title">{{title}}</h1>
-<nav class="links">
-    <h2 id="openProgramsLink">{% trans 'Образовательные программы' %}</h2>
-    <h2 id="coursesLink">{% trans 'Курсы' %}</h2>
-    <h2 id="professionsLink">{% trans 'Профессии' %}</h2>
-</nav>
-<div id="content">
-    
-</div>
+{% extends "constructor/base.html" %}
+{% block content %}
 
-<style type="text/css">
-    nav.links {
-        display: inline-flex;
-    }
-    nav.links h2 {
-        padding-left: 1em;
-        color: darkblue;
-    }
-</style>
+{% load i18n %}
+   
+
 <script type="text/javascript">
     var contentBlock = document.getElementById("content"),
         openProgramsLink = document.getElementById("openProgramsLink"),
@@ -62,5 +42,4 @@
     })
 </script>
 
-</body>
-</html>
+{% endblock %}

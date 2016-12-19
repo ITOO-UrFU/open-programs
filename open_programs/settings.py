@@ -40,6 +40,7 @@ class Common(Configuration):
         'smuggler',
         'rest_framework',
         'rest_framework_swagger',
+        'super_inlines',
         'codemirror2',
         'corsheaders',
         'allauth',
@@ -241,14 +242,17 @@ class Common(Configuration):
 
 #### REST FRAMEWORK ####
     REST_FRAMEWORK = {
-        'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
-        'PAGINATE_BY': 10
+        'DEFAULT_AUTHENTICATION_CLASSES': [],
+        'DEFAULT_PERMISSION_CLASSES': (
+            'rest_framework.permissions.AllowAny',
+        ),
     }
 
     #### CORS ####
     CORS_ORIGIN_WHITELIST = (
         'localhost:8000',
-        '127.0.0.1:8000'
+        '127.0.0.1:8000',
+        'localhost:3000',
     )
 
     CORS_URLS_REGEX = r'^/api/v1/.*$'

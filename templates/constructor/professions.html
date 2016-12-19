@@ -1,0 +1,12 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+
+    
+{% block content %}
+{% for profession in professions %}
+<div class="profession">
+    <div class="profession-title">{{profession.title}}</div>
+</div>
+{% endfor %}
+
+{% endblock %}

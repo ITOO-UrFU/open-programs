@@ -1,0 +1,11 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+
+    
+{% block content %}
+{% for course in courses %}
+<div class="course">
+    <div class="course-title">{{course.title}}</div>
+</div>
+{% endfor %}
+{% endblock %}

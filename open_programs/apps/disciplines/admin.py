@@ -6,7 +6,7 @@ from .models import Discipline
 
 @admin.register(Discipline)
 class DisciplineAdmin(VersionAdmin):
-    fields = ("name", "courses", "status", "archived", "results", "results_text")
-    list_display = ("name", "get_all", "status", "archived")
+    fields = ("name", "courses", "points", "status", "archived", "results", "results_text")
+    list_display = ("name", "get_all", "points", "status", "archived")
     filter_horizontal = ("courses", "results")
     list_filter = ("archived", "created", "updated", "status")

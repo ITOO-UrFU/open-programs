@@ -1,0 +1,19 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+
+    
+{% block content %}
+<div class="program-detail">
+    <div class="program-title"><h1>Образовательная программа "{{program.title}}"</h1></div>
+
+    {% for module in program.modules.all %}
+        <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
+        <p>{{module.description}}</p>
+        {% for discipline in module.disciplines.all %}
+            <h3>{{discipline.name}}</h3>
+
+        {% endfor %}
+
+    {% endfor %}
+</div>
+{% endblock %}

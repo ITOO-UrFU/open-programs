@@ -16,9 +16,9 @@ class CourseAdmin(VersionAdmin):
                                                 )
         return super(CourseAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
-    fields = ("title", "slug", "description", "about", "staff", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "results", "results_text", "status", "archived")
-    list_display = ("title", "slug", "short_description", "short_about", "get_cover", "get_video", "workload", "points", "duration", "status", "archived", "all_sessions_colors")
-    filter_horizontal = ("sessions", "staff", "results")
+    fields = ("title", "slug", "description", "about", "external_link", "type", "authors", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "results", "results_text", "staff", "status", "archived")
+    list_display = ("title", "slug", "short_description", "short_about", "external_link", "type", "get_cover", "get_video", "workload", "points", "duration", "status", "archived", "all_sessions_colors")
+    filter_horizontal = ("sessions", "staff", "results", "authors")
     list_filter = ('archived', 'created', 'updated')
     search_fields = ('slug', "title")
 

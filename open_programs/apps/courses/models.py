@@ -24,11 +24,17 @@ class Course(ObjectBaseClass):
     def get_video_cover_path(self, filename):
         return str(self.slug) + "/poster/" + filename
 
+    TYPES = (
+        ('0', 'Онлайн-курс'),
+        ('1', 'Смешанная'),
+        ('2', 'Традиционная')
+    )
+
     title = models.CharField(_("Название курса"), max_length=256, blank=False, default=_("Название курса"))
     description = models.TextField(_("Короткое описание"), max_length=16384, blank=True, default=_("Здесь должно быть описание курса"))
-    slug = models.SlugField(_("Код курса"), help_text=_("должен быть уникальным в рамках вуза"))
+    slug = models.CharField(_("Код курса"), help_text=_("должен быть уникальным в рамках вуза"), blank=False, max_length=32)
     #university = models.ForeignKey(University, related_name='university_courses', verbose_name=_("Университет"))  TODO: create University model
-    authors = models.ManyToManyField(Person, related_name='course_authors', verbose_name=_("Автор"), blank=True)
+    authors = models.ManyToManyField(Person, related_name='course_authors', verbose_name=_("Авторы"), blank=True)
     authors_ordering = models.CharField(_("Порядок авторов"), max_length=500, blank=True,
                                         help_text=_("id авторов через пробел"))
     about = models.TextField(_("О курсе"), blank=True)
@@ -45,6 +51,8 @@ class Course(ObjectBaseClass):
     staff = models.ManyToManyField(Person, related_name='course_staff', verbose_name=_("Команда курса"), blank=True)  # TODO: auto add course author and course authors
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
+    external_link = models.URLField(_("Внешняя ссылка"), blank=True, null=True)
+    type = models.CharField(_("Технология"), choices=TYPES, default='0', max_length=1, blank=False)
 
     class Meta:
         verbose_name = 'курс'
