@@ -7,16 +7,30 @@
     <div class="program-title"><h1>Образовательная программа "{{program.title}}"</h1></div>
 
     {% for module in program.modules.all %}
-        <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
-        <p>{{module.description}}</p>
-        {% for discipline in module.disciplines.all %}
-            <h3><a href="{% url "discipline_detail" discipline.id %}">{{discipline.name}}</a></h3>
-
-        {% endfor %}
-
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="ui floating label"><a href="{% url "program_remove" program.id module.id %}"><i class="red remove icon"></i></a></div>
+                <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
+                <p>{{module.description}}</p>
+                {% for discipline in module.disciplines.all %}
+                    <div class="ui secondary segment">
+                        <h3><a href="{% url "discipline_detail" discipline.id %}">Дисциплина "{{discipline.name}}"</a></h3>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
     {% endfor %}
-    {% for module in modules_available %}
-        <p><a href="{% url "program_add" program.id module.id %}">+</a> {{module.title}}</p>
-    {% endfor %}
+    <h3>Добавить модуль в программу</h3>
+    {% if modules_available %}
+        <div class="ui list">
+            <div class="item">
+                <div class="content">
+                    {% for module in modules_available %}
+                        <p><a href="{% url "program_add" program.id module.id %}"><i class="plus icon"></i></a> {{module.title}}</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endblock %}

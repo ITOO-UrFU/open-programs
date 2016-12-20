@@ -11,7 +11,7 @@
 
 <div class="ui borderless main menu fixed">
 <div class="ui container">
-  <a href="#" class="header item">
+  <a href="{% url "constructor_index" %}" class="header item">
    <!-- <img class="logo" src="assets/images/logo.png"> -->
     {{title}}
   </a>
@@ -39,7 +39,7 @@
 </div>
 </div>
 
-<div class="ui main text container">
+<div class="ui main container">
 
 <div id="content">
 {% block content %}
@@ -77,6 +77,10 @@
   .ui.footer.segment {
     margin: 5em 0em 0em;
     padding: 5em 0em;
+  }
+  #content {
+    min-width: 700px;
+    width: 1000px;
   }
 </style>
 

@@ -1,19 +1,29 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
-
-    
 {% block content %}
-<div class="discipline-detail">
-    <div class="discipline-title"><h1>Дисциплина "{{discipline.name}}"</h1></div>
-
-    <div class="disciplines">
-    <h2>Связанные с дисциплиной курсы:</h2>
+    <div class="discipline-detail">
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="discipline-title"><h1>Дисциплина "{{discipline.name}}"</h1></div>
+            </div>
+        </div>
+        <div class="disciplines">
+            <h2>Связанные с дисциплиной курсы:</h2>
+            <div class="ui segments">
+                {% for course in discipline.courses.all %}
+                    <div class="ui segment">
+                        <div class="ui floating label"><a href="{% url "course_remove" discipline.id course.id %}">Убрать</a></div>
+                        <h3>{{course.title}}</h3>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
         
-        {% for course in discipline.courses.all %}
-            <h3>{{course.title}}</h3>
-            <div class="remove"><a href="{% url "course_remove" discipline.id course.id %}">X</a></div>
-        {% endfor %}
+        <p>&nbsp;</p>
+
+            {% for course in courses_available %}
+                <p><a href="{% url "course_add" discipline.id course.id %}"><i class="plus icon"></i></a> {{course.title}}</p>
+            {% endfor %}
 
     </div>
-</div>
 {% endblock %}

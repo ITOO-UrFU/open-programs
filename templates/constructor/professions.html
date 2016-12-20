@@ -1,12 +1,14 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 
-    
 {% block content %}
-{% for profession in professions %}
-<div class="profession">
-    <div class="profession-title">{{profession.title}}</div>
-</div>
-{% endfor %}
-
+    {% for profession in professions %}
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="profession">
+                    <div class="profession-title">{{profession.title}}</div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 {% endblock %}

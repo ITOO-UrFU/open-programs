@@ -32,6 +32,14 @@ def program_add(request, program_pk, module_pk):
     return redirect("program_detail", pk=program_pk)
 
 
+def program_remove(request, program_pk, module_pk):
+    program = Program.objects.get(pk=program_pk)
+    module = Module.objects.get(pk=module_pk)
+    program.modules.remove(module)
+    program.save()
+    return redirect("program_detail", pk=program_pk)
+
+
 def professions(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -92,8 +100,10 @@ def discipline_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
     discipline = Discipline.objects.get(pk=pk)
+    courses_available = Course.objects.exclude(discipline__id=discipline.id)
 
     context["discipline"] = discipline
+    context["courses_available"] = courses_available
     return render(request, "constructor/discipline.html", context)
 
 
@@ -101,5 +111,13 @@ def course_remove(request, disc_pk, course_pk):
     discipline = Discipline.objects.get(pk=disc_pk)
     course = Course.objects.get(pk=course_pk)
     discipline.courses.remove(course)
+    discipline.save()
+    return redirect("discipline_detail", pk=disc_pk)
+
+
+def course_add(request, disc_pk, course_pk):
+    discipline = Discipline.objects.get(pk=disc_pk)
+    course = Course.objects.get(pk=course_pk)
+    discipline.courses.add(course)
     discipline.save()
     return redirect("discipline_detail", pk=disc_pk)
