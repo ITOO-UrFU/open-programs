@@ -3,9 +3,9 @@ from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 import uuid
 
-from disciplines.models import Discipline
 from results.models import Result
 from competences.models import Competence
+from disciplines.models import Discipline
 
 
 class Type(ObjectBaseClass):
@@ -24,14 +24,14 @@ class Module(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название модуля"), max_length=256, blank=False)
     description = models.TextField(_("Описание модуля"), max_length=16384, blank=True, default="")
-    disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"), blank=True)
+    #disciplines = models.ManyToManyField(Discipline, verbose_name=_("Дисциплины"), blank=True)
     type = models.ForeignKey("Type", verbose_name="Тип модуля", default=0, null=True)
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
     competences = models.ManyToManyField(Competence, verbose_name=_("Компетенции"), blank=True)
 
     def get_all_disciplines(self):
-        return "\n".join([str(disciplines)for disciplines in self.disciplines.all()])
+        return Discipline.objects.filter(module__id=self.id)
 
     class Meta:
         verbose_name = 'модуль'

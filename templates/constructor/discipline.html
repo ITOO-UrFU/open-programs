@@ -5,6 +5,9 @@
         <div class="ui segments">
             <div class="ui segment">
                 <div class="discipline-title"><h1>Дисциплина "{{discipline.name}}"</h1></div>
+                {% if dicsipline.description %}
+                    <p>{{dicsipline.description}}</p>
+                {% endif %}
             </div>
         </div>
         <div class="disciplines">
@@ -18,7 +21,7 @@
                 {% endfor %}
             </div>
         </div>
-        
+
         <p>&nbsp;</p>
 
             {% for course in courses_available %}

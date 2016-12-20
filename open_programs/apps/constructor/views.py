@@ -83,11 +83,13 @@ def module_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
     module = Module.objects.get(pk=pk)
+    disciplines = module.get_all_disciplines()
 
-    disciplines_available = Discipline.objects.exclude(module__id=module.id)
+    disciplines_available = Discipline.objects.filter(module__isnull=True)
 
 
     context["module"] = module
+    context["disciplines"] = disciplines
     context["disciplines_available"] = disciplines_available
     return render(request, "constructor/module.html", context)
 
@@ -103,8 +105,8 @@ def discipline_remove(request, mod_pk, disc_pk):
 def discipline_add(request, mod_pk, disc_pk):
     module = Module.objects.get(pk=mod_pk)
     discipline = Discipline.objects.get(pk=disc_pk)
-    module.disciplines.add(discipline)
-    module.save()
+    discipline.module = module
+    discipline.save()
     return redirect("module_detail", pk=mod_pk)
 
 
@@ -147,6 +149,12 @@ class ResultForm(ModelForm):
         fields = ['title', ]
 
 
+class CourseForm(ModelForm):
+    class Meta:
+        model = Course
+        fields = ["title", "slug", "description", "about", "external_link", "type", "cover", "video", "video_cover", "workload", "points", "duration", "status"]
+
+
 def course_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -184,3 +192,12 @@ def result_create(request, course_pk):
             result.save()
             return redirect("course_add_result", course_pk=course_pk, result_pk=result.id)
 
+
+# def course_create(request):
+#     if request.method == 'POST':
+#         form = CourseForm(request.POST)
+#         if form.is_valid():
+#             result = form.save(commit=False)
+#             result.save()
+#             return redirect("course_add_result", course_pk=course_pk, result_pk=result.id)
+#
