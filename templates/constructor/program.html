@@ -10,7 +10,7 @@
         <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
         <p>{{module.description}}</p>
         {% for discipline in module.disciplines.all %}
-            <h3>{{discipline.name}}</h3>
+            <h3><a href="{% url "discipline_detail" discipline.id %}">{{discipline.name}}</a></h3>
 
         {% endfor %}
 

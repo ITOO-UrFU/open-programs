@@ -77,3 +77,20 @@ def discipline_add(request, mod_pk, disc_pk):
     module.disciplines.add(discipline)
     module.save()
     return redirect("module_detail", pk=mod_pk)
+
+
+def discipline_detail(request, pk):
+    context = {}
+    context["title"] = _("Конструктор открытых образовательных программ")
+    discipline = Discipline.objects.get(pk=pk)
+
+    context["discipline"] = discipline
+    return render(request, "constructor/discipline.html", context)
+
+
+def course_remove(request, disc_pk, course_pk):
+    discipline = Discipline.objects.get(pk=disc_pk)
+    course = Course.objects.get(pk=course_pk)
+    discipline.courses.remove(course)
+    discipline.save()
+    return redirect("discipline_detail", pk=disc_pk)
