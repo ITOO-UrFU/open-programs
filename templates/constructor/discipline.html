@@ -1,0 +1,19 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+
+    
+{% block content %}
+<div class="discipline-detail">
+    <div class="discipline-title"><h1>Дисциплина "{{discipline.name}}"</h1></div>
+
+    <div class="disciplines">
+    <h2>Связанные с дисциплиной курсы:</h2>
+        
+        {% for course in discipline.courses.all %}
+            <h3>{{course.title}}</h3>
+            <div class="remove"><a href="{% url "course_remove" discipline.id course.id %}">X</a></div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
