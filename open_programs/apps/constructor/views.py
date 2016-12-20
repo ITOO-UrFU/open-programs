@@ -55,20 +55,25 @@ def module_detail(request, pk):
     context["title"] = _("Конструктор открытых образовательных программ")
     module = Module.objects.get(pk=pk)
 
+    disciplines_available = Discipline.objects.exclude(module__id=module.id)
 
 
     context["module"] = module
+    context["disciplines_available"] = disciplines_available
     return render(request, "constructor/module.html", context)
 
 
 def discipline_remove(request, mod_pk, disc_pk):
-    context = {}
-    context["title"] = _("Конструктор открытых образовательных программ")
     module = Module.objects.get(pk=mod_pk)
     discipline = Discipline.objects.get(pk=disc_pk)
     module.disciplines.remove(discipline)
     module.save()
+    return redirect("module_detail", pk=mod_pk)
 
 
-    context["module"] = module
+def discipline_add(request, mod_pk, disc_pk):
+    module = Module.objects.get(pk=mod_pk)
+    discipline = Discipline.objects.get(pk=disc_pk)
+    module.disciplines.add(discipline)
+    module.save()
     return redirect("module_detail", pk=mod_pk)
