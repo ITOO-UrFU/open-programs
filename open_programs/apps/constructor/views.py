@@ -10,6 +10,8 @@ from professions.models import Profession
 from modules.models import Module
 from disciplines.models import Discipline
 from results.models import Result
+from competences.models import Competence
+
 
 
 def index(request):
@@ -74,8 +76,10 @@ def profession_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
     profession = Profession.objects.get(pk=pk)
+    competences_available = Competence.objects.filter(profession__isnull=True)
 
     context["profession"] = profession
+    context["competences_available"] = competences_available
     return render(request, "constructor/profession.html", context)
 
 
@@ -95,10 +99,9 @@ def module_detail(request, pk):
 
 
 def discipline_remove(request, mod_pk, disc_pk):
-    module = Module.objects.get(pk=mod_pk)
     discipline = Discipline.objects.get(pk=disc_pk)
-    module.disciplines.remove(discipline)
-    module.save()
+    discipline.module = None
+    discipline.save()
     return redirect("module_detail", pk=mod_pk)
 
 

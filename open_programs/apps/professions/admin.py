@@ -8,11 +8,6 @@ from .models import Profession
 from competences.models import Competence
 
 
-class CompetencesInline(admin.StackedInline):
-    model = Profession.competences.through
-
-
-
 @admin.register(Profession)
 class ProfessionAdmin(VersionAdmin):
     fieldsets = (
@@ -31,4 +26,3 @@ class ProfessionAdmin(VersionAdmin):
         "status",
     )
     list_filter = ("archived", "created", "updated")
-    inlines = [CompetencesInline, ]

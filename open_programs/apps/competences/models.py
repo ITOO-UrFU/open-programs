@@ -11,6 +11,7 @@ from django.utils.translation import ugettext_lazy as _
 class Competence(ObjectBaseClass):
     title = models.CharField(_("Компетенция"), max_length=512, blank=False, default=_(""))
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"))
+    profession = models.ForeignKey("professions.Profession", blank=True, null=True)
 
     class Meta:
         verbose_name = 'компетенция'

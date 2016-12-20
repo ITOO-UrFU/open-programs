@@ -13,6 +13,7 @@ class ResultInline(admin.StackedInline):
 class CompetenceAdmin(VersionAdmin):
     list_display = (
         "title",
+        "profession",
         "archived",
         "created",
         "updated",

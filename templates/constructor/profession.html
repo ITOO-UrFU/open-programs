@@ -9,8 +9,8 @@
     </div>
     <div class="ui secondary segment">
         <h2>Компетенции и результаты обучения</h2>
-        {% if profession.competences.all %}
-            {% for competence in profession.competences.all %}
+        {% if profession.competences %}
+            {% for competence in profession.competences %}
                 <h3 style="padding-left:14px;">{{competence.title}}</h3>
                 {% for result in competence.results.all %}
                     <h4 style="padding-left:28px;">{{result.title}}</h4>
@@ -20,6 +20,9 @@
         {% else %}
             <p>Требования ещё не добавлены.</p>
         {% endif %}
+        {% for competence in competences_available %}
+        <p>{{competence}}</p>
+        {% endfor %}
     </div>
     
 </div>

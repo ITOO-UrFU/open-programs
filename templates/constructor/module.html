@@ -17,7 +17,7 @@
         <div class="modules">
             <h2>Дисциплины модуля:</h2>
             <div class="ui segments">
-                {% for discipline in module.disciplines.all %}
+                {% for discipline in disciplines %}
                     <div class="ui segment">
                         <div class="ui floating label"><a href="{% url "discipline_remove" module.id discipline.id %}">Убрать</a></div>
                          <h3><a href="{% url "discipline_detail" discipline.id %}">Дисциплина "{{discipline.name}}"</a></h3>
