@@ -15,5 +15,8 @@
         {% endfor %}
 
     {% endfor %}
+    {% for module in modules_available %}
+        <p><a href="{% url "program_add" program.id module.id %}">+</a> {{module.title}}</p>
+    {% endfor %}
 </div>
 {% endblock %}

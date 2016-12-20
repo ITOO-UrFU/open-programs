@@ -20,9 +20,16 @@ def programs(request):
     context["title"] = _("Конструктор открытых образовательных программ")
     programs = Program.objects.filter(status="p", archived=False)
 
-
     context["programs"] = programs
     return render(request, "constructor/programs.html", context)
+
+
+def program_add(request, program_pk, module_pk):
+    program = Program.objects.get(pk=program_pk)
+    module = Module.objects.get(pk=module_pk)
+    program.modules.add(module)
+    program.save()
+    return redirect("program_detail", pk=program_pk)
 
 
 def professions(request):
@@ -45,8 +52,10 @@ def program_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
     program = Program.objects.get(pk=pk)
+    modules_available = Module.objects.exclude(program__id=program.id)
 
     context["program"] = program
+    context["modules_available"] = modules_available
     return render(request, "constructor/program.html", context)
 
 
