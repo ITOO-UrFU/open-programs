@@ -1,0 +1,38 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="course-detail">
+        <div class="course-title"><h1>Курс "{{course.title}}"</h1>
+            <p>&nbsp;</p></div>
+            
+            <div class="course_about">
+                <h2>О курсе:</h2>
+                <p>{{course.about|safe}}</p>
+            </div>
+            <div class="course-description"><h2>Описание:</h2>
+                <p>{{course.description|safe}}</p>
+            </div>
+            <div class="results">
+                {% if course.results.all %}
+                    <h2>Результаты обучения:</h2>
+                    {% for result in course.results.all %}
+                        <div class="ui segment">
+                            <div class="ui floating label"><a href="{% url "result_remove" course.id result.id %}"><i class="red remove icon"></i></a></div>
+                            <h4>{{result.title}}</h4>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="ui segment">
+                <h2>Добавить результат обучения</h2>
+                {% for result in results_available %}
+                    <h4><a href="{% url "course_add_result" course.id result.id %}"><i class="plus icon"></i></a>{{result.title}}</h4>
+                {% endfor %}
+                <hr>
+                <form action="{% url "result_create" course.id %}" method="post">{% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Добавить" />
+                </form>
+            </div>
+        </div>
+    {% endblock %}

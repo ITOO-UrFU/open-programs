@@ -1,14 +1,14 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
-
 {% block content %}
     {% for program in programs %}
         <div class="ui segments">
-            <div class="ui segment">
+            <div class="ui clearing segment">
                 <div class="program">
-                    <div class="program-title">{{program.title}}</div>
-                    <div class="program-detail"><a href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
+                    <div class="program-title"><h3>{{program.title}}</h3></div>
                 </div>
-            </div></div>
-        {% endfor %}
-    {% endblock %}
+                <div class="ui right floated button"><a href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}

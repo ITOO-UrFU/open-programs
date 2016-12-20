@@ -3,10 +3,13 @@
 {% block content %}
     {% for course in courses %}
         <div class="ui segments">
-            <div class="ui segment">
+            <div class="ui clearing segment">
                 <div class="course">
-                    <div class="course-title">{{course.title}}</div>
+                    <div class="course-title">
+                        <h3>{{course.title}}</h3>
+                    </div>
                 </div>
+                <a href="{% url "course_detail" course.id %}"><div class="ui right floated button">Подробнее</div></a>
             </div>
         </div>
     {% endfor %}

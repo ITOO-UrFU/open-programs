@@ -1,0 +1,26 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="ui segments profession-detail">
+        <div class="ui segment">
+            <div class="profession-title"><h1>{{profession.title}}</h1></div>
+            <p>{{profession.description}}</p>
+        </div>
+    </div>
+    <div class="ui secondary segment">
+        <h2>Компетенции и результаты обучения</h2>
+        {% if profession.competences.all %}
+            {% for competence in profession.competences.all %}
+                <h3 style="padding-left:14px;">{{competence.title}}</h3>
+                {% for result in competence.results.all %}
+                    <h4 style="padding-left:28px;">{{result.title}}</h4>
+                {% endfor %}
+            {% endfor %}
+            <a href="{% url "professions_edit" profession.id %}">Редактировать компетенции и результаты обучения</a>
+        {% else %}
+            <p>Требования ещё не добавлены.</p>
+        {% endif %}
+    </div>
+    
+</div>
+{% endblock %}

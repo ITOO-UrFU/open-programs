@@ -4,10 +4,11 @@
 {% block content %}
     {% for profession in professions %}
         <div class="ui segments">
-            <div class="ui segment">
+            <div class="ui clearing segment">
                 <div class="profession">
-                    <div class="profession-title">{{profession.title}}</div>
+                    <div class="profession-title"><h3>{{profession.title}}</h3></div>
                 </div>
+                <div class="ui right floated button"><a href="{% url "profession_detail" profession.id %}">{% trans 'Подробнее' %}</a></div>
             </div>
         </div>
     {% endfor %}

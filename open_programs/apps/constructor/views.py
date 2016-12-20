@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.views.generic.edit import CreateView
+from django.forms import ModelForm
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -7,6 +9,7 @@ from courses.models import Course
 from professions.models import Profession
 from modules.models import Module
 from disciplines.models import Discipline
+from results.models import Result
 
 
 def index(request):
@@ -67,6 +70,15 @@ def program_detail(request, pk):
     return render(request, "constructor/program.html", context)
 
 
+def profession_detail(request, pk):
+    context = {}
+    context["title"] = _("Конструктор открытых образовательных программ")
+    profession = Profession.objects.get(pk=pk)
+
+    context["profession"] = profession
+    return render(request, "constructor/profession.html", context)
+
+
 def module_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -121,3 +133,54 @@ def course_add(request, disc_pk, course_pk):
     discipline.courses.add(course)
     discipline.save()
     return redirect("discipline_detail", pk=disc_pk)
+
+
+def professions_edit(request, pk):
+    profession = Profession.objects.get(pk=pk)
+
+    #return redirect("discipline_detail", pk=disc_pk)
+
+
+class ResultForm(ModelForm):
+    class Meta:
+        model = Result
+        fields = ['title', ]
+
+
+def course_detail(request, pk):
+    context = {}
+    context["title"] = _("Конструктор открытых образовательных программ")
+    course = Course.objects.get(pk=pk)
+    results_available = Result.objects.exclude(course__id=course.id)
+    form = ResultForm
+
+    context["course"] = course
+    context["results_available"] = results_available
+    context["form"] = form
+    return render(request, "constructor/course.html", context)
+
+
+def result_remove(request, course_pk, result_pk):
+    course = Course.objects.get(pk=course_pk)
+    result = Result.objects.get(pk=result_pk)
+    course.results.remove(result)
+    course.save()
+    return redirect("course_detail", pk=course_pk)
+
+
+def course_add_result(request, course_pk, result_pk):
+    course = Course.objects.get(pk=course_pk)
+    result = Result.objects.get(pk=result_pk)
+    course.results.add(result)
+    course.save()
+    return redirect("course_detail", pk=course_pk)
+
+
+def result_create(request, course_pk):
+    if request.method == 'POST':
+        form = ResultForm(request.POST)
+        if form.is_valid():
+            result = form.save(commit=False)
+            result.save()
+            return redirect("course_add_result", course_pk=course_pk, result_pk=result.id)
+
