@@ -1,0 +1,226 @@
+[
+{
+  "model": "disciplines.discipline",
+  "pk": 1,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:43:51.759Z",
+    "updated": "2016-12-19T15:43:51.760Z",
+    "status": "p",
+    "name": "\u0418\u043d\u043e\u0441\u0442\u0440\u0430\u043d\u043d\u044b\u0439 \u044f\u0437\u044b\u043a. \u0427\u0430\u0441\u0442\u044c 1",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 2,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:44:11.055Z",
+    "updated": "2016-12-19T15:44:11.055Z",
+    "status": "p",
+    "name": "\u0418\u043d\u043e\u0441\u0442\u0440\u0430\u043d\u043d\u044b\u0439 \u044f\u0437\u044b\u043a. \u0427\u0430\u0441\u0442\u044c 2",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 3,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:44:30.557Z",
+    "updated": "2016-12-19T15:55:57.183Z",
+    "status": "p",
+    "name": "\u0418\u043d\u043e\u0441\u0442\u0440\u0430\u043d\u043d\u044b\u0439 \u044f\u0437\u044b\u043a. \u0427\u0430\u0441\u0442\u044c 3",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 4,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:44:43.693Z",
+    "updated": "2016-12-19T15:56:06.754Z",
+    "status": "p",
+    "name": "\u0418\u043d\u043e\u0441\u0442\u0440\u0430\u043d\u043d\u044b\u0439 \u044f\u0437\u044b\u043a. \u0427\u0430\u0441\u0442\u044c 4",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 5,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:53:46.387Z",
+    "updated": "2016-12-19T15:53:46.387Z",
+    "status": "p",
+    "name": "\u041f\u0441\u0438\u0445\u043e\u043b\u043e\u0433\u0438\u044f",
+    "points": 2,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 6,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:54:07.838Z",
+    "updated": "2016-12-19T15:54:07.838Z",
+    "status": "p",
+    "name": "\u041a\u0443\u043b\u044c\u0442\u0443\u0440\u043e\u043b\u043e\u0433\u0438\u044f",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 7,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:54:34.167Z",
+    "updated": "2016-12-19T15:54:34.167Z",
+    "status": "p",
+    "name": "\u042d\u043a\u043e\u043d\u043e\u043c\u0438\u043a\u0430 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0439 \u043e\u0442\u0440\u0430\u0441\u043b\u0438",
+    "points": 2,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 8,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:55:04.961Z",
+    "updated": "2016-12-19T15:55:04.961Z",
+    "status": "p",
+    "name": "\u041f\u0440\u0430\u0432\u043e\u0432\u044b\u0435 \u043e\u0441\u043d\u043e\u0432\u044b \u0433\u0440\u0430\u0434\u043e-\u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0430",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 9,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:58:54.196Z",
+    "updated": "2016-12-19T15:58:54.196Z",
+    "status": "p",
+    "name": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430. \u0427\u0430\u0441\u0442\u044c 1",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 10,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:59:13.270Z",
+    "updated": "2016-12-19T15:59:13.270Z",
+    "status": "p",
+    "name": "\u0418\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430. \u0427\u0430\u0441\u0442\u044c 2",
+    "points": 2,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 11,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:00:53.883Z",
+    "updated": "2016-12-19T16:00:53.883Z",
+    "status": "p",
+    "name": "\u042d\u043a\u043e\u043b\u043e\u0433\u0438\u044f \u0432 \u0441\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u0435",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 12,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:01:13.533Z",
+    "updated": "2016-12-19T16:01:13.533Z",
+    "status": "p",
+    "name": "\u0411\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c \u0436\u0438\u0437\u043d\u0435\u0434\u0435\u044f\u0442\u0435\u043b\u044c\u043d\u043e\u0441\u0442\u0438",
+    "points": 3,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 13,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:07:33.513Z",
+    "updated": "2016-12-19T16:07:33.513Z",
+    "status": "p",
+    "name": "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u044b\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u044b",
+    "points": 2,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+},
+{
+  "model": "disciplines.discipline",
+  "pk": 14,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:07:55.925Z",
+    "updated": "2016-12-19T16:07:55.925Z",
+    "status": "p",
+    "name": "\u041c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u043e\u0432\u0435\u0434\u0435\u043d\u0438\u0435",
+    "points": 2,
+    "form": "z",
+    "results_text": "",
+    "courses": [],
+    "results": []
+  }
+}
+]

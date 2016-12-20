@@ -9,14 +9,16 @@
 </head>
 <body>
 
-<div class="ui fixed inverted menu">
+<div class="ui borderless main menu fixed">
 <div class="ui container">
   <a href="#" class="header item">
-    <img class="logo" src="assets/images/logo.png">
-    Project Name
+   <!-- <img class="logo" src="assets/images/logo.png"> -->
+    {{title}}
   </a>
-  <a href="#" class="item">Home</a>
-  <div class="ui simple dropdown item">
+  <a href="{% url "programs" %}" class="item">{% trans 'Образовательные программы' %}</a>
+    <a href="{% url "courses" %}" class="item">{% trans 'Курсы' %}</a>
+      <a href="{% url "professions" %}" class="item">{% trans 'Профессии' %}</a>
+  <!--<div class="ui simple dropdown item">
     Dropdown <i class="dropdown icon"></i>
     <div class="menu">
       <a class="item" href="#">Link Item</a>
@@ -33,17 +35,12 @@
       </div>
       <a class="item" href="#">Link Item</a>
     </div>
-  </div>
+  </div>-->
 </div>
 </div>
 
+<div class="ui main text container">
 
-<h1 id="title">{{title}}</h1>
-<nav class="links">
-    <h2 id="openProgramsLink"><a href="{% url "programs" %}">{% trans 'Образовательные программы' %}</a></h2>
-    <h2 id="coursesLink"><a href="{% url "courses" %}">{% trans 'Курсы' %}</a></h2>
-    <h2 id="professionsLink"><a href="{% url "professions" %}">{% trans 'Профессии' %}</a></h2>
-</nav>
 <div id="content">
 {% block content %}
 
@@ -51,6 +48,11 @@
 
 {% endblock %}
 </div>
+
+  </div>
+
+
+
 <style type="text/css">
     nav.links {
         display: inline-flex;
@@ -59,6 +61,23 @@
         padding-left: 1em;
         color: darkblue;
     }
+    .main.menu {
+        height: 4em;
+    }
+   
+   .ui.menu .item img.logo {
+    margin-right: 1.5em;
+  }
+  .main.container {
+    margin-top: 7em;
+  }
+  .wireframe {
+    margin-top: 2em;
+  }
+  .ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+  }
 </style>
 
 </body>
