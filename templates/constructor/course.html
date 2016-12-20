@@ -33,9 +33,21 @@
                     <h4><a href="{% url "course_add_result" course.id result.id %}"><i class="plus icon"></i></a>{{result.title}}</h4>
                 {% endfor %}
                 <hr>
+
+
                 <form action="{% url "result_create" course.id %}" method="post">{% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Добавить" />
+                    <div class="ui top attached tabular menu">
+                      <div class="active item">Добавить новый результат обучения</div>
+                    </div>
+                    <div class="ui bottom attached active tab segment">
+
+                        <div class="ui fluid action input">
+                          <input id="id_title" maxlength="512" name="title" type="text" required="" placeholder="Введите результат обучения">
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                        </div>
+                    
+                    </div>
+
                 </form>
             </div>
         </div>
