@@ -4,6 +4,10 @@
     <div class="course-detail">
         <div class="course-title"><h1>Курс "{{course.title}}"</h1>
             <p>&nbsp;</p></div>
+
+            {% if course.external_link %}
+            <a href="{{course.external_link}}">Перейти к курсу</a>
+            {% endif %}
             
             <div class="course_about">
                 <h2>О курсе:</h2>
