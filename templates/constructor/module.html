@@ -4,20 +4,36 @@
     
 {% block content %}
 <div class="module-detail">
-    <div class="module-title"><h1>Модуль "{{module.title}}"</h1></div>
+
+        <div class="ui segments">
+            <div class="ui segment">
+                <div class="discipline-title"><h1>Модуль "{{module.title}}"</h1></div>
+            </div>
+        </div>
     <div class="module-description"><h2>Описание:</h2>
         <p>{{module.description}}</p>
     </div>
-    <div class="disciplines">
-    <h2>Дисциплины модуля:</h2>
-        
-        {% for discipline in module.disciplines.all %}
-            <h3>{{discipline.name}}</h3>
-            <div class="remove"><a href="{% url "discipline_remove" module.id discipline.id %}">X</a></div>
-        {% endfor %}
+
+        <div class="modules">
+            <h2>Дисциплины модуля:</h2>
+            <div class="ui segments">
+                {% for discipline in module.disciplines.all %}
+                    <div class="ui segment">
+                        <div class="ui floating label"><a href="{% url "discipline_remove" module.id discipline.id %}">Убрать</a></div>
+                         <h3><a href="{% url "discipline_detail" discipline.id %}">Дисциплина "{{discipline.name}}"</a></h3>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    
+    <p>&nbsp;</p>
+    
+    <div class="avalible-disciplines">
 
     {% for discipline in disciplines_available %}
-        <p><a href="{% url "discipline_add" module.id discipline.id %}">+</a> {{discipline.name}}</p>
+
+    <p><a href="{% url "discipline_add" module.id discipline.id %}"><i class="plus icon"></i></a> {{discipline.name}}</p>
+
     {% endfor %}
     </div>
 </div>
