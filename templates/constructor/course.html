@@ -17,8 +17,8 @@
                     <h2>Результаты обучения:</h2>
                     {% for result in course.results.all %}
                         <div class="ui segment">
+                        <h4>{{result.title}}</h4>
                             <div class="ui floating label"><a href="{% url "result_remove" course.id result.id %}"><i class="red remove icon"></i></a></div>
-                            <h4>{{result.title}}</h4>
                         </div>
                     {% endfor %}
                 {% endif %}

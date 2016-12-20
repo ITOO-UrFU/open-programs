@@ -1,45 +1,41 @@
-
-
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
- 
-<script type="text/javascript">
-    var contentBlock = document.getElementById("content"),
-        openProgramsLink = document.getElementById("openProgramsLink"),
-        coursesLink = document.getElementById("coursesLink"),
-        professionsLink = document.getElementById("professionsLink")
-
-    function getObjectJSON(urlJSON) {
-        var objectJSON = {};
-        var request = new XMLHttpRequest();
-        request.open('GET', urlJSON, false);
-        request.onreadystatechange = function(e) {
-            if (this.readyState == 4) {
-                if (this.status == 200) {
-                    console.info("Загрузка успешно завершена: ", urlJSON);
-                    objectJSON = JSON.parse(this.responseText);
-                } else {
-                    console.error("Ошибка загрузки: " + urlJSON);
-                }
-            }
-        };
-        request.send(null);
-        return objectJSON;
-    }
-
-    function getAPIUrls() {
-        var baseurl = "/api/v1/?format=json",
-            APIUrls = getObjectJSON(baseurl);
-        return APIUrls
-    };
-
-    var APIUrls = getAPIUrls();
-
-    coursesLink.addEventListener("click", function() {
-        courses = getObjectJSON(APIUrls.courses);
-        contentBlock.innerHTML = courses.toString();
-    })
-</script>
-
+    
+    <div class="ui cards">
+        <div class="card" id="programs">
+            <div class="content">
+                <div class="header">Образовательные программы</div>
+            </div>
+        </div>
+        <div class="card" id="courses">
+            <div class="content">
+                <div class="header">Курсы</div>
+            </div>
+        </div>
+        <div class="card" id="professions">
+            <div class="content">
+                <div class="header">Профессии</div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+    document.getElementById("programs").addEventListener("click", function(){
+        document.location.href = "{% url "programs" %}";
+    });
+    document.getElementById("courses").addEventListener("click", function(){
+        document.location.href = "{% url "courses" %}";
+    });
+    document.getElementById("professions").addEventListener("click", function(){
+        document.location.href = "{% url "professions" %}";
+    });
+    </script>
+    <style type="text/css">
+        div.header{
+            text-align: center;
+        }
+        div.card {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
