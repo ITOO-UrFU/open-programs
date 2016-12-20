@@ -40,7 +40,6 @@ class Common(Configuration):
         'smuggler',
         'rest_framework',
         'rest_framework_swagger',
-        'super_inlines',
         'codemirror2',
         'corsheaders',
         'allauth',
