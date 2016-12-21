@@ -1,6 +1,7 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
+<h1>Образовательные программы</h1>
     {% for program in programs %}
         <div class="ui segments">
             <div class="ui clearing segment">
@@ -11,4 +12,11 @@
             </div>
         </div>
     {% endfor %}
+
+    <form action="{% url "program_create" %}" method="post">{% csrf_token %}
+                    {{form.as_p}}
+                          <button type="submit" value="Добавить" class="ui button">Создать</button>
+                </form>
+
+
 {% endblock %}

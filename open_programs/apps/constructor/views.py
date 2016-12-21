@@ -24,8 +24,10 @@ def index(request):
 def programs(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
-    programs = Program.objects.filter(status="p", archived=False)
+    programs = Program.objects.all()
+    form = ProgramForm(request.POST)
 
+    context["form"] = form
     context["programs"] = programs
     return render(request, "constructor/programs.html", context)
 
@@ -49,7 +51,7 @@ def program_remove(request, program_pk, module_pk):
 def professions(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
-    professions = Profession.objects.filter(status="p", archived=False)
+    professions = Profession.objects.all()
     context["professions"] = professions
     return render(request, "constructor/professions.html", context)
 
@@ -57,7 +59,7 @@ def professions(request):
 def courses(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
-    courses = Course.objects.filter(status="p", archived=False)
+    courses = Course.objects.all()
     context["courses"] = courses
     return render(request, "constructor/courses.html", context)
 
@@ -144,6 +146,12 @@ def course_add(request, disc_pk, course_pk):
 class ResultForm(ModelForm):
     class Meta:
         model = Result
+        fields = ['title', ]
+
+
+class ProgramForm(ModelForm):
+    class Meta:
+        model = Program
         fields = ['title', ]
 
 
@@ -368,6 +376,16 @@ def module_create(request):
             program.save()
 
     return redirect("program_detail", pk=program.id)
+
+
+def program_create(request):
+    if request.method == 'POST':
+        form = ProgramForm(request.POST)
+        if form.is_valid():
+            program = form.save(commit=False)
+            program.save()
+            return redirect("programs")
+
 
 # def professions_edit(request, pk):
 #     context = {}

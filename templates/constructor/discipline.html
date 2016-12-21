@@ -20,7 +20,7 @@
                         {% for course in discipline.courses.all %}
                             <div class="ui segment">
                                 <div class="ui floating label"><a href="{% url "course_remove" discipline.id course.id %}">Убрать</a></div>
-                                <h3><a href="{% url "course_detail" course.id %}">{{course.title}}</a></h3>
+                                <h3><a href="{% url "course_detail" course.id %}">{{course.title}} </a><span style="font-size:1rem;">[{{course.get_type_display}}]</span></h3>
                             </div>
                         {% endfor %}
                     </div>
@@ -29,7 +29,7 @@
             <p>&nbsp;</p>
             <div class="ui segments">
                 {% for course in courses_available %}
-                    <p><a href="{% url "course_add" discipline.id course.id %}"><i class="plus icon"></i></a> <a href="{% url "course_detail" course.id %}">{{course.title}}</a></p>
+                    <p><a href="{% url "course_add" discipline.id course.id %}"><i class="plus icon"></i></a> <a href="{% url "course_detail" course.id %}">{{course.title}}</a> <span style="font-size:1rem;">[{{course.get_type_display}}]</span></p>
                 {% endfor %}
             </div>
         </div>

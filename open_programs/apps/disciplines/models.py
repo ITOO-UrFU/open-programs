@@ -29,3 +29,6 @@ class Discipline(ObjectBaseClass):
 
     def get_all(self):
         return "\n".join([str(course)for course in self.courses.all()])
+
+    def num_courses(self):
+        return len(self.courses.all())

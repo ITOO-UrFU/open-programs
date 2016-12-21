@@ -1,10 +1,11 @@
 {% extends "constructor/base.html" %}
+{% load const_filters %}
 {% load i18n %}
 
 {% block content %}
     <div class="program-detail">
         <div class="program-title"><h1>Образовательная программа "{{program.title}}"</h1></div>
-        {% for module in program.modules.all %}
+        {% for module in program.modules.all|sort_by:"semester" %}
             <div class="ui segments">
                 <div class="ui segment">
                     <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
@@ -12,6 +13,7 @@
                     {% for discipline in module.get_all_disciplines %}
                         <div class="ui secondary segment">
                             <h3><a href="{% url "discipline_detail" discipline.id %}">Дисциплина "{{discipline.name}}"</a></h3>
+                            <p>{{discipline.num_courses}}</p>
                         </div>
                     {% endfor %}
                     <div class="ui floating label"><a href="{% url "program_remove" program.id module.id %}"><i class="red remove icon"></i></a></div>

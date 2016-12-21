@@ -1,17 +1,19 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
-<a href="{% url "course_create" %}">Создать</a>
+
+<h1>Курсы</h1>
     {% for course in courses %}
         <div class="ui segments">
             <div class="ui clearing segment">
                 <div class="course">
                     <div class="course-title">
-                        <h3>{{course.title}}</h3>
+                        <h3>{{course.title}} <span style="font-size:1rem;">[{{course.get_type_display}}]</span></h3>
                     </div>
                 </div>
                 <a href="{% url "course_detail" course.id %}"><div class="ui right floated button">Подробнее</div></a>
             </div>
         </div>
     {% endfor %}
+    <a href="{% url "course_create" %}">Создать</a>
 {% endblock %}

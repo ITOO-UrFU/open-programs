@@ -29,6 +29,7 @@ class Module(ObjectBaseClass):
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
     competences = models.ManyToManyField(Competence, verbose_name=_("Компетенции"), blank=True)
+    semester = models.PositiveIntegerField(_("Семестр"), blank=True, null=True)
 
     def get_all_disciplines(self):
         return Discipline.objects.filter(module__id=self.id)
