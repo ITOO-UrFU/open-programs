@@ -2,6 +2,8 @@
 {% load i18n %}
 
 {% block content %}
+<a href="{% url "profession_create" %}">Создать</a>
+
     {% for profession in professions %}
         <div class="ui segments">
             <div class="ui clearing segment">

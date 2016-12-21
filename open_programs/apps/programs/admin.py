@@ -17,13 +17,14 @@ class ProgramAdmin(VersionAdmin):
     list_display = (
         'title',
         'chief',
+        "level",
         'created',
         'updated',
         'archived',
         'status',
 
     )
-    list_filter = ('title', 'chief', 'created', 'updated', 'status', 'archived',)
+    list_filter = ('title', 'chief', "level", "modules", 'created', 'updated', 'status', 'archived',)
     filter_horizontal = (
         'modules',
         #'general_base_modules',

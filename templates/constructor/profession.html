@@ -13,23 +13,26 @@
             {% for competence in profession.competences %}
                 <div class="ui segment competence">
                     <div class="ui floating label"><a href="{% url "competence_profession_remove" profession.id competence.id %}">Убрать</a></div>
-                    <h3 style="padding-left:14px;">{{competence.title}}</h3>
+                    <h3 style="padding-left:14px;"><a href="{% url "competence_edit" competence.id %}">{{competence.title}}</a></h3>
                     {% for result in competence.results.all %}
-                        <h4 style="padding-left:28px;">{{result.title}}</h4>
+                    <p  style="padding-left:28px;"  {{result.title}}</p>
                     {% endfor %}
                 </div>
             {% endfor %}
-            <a href="{% url "professions_edit" profession.id %}">Редактировать компетенции и результаты обучения</a>
         {% else %}
-            <p>Требования ещё не добавлены.</p>
+            
         {% endif %}
         {% for competence in competences_available %}
-        <div class="ui segment">
-            <div class="ui floating label"><a href="{% url "competence_profession_add" profession.id competence.id %}">Добавить</a></div>
-            {{competence}}
-        </div>
+            <div class="ui segment">
+                <div class="ui floating label"><a href="{% url "competence_profession_add" profession.id competence.id %}">Добавить</a></div>
+                {{competence}}
+            </div>
         {% endfor %}
     </div>
+    <form action="{% url "competence_create" profession.id %}" method="post">{% csrf_token %}
+        {{comp_form.as_p}}
+        <button type="submit" value="Добавить" class="ui button">Добавить</button>
+    </form>
     
 </div>
 {% endblock %}

@@ -20,8 +20,15 @@ class Program(ObjectBaseClass):
     - майноры
     - всякая практика, которой пока нет
     """
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
+    LEVELS = (
+        ("b", _("бакалавриат")),
+        ("m", _("магистратура")),
+        ("m", _("специалитет")),
+    )
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    level = models.CharField(_("Уровень программы"), max_length=1, choices=LEVELS, default="b")
     title = models.CharField(_('Название образовательной программы'), blank=False, max_length=256, default=_(''))
     chief = models.OneToOneField(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
 
@@ -46,6 +53,8 @@ class Program(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+
 
     def all_modules(self):
 

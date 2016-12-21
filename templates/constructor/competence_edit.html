@@ -1,0 +1,45 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+{% block content %}
+    <div class="competence-detail">
+    <a href="{% url "profession_detail" profession.id %}">Вернуться к профессии {{profession.title}}</a>
+        <div class="competence-title"><h1>Компетенция "{{competence.title}}"</h1>
+            <p>&nbsp;</p></div>
+
+
+            <div class="results">
+                {% if competence.results.all %}
+                    <h2>Результаты обучения:</h2>
+                    {% for result in competence.results.all %}
+                        <div class="ui segment">
+                        <h4>{{result.title}}</h4>
+                            <div class="ui floating label"><a href="{% url "result_remove" competence.id result.id %}"><i class="red remove icon"></i></a></div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+            <div class="ui segment">
+                <h2>Добавить результат обучения</h2>
+                {% for result in results_available %}
+                    <h4><a href="{% url "competence_result_add" competence.id result.id %}"><i class="plus icon"></i></a>{{result.title}}</h4>
+                {% endfor %}
+                <hr>
+
+
+                <form action="{% url "competence_result_create_noprof" competence.id %}" method="post">{% csrf_token %}
+                    <div class="ui top attached tabular menu">
+                      <div class="active item">Добавить новый результат обучения</div>
+                    </div>
+                    <div class="ui bottom attached active tab segment">
+
+                        <div class="ui fluid action input">
+                          <input id="id_title" maxlength="512" name="title" type="text" required="" placeholder="Введите результат обучения">
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                        </div>
+                    
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    {% endblock %}

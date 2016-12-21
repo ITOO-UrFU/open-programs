@@ -1,6 +1,7 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
+<a href="{% url "course_create" %}">Создать</a>
     {% for course in courses %}
         <div class="ui segments">
             <div class="ui clearing segment">

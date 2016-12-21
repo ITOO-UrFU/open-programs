@@ -5,6 +5,8 @@
 {% block content %}
 <div class="module-detail">
 
+<a href="{% url "program_detail" program.id %}">Вернуться в программу {{program.title}}</a>
+
         <div class="ui segments">
             <div class="ui segment">
                 <div class="discipline-title"><h1>Модуль "{{module.title}}"</h1></div>
@@ -36,5 +38,10 @@
 
     {% endfor %}
     </div>
+
+    <form action="{% url "discipline_create" module.id %}" method="post">{% csrf_token %}
+                    {{form.as_p}}
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                </form>
 </div>
 {% endblock %}

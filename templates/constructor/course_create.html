@@ -1,0 +1,11 @@
+{% extends "constructor/base.html" %}
+{% load i18n %}
+{% block content %}
+   
+
+
+                <form action="{% url "course_create" %}" method="post">{% csrf_token %}
+                    {{form.as_p}}
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                </form>
+    {% endblock %}

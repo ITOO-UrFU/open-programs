@@ -9,7 +9,7 @@
                 <div class="ui segment">
                     <h2><a href="{% url "module_detail" module.id %}">Модуль "{{module.title}}"</a></h2>
                     <p>{{module.description}}</p>
-                    {% for discipline in module.disciplines.all %}
+                    {% for discipline in module.get_all_disciplines %}
                         <div class="ui secondary segment">
                             <h3><a href="{% url "discipline_detail" discipline.id %}">Дисциплина "{{discipline.name}}"</a></h3>
                         </div>
@@ -22,11 +22,34 @@
         {% if modules_available %}
             <div class="ui segment">
             <div class="content">
+
+                <form action="{% url "module_create" %}" method="post">{% csrf_token %}
+                    {{form.as_p}}
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                </form>
+                <p>&nbsp;</p>
+
+                <button class="ui button" id="modules-button"><i class="expand icon"></i> Модули</button>
+                <div id= "modules" hidden="hidden">
                 {% for module in modules_available %}
-                    <p><a href="{% url "program_add" program.id module.id %}"><i class="plus icon"></i></a> {{module.title}}</p>
+                    <p><a href="{% url "program_add" program.id module.id  %}"><i class="plus icon"></i></a> {{module.title}}</p>
                 {% endfor %}
+                </div>
             </div>
         </div>
     {% endif %}
 </div>
+<script type="text/javascript">
+
+    var button = document.getElementById("modules-button");
+    button.onclick = function() {
+    var div = document.getElementById('modules');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+    }
+    else {
+        div.style.display = 'block';
+    }
+};
+</script>
 {% endblock %}
