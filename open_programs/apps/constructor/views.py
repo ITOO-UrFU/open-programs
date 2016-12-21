@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.forms import ModelForm
 from django.views.generic.edit import FormView
+from django.contrib.auth.decorators import login_required
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -14,13 +15,14 @@ from results.models import Result
 from competences.models import Competence
 
 
-
+@login_required
 def index(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
     return render(request, "constructor/index.html", context)
 
 
+@login_required
 def programs(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -32,6 +34,7 @@ def programs(request):
     return render(request, "constructor/programs.html", context)
 
 
+@login_required
 def program_add(request, program_pk, module_pk):
     program = Program.objects.get(pk=program_pk)
     module = Module.objects.get(pk=module_pk)
@@ -40,6 +43,7 @@ def program_add(request, program_pk, module_pk):
     return redirect("program_detail", pk=program_pk)
 
 
+@login_required
 def program_remove(request, program_pk, module_pk):
     program = Program.objects.get(pk=program_pk)
     module = Module.objects.get(pk=module_pk)
@@ -48,6 +52,7 @@ def program_remove(request, program_pk, module_pk):
     return redirect("program_detail", pk=program_pk)
 
 
+@login_required
 def professions(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -56,6 +61,7 @@ def professions(request):
     return render(request, "constructor/professions.html", context)
 
 
+@login_required
 def courses(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -64,6 +70,7 @@ def courses(request):
     return render(request, "constructor/courses.html", context)
 
 
+@login_required
 def program_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -78,6 +85,7 @@ def program_detail(request, pk):
     return render(request, "constructor/program.html", context)
 
 
+@login_required
 def module_detail(request, pk):
     context = {}
     form = DisciplineForm(request.POST)
@@ -97,6 +105,7 @@ def module_detail(request, pk):
     return render(request, "constructor/module.html", context)
 
 
+@login_required
 def discipline_remove(request, mod_pk, disc_pk):
     discipline = Discipline.objects.get(pk=disc_pk)
     discipline.delete()
@@ -105,6 +114,7 @@ def discipline_remove(request, mod_pk, disc_pk):
     return redirect("module_detail", pk=mod_pk)
 
 
+@login_required
 def discipline_add(request, mod_pk, disc_pk):
     module = Module.objects.get(pk=mod_pk)
     discipline = Discipline.objects.get(pk=disc_pk)
@@ -113,6 +123,7 @@ def discipline_add(request, mod_pk, disc_pk):
     return redirect("module_detail", pk=mod_pk)
 
 
+@login_required
 def discipline_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -127,6 +138,7 @@ def discipline_detail(request, pk):
     return render(request, "constructor/discipline.html", context)
 
 
+@login_required
 def course_remove(request, disc_pk, course_pk):
     discipline = Discipline.objects.get(pk=disc_pk)
     course = Course.objects.get(pk=course_pk)
@@ -135,6 +147,7 @@ def course_remove(request, disc_pk, course_pk):
     return redirect("discipline_detail", pk=disc_pk)
 
 
+@login_required
 def course_add(request, disc_pk, course_pk):
     discipline = Discipline.objects.get(pk=disc_pk)
     course = Course.objects.get(pk=course_pk)
@@ -185,6 +198,7 @@ class ModuleForm(ModelForm):
         fields = ["title"]
 
 
+@login_required
 def course_detail(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -198,6 +212,7 @@ def course_detail(request, pk):
     return render(request, "constructor/course.html", context)
 
 
+@login_required
 def result_remove(request, course_pk, result_pk):
     course = Course.objects.get(pk=course_pk)
     result = Result.objects.get(pk=result_pk)
@@ -206,6 +221,7 @@ def result_remove(request, course_pk, result_pk):
     return redirect("course_detail", pk=course_pk)
 
 
+@login_required
 def course_add_result(request, course_pk, result_pk):
     course = Course.objects.get(pk=course_pk)
     result = Result.objects.get(pk=result_pk)
@@ -214,6 +230,7 @@ def course_add_result(request, course_pk, result_pk):
     return redirect("course_detail", pk=course_pk)
 
 
+@login_required
 def result_create(request, course_pk):
     if request.method == 'POST':
         form = ResultForm(request.POST)
@@ -223,6 +240,7 @@ def result_create(request, course_pk):
             return redirect("course_add_result", course_pk=course_pk, result_pk=result.id)
 
 
+@login_required
 def competence_result_create(request, comp_pk, prof_pk):
     if request.method == 'POST':
         competence = Competence.objects.get(pk=comp_pk)
@@ -235,6 +253,7 @@ def competence_result_create(request, comp_pk, prof_pk):
             return redirect("profession_detail", pk=prof_pk)
 
 
+@login_required
 def competence_result_create_noprof(request, comp_pk):
     if request.method == 'POST':
         competence = Competence.objects.get(pk=comp_pk)
@@ -246,6 +265,7 @@ def competence_result_create_noprof(request, comp_pk):
             return redirect("competence_edit", pk=comp_pk)
 
 
+@login_required
 def competence_profession_remove(request, prof_pk, comp_pk):
     competence = Competence.objects.get(pk=comp_pk)
     competence.profession = None
@@ -253,6 +273,7 @@ def competence_profession_remove(request, prof_pk, comp_pk):
     return redirect("profession_detail", pk=prof_pk)
 
 
+@login_required
 def competence_profession_add(request, prof_pk, comp_pk):
     competence = Competence.objects.get(pk=comp_pk)
     competence.profession = Profession.objects.get(pk=prof_pk)
@@ -260,6 +281,7 @@ def competence_profession_add(request, prof_pk, comp_pk):
     return redirect("profession_detail", pk=prof_pk)
 
 
+@login_required
 def competence_result_add(request, comp_pk, result_pk):
     competence = Competence.objects.get(pk=comp_pk)
     result = Result.objects.get(pk=result_pk)
@@ -268,6 +290,7 @@ def competence_result_add(request, comp_pk, result_pk):
     return redirect("competence_edit", pk=comp_pk)
 
 
+@login_required
 def competence_result_remove(request, comp_pk, result_pk):
     competence = Competence.objects.get(pk=comp_pk)
     result = Result.objects.get(pk=result_pk)
@@ -276,6 +299,7 @@ def competence_result_remove(request, comp_pk, result_pk):
     return redirect("profession_detail", pk=competence.profession.id)
 
 
+@login_required
 def competence_create(request, pk):
     profession = Profession.objects.get(pk=pk)
     if request.method == 'POST':
@@ -287,6 +311,7 @@ def competence_create(request, pk):
             return redirect("profession_detail", pk=pk)
 
 
+@login_required
 def course_create(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -301,6 +326,7 @@ def course_create(request):
         return render(request, "constructor/course_create.html", context)
 
 
+@login_required
 def profession_create(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -315,6 +341,7 @@ def profession_create(request):
         return render(request, "constructor/profession_create.html", context)
 
 
+@login_required
 def competence_edit(request, pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -331,6 +358,7 @@ def competence_edit(request, pk):
     return render(request, "constructor/competence_edit.html", context)
 
 
+@login_required
 def profession_detail(request, pk):
     context = {}
     comp_form = CompetenceForm()
@@ -347,6 +375,7 @@ def profession_detail(request, pk):
     return render(request, "constructor/profession.html", context)
 
 
+@login_required
 def discipline_create(request, module_pk):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -361,6 +390,7 @@ def discipline_create(request, module_pk):
     return redirect("module_detail", pk=module_pk)
 
 
+@login_required
 def module_create(request):
     context = {}
     context["title"] = _("Конструктор открытых образовательных программ")
@@ -378,6 +408,7 @@ def module_create(request):
     return redirect("program_detail", pk=program.id)
 
 
+@login_required
 def program_create(request):
     if request.method == 'POST':
         form = ProgramForm(request.POST)
@@ -387,7 +418,7 @@ def program_create(request):
             return redirect("programs")
 
 
-# def professions_edit(request, pk):
+# @login_required def professions_edit(request, pk):
 #     context = {}
 #     profession = Profession.objects.get(pk=pk)
 #     comp_form = CompetenceForm()

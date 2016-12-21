@@ -11,9 +11,7 @@
                 <div class="discipline-title"><h1>Дисциплина "{{discipline.name}}"</h1></div>
                 {% if dicsipline.description %}
                     <p>{{dicsipline.description}}</p>
-                {% endif %}
-                
-                
+                {% endif %} 
                 <div class="disciplines">
                     <h2>Связанные с дисциплиной курсы:</h2>
                     <div class="ui segments">
@@ -28,10 +26,28 @@
             </div>
             <p>&nbsp;</p>
             <div class="ui segments">
+            <button class="ui button" id="courses-button"><i class="expand icon"></i> Курсы</button>
+                <div id= "courses" hidden="hidden">
                 {% for course in courses_available %}
                     <p><a href="{% url "course_add" discipline.id course.id %}"><i class="plus icon"></i></a> <a href="{% url "course_detail" course.id %}">{{course.title}}</a> <span style="font-size:1rem;">[{{course.get_type_display}}]</span></p>
                 {% endfor %}
+                </div>
             </div>
         </div>
     </div>
+
+<script type="text/javascript">
+
+    var button = document.getElementById("courses-button");
+    button.onclick = function() {
+    var div = document.getElementById('courses');
+    if (div.style.display !== 'none') {
+        div.style.display = 'none';
+    }
+    else {
+        div.style.display = 'block';
+    }
+};
+</script>
+
 {% endblock %}

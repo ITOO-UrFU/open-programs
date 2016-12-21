@@ -203,7 +203,7 @@ class Common(Configuration):
         'rate_limit': '50/m',
     }
 
-    LOGIN_REDIRECT_URL = "/"
+    LOGIN_REDIRECT_URL = "/constructor/"
 
     #### ADMIN REORDER ####
     ADMIN_REORDER = (
