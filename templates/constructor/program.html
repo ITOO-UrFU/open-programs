@@ -26,16 +26,27 @@
             <div class="content">
 
                 <form action="{% url "module_create" %}" method="post">{% csrf_token %}
-                    {{form.as_p}}
+                    <div class="ui top attached tabular menu">
+                      <div class="active item">Создать новый модуль</div>
+                    </div>
+                    <div class="ui bottom attached active tab segment">
+                        <div class="ui fluid action input">
+                        <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название модуля">
                           <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                        </div>
+                    </div>
+                                        
                 </form>
                 <p>&nbsp;</p>
 
-                <button class="ui button" id="modules-button"><i class="expand icon"></i> Модули</button>
+                <button class="ui button" id="modules-button"><i class="expand icon"></i> Показать модули</button>
+                
                 <div id= "modules" hidden="hidden">
+                <div class="ui segment" style="margin-top: 10px;">
                 {% for module in modules_available %}
                     <p><a href="{% url "program_add" program.id module.id  %}"><i class="plus icon"></i></a> {{module.title}}</p>
                 {% endfor %}
+                </div>
                 </div>
             </div>
         </div>
@@ -43,7 +54,7 @@
 </div>
 <script type="text/javascript">
 
-    var button = document.getElementById("modules-button");
+   /* var button = document.getElementById("modules-button");
     button.onclick = function() {
     var div = document.getElementById('modules');
     if (div.style.display !== 'none') {
@@ -52,6 +63,12 @@
     else {
         div.style.display = 'block';
     }
-};
+};*/
+
+$( "#modules-button" ).click(function() {
+  $( "#modules" ).toggle("fast");
+});
+
+
 </script>
 {% endblock %}

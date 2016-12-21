@@ -1,11 +1,28 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
-   
+<h3>Создание новой профессии</h3>
+   <div class="ui segment">
+            <div class="content">
+
+                <form class="ui form" action="{% url "profession_create" %}" method="post">{% csrf_token %}
+               
+
+<div class="field">
+          <label>Название профессии:</label>
+            <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название профессии">
+         
+</div>
+
+<div class="field">
+          <label>Описание профессии:</label>
+            <textarea cols="40" id="id_description" maxlength="16384" name="description" rows="10" placeholder="Введите описание профессии"></textarea>
+         
+</div>
 
 
-                <form action="{% url "profession_create" %}" method="post">{% csrf_token %}
-                    {{form.as_p}}
                           <button type="submit" value="Добавить" class="ui button">Добавить</button>
                 </form>
+    </div>
+    </div>
     {% endblock %}

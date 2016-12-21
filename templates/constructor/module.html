@@ -39,9 +39,35 @@
     {% endfor %}
     </div>
 
-    <form action="{% url "discipline_create" module.id %}" method="post">{% csrf_token %}
-                    {{form.as_p}}
-                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
-                </form>
+     <div class="ui top attached tabular menu">
+      <div class="active item">Создать новую дисциплину</div>
+    </div>
+    <div class="ui bottom attached active tab segment">
+
+    <form class="ui form" action="{% url "discipline_create" module.id %}" method="post">{% csrf_token %}
+       
+          
+          <div class="field">
+            <label>Название дисциплины</label>
+            <input id="id_name" maxlength="256" name="name" type="text" required=""placeholder="Введите название дисциплины">
+          </div>
+          
+          <div class="field">
+            <label>Количество зачетных единиц</label>
+            <input id="id_points" min="0" name="points" type="number" required="" placeholder="Введите количество зачетных единиц">
+          </div>
+  
+    <div class="field">
+    <label>Форма контроля</label>
+          <select class="ui fluid search dropdown" id="id_form" name="form" required="">
+                <option value="e">Экзамен</option>
+                <option value="z">Зачет</option>
+          </select>
+    </div>
+          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+
+    </form>
+</div>
+
 </div>
 {% endblock %}

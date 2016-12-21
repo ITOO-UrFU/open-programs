@@ -3,7 +3,7 @@
 
 {% block content %}
 <h1>Профессии</h1>
-<a href="{% url "profession_create" %}">Создать</a>
+<a class="fluid ui button" href="{% url "profession_create" %}">Создать профессию</a>
 
     {% for profession in professions %}
         <div class="ui segments">

@@ -3,7 +3,7 @@
 {% block content %}
     <div class="ui segments profession-detail">
         <div class="ui segment">
-            <div class="profession-title"><h1>{{profession.title}}</h1></div>
+            <div class="profession-title"><h1>Профессия "{{profession.title}}"</h1></div>
             <p>{{profession.description}}</p>
         </div>
     </div>
@@ -30,8 +30,21 @@
         {% endfor %}
     </div>
     <form action="{% url "competence_create" profession.id %}" method="post">{% csrf_token %}
-        {{comp_form.as_p}}
-        <button type="submit" value="Добавить" class="ui button">Добавить</button>
+  
+
+                   <div class="ui top attached tabular menu">
+                      <div class="active item">Добавить новую компетенцию</div>
+                    </div>
+                    <div class="ui bottom attached active tab segment">
+                        <div class="ui fluid action input">
+                          <input id="id_title" maxlength="512" name="title" type="text" required="" placeholder="Компетенция ...">
+                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                        </div>
+
+                    </div>
+
+
+        
     </form>
     
 </div>

@@ -8,14 +8,23 @@
                 <div class="program">
                     <div class="program-title"><h3>{{program.title}}</h3></div>
                 </div>
-                <div class="ui right floated button"><a href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
+                <div><a  class="ui right floated button" href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
             </div>
         </div>
     {% endfor %}
 
     <form action="{% url "program_create" %}" method="post">{% csrf_token %}
-                    {{form.as_p}}
-                          <button type="submit" value="Добавить" class="ui button">Создать</button>
+    <div class="ui top attached tabular menu">
+      <div class="active item">Создать новую программу</div>
+    </div>
+    <div class="ui bottom attached active tab segment">
+
+        <div class="ui fluid action input">
+          <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название программы">
+          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+        </div>
+    
+    </div>
                 </form>
 
 
