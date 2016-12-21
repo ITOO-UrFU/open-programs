@@ -11,17 +11,23 @@
         <h2>Компетенции и результаты обучения</h2>
         {% if profession.competences %}
             {% for competence in profession.competences %}
-                <h3 style="padding-left:14px;">{{competence.title}}</h3>
-                {% for result in competence.results.all %}
-                    <h4 style="padding-left:28px;">{{result.title}}</h4>
-                {% endfor %}
+                <div class="ui segment competence">
+                    <div class="ui floating label"><a href="{% url "competence_profession_remove" profession.id competence.id %}">Убрать</a></div>
+                    <h3 style="padding-left:14px;">{{competence.title}}</h3>
+                    {% for result in competence.results.all %}
+                        <h4 style="padding-left:28px;">{{result.title}}</h4>
+                    {% endfor %}
+                </div>
             {% endfor %}
             <a href="{% url "professions_edit" profession.id %}">Редактировать компетенции и результаты обучения</a>
         {% else %}
             <p>Требования ещё не добавлены.</p>
         {% endif %}
         {% for competence in competences_available %}
-        <p>{{competence}}</p>
+        <div class="ui segment">
+            <div class="ui floating label"><a href="{% url "competence_profession_add" profession.id competence.id %}">Добавить</a></div>
+            {{competence}}
+        </div>
         {% endfor %}
     </div>
     

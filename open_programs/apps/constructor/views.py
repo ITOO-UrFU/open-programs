@@ -196,21 +196,21 @@ def result_create(request, course_pk):
             return redirect("course_add_result", course_pk=course_pk, result_pk=result.id)
 
 
-def profession_remove(request, prof_pk, comp_pk):
+def competence_profession_remove(request, prof_pk, comp_pk):
     competence = Competence.objects.get(pk=comp_pk)
     competence.profession = None
     competence.save()
     return redirect("profession_detail", pk=prof_pk)
 
 
-def profession_add(request, prof_pk, comp_pk):
+def competence_profession_add(request, prof_pk, comp_pk):
     competence = Competence.objects.get(pk=comp_pk)
     competence.profession = Profession.objects.get(pk=prof_pk)
     competence.save()
     return redirect("profession_detail", pk=prof_pk)
 
 
-def competence_add(request, comp_pk, result_pk):
+def competence_result_add(request, comp_pk, result_pk):
     competence = Competence.objects.get(pk=comp_pk)
     result = Result.objects.get(pk=result_pk)
     competence.results.add(result)
@@ -218,6 +218,12 @@ def competence_add(request, comp_pk, result_pk):
     return redirect("course_detail", pk=course_pk)
 
 
+def competence_result_remove(request, comp_pk, result_pk):
+    competence = Competence.objects.get(pk=comp_pk)
+    result = Result.objects.get(pk=result_pk)
+    competence.results.remove(result)
+    competence.save()
+    return redirect("course_detail", pk=course_pk)
 
 
 # def course_create(request):

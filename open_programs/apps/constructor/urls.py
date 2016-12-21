@@ -23,11 +23,11 @@ urlpatterns = [
     url(r'^courses/add/(?P<course_pk>[0-9A-Za-z-]+)/(?P<result_pk>[0-9]+)/$', course_add_result, name='course_add_result'),
     url(r'^result/create/(?P<course_pk>[0-9A-Za-z-]+)$', result_create, name='result_create'),
 
-    url(r'^competence/edit/(?P<pk>[0-9A-Za-z-]+)/$', competence_edit, name='competence_edit'),
-    url(r'^competence/create/$', competence_create, name='competence_create'),
-    url(r'^profession/remove/(?P<prof_pk>[0-9A-Za-z-]+)/(?P<comp_pk>[0-9]+)/$', profession_remove, name='profession_remove'),  # ok
-    url(r'^profession/add/(?P<prof_pk>[0-9A-Za-z-]+)/(?P<comp_pk>[0-9]+)/$', profession_add, name='profession_add'),  # ok
-    url(r'^competence/add/(?P<comp_pk>[0-9A-Za-z-]+)/(?P<result_pk>[0-9]+)/$', competence_add, name='competence_add'),
-    url(r'^competence/remove/(?P<comp_pk>[0-9A-Za-z-]+)/(?P<result_pk>[0-9]+)/$', competence_remove, name='competence_remove'),
+    #url(r'^competence/edit/(?P<pk>[0-9A-Za-z-]+)/$', competence_edit, name='competence_edit'),
+    #url(r'^competence/create/$', competence_create, name='competence_create'),
+    url(r'^profession/remove/(?P<prof_pk>[0-9A-Za-z-]+)/(?P<comp_pk>[0-9]+)/$', competence_profession_remove, name='competence_profession_remove'),
+    url(r'^profession/add/(?P<prof_pk>[0-9A-Za-z-]+)/(?P<comp_pk>[0-9]+)/$', competence_profession_add, name='competence_profession_add'),
+    url(r'^competence/add/(?P<comp_pk>[0-9A-Za-z-]+)/(?P<result_pk>[0-9]+)/$', competence_result_add, name='competence_result_add'),
+    url(r'^competence/remove/(?P<comp_pk>[0-9A-Za-z-]+)/(?P<result_pk>[0-9]+)/$', competence_result_remove, name='competence_result_remove'),
 
     ]
