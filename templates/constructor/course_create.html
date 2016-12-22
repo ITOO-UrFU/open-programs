@@ -2,10 +2,102 @@
 {% load i18n %}
 {% block content %}
    
+<h3>Создание нового курса</h3>
+   <div class="ui segment">
+        <div class="content">
 
 
-                <form action="{% url "course_create" %}" method="post">{% csrf_token %}
-                    {{form.as_p}}
-                          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                <form class="ui form"  action="{% url "course_create" %}" method="post">{% csrf_token %}
+				
+				<div class="field">
+                    <label for="id_title">Название курса:</label> 
+                    <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название курса">
+                </div>       
+
+
+				<div class="field">
+					<label for="id_slug">Код курса:</label> 
+					<input id="id_slug" maxlength="32" name="slug" type="text" required="" placeholder="Введите код курса">
+				</div>
+
+
+				<div class="field">
+				    <label for="id_description">Короткое описание:</label>
+				    <textarea cols="40" id="id_description" maxlength="16384" name="description" rows="2"></textarea>
+				</div>
+
+
+				<div class="field">
+				    <label for="id_about">О курсе:</label>
+				    <textarea cols="40" id="id_about" name="about" rows="10"></textarea>
+				</div>
+
+				<div class="field">
+				    <label for="id_external_link">Внешняя ссылка:</label>
+				    <input id="id_external_link" maxlength="200" name="external_link" type="url">
+				</div>
+
+
+				<div class="field">
+				    <label>Технология:</label>
+			        <select class="ui fluid search dropdown" id="id_type" name="type" required="">
+					    <option value="0">Онлайн-курс</option>
+						<option value="1">Смешанная</option>
+						<option value="2">Традиционная</option>
+				    </select>
+				</div>
+					
+				<div class="field">
+			   		<label for="id_cover">Обложка:</label>
+			   		<input id="id_cover" name="cover" type="file">
+			   	</div>
+
+			   	<div class="field">
+					<label for="id_video">Промовидео:</label> 
+					<input id="id_video" maxlength="500" name="video" type="url" placeholder="URL видео">
+				</div>
+
+				<div class="field">
+					<label for="id_video_cover">Картинка для видео:</label> 
+					<input id="id_video_cover" name="video_cover" type="file">
+				</div>
+
+
+				<div class="field">
+					<label for="id_workload">Часов в неделю:</label>
+					<input id="id_workload" min="0" name="workload" type="number">
+				</div>
+
+
+				<div class="field">
+					<label for="id_points">Зачётных единиц:</label> 
+					<input id="id_points" min="0" name="points" type="number">
+				</div>
+
+
+				<div class="field">
+					<label for="id_duration">Длительность (недель):</label> 
+					<input id="id_duration" min="0" name="duration" type="number">
+				</div>
+
+
+				<div class="field">
+				    <label for="id_status">Статус публикации:</label>
+					<select class="ui fluid search dropdown" id="id_status" name="status" required="">
+						<option value="h">Скрыт</option>
+						<option value="p">Опубликован</option>
+					</select>
+				</div>
+
+
+
+                <button type="submit" value="Добавить" class="ui button">Добавить</button>
+                
+
+
+
+
                 </form>
-    {% endblock %}
+        </div>
+    </div
+{% endblock %}
