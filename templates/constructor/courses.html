@@ -1,8 +1,7 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
-
-<h1>Курсы</h1>
+    <h1>Курсы</h1>
     {% for course in courses %}
         <div class="ui segments">
             <div class="ui clearing segment">
@@ -16,4 +15,9 @@
         </div>
     {% endfor %}
     <a class="fluid ui button" href="{% url "course_create" %}">Создать курс</a>
+    <style type="text/css">
+    .ui.segments .ui.segment, .ui.tabular.menu .active.item, .ui.attached:not(.message)+.ui.attached.segment:not(.top) {
+    background-color: rgba(243, 122, 0, 0.1);
+    }
+    </style>
 {% endblock %}

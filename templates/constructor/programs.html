@@ -1,7 +1,7 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
 {% block content %}
-<h1>Образовательные программы</h1>
+    <h1>Образовательные программы</h1>
     {% for program in programs %}
         <div class="ui segments">
             <div class="ui clearing segment">
@@ -12,20 +12,21 @@
             </div>
         </div>
     {% endfor %}
-
     <form action="{% url "program_create" %}" method="post">{% csrf_token %}
-    <div class="ui top attached tabular menu">
-      <div class="active item">Создать новую программу</div>
-    </div>
-    <div class="ui bottom attached active tab segment">
-
-        <div class="ui fluid action input">
-          <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название программы">
-          <button type="submit" value="Добавить" class="ui button">Добавить</button>
+        <div class="ui top attached tabular menu">
+            <div class="active item">Создать новую программу</div>
         </div>
-    
-    </div>
-                </form>
-
-
+        <div class="ui bottom attached active tab segment">
+            <div class="ui fluid action input">
+                <input id="id_title" maxlength="256" name="title" type="text" required="" placeholder="Введите название программы">
+                <button type="submit" value="Добавить" class="ui button">Добавить</button>
+            </div>
+            
+        </div>
+    </form>
+    <style type="text/css">
+    .ui.segments .ui.segment, .ui.tabular.menu .active.item, .ui.attached:not(.message)+.ui.attached.segment:not(.top) {
+        background-color: rgba(53,187,53,0.1);
+    }
+    </style>
 {% endblock %}
