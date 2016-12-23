@@ -7,11 +7,23 @@
         <div class="ui segments">
             <div class="ui clearing segment">
                 <div class="program">
-                    <div class="program-title"><h3>{{program.title}}</h3></div>
-                    <p>{{program.labor_percent|percentage }} трудоёмкости</p>
-                    <p>{{program.profs_count}} профессии</p>
-
-
+                    <div class="program-title"><h1>{{program.title}}</h1></div>
+                    <div class="ui tiny statistic labor">
+                        <div class="value">
+                            {{program.labor_percent|percentage }}
+                        </div>
+                        <div class="label">
+                            Трудоемкость
+                        </div>
+                    </div>
+                    <div class="ui tiny statistic profs_count">
+                        <div class="value">
+                            {{program.profs_count}}
+                        </div>
+                        <div class="label">
+                            Кол-во профессий
+                        </div>
+                    </div>
                 </div>
                 <div><a  class="ui right floated button" href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
             </div>
@@ -31,7 +43,15 @@
     </form>
     <style type="text/css">
     .ui.segments .ui.segment, .ui.tabular.menu .active.item, .ui.attached:not(.message)+.ui.attached.segment:not(.top) {
-        background-color: rgba(53,187,53,0.1);
+    background-color: rgba(53,187,53,0.1);
+    }
+    .profs_count {
+        background-color: rgba(50, 138, 179, 0.5);
+        padding: 5px 15px 5px 15px;
+    }
+    .labor {
+        background-color: rgba(53,187,53,0.5);
+        padding: 5px 15px 5px 15px;
     }
     </style>
 {% endblock %}

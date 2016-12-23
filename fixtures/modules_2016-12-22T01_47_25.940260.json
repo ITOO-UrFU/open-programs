@@ -1,0 +1,130 @@
+[
+{
+  "model": "modules.type",
+  "pk": 1,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-07T15:57:36.143Z",
+    "updated": "2016-12-07T15:57:42.322Z",
+    "status": "h",
+    "title": "\u041c\u043e\u0434\u0443\u043b\u044c",
+    "description": ""
+  }
+},
+{
+  "model": "modules.type",
+  "pk": 2,
+  "fields": {
+    "archived": false,
+    "created": "2016-12-07T15:57:52.623Z",
+    "updated": "2016-12-07T15:57:52.623Z",
+    "status": "h",
+    "title": "\u041c\u0430\u0439\u043d\u043e\u0440",
+    "description": ""
+  }
+},
+{
+  "model": "modules.module",
+  "pk": "12cfe112-462a-4ad8-8297-830d7c2ca18f",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:06:51.170Z",
+    "updated": "2016-12-19T16:08:01.074Z",
+    "status": "p",
+    "title": "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u043e\u0435 \u043c\u0430\u0442\u0435\u0440\u0438\u0430\u043b\u043e\u0432\u0435\u0434\u0435\u043d\u0438\u0435",
+    "description": "",
+    "type": 1,
+    "results_text": "",
+    "disciplines": [
+      13,
+      14
+    ],
+    "results": [],
+    "competences": []
+  }
+},
+{
+  "model": "modules.module",
+  "pk": "192af50b-2f2e-4a56-a13c-9f4dae225ea2",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T16:01:24.165Z",
+    "updated": "2016-12-19T16:08:13.085Z",
+    "status": "p",
+    "title": "\u0422\u0435\u0445\u043d\u043e\u043b\u043e\u0433\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0431\u0435\u0437\u043e\u043f\u0430\u0441\u043d\u043e\u0441\u0442\u044c",
+    "description": "",
+    "type": 1,
+    "results_text": "",
+    "disciplines": [
+      11,
+      12
+    ],
+    "results": [],
+    "competences": []
+  }
+},
+{
+  "model": "modules.module",
+  "pk": "38004a7a-65b1-404c-8a0b-84e9ff05c43d",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:55:09.354Z",
+    "updated": "2016-12-19T16:11:31.695Z",
+    "status": "p",
+    "title": "\u041e\u0441\u043d\u043e\u0432\u044b \u0433\u0443\u043c\u0430\u043d\u0438\u0442\u0430\u0440\u043d\u043e\u0439 \u043a\u0443\u043b\u044c\u0442\u0443\u0440\u044b",
+    "description": "",
+    "type": 1,
+    "results_text": "",
+    "disciplines": [
+      8,
+      5,
+      6,
+      7
+    ],
+    "results": [],
+    "competences": []
+  }
+},
+{
+  "model": "modules.module",
+  "pk": "61d9686d-c735-4345-8055-6612bdf760d0",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:45:05.484Z",
+    "updated": "2016-12-19T15:45:05.484Z",
+    "status": "p",
+    "title": "\u041e\u0441\u043d\u043e\u0432\u044b \u0438\u043d\u043e\u044f\u0437\u044b\u0447\u043d\u043e\u0439 \u043f\u0440\u043e\u0444\u0435\u0441\u0441\u0438\u043e\u043d\u0430\u043b\u044c\u043d\u043e\u0439 \u043a\u043e\u043c\u043c\u0443\u043d\u0438\u043a\u0430\u0446\u0438\u0438",
+    "description": "",
+    "type": 1,
+    "results_text": "",
+    "disciplines": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "results": [],
+    "competences": []
+  }
+},
+{
+  "model": "modules.module",
+  "pk": "e68570c0-be0f-4e11-bd93-c5a193e6e6ed",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:59:23.864Z",
+    "updated": "2016-12-19T16:11:41.428Z",
+    "status": "p",
+    "title": "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u043d\u0430\u044f \u0438\u043d\u0444\u043e\u0440\u043c\u0430\u0442\u0438\u043a\u0430",
+    "description": "",
+    "type": 1,
+    "results_text": "",
+    "disciplines": [
+      9,
+      10
+    ],
+    "results": [],
+    "competences": []
+  }
+}
+]

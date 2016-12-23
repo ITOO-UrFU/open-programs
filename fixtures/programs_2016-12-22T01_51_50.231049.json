@@ -1,0 +1,25 @@
+[
+{
+  "model": "programs.program",
+  "pk": "d4653b0b-b958-4e35-91d0-239e4924aadb",
+  "fields": {
+    "archived": false,
+    "created": "2016-12-19T15:46:54.008Z",
+    "updated": "2016-12-19T16:11:13.635Z",
+    "status": "p",
+    "level": "b",
+    "title": "\u0421\u0442\u0440\u043e\u0438\u0442\u0435\u043b\u044c\u0441\u0442\u0432\u043e \u0437\u0434\u0430\u043d\u0438\u0439 \u0438 \u0441\u043e\u043e\u0440\u0443\u0436\u0435\u043d\u0438\u0439",
+    "chief": null,
+    "modules": [
+      "61d9686d-c735-4345-8055-6612bdf760d0",
+      "38004a7a-65b1-404c-8a0b-84e9ff05c43d",
+      "e68570c0-be0f-4e11-bd93-c5a193e6e6ed",
+      "192af50b-2f2e-4a56-a13c-9f4dae225ea2",
+      "12cfe112-462a-4ad8-8297-830d7c2ca18f"
+    ],
+    "educational_program_trajectories": [],
+    "choice_modules": [],
+    "module_dependencies": []
+  }
+}
+]

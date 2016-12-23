@@ -67,7 +67,7 @@ class Common(Configuration):
         "uni",
     ]
 
-    if platform.system() not in ('Windows', 'Darwin'):
+    if platform.system() not in ('Windows', 'Darwin', 'FreeBSD'):
         INSTALLED_APPS.append('haystack')
 
     MIDDLEWARE_CLASSES = [

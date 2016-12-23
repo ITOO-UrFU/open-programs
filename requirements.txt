@@ -1,7 +1,7 @@
 Django>=1.10
 django-allauth==0.29.0
 django-extensions==1.7.5
-haystack==0.36
+#haystack==0.36
 Werkzeug==0.11.11
 elasticsearch==5.0.1
 django-countries==4.0
