@@ -2,7 +2,7 @@
 {% load i18n %}
 {% block content %}
 
-<a href="{% url "program_detail" program.id %}">Вернуться в программу {{program.title}}</a>
+<a href="{% url "program_detail" program.id %}">Вернуться в программу "{{program.title}}"</a>
 
 
     <div class="discipline-detail">
@@ -20,6 +20,23 @@
                             <div class="ui segment">
                                 <div class="ui floating label"><a href="{% url "course_remove" discipline.id course.id %}">Убрать</a></div>
                                 <h3><a href="{% url "course_detail" course.id %}">{{course.title}} </a><span style="font-size:1rem;">[{{course.get_type_display}}]</span></h3>
+                                
+                                <div class="ui tiny statistic programs_count">
+                        <div class="value">
+                            {{course.programs_count}}
+                        </div>
+                        <div class="label">
+                            Кол-во программ
+                        </div>
+                    </div>
+                    <div class="ui tiny statistic profs_count">
+                        <div class="value">
+                            {{course.profs_count}}
+                        </div>
+                        <div class="label">
+                            Кол-во профессий
+                        </div>
+                    </div>
                             </div>
                         {% endfor %}
                     </div>
@@ -65,5 +82,16 @@ $( "#courses-button" ).click(function() {
 
 
 </script>
+<style type="text/css">
+.profs_count {
+        background-color: rgba(50, 138, 179, 0.5);
+        padding: 5px 15px 5px 15px;
+    }
+
+    .programs_count {
+        background-color: rgba(53,187,53,0.5);
+        padding: 5px 15px 5px 15px;
+    }
+    </style>
 
 {% endblock %}

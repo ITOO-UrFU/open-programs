@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.conf.urls.static import static
 from django.conf import settings
 
+from django.views.generic.base import RedirectView
+
 from dashing.utils import router
 import permission
 
@@ -54,6 +56,8 @@ schema_view = get_swagger_view(title='Open programs')
 
 
 urlpatterns = [
+    url(r'^$', RedirectView.as_view(url='/constructor/', permanent=False), name='index'),
+
     url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),

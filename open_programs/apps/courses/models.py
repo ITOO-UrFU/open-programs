@@ -12,6 +12,10 @@ from permission.logics import CollaboratorsPermissionLogic
 
 from persons.models import Person
 from results.models import Result
+from programs.models import Program
+from professions.models import Profession
+from competences.models import Competence
+from disciplines.models import Discipline
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -100,6 +104,30 @@ class Course(ObjectBaseClass):
             return "<video controls=\"controls\" height=\"100\"><source src=\"" + str(self.video) + "\"></video>"
         else:
             return "<center><img  height=\"100\" src=\"/static/img/no_video.png\"/></center>"
+
+    def programs_count(self):
+        courses = []
+        for program in Program.objects.all():
+            for module in program.modules.all():
+                for discipline in Discipline.objects.filter(module=module):
+                    courses += list(discipline.courses.all())
+                    
+        return courses.count(self)
+
+    def profs_count(self):
+        profs = []
+        results_course = [result for result in self.results.all()]
+
+        for profession in Profession.objects.all():
+            for comp in Competence.objects.filter(profession=profession):
+                for r in comp.results.all():
+                    if r in results_course:
+                        if profession not in profs:
+                            profs.append(profession)
+
+        return len(profs)
+
+
 
     all_sessions_colors.allow_tags = True
     short_description.allow_tags = True
