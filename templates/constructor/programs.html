@@ -1,5 +1,6 @@
 {% extends "constructor/base.html" %}
 {% load i18n %}
+{% load const_filters %}
 {% block content %}
     <h1>Образовательные программы</h1>
     {% for program in programs %}
@@ -7,6 +8,10 @@
             <div class="ui clearing segment">
                 <div class="program">
                     <div class="program-title"><h3>{{program.title}}</h3></div>
+                    <p>{{program.labor_percent|percentage }} трудоёмкости</p>
+                    <p>{{program.profs_count}} профессии</p>
+
+
                 </div>
                 <div><a  class="ui right floated button" href="{% url "program_detail" program.id %}">{% trans 'Подробнее' %}</a></div>
             </div>

@@ -9,6 +9,9 @@ from django.utils.translation import ugettext_lazy as _
 
 from modules.models import Module, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
 from persons.models import Person
+from disciplines.models import Discipline
+from professions.models import Profession
+from competences.models import Competence
 
 
 class Program(ObjectBaseClass):
@@ -24,7 +27,7 @@ class Program(ObjectBaseClass):
     LEVELS = (
         ("b", _("бакалавриат")),
         ("m", _("магистратура")),
-        ("m", _("специалитет")),
+        ("s", _("специалитет")),
     )
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -54,8 +57,6 @@ class Program(ObjectBaseClass):
     def __str__(self):
         return self.title
 
-
-
     def all_modules(self):
 
         # choice_modules = []
@@ -73,6 +74,40 @@ class Program(ObjectBaseClass):
         # modules = choice_modules + general_base_modules + educational_program_trajectories
 
         return self.modules.all()
+
+    def labor_percent(self):
+        labor = 0
+        for module in self.modules.all():
+            for discipline in Discipline.objects.filter(module=module):
+                if discipline.courses is not None:
+                    labor += discipline.points
+        if self.level == "b":
+            return labor / 240
+        elif self.level == "s":
+            return labor / 300
+        elif self.level == "m":
+            return labor / 120
+
+    def profs_count(self):
+        results = []
+        results_program = []
+        profs = []
+        for module in self.modules.all():
+            for discipline in Discipline.objects.filter(module=module):
+                for course in discipline.courses.all():
+                    results.append(list(course.results.all()))
+        for r in results:
+            results_program += r
+
+        for profession in Profession.objects.all():
+            for comp in Competence.objects.filter(profession=profession):
+                for r in comp.results.all():
+                    if r in results_program:
+                        if profession not in profs:
+                            profs.append(profession)
+        return len(profs)
+
+
 
 
 class ModuleDependency(models.Model):
