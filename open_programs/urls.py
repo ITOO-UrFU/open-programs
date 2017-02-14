@@ -13,22 +13,16 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
-from django.contrib import admin
-from django.conf.urls.static import static
-from django.conf import settings
-
-from django.views.generic.base import RedirectView
-
-from dashing.utils import router
 import permission
-
-from django.contrib.auth.models import User
-from rest_framework import routers, serializers, viewsets
-from rest_framework.urlpatterns import format_suffix_patterns
+from django.conf import settings
+from django.conf.urls import url, include
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.views.generic.base import RedirectView
+from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 
-from api.views import *
+from .apps.api.views import *
 
 permission.autodiscover()
 
@@ -79,5 +73,5 @@ if settings.DEBUG is True:
 #### APPS ####
 
 urlpatterns += [
-    url(r'constructor/', include('constructor.urls')),
+    url(r'constructor/', include('open_programs.apps.constructor.urls')),
 ]
