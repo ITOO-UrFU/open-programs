@@ -1,290 +1,273 @@
 import os
-import sys
 import platform
+import sys
+
 from django.contrib import admin
 from django.utils.translation import ugettext_lazy as _
 
-from configurations import Configuration
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# SECURITY WARNING: don't run with debug turned on in production!
+SECRET_KEY = '&p(zt!@%h#+f+i%@avy9=v5bfi!pz(0rv@-6w%(#olfe(@b^i0'
 
-class Common(Configuration):
+ALLOWED_HOSTS = ['*', ]
 
-    # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_ROOT = os.path.dirname(__file__)
+sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
-    # SECURITY WARNING: don't run with debug turned on in production!
-    SECRET_KEY = '&p(zt!@%h#+f+i%@avy9=v5bfi!pz(0rv@-6w%(#olfe(@b^i0'
+# Application definition
 
-    ALLOWED_HOSTS = ['*', ]
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django_extensions',
+    'reversion',
+    'rosetta',
+    'djcelery_email',
+    'permission',
+    'admin_reorder',
+    'smuggler',
+    'rest_framework',
+    'rest_framework_swagger',
+    'codemirror2',
+    'corsheaders',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.instagram',
+    'allauth.socialaccount.providers.odnoklassniki',
+    'allauth.socialaccount.providers.openid',
+    'allauth.socialaccount.providers.twitter',
+    'open_programs.apps.courses',
+    'open_programs.apps.directories',
+    'open_programs.apps.journal',
+    'open_programs.apps.persons',
+    'open_programs.apps.professions',
+    'open_programs.apps.programs',
+    'open_programs.apps.modules',
+    'open_programs.apps.disciplines',
+    "open_programs.apps.competences",
+    "open_programs.apps.results",
+    'open_programs.apps.base',
+    "open_programs.apps.constructor",
+    "open_programs.apps.api",
+    "open_programs.apps.uni",
+]
 
-    PROJECT_ROOT = os.path.dirname(__file__)
-    sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
+if platform.system() not in ('Windows', 'Darwin', 'FreeBSD'):
+    INSTALLED_APPS.append('haystack')
 
-    # Application definition
+MIDDLEWARE_CLASSES = [
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'admin_reorder.middleware.ModelAdminReorder',
+]
 
-    INSTALLED_APPS = [
-        'django.contrib.admin',
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'django.contrib.sessions',
-        'django.contrib.messages',
-        'django.contrib.staticfiles',
-        'django.contrib.sites',
-        'django_extensions',
-        'reversion',
-        'rosetta',
-        'dashing',  # Read https://github.com/talpor/django-dashing/
-        'djcelery_email',
-        'permission',
-        'admin_reorder',
-        'smuggler',
-        'rest_framework',
-        'rest_framework_swagger',
-        'codemirror2',
-        'corsheaders',
-        'allauth',
-        'allauth.account',
-        'allauth.socialaccount',
-        'allauth.socialaccount.providers.google',
-        'allauth.socialaccount.providers.vk',
-        'allauth.socialaccount.providers.instagram',
-        'allauth.socialaccount.providers.odnoklassniki',
-        'allauth.socialaccount.providers.openid',
-        'allauth.socialaccount.providers.twitter',
-        'courses',
-        'directories',
-        'journal',
-        'persons',
-        'professions',
-        'programs',
-        'modules',
-        'disciplines',
-        "competences",
-        "results",
-        'base',
-        "constructor",
-        "api",
-        "uni",
-    ]
+ROOT_URLCONF = 'open_programs.urls'
 
-    if platform.system() not in ('Windows', 'Darwin', 'FreeBSD'):
-        INSTALLED_APPS.append('haystack')
-
-    MIDDLEWARE_CLASSES = [
-        'django.middleware.security.SecurityMiddleware',
-        'django.contrib.sessions.middleware.SessionMiddleware',
-        'corsheaders.middleware.CorsMiddleware',
-        'django.middleware.common.CommonMiddleware',
-        'django.middleware.csrf.CsrfViewMiddleware',
-        'django.contrib.auth.middleware.AuthenticationMiddleware',
-        'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-        'django.contrib.messages.middleware.MessageMiddleware',
-        'django.middleware.clickjacking.XFrameOptionsMiddleware',
-        'admin_reorder.middleware.ModelAdminReorder',
-    ]
-
-    ROOT_URLCONF = 'open_programs.urls'
-
-    TEMPLATES = [
-        {
-            'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "constructor")],
-            'APP_DIRS': True,
-            'OPTIONS': {
-                'context_processors': [
-                    'django.template.context_processors.request',
-                    'django.contrib.auth.context_processors.auth',
-                    'django.contrib.messages.context_processors.messages',
-                ],
-            },
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [os.path.join(BASE_DIR, "templates"), os.path.join(BASE_DIR, "constructor")],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
         },
-    ]
+    },
+]
 
-    WSGI_APPLICATION = 'open_programs.wsgi.application'
+WSGI_APPLICATION = 'open_programs.wsgi.application'
 
-    SITE_ID = 1
+SITE_ID = 1
 
-    # Database
-    # https://docs.djangoproject.com/en/1.9/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
+}
 
-    # Password validation
-    # https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
-    AUTH_PASSWORD_VALIDATORS = [
-        {
-            'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-        },
-        {
-            'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-        },
-    ]
+# Password validation
+# https://docs.djangoproject.com/en/1.9/ref/settings/#auth-password-validators
+AUTH_PASSWORD_VALIDATORS = [
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+    # },
+    # {
+    #     'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+    # },
+]
 
-    # Internationalization
-    # https://docs.djangoproject.com/en/1.9/topics/i18n/
-    LANGUAGE_CODE = 'ru'
+# Internationalization
+# https://docs.djangoproject.com/en/1.9/topics/i18n/
+LANGUAGE_CODE = 'ru'
 
-    TIME_ZONE = 'Asia/Yekaterinburg'
+TIME_ZONE = 'Asia/Yekaterinburg'
 
-    USE_I18N = True
+USE_I18N = True
 
-    USE_L10N = True
+USE_L10N = True
 
-    USE_TZ = True
+USE_TZ = True
 
-    #### STATIC ####
-    STATIC_URL = '/static/'
-    STATICFILES_DIRS = [
-        os.path.join(BASE_DIR, "static"),
-    ]
+#### STATIC ####
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
-    #### FIXTURES ####
+#### FIXTURES ####
 
-    FIXTURE_DIRS = [
-        os.path.join(BASE_DIR, "fixtures"),
-    ]
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, "fixtures"),
+]
 
-    #### SOCIAL ####
+#### SOCIAL ####
 
-    SOCIALACCOUNT_QUERY_EMAIL = True
+SOCIALACCOUNT_QUERY_EMAIL = True
 
-    AUTHENTICATION_BACKENDS = (
-        'django.contrib.auth.backends.ModelBackend',
-        'allauth.account.auth_backends.AuthenticationBackend',
-        'permission.backends.PermissionBackend',
-    )
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+    'permission.backends.PermissionBackend',
+)
 
-    #### HAYSTACK ####
+#### HAYSTACK ####
 
-    HAYSTACK_CONNECTIONS = {
-        'default': {
-            'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
-        },
-        'elasticsearch': {
-            'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
-            'URL': 'http://127.0.0.1:9200/',
-            'INDEX_NAME': 'haystack',
-        },
-    }
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'haystack.backends.simple_backend.SimpleEngine',
+    },
+    'elasticsearch': {
+        'ENGINE': 'haystack.backends.elasticsearch_backend.ElasticsearchSearchEngine',
+        'URL': 'http://127.0.0.1:9200/',
+        'INDEX_NAME': 'haystack',
+    },
+}
 
-    #### LOCALES ####
+#### LOCALES ####
 
-    LOCALE_PATHS = (
-        BASE_DIR + '/locale', )
+LOCALE_PATHS = (
+    BASE_DIR + '/locale', )
 
-    LANGUAGES = [
-        ('ru', _('Russian')),
-        ('en', _('English')),
-    ]
+LANGUAGES = [
+    ('ru', _('Russian')),
+    ('en', _('English')),
+]
 
-    #### MEDIA ####
+#### MEDIA ####
 
-    MEDIA_ROOT = os.path.join(BASE_DIR, "media")
-    MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+MEDIA_URL = "/media/"
 
-    #### EMAIL ####
-    EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+#### EMAIL ####
+EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 
-    CELERY_EMAIL_TASK_CONFIG = {
-        'name': 'djcelery_email_send',
-        'ignore_result': True,
-        'queue': 'email',
-        'rate_limit': '50/m',
-    }
+CELERY_EMAIL_TASK_CONFIG = {
+    'name': 'djcelery_email_send',
+    'ignore_result': True,
+    'queue': 'email',
+    'rate_limit': '50/m',
+}
 
-    LOGIN_REDIRECT_URL = "/constructor/"
+LOGIN_REDIRECT_URL = "/constructor/"
 
-    #### ADMIN REORDER ####
-    ADMIN_REORDER = (
-        {'app': 'programs', 'label': 'Открытые образовательные программы'},
-        {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
-        {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
-        {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool',
-                                                                     'modules.EducationalProgramTrajectoriesPool',
-                                                                     'modules.ChoiceModulesPool')},
-        {'app': 'auth', 'label': 'Пользователи', 'models': ('auth.User', )},
-        {'app': 'persons', 'label': 'Персоны'},
-        {'app': 'courses', 'label': 'Курсы и запуски курсов'},
-        {'app': 'directories', 'label': 'Справочники'},
-        {'app': 'disciplines', 'label': 'Дисциплины'},
-        {'app': 'journal', 'label': 'Электронный дневник'},
-        {'app': 'professions', 'label': 'Профессии'},
-        {'app': 'results', 'label': 'Результаты обучения'},
-        {'app': 'competences', 'label': 'Компетенции'},
-        {"app": "uni"},
-    )
+#### ADMIN REORDER ####
+ADMIN_REORDER = (
+    {'app': 'programs', 'label': 'Открытые образовательные программы'},
+    {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
+    {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
+    {'app': 'modules', 'label': 'Контейнеры модулей', 'models': ('modules.GeneralBaseModulesPool',
+                                                                 'modules.EducationalProgramTrajectoriesPool',
+                                                                 'modules.ChoiceModulesPool')},
+    {'app': 'auth', 'label': 'Пользователи', 'models': ('auth.User', )},
+    {'app': 'persons', 'label': 'Персоны'},
+    {'app': 'courses', 'label': 'Курсы и запуски курсов'},
+    {'app': 'directories', 'label': 'Справочники'},
+    {'app': 'disciplines', 'label': 'Дисциплины'},
+    {'app': 'journal', 'label': 'Электронный дневник'},
+    {'app': 'professions', 'label': 'Профессии'},
+    {'app': 'results', 'label': 'Результаты обучения'},
+    {'app': 'competences', 'label': 'Компетенции'},
+    {"app": "uni"},
+)
 
 #### REWRITE ADMIN TITLES ####
-    admin.site.site_header = _('Открытые образовательные программы')
-    admin.site.site_title = _('Открытые образовательные программы')
-    admin.site.index_title = _('Администрирование')
+admin.site.site_header = _('Открытые образовательные программы')
+admin.site.site_title = _('Открытые образовательные программы')
+admin.site.index_title = _('Администрирование')
 
 #### PERMISSION ####
-    PERMISSION_CHECK_TEMPLATES_OPTIONS_BUILTINS = False
+PERMISSION_CHECK_TEMPLATES_OPTIONS_BUILTINS = False
 
 #### SMUGGLER ####
-    SMUGGLER_FIXTURE_DIR = FIXTURE_DIRS[0]
+SMUGGLER_FIXTURE_DIR = FIXTURE_DIRS[0]
 
 #### CODEMIRROR ####
-    CODEMIRROR_PATH = os.path.join(STATICFILES_DIRS[0], "vendor", "codemirror")
+CODEMIRROR_PATH = os.path.join(STATICFILES_DIRS[0], "vendor", "codemirror")
 
 #### REST FRAMEWORK ####
-    REST_FRAMEWORK = {
-        'DEFAULT_AUTHENTICATION_CLASSES': [],
-        'DEFAULT_PERMISSION_CLASSES': (
-            'rest_framework.permissions.AllowAny',
-        ),
-    }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [],
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.AllowAny',
+    ),
+}
 
-    #### CORS ####
-    CORS_ORIGIN_WHITELIST = (
-        'localhost:8000',
-        '127.0.0.1:8000',
-        'localhost:3000',
-    )
+#### CORS ####
+CORS_ORIGIN_WHITELIST = (
+    'localhost:8000',
+    '127.0.0.1:8000',
+    'localhost:3000',
+)
 
-    CORS_URLS_REGEX = r'^/api/v1/.*$'
+CORS_URLS_REGEX = r'^/api/v1/.*$'
 
-    CORS_ALLOW_METHODS = (
-        'DELETE',
-        'GET',
-        'OPTIONS',
-        'PATCH',
-        'POST',
-        'PUT',
-    )
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
 
-    CORS_ALLOW_HEADERS = (
-        'accept',
-        'accept-encoding',
-        'authorization',
-        'content-type',
-        'dnt',
-        'origin',
-        'user-agent',
-        'x-csrftoken',
-        'x-requested-with',
-    )
-
-
-class Dev(Common):
-
-    DEBUG = True
-    SECRET_KEY = '&p(zt!@%h#+f+i%@avy9=v5bfi!pz(0rv@-6w%(#olfe(@b^i0'
-
-
-class Prod(Common):
-
-    DEBUG = False
-    #INSTALLED_APPS.append('django_mysql') # Read https://django-mysql.readthedocs.io/en/latest/installation.html
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+)
