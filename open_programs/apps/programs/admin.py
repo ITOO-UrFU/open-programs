@@ -1,21 +1,14 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Program, ModuleDependency, ModuleDependencyForm
-
-
-# class ModuleDependencyInline(admin.TabularInline):
-#     model = Program.module_dependencies.through
-
+from .models import Program, TrainingTarget, ProgramCompetence
 
 
 @admin.register(Program)
 class ProgramAdmin(VersionAdmin):
-    # inlines = (
-    #     ModuleDependencyInline,
-    # )
     list_display = (
         'title',
+        "training_direction",
         'chief',
         "level",
         'created',
@@ -24,20 +17,29 @@ class ProgramAdmin(VersionAdmin):
         'status',
 
     )
-    list_filter = ('title', 'chief', "level", "modules", 'created', 'updated', 'status', 'archived',)
+    list_filter = ('title', 'chief', "training_direction", "level", "program_modules", 'created', 'updated', 'status', 'archived',)
     filter_horizontal = (
-        'modules',
-        #'general_base_modules',
-        #'educational_program_trajectories',
-        #'choice_modules',
+        'program_modules',
     )
-    exclude = ('module_dependencies', )
 
 
-@admin.register(ModuleDependency)
-class ModuleDependencyAdmin(VersionAdmin):
-    # list_display = ('id', 'module', 'type', 'program')
-    # list_filter = ('module',)
-    filter_horizontal = ('modules',)  # TODO: list modules from program!!!?
+@admin.register(TrainingTarget)
+class TrainingTargetAdmin(VersionAdmin):
+    list_display = (
+        "title",
+        "program",
+        "number"
+    )
+    list_filter = (
+        "title",
+        "program",
+        "number"
+    )
+    filter_horizontal = ("program", )
 
-    form = ModuleDependencyForm
+
+@admin.register(ProgramCompetence)
+class ProgramCompetenceAdmin(VersionAdmin):
+    list_display = ("title", "number")
+    list_filter = ("title", "number")
+    search_fields = ("title", )
