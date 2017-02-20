@@ -8,7 +8,7 @@ from persons.models import Person
 from competences.models import Competence
 from results.models import Result
 from disciplines.models import Discipline
-from modules.models import Module, Type, GeneralBaseModulesPool, EducationalProgramTrajectoriesPool, ChoiceModulesPool
+from modules.models import Module, Type
 from programs.models import Program
 from disciplines.models import Discipline
 
@@ -17,8 +17,7 @@ from persons.serializers import UserSerializer, PersonSerializer
 from competences.serializers import CompetenceSerializer
 from results.serializers import ResultSerializer
 from disciplines.serializers import DisciplineSerializer
-from modules.serializers import ModuleSerializer, TypeSerializer, GeneralBaseModulesPoolSerializer, \
-    EducationalProgramTrajectoriesPoolSerializer, ChoiceModulesPoolSerializer
+from modules.serializers import ModuleSerializer, TypeSerializer
 from programs.serializers import ProgramSerializer
 from disciplines.serializers import DisciplineSerializer
 
@@ -81,21 +80,6 @@ class TypeList(viewsets.ModelViewSet):
     serializer_class = TypeSerializer
 
 
-class GeneralBaseModulesPoolList(viewsets.ModelViewSet):
-    queryset = GeneralBaseModulesPool.objects.filter(status="p", archived=False)
-    serializer_class = GeneralBaseModulesPoolSerializer
-
-
-class EducationalProgramTrajectoriesPoolList(viewsets.ModelViewSet):
-    queryset = EducationalProgramTrajectoriesPool.objects.filter(status="p", archived=False)
-    serializer_class = EducationalProgramTrajectoriesPoolSerializer
-
-
-class ChoiceModulesPoolList(viewsets.ModelViewSet):
-    queryset = ChoiceModulesPool.objects.filter(status="p", archived=False)
-    serializer_class = ChoiceModulesPoolSerializer
-
-
 class DisciplineList(viewsets.ModelViewSet):
     model = Discipline
     serializer_class = DisciplineSerializer
@@ -130,21 +114,6 @@ class ModuleDetail(serializers.HyperlinkedModelSerializer):
 class TypeDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Type
-
-
-class GeneralBaseModulesPoolDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = GeneralBaseModulesPool
-
-
-class EducationalProgramTrajectoriesPoolDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = EducationalProgramTrajectoriesPool
-
-
-class ChoiceModulesPoolDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ChoiceModulesPool
 
 
 class ResultDetail(serializers.HyperlinkedModelSerializer):

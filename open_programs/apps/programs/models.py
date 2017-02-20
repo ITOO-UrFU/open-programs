@@ -19,14 +19,11 @@ class Program(ObjectBaseClass):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     level = models.CharField(_("Уровень программы"), max_length=1, choices=LEVELS, default="b")
-
     title = models.CharField(_('Наименование образовательной программы'), blank=False, max_length=256, default=_(''))
-    training_direction = models.CharField(_("Направление подготовки"), blank=False, max_length=256, default=_(''))  # TODO: obj or string?
+    training_direction = models.CharField(_("Направление подготовки"), blank=False, max_length=256, default=_(''))
     competences = models.ManyToManyField(Competence, blank=True)
-    # choice_groups = models.ManyToManyField()
     chief = models.OneToOneField(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
-
-    program_modules = models.ManyToManyField(Module, blank=True, verbose_name=_("Модули программы"))
+    # program_modules = models.ManyToManyField(Module, blank=True, verbose_name=_("Модули программы"))
 
     class Meta:
         verbose_name = 'программа'
@@ -41,31 +38,76 @@ class TrainingTarget(ObjectBaseClass):
     title = models.CharField(_('Наименование образовательной цели'), blank=False, max_length=256, default=_(''))
     program = models.ManyToManyField("Program")
     number = models.IntegerField(_("Порядковый номер цели"))
+
+    class Meta:
+        verbose_name = 'образовательная цель'
+        verbose_name_plural = 'образовательные цели'
+
+    def __str__(self):
+        return self.title
     
     
 class ProgramCompetence(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title = models.CharField(_('Наименование компетенции'), blank=False, max_length=256, default=_(''))
+    title = models.CharField(_('Наименование компетенции'), blank=False, max_length=2048, default=_(''))
     number = models.IntegerField(_("Номер компетенции"))
+
+    class Meta:
+        verbose_name = 'компетенция программы'
+        verbose_name_plural = 'компетенции программы'
+
+    def __str__(self):
+        return self.title
 
 
 class ProgramModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     program = models.ForeignKey("Program")
-    module = models.ForeignKey("Module")
-    # choice_group = models.ForeignKey()
+    module = models.ForeignKey("modules.Module")
+    choice_group = models.ForeignKey("ChoiceGroup")
     competence = models.ManyToManyField(Competence, blank=True)
     period_start = models.DateField(_("Начало периода освоения"))
     period_end = models.DateField(_("Конец периода освоения"))
 
+    class Meta:
+        verbose_name = 'модуль программы'
+        verbose_name_plural = 'модули программы'
+
 
 class TargetModules(ObjectBaseClass):
-    pass
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    target = models.ForeignKey("TrainingTarget")
+    program_module = models.ForeignKey("ProgramModules")
+    choice_group = models.ForeignKey("ChoiceGroup")
+
+    class Meta:
+        verbose_name = 'модуль цели'
+        verbose_name_plural = 'модули цели'
 
 
 class ChoiceGroup(ObjectBaseClass):
-    pass
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    program = models.ForeignKey("Program")
+    title = models.CharField(_('Наименование группы выбора'), blank=False, max_length=2048, default=_(''))
+    labor = models.IntegerField(_("Трудоёмкость группы"), default=3)
+    choice_group_type = models.ForeignKey("ChoiceGroupType")
+    number = models.IntegerField(_("Номер группы выбора"))
+
+    class Meta:
+        verbose_name = 'группа выбора'
+        verbose_name_plural = 'группы выбора'
+
+    def __str__(self):
+        return self.title
 
 
-class ChoicesGroupType(ObjectBaseClass):
-    pass
+class ChoiceGroupType(ObjectBaseClass):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(_('Наименование типы группы выбора'), blank=False, max_length=2048, default=_(''))
+
+    class Meta:
+        verbose_name = 'тип группы выбора'
+        verbose_name_plural = 'типы группы выбора'
+
+    def __str__(self):
+        return self.title

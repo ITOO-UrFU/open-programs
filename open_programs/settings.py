@@ -16,6 +16,7 @@ ALLOWED_HOSTS = ['*', ]
 PROJECT_ROOT = os.path.dirname(__file__)
 sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
+DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [

@@ -40,9 +40,6 @@ router.register(r'disciplines', DisciplineList)
 
 router.register(r'modules', ModuleList)
 router.register(r'types', TypeList)
-router.register(r'generalbasemodulespools', GeneralBaseModulesPoolList)
-router.register(r'educationalprogramtrajectoriespools', EducationalProgramTrajectoriesPoolList)
-router.register(r'choicemodulespools', ChoiceModulesPoolList)
 
 
 

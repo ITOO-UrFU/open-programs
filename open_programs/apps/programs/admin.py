@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Program, TrainingTarget, ProgramCompetence
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType
 
 
 @admin.register(Program)
@@ -17,19 +17,18 @@ class ProgramAdmin(VersionAdmin):
         'status',
 
     )
-    list_filter = ('title', 'chief', "training_direction", "level", "program_modules", 'created', 'updated', 'status', 'archived',)
-    filter_horizontal = (
-        'program_modules',
-    )
+    list_filter = ('title', 'chief', "training_direction", "level", 'created', 'updated', 'status', 'archived',)
+    # filter_horizontal = (
+    #     'program_modules',
+    # )
 
 
 @admin.register(TrainingTarget)
 class TrainingTargetAdmin(VersionAdmin):
     list_display = (
         "title",
-        "program",
         "number"
-    )
+    )  # TODO: "program"
     list_filter = (
         "title",
         "program",
@@ -43,3 +42,24 @@ class ProgramCompetenceAdmin(VersionAdmin):
     list_display = ("title", "number")
     list_filter = ("title", "number")
     search_fields = ("title", )
+
+
+@admin.register(ProgramModules)
+class ProgramModulesAdmin(VersionAdmin):
+    list_display = ("id",  "period_start", "period_end")  # TODO: "module", "program", "choice_group", "competence",
+    list_filter = ("program", "period_start", "period_end")
+
+
+@admin.register(TargetModules)
+class TargetModulesAdmin(VersionAdmin):
+    list_display = ("id",  )  # TODO: "choice_group", "program_module", "target"
+
+
+@admin.register(ChoiceGroup)
+class ChoiceGroupAdmin(VersionAdmin):
+    list_display = ("id", "program", "title", "labor", "choice_group_type", "number")
+
+
+@admin.register(ChoiceGroupType)
+class ChoiceGroupTypeAdmin(VersionAdmin):
+    list_display = ("title", )
