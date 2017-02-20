@@ -71,4 +71,5 @@ if settings.DEBUG is True:
 
 urlpatterns += [
     url(r'constructor/', include('open_programs.apps.constructor.urls')),
+    url(r'constructor_v2/', include('open_programs.apps.constructor_v2.urls')),
 ]
