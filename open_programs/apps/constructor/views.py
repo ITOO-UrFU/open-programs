@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 from django.utils.translation import ugettext_lazy as _
 
-from programs.models import Program
+from programs.models import *
 from courses.models import Course
 from professions.models import Profession
 from modules.models import Module

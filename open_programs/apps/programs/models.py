@@ -22,8 +22,7 @@ class Program(ObjectBaseClass):
     title = models.CharField(_('Наименование образовательной программы'), blank=False, max_length=256, default=_(''))
     training_direction = models.CharField(_("Направление подготовки"), blank=False, max_length=256, default=_(''))
     competences = models.ManyToManyField(Competence, blank=True)
-    chief = models.OneToOneField(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
-    # program_modules = models.ManyToManyField(Module, blank=True, verbose_name=_("Модули программы"))
+    chief = models.ForeignKey(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
 
     class Meta:
         verbose_name = 'программа'
@@ -31,6 +30,9 @@ class Program(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+    def get_choice_groups(self):
+        return [str(choice_group) for choice_group in ChoiceGroup.objects.filter(program__id=self.id)]
 
 
 class TrainingTarget(ObjectBaseClass):
