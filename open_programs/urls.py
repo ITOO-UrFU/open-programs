@@ -23,25 +23,42 @@ from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 
 from .apps.api.views import *
+from .apps.api_v11.views import *
 
 permission.autodiscover()
 
 
-router = routers.DefaultRouter()
-router.register(r'courses', CourseList)
-router.register(r'courses_ids', CoursesIdList, 'Course')
-router.register(r'sessions', SessionList)
-router.register(r'persons', PersonList)
-router.register(r'users', UserList)
-router.register(r'competences', CompetenceList)
-router.register(r'results', ResultList)
-router.register(r'programs', ProgramList)
-router.register(r'disciplines', DisciplineList)
-
-router.register(r'modules', ModuleList)
-router.register(r'types', TypeList)
 
 
+router_10 = routers.DefaultRouter()
+router_10.register(r'courses', CourseList)
+router_10.register(r'courses_ids', CoursesIdList, 'Course')
+router_10.register(r'sessions', SessionList)
+router_10.register(r'persons', PersonList)
+router_10.register(r'users', UserList)
+router_10.register(r'competences', CompetenceList)
+router_10.register(r'results', ResultList)
+router_10.register(r'programs', ProgramList)
+router_10.register(r'disciplines', DisciplineList)
+router_10.register(r'modules', ModuleList)
+router_10.register(r'types', TypeList)
+
+router_11 = routers.DefaultRouter()
+router_11.register(r'choice_group_types', ChoiceGroupTypeList)
+router_11.register(r'choice_groups', ChoiceGroupList)
+router_11.register(r'target_modules', TargetModulesList)
+router_11.register(r'program_modules', ProgramModulesList)
+router_11.register(r'program_competences', ProgramCompetenceList)
+router_11.register(r'training_targets', TrainingTargetList)
+router_11.register(r'users', UserList)
+router_11.register(r'courses', CourseList)
+router_11.register(r'persons', PersonList)
+router_11.register(r'competences', CompetenceList)
+router_11.register(r'results', ResultList)
+router_11.register(r'disciplines', DisciplineList)
+router_11.register(r'types', TypeList)
+router_11.register(r'modules', ModuleList)
+router_11.register(r'programs', ProgramList)
 
 schema_view = get_swagger_view(title='Open programs')
 
@@ -52,7 +69,8 @@ urlpatterns = [
     url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^api/v1/', include(router.urls, namespace='api')),
+    url(r'^api/v1/', include(router_10.urls, namespace='api')),
+    url(r'^api/v11/', include(router_11.urls, namespace='api_v11')),
     url(r'^api/docs/', schema_view),
  ]
 

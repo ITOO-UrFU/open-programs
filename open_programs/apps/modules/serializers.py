@@ -17,12 +17,10 @@ class ModuleSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True,
     )
 
-    disciplines = serializers.PrimaryKeyRelatedField(
+    get_all_disciplines = DisciplineSerializer(
         many=True,
-        read_only=True,
-
     )
 
     class Meta:
         model = Module
-        fields = ("id", "title", "description", "disciplines", "type", "results", "results_text", "competences", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description", "get_all_disciplines", "type", "results", "results_text", "competences")

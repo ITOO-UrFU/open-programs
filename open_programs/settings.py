@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "constructor",
     "constructor_v2",
     "api",
+    "api_v11",
     "uni",
 ]
 

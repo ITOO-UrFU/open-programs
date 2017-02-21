@@ -67,7 +67,7 @@ class ProgramModules(ObjectBaseClass):
     program = models.ForeignKey("Program")
     module = models.ForeignKey("modules.Module")
     choice_group = models.ForeignKey("ChoiceGroup")
-    competence = models.ManyToManyField(Competence, blank=True)
+    competence = models.ManyToManyField(ProgramCompetence, blank=True)
     period_start = models.DateField(_("Начало периода освоения"))
     period_end = models.DateField(_("Конец периода освоения"))
 
