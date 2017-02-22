@@ -33,9 +33,15 @@ class Module(ObjectBaseClass):
     def get_all_disciplines(self):
         return Discipline.objects.filter(module__id=self.id)
 
+    def get_labor(self):
+        return sum([labor["labor"] for labor in Discipline.objects.filter(module__id=self.id).values('labor')])
+
     class Meta:
         verbose_name = 'модуль'
         verbose_name_plural = 'модули'
 
     def __str__(self):
         return self.title
+
+    def get_type_display(self):
+        return self.type.title
