@@ -189,7 +189,7 @@ class ProfessionForm(ModelForm):
 class DisciplineForm(ModelForm):
     class Meta:
         model = Discipline
-        fields = ['name', "points", "form"]
+        fields = ['name', "labor", "form"]
 
 
 class ModuleForm(ModelForm):

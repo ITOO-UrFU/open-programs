@@ -32,7 +32,7 @@ class Program(ObjectBaseClass):
         return self.title
 
     def get_choice_groups(self):
-        return [str(choice_group) for choice_group in ChoiceGroup.objects.filter(program__id=self.id)]
+        return [choice_group.id for choice_group in ChoiceGroup.objects.filter(program__id=self.id)]
 
 
 class TrainingTarget(ObjectBaseClass):
@@ -101,6 +101,13 @@ class ChoiceGroup(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+    def get_choice_group_type_display(self):
+        return self.choice_group_type.title
+
+    def get_modules(self):
+        program_modules = ProgramModules.objects.filter(program=self.program, choice_group=self)
+        return [program_module.module.id for program_module in program_modules]
 
 
 class ChoiceGroupType(ObjectBaseClass):

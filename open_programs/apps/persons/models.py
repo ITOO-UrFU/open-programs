@@ -32,7 +32,7 @@ class Person(models.Model):
 
     def __str__(self):
         if self.first_name and self.last_name:
-            return ' '.join([str(self.first_name), str(self.last_name)])
+            return ' '.join([str(self.last_name), str(self.first_name), str(self.second_name)])
         else:
             return str(self.user)
 

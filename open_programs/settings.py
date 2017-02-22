@@ -250,9 +250,11 @@ CORS_ORIGIN_WHITELIST = (
     'localhost:8000',
     '127.0.0.1:8000',
     'localhost:3000',
+    'localhost:4200',
+    '127.0.0.1:4200',
 )
 
-CORS_URLS_REGEX = r'^/api/v1/.*$'
+CORS_URLS_REGEX = r'^/api/v11/.*$'
 
 CORS_ALLOW_METHODS = (
     'DELETE',
