@@ -46,13 +46,14 @@ class ProgramCompetenceAdmin(VersionAdmin):
 
 @admin.register(ProgramModules)
 class ProgramModulesAdmin(VersionAdmin):
-    list_display = ("id",  "period_start", "period_end")  # TODO: "module", "program", "choice_group", "competence",
+    list_display = ("id",  "semester", "module", "program", "choice_group", "competence")
     list_filter = ("program", "period_start", "period_end")
+    raw_id_fields = ("module", )
 
 
 @admin.register(TargetModules)
 class TargetModulesAdmin(VersionAdmin):
-    list_display = ("id",  )  # TODO: "choice_group", "program_module", "target"
+    list_display = ("id", )  # TODO: "choice_group", "program_module", "target"
 
 
 @admin.register(ChoiceGroup)

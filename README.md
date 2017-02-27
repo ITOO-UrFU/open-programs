@@ -34,3 +34,9 @@
 ## Создание суперпользователя
 
 `$ ./manage.py addroot <username>`
+
+## Разное
+
+Для работы с accdb загрузить драйвер:
+
+`https://www.microsoft.com/en-US/download/details.aspx?id=13255`

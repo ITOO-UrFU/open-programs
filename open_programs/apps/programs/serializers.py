@@ -42,18 +42,18 @@ class ChoiceGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ChoiceGroup
-        fields = ("id", "program", "title", "labor", "get_choice_group_type_display", "get_modules", "number")
+        fields = ("id", "program", "title", "labor", "get_choice_group_type_display", "get_program_modules", "number")
 
 
 class ProgramModulesSerializer(serializers.ModelSerializer):
     program = ProgramSerializer
-    module = ModuleSerializer(many=True)
+    module = ModuleSerializer
     choice_group = ChoiceGroupSerializer
     competence = ProgramCompetenceSerializer
 
     class Meta:
         model = ProgramModules
-        fields = ("id", "program", "module", "choice_group", "competence", "period_start", "period_end")
+        fields = ("id", "program", "module", "choice_group", "get_competence_display", "period_start", "period_end")
 
 
 class TargetModulesSerializer(serializers.ModelSerializer):
