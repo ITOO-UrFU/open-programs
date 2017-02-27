@@ -67,13 +67,15 @@ class ProgramModules(ObjectBaseClass):
     program = models.ForeignKey("Program")
     module = models.ForeignKey("modules.Module")
     choice_group = models.ForeignKey("ChoiceGroup")
-    competence = models.ManyToManyField(ProgramCompetence, blank=True)
-    period_start = models.DateField(_("Начало периода освоения"))
-    period_end = models.DateField(_("Конец периода освоения"))
+    competence = models.ForeignKey(ProgramCompetence, blank=True, null=True)
+    semester = models.PositiveIntegerField(blank=True)
 
     class Meta:
         verbose_name = 'модуль программы'
         verbose_name_plural = 'модули программы'
+
+    def get_competence_display(self):
+        return str(self.competence)
 
 
 class TargetModules(ObjectBaseClass):
@@ -105,9 +107,8 @@ class ChoiceGroup(ObjectBaseClass):
     def get_choice_group_type_display(self):
         return self.choice_group_type.title
 
-    def get_modules(self):
-        program_modules = ProgramModules.objects.filter(program=self.program, choice_group=self)
-        return [program_module.module.id for program_module in program_modules]
+    def get_program_modules(self):
+        return [program_module.id for program_module in ProgramModules.objects.filter(program=self.program, choice_group=self, status="p", archived=False)]
 
 
 class ChoiceGroupType(ObjectBaseClass):

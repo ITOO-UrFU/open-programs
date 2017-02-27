@@ -1,0 +1,41 @@
+{% extends "constructor_v2/base.html" %}
+{% load i18n %}
+{% load constructor_filters %}
+{% block content %}
+
+		<script type="text/javascript" charset="utf-8">
+        var programsList = {{ programs|to_list_ui|safe }};
+        webix.ready(function() {
+            webix.ui({
+                type: "space", id: "constructor", rows: [{
+                    type: "space", padding: 0, responsive: "a1", cols: [
+                        {
+                            view: "list", data: programsList,
+                            ready:function(){ this.select(this.getFirstId());},
+                            select: true, scroll: true, width: 400,
+                            on: {"onItemClick": programClick}
+                        },
+                        {
+                            view: "list", data: null,
+                            select: true, scroll: false, width: 300
+                        },
+                        {
+                            view: "datatable", select: true, columns: [
+                            {id: "title", fillspace: 1}, {id: "votes"}
+                        ], data: null,
+                            minWidth: 300
+                        }
+                    ]
+                }
+                ]
+            }).show();
+
+            function programClick(id, e) {
+                var item_id = $$('$list1').locate(e);
+                webix.message("Программа: " + item_id);
+            }
+        })
+
+		</script>
+
+{% endblock %}
