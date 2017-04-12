@@ -20,18 +20,26 @@ def random_component_key():
 
 class ContainerType(models.Model):
     title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default=random_container_key)
-    dev_description = HTMLField()
+    dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'тип контейнера'
+        verbose_name_plural = 'типы контейнера'
 
 
 class ComponentType(models.Model):
     title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default=random_component_key)
-    dev_description = HTMLField()
+    dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
         return self.title
+
+    class Meta:
+        verbose_name = 'тип компонента'
+        verbose_name_plural = 'типы компонентов'
 
 
 class Container(ObjectBaseClass):
