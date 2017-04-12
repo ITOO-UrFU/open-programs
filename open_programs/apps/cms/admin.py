@@ -25,7 +25,10 @@ class JSONEditor(Textarea):
         css = {'all': (getattr(settings, "JSON_EDITOR_CSS", settings.STATIC_URL+'jsoneditor/jsoneditor.css'),)}
 
     def render(self, name, value, attrs=None):
-        value = json.dumps(value)
+        try:
+            value = json.loads(value)
+        except TypeError:
+            pass
         input_attrs = {'hidden': True}
         input_attrs.update(attrs)
         if 'class' not in input_attrs:
@@ -38,6 +41,11 @@ class JSONEditor(Textarea):
         div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
         final_attrs = self.build_attrs(div_attrs, name=name)
         r += '''
+        <script>
+            var container = document.getElementById("id_json_jsoneditor");
+            var options = {};
+            var editor = new JSONEditor(container, options);
+        </script>
         <div %(attrs)s></div>
         ''' % {
             'attrs': flatatt(final_attrs),
