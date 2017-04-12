@@ -42,27 +42,28 @@ class JSONEditor(Textarea):
         final_attrs = self.build_attrs(div_attrs, name=name)
         r += '''
         <style type="text/css">
-            #id_json_jsoneditor {
+            #id_%(name)s_jsoneditor {
               height: 400px;
             }
           </style>
         <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
-            var jsoncontainer = document.getElementById("id_json_jsoneditor");
+            var jsoncontainer = document.getElementById("id_%(name)s_jsoneditor");
             var options = {
-                onChange: function(){document.getElementById("id_json").value = JSON.stringify(editor.get())}
+                onChange: function(){document.getElementById("id_%(name)s").value = JSON.stringify(editor.get())}
             };
             var editor = new JSONEditor(jsoncontainer, options);
 
-            editor.set(JSON.parse(document.getElementById("id_json").value.replace(/'/g, '"')));
-            document.getElementById("id_json").value = JSON.stringify(editor.get());
+            editor.set(JSON.parse(document.getElementById("id_%(name)s").value.replace(/'/g, '"')));
+            document.getElementById("id_%(name)s").value = JSON.stringify(editor.get());
         });
 
         </script>
         <div %(attrs)s></div>
         ''' % {
             'attrs': flatatt(final_attrs),
+            'name': name
         }
         return mark_safe(r)
 
