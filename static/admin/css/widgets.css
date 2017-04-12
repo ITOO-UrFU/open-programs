@@ -1,5 +1,9 @@
 /* SELECTOR (FILTER INTERFACE) */
 
+.form-row .mce-tinymce {
+    top: 3em;
+}
+
 .selector {
     width: 800px;
     float: left;
