@@ -43,7 +43,7 @@ class JSONEditor(Textarea):
         r += '''
         <style type="text/css">
             #id_json_jsoneditor {
-              height: 700px;
+              height: 400px;
             }
           </style>
         <script>
