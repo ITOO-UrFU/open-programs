@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from jsonfield import JSONField
-from jsoneditor.forms import JSONEditor
+# from jsoneditor.fields.django_jsonfield import JSONField
+# from jsoneditor.forms import JSONEditor
 from reversion.admin import VersionAdmin
 from codemirror2.widgets import CodeMirrorEditor
 
@@ -19,9 +19,9 @@ class ComponentAdmin(VersionAdmin):
                                                 )
         return super(ComponentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
-    formfield_overrides = {
-        JSONField: {'widget': JSONEditor},
-    }
+    # formfield_overrides = {
+    #     JSONField: {'widget': JSONEditor},
+    # }
 
     fields = ("title", "slug", "type",  "dev_description", "content", "json", "components", "weight", "status", "archived")
     list_display = ("title", "slug", "weight", "status", "archived")
