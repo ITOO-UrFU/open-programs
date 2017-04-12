@@ -55,7 +55,7 @@ class JSONEditor(Textarea):
             };
             var editor = new JSONEditor(jsoncontainer, options);
 
-            editor.set(JSON.parse(document.getElementById("id_json").value));
+            editor.set(JSON.parse(JSON.stringify(document.getElementById("id_json").value)));
         });
 
         </script>
