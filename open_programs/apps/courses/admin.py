@@ -1,5 +1,4 @@
 from django.contrib import admin
-from django.db import models
 from reversion.admin import VersionAdmin
 from codemirror2.widgets import CodeMirrorEditor
 
@@ -21,7 +20,6 @@ class CourseAdmin(VersionAdmin):
     filter_horizontal = ("sessions", "staff", "results", "authors")
     list_filter = ('archived', 'created', 'updated')
     search_fields = ('slug', "title")
-
 
 
 @admin.register(Session)

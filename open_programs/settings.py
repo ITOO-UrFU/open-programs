@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_swagger',
     'codemirror2',
+    'tinymce',
     'corsheaders',
+    'jsoneditor',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -63,6 +65,7 @@ INSTALLED_APPS = [
     "api",
     "api_v11",
     "uni",
+    "cms",
 ]
 
 if platform.system() not in ('Windows', 'Darwin', 'FreeBSD', 'Linux'):
@@ -278,3 +281,22 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+
+JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/4.2.1/jsoneditor.js'
+JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/4.2.1/jsoneditor.css'
+
+#### TINYMCE ####
+
+TINYMCE_PROFILE = {
+    'theme': 'modern',
+    'plugins': 'noneditable advlist autolink link lists charmap hr searchreplace wordcount visualblocks visualchars code insertdatetime save table contextmenu directionality paste textcolor',
+    'toolbar': 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | upload_button',
+    'noneditable_leave_contenteditable': 'true',
+    'setup': 'addCustomButtons',
+    'content_css': os.path.join(STATIC_URL, "mycss/tinymce.css"),
+    'relative_urls': False,
+    'remove_script_host': True,
+    'document_base_url': "https://openedu.urfu.ru",
+    'removed_menuitems': 'newdocument'
+}
