@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'codemirror2',
     'corsheaders',
+    'jsoneditor',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -277,3 +278,7 @@ CORS_ALLOW_HEADERS = (
     'x-csrftoken',
     'x-requested-with',
 )
+
+
+JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/4.2.1/jsoneditor.js'
+JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/4.2.1/jsoneditor.css'

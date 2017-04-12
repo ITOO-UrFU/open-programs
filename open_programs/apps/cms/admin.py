@@ -1,3 +1,11 @@
 from django.contrib import admin
 
-# Register your models here.
+from jsonfield import JSONField
+from jsoneditor.forms import JSONEditor
+
+
+
+class MyAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+        JSONField:{'widget': JSONEditor},
+    }
