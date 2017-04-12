@@ -208,6 +208,7 @@ LOGIN_REDIRECT_URL = "/constructor/"
 
 #### ADMIN REORDER ####
 ADMIN_REORDER = (
+    {'app': 'cms', 'label': 'Управление контентом'},
     {'app': 'programs', 'label': 'Открытые образовательные программы'},
     {'app': 'modules', 'label': 'Типы модулей', 'models': ('modules.Type', )},
     {'app': 'modules', 'label': 'Модули', 'models': ('modules.Module', )},
