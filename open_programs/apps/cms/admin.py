@@ -71,13 +71,6 @@ class JSONEditor(Textarea):
 @admin.register(Component)
 class ComponentAdmin(VersionAdmin):
 
-    def formfield_for_dbfield(self, db_field, **kwargs):
-        if db_field.attname in ("description", "about"):
-            kwargs['widget'] = CodeMirrorEditor(options={'mode': 'htmlmixed', 'lineNumbers': True, 'lineWrapping': True},
-                                                modes=['css', 'xml', 'javascript', 'htmlmixed'],
-                                                )
-        return super(ComponentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
-
     formfield_overrides = {
         JSONField: {'widget': JSONEditor},
     }
@@ -87,3 +80,23 @@ class ComponentAdmin(VersionAdmin):
     filter_horizontal = ("components", )
     list_filter = ("slug", "weight", "status", "archived")
     search_fields = ('slug', "title", "dev_description")
+
+
+@admin.register(Container)
+class ContainerAdmin(VersionAdmin):
+
+    fields = ("title", "slug", "type",  "dev_description", "containers", "weight", "status", "archived")
+    list_display = ("title", "slug", "weight", "status", "archived")
+    filter_horizontal = ("containers", )
+    list_filter = ("slug", "weight", "status", "archived")
+    search_fields = ('slug', "title", "dev_description")
+
+
+@admin.register(ContainerType)
+class ContainerTypeAdmin(VersionAdmin):
+    fields = ("title", "dev_description")
+
+
+@admin.register(ComponentType)
+class ComponentTypeAdmin(VersionAdmin):
+    fields = ("title", "dev_description")
