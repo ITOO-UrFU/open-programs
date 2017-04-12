@@ -1,6 +1,6 @@
 from django.db import models
 from base.models import ObjectBaseClass
-from jsoneditor.fields.django_jsonfield import JSONField
+from jsonfield import JSONField
 from django.utils.translation import ugettext_lazy as _
 import uuid
 from tinymce.models import HTMLField
