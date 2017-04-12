@@ -50,7 +50,9 @@ class JSONEditor(Textarea):
 
         document.addEventListener("DOMContentLoaded", function(event) {
             var jsoncontainer = document.getElementById("id_json_jsoneditor");
-            var options = {};
+            var options = {
+                onChange: function(){document.getElementById("id_json").value = editor.get()};
+            };
             var editor = new JSONEditor(jsoncontainer, options);
         });
 
