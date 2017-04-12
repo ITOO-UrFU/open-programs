@@ -55,9 +55,9 @@ class ComponentAdmin(VersionAdmin):
                                                 )
         return super(ComponentAdmin, self).formfield_for_dbfield(db_field, **kwargs)
 
-    # formfield_overrides = {
-    #     JSONField: {'widget': JSONEditor},
-    # }
+    formfield_overrides = {
+        JSONField: {'widget': JSONEditor},
+    }
 
     fields = ("title", "slug", "type",  "dev_description", "content", "json", "components", "weight", "status", "archived")
     list_display = ("title", "slug", "weight", "status", "archived")
