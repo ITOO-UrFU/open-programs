@@ -71,13 +71,14 @@ urlpatterns = [
     url(r'^api/v1/', include(router_10.urls, namespace='api')),
     url(r'^api/v11/', include(router_11.urls, namespace='api_v11')),
     url(r'^api/docs/', schema_view),
+    url(r'^tinymce/', include('tinymce.urls')),
+    url(r'^accounts/', include('allauth.urls')),
  ]
 
 
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += [url(r'^rosetta/', include('rosetta.urls')),
                     url(r'^i18n/', include('django.conf.urls.i18n')),
-                    url(r'^accounts/', include('allauth.urls')),
                     ]
 
 if settings.DEBUG is True:
