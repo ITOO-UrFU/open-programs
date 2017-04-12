@@ -1,21 +1,26 @@
 import os
-import pypyodbc
 import json
+import os
+import pyodbc
 
 
 DUMP_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "dump")
 
-PROGRAMS = []
+if 'accdb' in pyodbc.dataSources():
+    if not os.path.isfile('C:\\Projects\\OOP_feb\\open-programs\\utils\\3.accdb'):
+        print('Файл базы данных не найден')
+    else:
+        connection = pyodbc.connect("DSN=accdb")
+        print('Connection: ok')
 
-pypyodbc.lowercase = False
-conn = pypyodbc.connect(
-    DRIVER="Driver do Microsoft Access (*.mdb)",
-    Dbq='C:\\Projects\\OOP_feb\\open-programs\\utils\\Прототип ИС ООП 2.0_v3.mdb')
+cur = connection.cursor()
 
-#### Программы
+tables = [t.table_name for t in cur.tables(tableType='TABLE')]
+print(tables)
 
-cur = conn.cursor()
+
 cur.execute("SELECT * FROM [Образовательные программы]")
+print()
 
 while True:
     row = cur.fetchone()
@@ -38,6 +43,7 @@ while True:
     PROGRAMS.append(Program)
 
 cur.close()
+print(PROGRAMS)
 
 #
 # #### Образовательные цели
@@ -98,69 +104,70 @@ cur.close()
 #
 
 #### Модули
-MODULES = []
+# MODULES = []
+#
+# cur = conn.cursor()
+# cur.execute("SELECT * FROM [Модули]")
+#
+# while True:
+#     row = cur.fetchone()
+#     if row is None:
+#         break
+#     Module = {}
+#     Module["model"] = "modules.module"
+#     Module["pk"] = row.get("Код модуля")
+#     Module["fields"] = {}
+#     Module["fields"]["archived"] = False
+#     Module["fields"]["created"] = "2017-02-20T07:01:43.361Z"
+#     Module["fields"]["updated"] = "2017-02-20T07:01:43.361Z"
+#     Module["fields"]["status"] = "p"
+#     Module["fields"]["title"] = row.get("Наименование модуля")
+#     Module["fields"]["description"] = ""
+#     Module["fields"]["type"] = 1
+#     Module["fields"]["results_text"] = ""
+#     Module["fields"]["semester"] = 1
+#     Module["fields"]["results"] = []
+#     Module["fields"]["competences"] = []
+#
+#     MODULES.append(Module)
+#
+# cur.close()
 
-cur = conn.cursor()
-cur.execute("SELECT * FROM [Модули]")
+# #### Дисциплины
+# import uuid
+# Disciplines = []
+#
+# cur = conn.cursor()
+# cur.execute("SELECT * FROM [Дисциплины]")
+#
+# while True:
+#     row = cur.fetchone()
+#     if row is None:
+#         break
+#     Discipline = {}
+#     Discipline["model"] = "disciplines.discipline"
+#     # Discipline["pk"] = str(uuid.uuid4())
+#     Discipline["fields"] = {}
+#     Discipline["fields"]["archived"] = False
+#     Discipline["fields"]["created"] = "2017-02-20T07:01:43.361Z"
+#     Discipline["fields"]["updated"] = "2017-02-20T07:01:43.361Z"
+#     Discipline["fields"]["status"] = "p"
+#     Discipline["fields"]["name"] = row.get("Наименование дисциплины")
+#     Discipline["fields"]["description"] = ""
+#     Discipline["fields"]["module"] = row.get("Код модуля")
+#     Discipline["fields"]["labor"] = row.get("Трудоемкость дисциплины")
+#
+#     Discipline["fields"]["period"] = row.get("Период освоения в модуле")
+#     Discipline["fields"]["form"] = row.get("Форма контроля")
+#     Discipline["fields"]["results_text"] = ""
+#     Discipline["fields"]["courses"] = []
+#     Discipline["fields"]["results"] = []
+#
+#     Disciplines.append(Discipline)
+#
+# cur.close()
+#
+# conn.close()
 
-while True:
-    row = cur.fetchone()
-    if row is None:
-        break
-    Module = {}
-    Module["model"] = "modules.module"
-    Module["pk"] = row.get("Код модуля")
-    Module["fields"] = {}
-    Module["fields"]["archived"] = False
-    Module["fields"]["created"] = "2017-02-20T07:01:43.361Z"
-    Module["fields"]["updated"] = "2017-02-20T07:01:43.361Z"
-    Module["fields"]["status"] = "p"
-    Module["fields"]["title"] = row.get("Наименование модуля")
-    Module["fields"]["description"] = ""
-    Module["fields"]["type"] = 1
-    Module["fields"]["results_text"] = ""
-    Module["fields"]["semester"] = 1
-    Module["fields"]["results"] = []
-    Module["fields"]["competences"] = []
+# print(json.dumps(Disciplines))
 
-    MODULES.append(Module)
-
-cur.close()
-
-#### Дисциплины
-import uuid
-Disciplines = []
-
-cur = conn.cursor()
-cur.execute("SELECT * FROM [Дисциплины]")
-
-while True:
-    row = cur.fetchone()
-    if row is None:
-        break
-    Discipline = {}
-    Discipline["model"] = "disciplines.discipline"
-    # Discipline["pk"] = str(uuid.uuid4())
-    Discipline["fields"] = {}
-    Discipline["fields"]["archived"] = False
-    Discipline["fields"]["created"] = "2017-02-20T07:01:43.361Z"
-    Discipline["fields"]["updated"] = "2017-02-20T07:01:43.361Z"
-    Discipline["fields"]["status"] = "p"
-    Discipline["fields"]["name"] = row.get("Наименование дисциплины")
-    Discipline["fields"]["description"] = ""
-    Discipline["fields"]["module"] = row.get("Код модуля")
-    Discipline["fields"]["labor"] = row.get("Трудоемкость дисциплины")
-
-    Discipline["fields"]["period"] = row.get("Период освоения в модуле")
-    Discipline["fields"]["form"] = row.get("Форма контроля")
-    Discipline["fields"]["results_text"] = ""
-    Discipline["fields"]["courses"] = []
-    Discipline["fields"]["results"] = []
-
-    Disciplines.append(Discipline)
-
-cur.close()
-
-conn.close()
-
-print(json.dumps(Disciplines))

@@ -53,7 +53,7 @@ class ProgramModulesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ProgramModules
-        fields = ("id", "program", "module", "choice_group", "get_competence_display", "period_start", "period_end")
+        fields = ("id", "program", "module", "choice_group", "get_competence_display", "semester")
 
 
 class TargetModulesSerializer(serializers.ModelSerializer):

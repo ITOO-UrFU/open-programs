@@ -47,7 +47,7 @@ class ProgramCompetenceAdmin(VersionAdmin):
 @admin.register(ProgramModules)
 class ProgramModulesAdmin(VersionAdmin):
     list_display = ("id",  "semester", "module", "program", "choice_group", "competence")
-    list_filter = ("program", "period_start", "period_end")
+    list_filter = ("program", "semester",)
     raw_id_fields = ("module", )
 
 

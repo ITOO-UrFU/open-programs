@@ -28,8 +28,6 @@ from .apps.api_v11.views import *
 permission.autodiscover()
 
 
-
-
 router_10 = routers.DefaultRouter()
 router_10.register(r'courses', CourseList)
 router_10.register(r'courses_ids', CoursesIdList, 'Course')
@@ -59,6 +57,7 @@ router_11.register(r'disciplines', DisciplineList)
 router_11.register(r'types', TypeList)
 router_11.register(r'modules', ModuleList)
 router_11.register(r'programs', ProgramList)
+
 
 schema_view = get_swagger_view(title='Open programs')
 
@@ -91,3 +90,7 @@ urlpatterns += [
     url(r'constructor/', include('open_programs.apps.constructor.urls')),
     url(r'constructor_v2/', include('open_programs.apps.constructor_v2.urls')),
 ]
+
+#### API rewrite
+urlpatterns.append(url(r'^api/v11/get_choice_groups_by_program/(?P<program_id>.*)/$', get_choice_groups_by_program, name="get_choice_groups_by_program"))
+urlpatterns.append(url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules, name="get_program_modules"))

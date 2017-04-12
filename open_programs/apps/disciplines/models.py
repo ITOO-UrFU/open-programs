@@ -10,7 +10,7 @@ class Discipline(ObjectBaseClass):
         ('e', _('Экзамен')),
         ('z', _('Зачет'))
         )
-    name = models.CharField(_('Название дисциплины'), max_length=256, blank=False, default='')
+    title = models.CharField(_('Название дисциплины'), max_length=256, blank=False, default='')
     description = models.TextField(_("Короткое описание"), max_length=16384, blank=True, null=True)
     module = models.ForeignKey("modules.Module", blank=True, null=True)
     labor = models.PositiveIntegerField(_("зачётных единиц"), blank=False, default=0)
@@ -25,7 +25,7 @@ class Discipline(ObjectBaseClass):
         verbose_name_plural = 'дисциплины'
 
     def __str__(self):
-        return self.name
+        return self.title
 
     def get_all(self):
         return "\n".join([str(course)for course in self.courses.all()])

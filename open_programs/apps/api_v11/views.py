@@ -1,5 +1,7 @@
 from rest_framework import viewsets
 from rest_framework import serializers
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 from django.contrib.auth.models import User
 from courses.models import Course, Session
@@ -164,7 +166,7 @@ class ProgramModulesDetail(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = ProgramModules
-        fields =("id", "program", "module", "choice_group", "competence", "period_start", "period_end")
+        fields = ("id", "program", "module", "choice_group", "competence", "period_start", "period_end")
 
 
 class ChoiceGroupDetail(serializers.HyperlinkedModelSerializer):
@@ -176,3 +178,46 @@ class ChoiceGroupTypeDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChoiceGroupType
 
+
+@api_view(('GET',))
+def get_choice_groups_by_program(request, program_id):
+    response = []
+    for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
+        response.append({
+            "id": cg.id,
+            "title": cg.title,
+            "get_choice_group_type_display": cg.get_choice_group_type_display(),
+            "get_program_modules": cg.get_program_modules(),
+            "number": cg.number,
+            "labor": cg.labor,
+            "program": cg.program.id,
+        })
+    return Response(response)
+
+
+@api_view(('GET',))
+def get_program_modules(request, program_id):
+    response = []
+    for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
+        tmp = []
+        mods = [program_module.module.id for program_module in ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, status="p", archived=False)]
+
+        for mod in Module.objects.filter(pk__in=mods):
+            pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
+
+            tmp.append({
+                "id": mod.id,
+                "title": mod.title,
+                "description": mod.description,
+                "get_competence_display": pr_mod.get_competence_display(),
+                "semester": pr_mod.semester,
+                "get_all_discipline_ids": mod.get_all_discipline_ids(),
+                # "get_all_disciplines": mod.get_all_disciplines(),
+                "get_type_display": mod.get_type_display(),
+                # "results": mod.results,
+                "results_text": mod.results_text,
+                # "competences": mod.competences,
+                "get_labor": mod.get_labor(),
+            })
+        response.append(tmp)
+    return Response(response)

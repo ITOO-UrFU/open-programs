@@ -33,6 +33,9 @@ class Module(ObjectBaseClass):
     def get_all_disciplines(self):
         return Discipline.objects.filter(module__id=self.id)
 
+    def get_all_discipline_ids(self):
+        return [discipline.id for discipline in Discipline.objects.filter(module__id=self.id).order_by("period")]
+
     def get_labor(self):
         return sum([labor["labor"] for labor in Discipline.objects.filter(module__id=self.id).values('labor')])
 
