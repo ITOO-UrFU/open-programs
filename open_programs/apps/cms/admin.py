@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from jsoneditor.fields.django_jsonfield import JSONField
+from json_field import JSONField
 from jsoneditor.forms import JSONEditor
 from reversion.admin import VersionAdmin
 from codemirror2.widgets import CodeMirrorEditor
