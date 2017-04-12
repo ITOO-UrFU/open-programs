@@ -286,24 +286,3 @@ CORS_ALLOW_HEADERS = (
 
 JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/jsoneditor.min.js'
 JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/jsoneditor.min.css'
-
-#### TINYMCE ####
-
-TINYMCE_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js'
-TINYMCE_DEFAULT_CONFIG = {
-    'plugins': "table,paste,searchreplace",
-    'theme': "modern",
-    'cleanup_on_startup': True,
-    'custom_undo_redo_levels': 10,
-}
-TINYMCE_COMPRESSOR = True
-TINYMCE_EXTRA_MEDIA = {
-    # 'css': {
-    #     'all': [
-    #         ...
-    #     ],
-    # },
-    'js': [
-        'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/themes/modern/theme.min.js'
-    ],
-}
