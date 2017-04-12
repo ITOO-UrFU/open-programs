@@ -41,6 +41,11 @@ class JSONEditor(Textarea):
         div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
         final_attrs = self.build_attrs(div_attrs, name=name)
         r += '''
+        <style type="text/css">
+            #id_json_jsoneditor {
+              height: 700px;
+            }
+          </style>
         <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
