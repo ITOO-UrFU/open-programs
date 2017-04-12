@@ -39,7 +39,6 @@ INSTALLED_APPS = [
     'codemirror2',
     'tinymce',
     'corsheaders',
-    'jsoneditor',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
