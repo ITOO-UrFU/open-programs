@@ -43,7 +43,7 @@ class JSONEditor(Textarea):
         r += '''
         <style type="text/css">
             #id_json_jsoneditor {
-              height: 700px;
+              height: 400px;
             }
           </style>
         <script>
@@ -56,6 +56,7 @@ class JSONEditor(Textarea):
             var editor = new JSONEditor(jsoncontainer, options);
 
             editor.set(JSON.parse(document.getElementById("id_json").value.replace(/'/g, '"')));
+            document.getElementById("id_json").value = JSON.stringify(editor.get());
         });
 
         </script>
