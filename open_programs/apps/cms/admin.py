@@ -23,7 +23,7 @@ class ComponentAdmin(VersionAdmin):
         JSONField: {'widget': JSONEditor},
     }
 
-    fields = ("title", "slug", "type",  "dev_description", "components", "weight", "status", "archived")
+    fields = ("title", "slug", "type",  "dev_description", "content", "json", "components", "weight", "status", "archived")
     list_display = ("title", "slug", "weight", "status", "archived")
     filter_horizontal = ("components", )
     list_filter = ("slug", "weight", "status", "archived")
