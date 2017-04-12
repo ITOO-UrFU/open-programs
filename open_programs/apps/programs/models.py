@@ -68,7 +68,7 @@ class ProgramModules(ObjectBaseClass):
     module = models.ForeignKey("modules.Module")
     choice_group = models.ForeignKey("ChoiceGroup")
     competence = models.ForeignKey(ProgramCompetence, blank=True, null=True)
-    semester = models.PositiveIntegerField(blank=True)
+    semester = models.PositiveIntegerField(blank=True, null=True)
 
     class Meta:
         verbose_name = 'модуль программы'

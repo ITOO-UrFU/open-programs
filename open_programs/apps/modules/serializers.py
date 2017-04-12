@@ -17,4 +17,4 @@ class ModuleSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Module
-        fields = ("id", "title", "description", "get_all_disciplines", "get_type_display", "results", "results_text", "competences", "get_labor")
+        fields = ("id", "title", "description", "get_all_disciplines", "get_all_discipline_ids", "get_type_display", "results", "results_text", "competences", "get_labor")
