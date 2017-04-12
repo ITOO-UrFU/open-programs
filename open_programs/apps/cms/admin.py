@@ -51,15 +51,11 @@ class JSONEditor(Textarea):
         document.addEventListener("DOMContentLoaded", function(event) {
             var jsoncontainer = document.getElementById("id_json_jsoneditor");
             var options = {
-                onChange: function(){
-                    document.getElementById("id_json").value = JSON.stringify(editor.get());
-                    console.log(JSON.stringify(editor.get()), document.getElementById("id_json").value)
-                    console.log("parse: ", JSON.stringify(editor.get()), JSON.parse(document.getElementById("id_json").value))
-                    }
+                onChange: function(){document.getElementById("id_json").value = JSON.stringify(editor.get())}
             };
             var editor = new JSONEditor(jsoncontainer, options);
 
-            editor.set(JSON.parse(JSON.stringify(document.getElementById("id_json").value)));
+            editor.set(JSON.parse(document.getElementById("id_json").value.replace(/'/g, '"')));
         });
 
         </script>
