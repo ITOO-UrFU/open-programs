@@ -4,7 +4,6 @@ from jsoneditor.fields.django_jsonfield import JSONField
 from django.utils.translation import ugettext_lazy as _
 import uuid
 from tinymce.models import HTMLField
-from open_programs.settings import TINYMCE_PROFILE
 
 
 def random_container_key():
@@ -21,7 +20,7 @@ def random_component_key():
 
 class ContainerType(models.Model):
     title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default=random_container_key)
-    dev_description = HTMLField(profile=TINYMCE_PROFILE)
+    dev_description = HTMLField()
 
     def __str__(self):
         return self.title
@@ -29,7 +28,7 @@ class ContainerType(models.Model):
 
 class ComponentType(models.Model):
     title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default=random_component_key)
-    dev_description = HTMLField(profile=TINYMCE_PROFILE)
+    dev_description = HTMLField()
 
     def __str__(self):
         return self.title
@@ -38,7 +37,7 @@ class ComponentType(models.Model):
 class Container(ObjectBaseClass):
     title = models.CharField(_("Название контейнера"), max_length=256, blank=False, default=random_container_key)
     slug = models.SlugField(_("Код"))
-    dev_description = HTMLField(profile=TINYMCE_PROFILE)
+    dev_description = HTMLField()
     type = models.ForeignKey("ContainerType", blank=True)
     weight = models.IntegerField(_("Вес"))
     containers = models.ManyToManyField("self", verbose_name=_("Вложенные контейнеры"), blank=True, related_name='+', symmetrical=False)
@@ -54,7 +53,7 @@ class Container(ObjectBaseClass):
 class Component(ObjectBaseClass):
     title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"))
-    dev_description = HTMLField(profile=TINYMCE_PROFILE)
+    dev_description = HTMLField()
     type = models.ForeignKey("ComponentType", blank=True)
     weight = models.IntegerField(_("Вес"))
     content = models.TextField(_("Контент"), blank=True, null=True)

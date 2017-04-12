@@ -289,15 +289,21 @@ JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/json
 
 #### TINYMCE ####
 
-TINYMCE_PROFILE = {
-    'theme': 'inlite',
-    'plugins': 'noneditable advlist autolink link lists charmap hr searchreplace wordcount visualblocks visualchars code insertdatetime save table contextmenu directionality paste textcolor',
-    'toolbar': 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | forecolor backcolor | upload_button',
-    'noneditable_leave_contenteditable': 'true',
-    'setup': 'addCustomButtons',
-    'content_css': os.path.join(STATIC_URL, "mycss/tinymce.css"),
-    'relative_urls': False,
-    'remove_script_host': True,
-    'document_base_url': "https://openedu.urfu.ru",
-    'removed_menuitems': 'newdocument'
+TINYMCE_JS_URL = 'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/tinymce.min.js'
+TINYMCE_DEFAULT_CONFIG = {
+    'plugins': "table,paste,searchreplace",
+    'theme': "modern",
+    'cleanup_on_startup': True,
+    'custom_undo_redo_levels': 10,
+}
+TINYMCE_COMPRESSOR = True
+TINYMCE_EXTRA_MEDIA = {
+    # 'css': {
+    #     'all': [
+    #         ...
+    #     ],
+    # },
+    'js': [
+        'https://cdnjs.cloudflare.com/ajax/libs/tinymce/4.5.6/themes/modern/theme.min.js'
+    ],
 }
