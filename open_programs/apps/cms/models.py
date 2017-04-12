@@ -1,6 +1,6 @@
 from django.db import models
 from base.models import ObjectBaseClass
-from jsonfield import JSONField
+from jsoneditor.fields.django_jsonfield import JSONField
 from django.utils.translation import ugettext_lazy as _
 import uuid
 from tinymce.models import HTMLField
@@ -57,7 +57,7 @@ class Component(ObjectBaseClass):
     type = models.ForeignKey("ComponentType", blank=True)
     weight = models.IntegerField(_("Вес"))
     content = models.TextField(_("Контент"), blank=True, null=True)
-    json = JSONField()
+    json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
     components = models.ManyToManyField("self", verbose_name=_("Вложенные компоненты"), blank=True, related_name='+', symmetrical=False)
 
     class Meta:
