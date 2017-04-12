@@ -42,9 +42,13 @@ class JSONEditor(Textarea):
         final_attrs = self.build_attrs(div_attrs, name=name)
         r += '''
         <script>
-            var container = document.getElementById("id_json_jsoneditor");
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            var jsoncontainer = document.getElementById("id_json_jsoneditor");
             var options = {};
-            var editor = new JSONEditor(container, options);
+            var editor = new JSONEditor(jsoncontainer, options);
+        });
+
         </script>
         <div %(attrs)s></div>
         ''' % {
