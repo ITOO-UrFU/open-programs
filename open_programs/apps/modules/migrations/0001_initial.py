@@ -105,7 +105,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='module',
             name='type',
-            field=models.ForeignKey(default=0, null=True, on_delete=django.db.models.deletion.CASCADE, to='modules.Type', verbose_name='Тип модуля'),
+            field=models.ForeignKey(default=1, null=True, on_delete=django.db.models.deletion.CASCADE, to='modules.Type', verbose_name='Тип модуля'),
         ),
         migrations.AddField(
             model_name='generalbasemodulespool',
