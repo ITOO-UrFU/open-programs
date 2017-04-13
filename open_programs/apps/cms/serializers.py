@@ -26,16 +26,18 @@ class ComponentSerializer(serializers.ModelSerializer):
 
 
 class SubContainerSerializer(serializers.HyperlinkedModelSerializer):
-    type = ContainerTypeSerializer(
-        many=False,
-        read_only=True
-    )
-
-    components = ComponentSerializer(
-        many=True,
-        read_only=True
-    )
-
+    # type = ContainerTypeSerializer(
+    #     many=False,
+    #     read_only=True
+    # )
+    #
+    # components = ComponentSerializer(
+    #     many=True,
+    #     read_only=True
+    # )
+    #
+    type = serializers.HyperlinkedRelatedField(many=True, view_name='containertypes-detail', read_only=True)
+    components = serializers.HyperlinkedRelatedField(many=True, view_name='container-detail', read_only=True)
     class Meta:
         model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
@@ -62,4 +64,6 @@ class ContainerSerializer(serializers.ModelSerializer):
         model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
         depth = 3
+
+
 
