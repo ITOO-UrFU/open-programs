@@ -64,7 +64,7 @@ class Container(ObjectBaseClass):
 class Component(ObjectBaseClass):
     title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"))
-    dev_description = HTMLField(verbose_name=_("Описание"), blank=True, null=True)
+    dev_description = HTMLField(verbose_name=_("DEV_DESCRIPTION"), blank=True, null=True)
     type = models.ForeignKey("ComponentType", blank=True, null=True)
     weight = models.IntegerField(_("Вес"), default=0)
     content = HTMLField(_("Контент"), blank=True, null=True)
