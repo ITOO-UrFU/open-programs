@@ -23,6 +23,7 @@ class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "content", "json")
+        depth = 3
 
 
 # class SubContainerSerializer(serializers.ModelSerializer):
