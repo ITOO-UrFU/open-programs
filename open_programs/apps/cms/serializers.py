@@ -14,7 +14,7 @@ class ComponentTypeSerializer(serializers.ModelSerializer):
         fields = ("slug",)
 
 
-class ContainerSerializer(serializers.dModelSerializer):
+class ContainerSerializer(serializers.ModelSerializer):
     type = ContainerTypeSerializer(
         many=True,
     )
