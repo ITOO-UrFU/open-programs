@@ -1,4 +1,4 @@
-from .models import ContainerType, ComponentType, Container
+from .models import ContainerType, ComponentType, Container, Component
 from rest_framework import serializers
 
 
