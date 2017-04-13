@@ -20,7 +20,7 @@ def random_component_key():
 
 class ContainerType(models.Model):
     title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default=random_container_key)
-    slug = models.SlugField(_("Код"))
+    slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
@@ -33,7 +33,7 @@ class ContainerType(models.Model):
 
 class ComponentType(models.Model):
     title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default=random_component_key)
-    slug = models.SlugField(_("Код"))
+    slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
