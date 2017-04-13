@@ -1,16 +1,16 @@
-from .models import Type, Module
+from .models import ContainerType, ComponentType, Container
 from rest_framework import serializers
 
 
 class ContainerTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Type
+        model = ContainerType
         fields = ("slug",)
 
 
 class ComponentTypeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Type
+        model = ComponentType
         fields = ("slug",)
 
 
@@ -20,5 +20,5 @@ class ContainerSerializer(serializers.dModelSerializer):
     )
 
     class Meta:
-        model = Module
+        model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers")  # TODO: add components
