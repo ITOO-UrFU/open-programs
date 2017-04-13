@@ -28,22 +28,22 @@ from disciplines.serializers import DisciplineSerializer
 from cms.serializers import *
 
 
-class ContainerList(viewsets.ModelViewSet):
+class ContainerList(viewsets.ReadOnlyModelViewSet):
     queryset = Container.objects.filter(status="p", archived=False)
     serializer_class = ContainerSerializer
 
 
-class ComponentList(viewsets.ModelViewSet):
+class ComponentList(viewsets.ReadOnlyModelViewSet):
     queryset = Component.objects.filter(status="p", archived=False)
     serializer_class = ComponentSerializer
 
 
-class ComponentTypeList(viewsets.ModelViewSet):
+class ComponentTypeList(viewsets.ReadOnlyModelViewSet):
     queryset = ComponentType.objects.all()
     serializer_class = ComponentTypeSerializer
 
 
-class ContainerTypeList(viewsets.ModelViewSet):
+class ContainerTypeList(viewsets.ReadOnlyModelViewSet):
     queryset = ContainerType.objects.all()
     serializer_class = ContainerTypeSerializer
 
