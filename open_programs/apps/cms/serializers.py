@@ -21,7 +21,8 @@ class ContainerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Container
-        fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")  # TODO: add components
+        fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
+        read_only_fields = fields
 
 
 class ComponentSerializer(serializers.ModelSerializer):
@@ -32,3 +33,4 @@ class ComponentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Component
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "content", "json")
+        read_only_fields = fields
