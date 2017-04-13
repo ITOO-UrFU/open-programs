@@ -87,7 +87,6 @@ class ComponentAdmin(VersionAdmin):
 
 @admin.register(Container)
 class ContainerAdmin(VersionAdmin):
-
     fields = ("weight", "status", "archived", "title", "slug", "type",  "dev_description", "containers", "components")
     list_display = ("title", "slug", "weight", "status", "archived")
     filter_horizontal = ("containers", )
