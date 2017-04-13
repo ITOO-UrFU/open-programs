@@ -24,6 +24,7 @@ class ContainerSerializer(serializers.ModelSerializer):
         model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
         read_only_fields = fields
+        depth = 3
 
 
 class ComponentSerializer(serializers.ModelSerializer):
@@ -36,3 +37,4 @@ class ComponentSerializer(serializers.ModelSerializer):
         model = Component
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "content", "json")
         read_only_fields = fields
+
