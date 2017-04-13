@@ -8,7 +8,7 @@
 .form-row .field-weight,
 .form-row .field-status,
 .form-row .field-archived {
-    display: inline-block;
+    display: inline-block !important;
 }
 .selector {
     width: 800px;
