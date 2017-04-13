@@ -36,13 +36,6 @@ class SubContainerSerializer(serializers.HyperlinkedModelSerializer):
         read_only=True
     )
 
-    containers = ContainerSerializer(
-        many=True,
-        read_only=True
-    )
-
-
-
     class Meta:
         model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
