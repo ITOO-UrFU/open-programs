@@ -6,13 +6,20 @@ import uuid
 from tinymce.models import HTMLField
 
 
-def random_key():
+def random_container_key():
     key = uuid.uuid4().hex[:5]
-    return "{key}".format(key=key)
+    title = _("Контейнер")
+    return "{title} {key}".format(key=key, title=title)
+
+
+def random_component_key():
+    key = uuid.uuid4().hex[:5]
+    title = _("Компонент")
+    return "{title} {key}".format(key=key, title=title)
 
 
 class ContainerType(models.Model):
-    title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default="Тип контейнера")
+    title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default=random_container_key)
     slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
 
@@ -25,7 +32,7 @@ class ContainerType(models.Model):
 
 
 class ComponentType(models.Model):
-    title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default="Тип компонента")
+    title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
 
@@ -38,7 +45,7 @@ class ComponentType(models.Model):
 
 
 class Container(ObjectBaseClass):
-    title = models.CharField(_("Название контейнера"), max_length=256, blank=False, default="Container_" + random_key())
+    title = models.CharField(_("Название контейнера"), max_length=256, blank=False, default=random_container_key)
     slug = models.SlugField(_("Код"))
     dev_description = HTMLField(blank=True, null=True)
     type = models.ForeignKey("ContainerType", blank=True, null=True)
@@ -55,7 +62,7 @@ class Container(ObjectBaseClass):
 
 
 class Component(ObjectBaseClass):
-    title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_key)
+    title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"))
     dev_description = HTMLField(verbose_name=_("DEV_DESCRIPTION"), blank=True, null=True)
     type = models.ForeignKey("ComponentType", blank=True, null=True)
