@@ -22,4 +22,5 @@ django-filter
 google-api-python-client==1.4.1
 django-cors-headers==1.3.1
 django-rest-swagger
+jsonfield==2.0.1
 django-tinymce
