@@ -5,6 +5,11 @@
     margin-bottom: 3em;
 }
 
+.form-row .field-weight,
+.form-row .field-status,
+.form-row .field-archived {
+    display: inline-block;
+}
 .selector {
     width: 800px;
     float: left;
