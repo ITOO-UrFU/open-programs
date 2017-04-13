@@ -57,6 +57,7 @@ router_11.register(r'disciplines', DisciplineList)
 router_11.register(r'types', TypeList)
 router_11.register(r'modules', ModuleList)
 router_11.register(r'programs', ProgramList)
+router_11.register(r'container', ContainerList)
 
 
 schema_view = get_swagger_view(title='Open programs')
