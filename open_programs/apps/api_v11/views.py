@@ -48,6 +48,26 @@ class ContainerTypeList(viewsets.ReadOnlyModelViewSet):
     serializer_class = ContainerTypeSerializer
 
 
+class ContainerDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Container
+
+
+class ComponentDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Component
+
+
+class ComponentTypeDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ComponentType
+
+
+class ContainerTypeDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = ContainerType
+
+
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
