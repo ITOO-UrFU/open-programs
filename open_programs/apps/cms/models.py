@@ -9,13 +9,13 @@ from tinymce.models import HTMLField
 def random_container_key():
     key = uuid.uuid4().hex[:5]
     title = _("C")
-    return "{title} {key}".format(key=key, title=title)
+    return "{title}_{key}".format(key=key, title=title)
 
 
 def random_component_key():
     key = uuid.uuid4().hex[:5]
     title = _("C")
-    return "{title} {key}".format(key=key, title=title)
+    return "{title}_{key}".format(key=key, title=title)
 
 
 class ContainerType(models.Model):
