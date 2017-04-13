@@ -25,7 +25,7 @@ class ComponentSerializer(serializers.ModelSerializer):
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "content", "json")
 
 
-class SubContainerSerializer(serializers.ModelSerializer):
+class SubContainerSerializer(serializers.HyperlinkedModelSerializer):
     type = ContainerTypeSerializer(
         many=False,
         read_only=True
