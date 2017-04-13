@@ -44,6 +44,7 @@ class JSONEditor(Textarea):
         <style type="text/css">
             #id_%(name)s_jsoneditor {
               height: 400px;
+              margin-bottom: 1em;
             }
           </style>
         <script>
@@ -51,8 +52,8 @@ class JSONEditor(Textarea):
         document.addEventListener("DOMContentLoaded", function(event) {
             var jsoncontainer = document.getElementById("id_%(name)s_jsoneditor");
             var options = {
-                mode: 'tree',
-                modes: ['code', 'form', 'text', 'tree', 'view'],
+                mode: 'code',
+                modes: ['code', 'tree'],
                 onChange: function(){document.getElementById("id_%(name)s").value = JSON.stringify(editor.get())}
             };
             var editor = new JSONEditor(jsoncontainer, options);
