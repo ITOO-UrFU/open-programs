@@ -13,7 +13,7 @@ from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType
 
-from cms.models import Container
+from cms.models import Container, Component, ComponentType, ContainerType
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
@@ -31,6 +31,21 @@ from cms.serializers import *
 class ContainerList(viewsets.ModelViewSet):
     queryset = Container.objects.filter(status="p", archived=False)
     serializer_class = ContainerSerializer
+
+
+class ComponentList(viewsets.ModelViewSet):
+    queryset = Component.objects.filter(status="p", archived=False)
+    serializer_class = ComponentSerializer
+
+
+class ComponentTypeList(viewsets.ModelViewSet):
+    queryset = ComponentType.objects.all()
+    serializer_class = ComponentTypeSerializer
+
+
+class ContainerTypeList(viewsets.ModelViewSet):
+    queryset = ContainerType.objects.all()
+    serializer_class = ContainerTypeSerializer
 
 
 class ProgramList(viewsets.ModelViewSet):

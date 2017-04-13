@@ -22,3 +22,13 @@ class ContainerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Container
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers")  # TODO: add components
+
+
+class ComponentSerializer(serializers.ModelSerializer):
+    type = ComponentTypeSerializer(
+        many=True,
+    )
+
+    class Meta:
+        model = Container
+        fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "content", "json")  # TODO: add components
