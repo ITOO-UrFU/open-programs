@@ -5,9 +5,9 @@
     margin-bottom: 3em;
 }
 
-.form-row .field-weight,
-.form-row .field-status,
-.form-row .field-archived {
+.form-row.field-weight,
+.form-row.field-status,
+.form-row.field-archived {
     display: inline-block !important;
 }
 .selector {
