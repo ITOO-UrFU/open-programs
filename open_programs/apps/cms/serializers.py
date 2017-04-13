@@ -26,19 +26,21 @@ class ComponentSerializer(serializers.ModelSerializer):
 
 
 class SubContainerSerializer(serializers.HyperlinkedModelSerializer):
-    # type = ContainerTypeSerializer(
-    #     many=False,
-    #     read_only=True
-    # )
-    #
-    # components = ComponentSerializer(
-    #     many=True,
-    #     read_only=True
-    # )
-    #
-    type = serializers.HyperlinkedRelatedField(many=False, view_name='componenttypes-detail', read_only=True)
-    components = serializers.HyperlinkedRelatedField(many=True, view_name='component-detail', read_only=True)
-    containers = serializers.HyperlinkedRelatedField(many=True, view_name='container-detail', read_only=True)
+    type = ContainerTypeSerializer(
+        many=False,
+        read_only=True
+    )
+
+    components = ComponentSerializer(
+        many=True,
+        read_only=True
+    )
+
+    containers = ContainerSerializer(
+        many=True,
+        read_only=True
+    )
+
 
 
     class Meta:
