@@ -13,8 +13,6 @@ from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType
 
-from cms.models import Container, Component, ComponentType, ContainerType
-
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
 from competences.serializers import CompetenceSerializer
@@ -25,47 +23,7 @@ from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
                                  ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer
 from disciplines.serializers import DisciplineSerializer
 
-from cms.serializers import *
-
-
-class ContainerList(viewsets.ReadOnlyModelViewSet):
-    queryset = Container.objects.filter(status="p", archived=False)
-    serializer_class = ContainerSerializer
-
-
-class ComponentList(viewsets.ReadOnlyModelViewSet):
-    queryset = Component.objects.filter(status="p", archived=False)
-    serializer_class = ComponentSerializer
-
-
-class ComponentTypeList(viewsets.ReadOnlyModelViewSet):
-    queryset = ComponentType.objects.all()
-    serializer_class = ComponentTypeSerializer
-
-
-class ContainerTypeList(viewsets.ReadOnlyModelViewSet):
-    queryset = ContainerType.objects.all()
-    serializer_class = ContainerTypeSerializer
-
-
-class ContainerDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Container
-
-
-class ComponentDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Component
-
-
-class ComponentTypeDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ComponentType
-
-
-class ContainerTypeDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ContainerType
+from cms.api_views import *
 
 
 class ProgramList(viewsets.ModelViewSet):
