@@ -16,7 +16,7 @@ class ComponentTypeSerializer(serializers.ModelSerializer):
 
 class ContainerSerializer(serializers.ModelSerializer):
     type = ContainerTypeSerializer(
-        many=True,
+        many=False,
     )
 
     class Meta:
@@ -26,7 +26,7 @@ class ContainerSerializer(serializers.ModelSerializer):
 
 class ComponentSerializer(serializers.ModelSerializer):
     type = ComponentTypeSerializer(
-        many=True,
+        many=False,
     )
 
     class Meta:
