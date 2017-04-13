@@ -30,5 +30,5 @@ class ComponentSerializer(serializers.ModelSerializer):
     )
 
     class Meta:
-        model = Container
+        model = Component
         fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "content", "json")  # TODO: add components
