@@ -80,7 +80,6 @@ class ComponentAdmin(VersionAdmin):
 
     fields = ("weight", "status", "archived", "title", "slug", "type",  "dev_description", "content", "json")
     list_display = ("title", "slug", "weight", "status", "archived")
-    filter_horizontal = ("components", )
     list_filter = ("slug", "weight", "status", "archived")
     search_fields = ('slug', "title", "dev_description")
 
@@ -89,7 +88,7 @@ class ComponentAdmin(VersionAdmin):
 class ContainerAdmin(VersionAdmin):
     fields = ("weight", "status", "archived", "title", "slug", "type",  "dev_description", "containers", "components")
     list_display = ("title", "slug", "weight", "status", "archived")
-    filter_horizontal = ("containers", )
+    filter_horizontal = ("containers", "components")
     list_filter = ("slug", "weight", "status", "archived")
     search_fields = ('slug', "title", "dev_description")
 
