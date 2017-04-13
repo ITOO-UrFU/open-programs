@@ -78,7 +78,7 @@ class ComponentAdmin(VersionAdmin):
         JSONField: {'widget': JSONEditor},
     }
 
-    fields = ("title", "slug", "type",  "dev_description", "content", "json", "components", "weight", "status", "archived")
+    fields = ("weight", "status", "archived", "title", "slug", "type",  "dev_description", "content", "json")
     list_display = ("title", "slug", "weight", "status", "archived")
     filter_horizontal = ("components", )
     list_filter = ("slug", "weight", "status", "archived")
@@ -87,8 +87,7 @@ class ComponentAdmin(VersionAdmin):
 
 @admin.register(Container)
 class ContainerAdmin(VersionAdmin):
-
-    fields = ("title", "slug", "type",  "dev_description", "containers", "weight", "status", "archived")
+    fields = ("weight", "status", "archived", "title", "slug", "type",  "dev_description", "containers", "components")
     list_display = ("title", "slug", "weight", "status", "archived")
     filter_horizontal = ("containers", )
     list_filter = ("slug", "weight", "status", "archived")
@@ -97,9 +96,9 @@ class ContainerAdmin(VersionAdmin):
 
 @admin.register(ContainerType)
 class ContainerTypeAdmin(VersionAdmin):
-    fields = ("title", "dev_description")
+    fields = ("title", "slug", "dev_description")
 
 
 @admin.register(ComponentType)
 class ComponentTypeAdmin(VersionAdmin):
-    fields = ("title", "dev_description")
+    fields = ("title", "slug", "dev_description")
