@@ -60,7 +60,7 @@ class ContainerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Container
-        fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
+        fields = ("id", "title", "slug", "dev_description", "get_type", "weight", "containers", "components")
         depth = 3
 
 

@@ -53,6 +53,9 @@ class Container(ObjectBaseClass):
     containers = models.ManyToManyField("self", verbose_name=_("Вложенные контейнеры"), blank=True, related_name='+', symmetrical=False)
     components = models.ManyToManyField("Component", verbose_name=_("Вложенные компоненты"), blank=True)
 
+    def get_type(self):
+        return self.type.title
+
     class Meta:
         verbose_name = 'контейнер'
         verbose_name_plural = 'контейнеры'
