@@ -15,22 +15,12 @@ class ComponentTypeSerializer(serializers.ModelSerializer):
 
 
 class ComponentSerializer(serializers.ModelSerializer):
-    type = ComponentTypeSerializer(
-        many=False,
-        read_only=True
-    )
-
     class Meta:
         model = Component
-        fields = ("id", "title", "slug", "dev_description", "type", "weight", "content", "json")
+        fields = ("id", "title", "slug", "dev_description", "get_type", "weight", "content", "json")
 
 
 class SubContainerSerializer(serializers.ModelSerializer):
-    type = ContainerTypeSerializer(
-        many=False,
-        read_only=True
-    )
-
     components = ComponentSerializer(
         many=True,
         read_only=True
@@ -38,15 +28,11 @@ class SubContainerSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Container
-        fields = ("id", "title", "slug", "dev_description", "type", "weight", "containers", "components")
+        fields = ("id", "title", "slug", "dev_description", "get_type", "weight", "containers", "components")
         depth = 3
 
 
 class ContainerSerializer(serializers.ModelSerializer):
-    # type = ContainerTypeSerializer(
-    #     many=False,
-    #     read_only=True
-    # )
 
     containers = SubContainerSerializer(
         many=True,
