@@ -15,7 +15,7 @@ class ComponentTypeSerializer(serializers.ModelSerializer):
 
 
 class ComponentSerializer(serializers.ModelSerializer):
-    type = serializers.RelatedField(source='type', read_only=True)
+    type = serializers.RelatedField(read_only=True)
 
     class Meta:
         model = Component
@@ -23,7 +23,7 @@ class ComponentSerializer(serializers.ModelSerializer):
 
 
 class SubContainerSerializer(serializers.ModelSerializer):
-    type = serializers.RelatedField(source='type', read_only=True)
+    type = serializers.RelatedField( read_only=True)
     components = ComponentSerializer(
         many=True,
         read_only=True
@@ -36,7 +36,7 @@ class SubContainerSerializer(serializers.ModelSerializer):
 
 
 class ContainerSerializer(serializers.ModelSerializer):
-    type = serializers.RelatedField(source='type', read_only=True)
+    type = serializers.RelatedField(read_only=True)
     containers = SubContainerSerializer(
         many=True,
         read_only=True
