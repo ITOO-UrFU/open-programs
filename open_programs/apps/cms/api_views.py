@@ -44,5 +44,6 @@ class ContainerTypeDetail(serializers.HyperlinkedModelSerializer):
 
 
 class ContainerListByType(viewsets.ReadOnlyModelViewSet):
+    queryset = Container.objects.all()
     serializer_class = ContainerSerializer
     lookup_field = 'get_type'
