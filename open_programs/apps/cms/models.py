@@ -60,6 +60,7 @@ class Container(ObjectBaseClass):
     def __str__(self):
         return self.title
 
+    @property
     def get_type(self):
         return self.type.title
 
@@ -80,5 +81,6 @@ class Component(ObjectBaseClass):
     def __str__(self):
         return self.title
 
+    @property
     def get_type(self):
         return self.type.title
