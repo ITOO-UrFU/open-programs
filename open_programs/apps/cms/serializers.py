@@ -43,10 +43,10 @@ class SubContainerSerializer(serializers.ModelSerializer):
 
 
 class ContainerSerializer(serializers.ModelSerializer):
-    type = ContainerTypeSerializer(
-        many=False,
-        read_only=True
-    )
+    # type = ContainerTypeSerializer(
+    #     many=False,
+    #     read_only=True
+    # )
 
     containers = SubContainerSerializer(
         many=True,
