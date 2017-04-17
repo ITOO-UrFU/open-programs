@@ -15,11 +15,6 @@ class ComponentTypeList(viewsets.ReadOnlyModelViewSet):
     serializer_class = ComponentTypeSerializer
 
 
-class ContainerTypeList(viewsets.ReadOnlyModelViewSet):
-    queryset = ContainerType.objects.all()
-    serializer_class = ContainerTypeSerializer
-
-
 class ComponentDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Component
@@ -30,23 +25,11 @@ class ComponentTypeDetail(serializers.HyperlinkedModelSerializer):
         model = ComponentType
 
 
-class ContainerTypeDetail(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = ContainerType
-
-
-class ContainerListByType(viewsets.ReadOnlyModelViewSet):
-    queryset = Container.objects.all()
-    serializer_class = ContainerSerializer
-    lookup_field = 'get_type'
-
-
 @api_view(('GET',))
 def get_containers(request):
     queryset = Container.objects.filter(status="p", archived=False)
     context = [
         {
-            "id": c.id,
             "title": c.title,
             "slug": c.slug,
             "type": c.type.slug,
@@ -61,11 +44,28 @@ def get_containers(request):
 
 
 @api_view(('GET',))
-def get_containers_by_slug(request, slug):
+def containers_by_type(request, slug):
     queryset = Container.objects.filter(status="p", archived=False, type__slug=slug)
     context = [
         {
-            "id": c.id,
+            "title": c.title,
+            "slug": c.slug,
+            "type": c.type.slug,
+            "weight": c.weight,
+            "containers": c.get_containers_dict(),
+            "components": c.get_components_dict()
+        }
+        for c in queryset
+        ]
+
+    return Response(context)
+
+
+@api_view(('GET',))
+def container_by_slug(request, slug):
+    queryset = Container.objects.filter(status="p", archived=False, slug=slug)
+    context = [
+        {
             "title": c.title,
             "slug": c.slug,
             "type": c.type.slug,

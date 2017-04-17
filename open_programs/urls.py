@@ -103,4 +103,5 @@ urlpatterns.append(url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get
 
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
-urlpatterns.append(url(r'^api/v11/containers/(?P<slug>.*)/$', get_containers_by_slug, name="get_containers_by_slug"))
+urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))
+urlpatterns.append(url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug"))
