@@ -42,6 +42,7 @@ def random_component_key():
 
 
 class ContainerType(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название типа контейнера"), max_length=256, blank=False, default=random_container_key)
     slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
@@ -55,6 +56,7 @@ class ContainerType(models.Model):
 
 
 class ComponentType(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название типа компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"), null=True)
     dev_description = HTMLField(blank=True, null=True)
