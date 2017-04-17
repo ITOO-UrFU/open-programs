@@ -11,7 +11,7 @@ def container_as_dict(c):
         "id": c.id,
         "title": c.title,
         "slug": c.slug,
-        "type": c.get_type(),
+        "type": c.type.slug,
         "weight": c.weight,
         "containers": c.get_containers_dict()
     }
@@ -89,9 +89,6 @@ class Container(ObjectBaseClass):
     def get_components_dict(self):
         return [component_as_dict(component) for component in self.components.filter(status="p", archived=False).order_by('weight')]
 
-    def get_type(self):
-        return self.type.slug
-
 
 class Component(ObjectBaseClass):
     title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
@@ -108,7 +105,4 @@ class Component(ObjectBaseClass):
 
     def __str__(self):
         return self.title
-
-    def get_type(self):
-        return self.type.slug
 
