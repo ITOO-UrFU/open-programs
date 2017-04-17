@@ -106,3 +106,6 @@ class Component(ObjectBaseClass):
     def __str__(self):
         return self.title
 
+    def get_type_display_admin(self):
+        return "{slug} - {title}".format({"slug":self.slug, "title":self.title})
+
