@@ -63,6 +63,13 @@ def containers_by_type(request, slug):
 
 @api_view(('GET',))
 def container_by_slug(request, slug):
+    """
+        Returns a list of all **active** accounts in the system.
+
+        For more details on how accounts are activated please [see here][ref].
+
+        [ref]: http://example.com/activating-accounts
+    """
     queryset = Container.objects.filter(status="p", archived=False, slug=slug)
     context = [
         {
