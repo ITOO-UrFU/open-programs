@@ -6,17 +6,16 @@ import uuid
 from tinymce.models import HTMLField
 
 
-def container_as_dict(container):
+def container_as_dict(c):
     return {
-        "id": container.id,
-        "slug": container.slug,
-        "title": container.title,
-        "html": container.html,
-        "pages": container.get_pages_dict(),
-        "keywords": container.keywords,
-        "type": container.type.title,
-        "weight": container.weight,
+        "id": c.id,
+        "title": c.title,
+        "slug": c.slug,
+        "type": c.get_type,
+        "weight": c.weight,
+        "containers": c.get_containers_dict()
     }
+
 
 def random_container_key():
     key = uuid.uuid4().hex[:5]
