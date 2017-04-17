@@ -47,7 +47,7 @@ class ContainerType(models.Model):
     dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return "{} - {}".format(self.slug, self.title)
 
     class Meta:
         verbose_name = 'тип контейнера'
@@ -60,11 +60,12 @@ class ComponentType(models.Model):
     dev_description = HTMLField(blank=True, null=True)
 
     def __str__(self):
-        return self.title
+        return "{} - {}".format(self.slug, self.title)
 
     class Meta:
         verbose_name = 'тип компонента'
         verbose_name_plural = 'типы компонентов'
+
 
 
 class Container(ObjectBaseClass):
@@ -106,6 +107,4 @@ class Component(ObjectBaseClass):
     def __str__(self):
         return self.title
 
-    def get_type_display_admin(self):
-        return "{slug} - {title}".format({"slug":self.slug, "title":self.title})
 
