@@ -6,6 +6,18 @@ import uuid
 from tinymce.models import HTMLField
 
 
+def container_as_dict(container):
+    return {
+        "id": container.id,
+        "slug": container.slug,
+        "title": container.title,
+        "html": container.html,
+        "pages": container.get_pages_dict(),
+        "keywords": container.keywords,
+        "type": container.type.title,
+        "weight": container.weight,
+    }
+
 def random_container_key():
     key = uuid.uuid4().hex[:5]
     title = _("C")
@@ -60,9 +72,8 @@ class Container(ObjectBaseClass):
     def __str__(self):
         return self.title
 
-    @property
-    def get_type(self):
-        return self.type.title
+    def get_containers_dict(self):
+        return [container_as_dict(container) for container in self.containers.filter(status="p").order_by('weight')]
 
 
 class Component(ObjectBaseClass):
@@ -81,6 +92,3 @@ class Component(ObjectBaseClass):
     def __str__(self):
         return self.title
 
-    @property
-    def get_type(self):
-        return self.type.title

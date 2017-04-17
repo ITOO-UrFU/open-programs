@@ -1,4 +1,6 @@
 from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 from .serializers import *
 from .models import Container, Component, ComponentType, ContainerType
 
@@ -47,3 +49,21 @@ class ContainerListByType(viewsets.ReadOnlyModelViewSet):
     queryset = Container.objects.all()
     serializer_class = ContainerSerializer
     lookup_field = 'get_type'
+
+
+@api_view(('GET',))
+def get_containers(request):
+    queryset = Container.object.filter(status="p", archived=False)
+    context = [
+        {
+            "id": c.id,
+            "title": c.title,
+            "slug": c.slug,
+            "type": c.get_type,
+            "weight": c.weight,
+            "containers": c.get_containers_dict()
+        }
+        for c in queryset
+        ]
+
+    return Response(context)

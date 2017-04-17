@@ -100,3 +100,6 @@ urlpatterns += [
 #### API rewrite
 urlpatterns.append(url(r'^api/v11/get_choice_groups_by_program/(?P<program_id>.*)/$', get_choice_groups_by_program, name="get_choice_groups_by_program"))
 urlpatterns.append(url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules, name="get_program_modules"))
+
+#### CMS API ####
+urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
