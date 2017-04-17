@@ -90,7 +90,7 @@ class Container(ObjectBaseClass):
         return [component_as_dict(component) for component in self.components.filter(status="p", archived=False).order_by('weight')]
 
     def get_type(self):
-        return self.type.title
+        return self.type.slug
 
 
 class Component(ObjectBaseClass):
@@ -110,5 +110,5 @@ class Component(ObjectBaseClass):
         return self.title
 
     def get_type(self):
-        return self.type.title
+        return self.type.slug
 
