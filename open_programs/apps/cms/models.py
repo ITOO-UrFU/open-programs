@@ -22,7 +22,7 @@ def component_as_dict(c):
         "id": c.id,
         "title": c.title,
         "slug": c.slug,
-        "type": c.get_type(),
+        "type": c.type.slug,
         "weight": c.weight,
         "content": c.content,
         "json": c.json
