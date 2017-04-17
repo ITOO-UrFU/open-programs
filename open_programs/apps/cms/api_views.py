@@ -59,7 +59,7 @@ def get_containers(request):
             "id": c.id,
             "title": c.title,
             "slug": c.slug,
-            "type": c.get_type,
+            "type": c.get_type(),
             "weight": c.weight,
             "containers": c.get_containers_dict()
         }
