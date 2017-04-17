@@ -75,6 +75,9 @@ class Container(ObjectBaseClass):
     def get_containers_dict(self):
         return [container_as_dict(container) for container in self.containers.filter(status="p").order_by('weight')]
 
+    def get_type(self):
+        return self.type.title
+
 
 class Component(ObjectBaseClass):
     title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
