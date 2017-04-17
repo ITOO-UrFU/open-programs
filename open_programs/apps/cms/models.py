@@ -17,6 +17,18 @@ def container_as_dict(c):
     }
 
 
+def component_as_dict(c):
+    return {
+        "id": c.id,
+        "title": c.title,
+        "slug": c.slug,
+        "type": c.get_type(),
+        "weight": c.weight,
+        "content": c.content,
+        "json": c.json
+    }
+
+
 def random_container_key():
     key = uuid.uuid4().hex[:5]
     title = _("C")
@@ -72,7 +84,10 @@ class Container(ObjectBaseClass):
         return self.title
 
     def get_containers_dict(self):
-        return [container_as_dict(container) for container in self.containers.filter(status="p").order_by('weight')]
+        return [container_as_dict(container) for container in self.containers.filter(status="p", archived=False).order_by('weight')]
+
+    def get_components_dict(self):
+        return [component_as_dict(component) for component in self.components.filter(status="p", archived=False).order_by('weight')]
 
     def get_type(self):
         return self.type.title
@@ -93,4 +108,7 @@ class Component(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+    def get_type(self):
+        return self.type.title
 

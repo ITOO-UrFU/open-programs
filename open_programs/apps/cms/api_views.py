@@ -61,7 +61,8 @@ def get_containers(request):
             "slug": c.slug,
             "type": c.get_type(),
             "weight": c.weight,
-            "containers": c.get_containers_dict()
+            "containers": c.get_containers_dict(),
+            "components": c.get_components_dict()
         }
         for c in queryset
         ]
