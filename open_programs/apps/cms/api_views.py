@@ -27,6 +27,9 @@ class ComponentTypeDetail(serializers.HyperlinkedModelSerializer):
 
 @api_view(('GET',))
 def get_containers(request):
+    """
+    Возвращает список всех контейнеров.
+    """
     queryset = Container.objects.filter(status="p", archived=False)
     context = [
         {
@@ -45,6 +48,9 @@ def get_containers(request):
 
 @api_view(('GET',))
 def containers_by_type(request, slug):
+    """
+    Возвращает список контейнеров по типу **type**.
+    """
     queryset = Container.objects.filter(status="p", archived=False, type__slug=slug)
     context = [
         {
@@ -64,11 +70,7 @@ def containers_by_type(request, slug):
 @api_view(('GET',))
 def container_by_slug(request, slug):
     """
-        Returns a list of all **active** accounts in the system.
-
-        For more details on how accounts are activated please [see here][ref].
-
-        [ref]: http://example.com/activating-accounts
+    Возвращает контейнер с уникальным полем **slug**.
     """
     queryset = Container.objects.filter(status="p", archived=False, slug=slug)
     context = [
