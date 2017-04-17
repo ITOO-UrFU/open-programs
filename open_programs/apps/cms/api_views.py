@@ -53,7 +53,7 @@ class ContainerListByType(viewsets.ReadOnlyModelViewSet):
 
 @api_view(('GET',))
 def get_containers(request):
-    queryset = Container.object.filter(status="p", archived=False)
+    queryset = Container.objects.filter(status="p", archived=False)
     context = [
         {
             "id": c.id,
