@@ -67,8 +67,8 @@ class ComponentType(models.Model):
         verbose_name_plural = 'типы компонентов'
 
 
-
 class Container(ObjectBaseClass):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название контейнера"), max_length=256, blank=False, default=random_container_key)
     slug = models.SlugField(_("Код"))
     dev_description = HTMLField(blank=True, null=True)
@@ -92,6 +92,7 @@ class Container(ObjectBaseClass):
 
 
 class Component(ObjectBaseClass):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_("Название компонента"), max_length=256, blank=False, default=random_component_key)
     slug = models.SlugField(_("Код"))
     dev_description = HTMLField(verbose_name=_("DEV_DESCRIPTION"), blank=True, null=True)
