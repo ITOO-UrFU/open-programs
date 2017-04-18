@@ -15,7 +15,7 @@ class Discipline(ObjectBaseClass):
     module = models.ForeignKey("modules.Module", blank=True, null=True)
     labor = models.PositiveIntegerField(_("зачётных единиц"), blank=False, default=0)
     courses = models.ManyToManyField("courses.Course", verbose_name=_("Варианты реализации дисциплины"), blank=True)
-    period = models.IntegerField(_("Период освоения в модуле"), max_length=2, default=1)
+    period = models.IntegerField(_("Период освоения в модуле"), default=1)
     form = models.CharField(_("Форма контроля"), max_length=1, choices=FORMS, default='z')
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
