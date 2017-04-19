@@ -32,17 +32,6 @@ class Command(BaseCommand):
         programs_path = options["programs_path"][0]
 
         try:
-            program = Program.objects.get(title=program_title)
-            program.status = "p"
-            program.save()
-        except:
-            program = Program(title=program_title,
-                              training_direction='Направление подготовки',
-                              level='b',
-                              )
-            program.save()
-
-        try:
             with open(html_path, encoding='utf-8') as html_file:
                 raw_html = '\n'.join(html_file.readlines())
         except:
@@ -61,7 +50,6 @@ class Command(BaseCommand):
             raise FileNotFoundError
 
         if raw_programs:
-            print("Есть программы!!!")
             programs_soup = BeautifulSoup(raw_programs, 'html.parser')
             rows = []
             for row in programs_soup.find_all('tr', {"class": "main-info"}):
@@ -71,7 +59,6 @@ class Command(BaseCommand):
                 try:
                     program = Program.objects.get(title=row[1])
                 except:
-                    print("Делаем программу!!!", row[4])
                     def level(x):
                         return {
                             'Магистр'.lower() in str(x).lower(): "m",
@@ -83,6 +70,13 @@ class Command(BaseCommand):
                                       level=level(row[4]),
                                       )
                     program.save()
+
+        try:
+            program = Program.objects.get(title=program_title)
+            program.status = "p"
+            program.save()
+        except:
+            raise NotImplementedError
 
         if raw_html:
             soup = BeautifulSoup(raw_html, 'html.parser')
