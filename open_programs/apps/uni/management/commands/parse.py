@@ -130,14 +130,13 @@ class Command(BaseCommand):
                     module_obj.save()
 
                 for d in module["disciplines"]:
-                    print(d["testUnits"])
                     if int(d["testUnits"]) > 0:
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
                             discipline = Discipline(title=d["title"])
                             discipline.module = module_obj
-                            discipline.labor = int(d["testUnits"])
+                            discipline.labor = d["testUnits"]
 
                             discipline.uni_uid = d["uni_uid"]
                             discipline.uni_discipline = d["uni_discipline"]
