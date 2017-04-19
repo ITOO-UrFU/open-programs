@@ -2,7 +2,6 @@ from django.contrib import admin
 
 from jsonfield import JSONField
 from reversion.admin import VersionAdmin
-from codemirror2.widgets import CodeMirrorEditor
 
 from .models import Component, ComponentType
 from .models import Container, ContainerType
@@ -24,7 +23,7 @@ class JSONEditor(Textarea):
         )
         css = {'all': (getattr(settings, "JSON_EDITOR_CSS", settings.STATIC_URL+'jsoneditor/jsoneditor.css'),)}
 
-    def render(self, name, value, attrs=None):
+    def render(self, value, attrs=None):
         try:
             value = json.loads(value)
         except TypeError:
@@ -35,11 +34,11 @@ class JSONEditor(Textarea):
             input_attrs['class'] = 'for_jsoneditor'
         else:
             input_attrs['class'] += ' for_jsoneditor'
-        r = super(JSONEditor, self).render(name, value, input_attrs)
+        r = super(JSONEditor, self).render(value, input_attrs)
         div_attrs = {}
         div_attrs.update(attrs)
         div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
-        final_attrs = self.build_attrs(div_attrs, name=name)
+        final_attrs = self.build_attrs(div_attrs)
         r += '''
         <style type="text/css">
             #id_%(name)s_jsoneditor {
@@ -66,7 +65,7 @@ class JSONEditor(Textarea):
         <div %(attrs)s></div>
         ''' % {
             'attrs': flatatt(final_attrs),
-            'name': name
+            'name': "jsoneditor"
         }
         return mark_safe(r)
 
