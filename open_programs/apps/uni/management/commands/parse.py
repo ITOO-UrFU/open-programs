@@ -148,9 +148,9 @@ class Command(BaseCommand):
 
                             discipline.save()
 
-                pm = ProgramModules(program=program,
-                                    module=module_obj)  # TODO: ChoiceGroup
-                pm.save()
+                # pm = ProgramModules(program=program,
+                #                     module=module_obj)  # TODO: ChoiceGroup
+                # pm.save()
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]
