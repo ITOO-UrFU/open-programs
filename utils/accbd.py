@@ -16,22 +16,26 @@ if 'accdb' in pyodbc.dataSources():
 cur = connection.cursor()
 
 tables = [t.table_name for t in cur.tables(tableType='TABLE')]
-print(tables)
+# print(tables)
 
 
 cur.execute("SELECT * FROM [Образовательные программы]")
-print()
+
+PROGRAMS = []
 
 while True:
     row = cur.fetchone()
     if row is None:
         break
+    # print(cur.description)
+    column_name = "Код ОП"
     Program = {}
     Program["model"] = "programs.program"
-    Program["pk"] = row.get("Код ОП")
+    Program["pk"] = row[0]
+    print(row)
     Program["fields"] = {}
-    Program["fields"]["title"] = row.get("Наименование программы")
-    Program["fields"]["training_direction"] = row.get("Направление подготовки")
+    Program["fields"]["title"] = row[1]
+    Program["fields"]["training_direction"] = row[2]
     Program["fields"]["archived"] = False
     Program["fields"]["created"] = "2017-02-21T12:25:49.862Z"
     Program["fields"]["updated"] = "2017-02-21T12:25:49.862Z"
