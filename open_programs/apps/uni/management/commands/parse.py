@@ -73,6 +73,7 @@ class Command(BaseCommand):
 
         try:
             program = Program.objects.filter(title=program_title).first()
+            print(program, program_title, '!!!!!!!!!')
             program.status = "p"
             program.save()
         except:
