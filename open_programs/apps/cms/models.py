@@ -3,7 +3,7 @@ from base.models import ObjectBaseClass
 from jsonfield import JSONField
 from django.utils.translation import ugettext_lazy as _
 import uuid
-from tinymce.models import HTMLField
+from tinymce import HTMLField
 
 
 def container_as_dict(c):
