@@ -130,6 +130,7 @@ class Command(BaseCommand):
                     module_obj.save()
 
                 for d in module["disciplines"]:
+                    print(d["testUnits"])
                     if int(d["testUnits"]) > 0:
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
@@ -143,6 +144,8 @@ class Command(BaseCommand):
                             discipline.uni_number = d["uni_number"]
                             discipline.uni_section = d["uni_section"]
                             discipline.uni_file = d["uni_file"]
+
+                            discipline.status = "p"
 
                             discipline.save()
                             print(d)
