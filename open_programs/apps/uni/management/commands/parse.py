@@ -72,7 +72,7 @@ class Command(BaseCommand):
                     program.save()
 
         try:
-            program = Program.objects.get(title=program_title)
+            program = Program.objects.filter(title=program_title).first()
             program.status = "p"
             program.save()
         except:
