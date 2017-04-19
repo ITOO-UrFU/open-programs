@@ -48,3 +48,5 @@ class Module(ObjectBaseClass):
 
     def get_type_display(self):
         return self.type.title
+
+

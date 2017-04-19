@@ -7,7 +7,7 @@ import pprint
 
 from django.core.management.base import BaseCommand
 
-from programs.models import Program
+from programs.models import Program, ProgramModules
 from disciplines.models import Discipline
 from modules.models import Module
 
@@ -127,7 +127,7 @@ class Command(BaseCommand):
                     module_obj = Module.objects.get(title=module["title"])
                 except:
                     module_obj = Module(title=module["title"])
-                    module_obj.save()
+                    module_obj.save()  # Создали модуль
 
                 for d in module["disciplines"]:
                     if int(d["testUnits"]) > 0:
@@ -147,7 +147,10 @@ class Command(BaseCommand):
                             discipline.status = "p"
 
                             discipline.save()
-                            print(d)
+
+                pm = ProgramModules(program=program,
+                                    module=module_obj)  # TODO: ChoiceGroup
+                pm.save()
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]
