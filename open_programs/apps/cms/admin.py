@@ -23,7 +23,7 @@ class JSONEditor(Textarea):
         )
         css = {'all': (getattr(settings, "JSON_EDITOR_CSS", settings.STATIC_URL+'jsoneditor/jsoneditor.css'),)}
 
-    def render(self, value, attrs=None):
+    def render(self, name, value, attrs=None):
         try:
             value = json.loads(value)
         except TypeError:
@@ -34,11 +34,11 @@ class JSONEditor(Textarea):
             input_attrs['class'] = 'for_jsoneditor'
         else:
             input_attrs['class'] += ' for_jsoneditor'
-        r = super(JSONEditor, self).render(value, input_attrs)
+        r = super(JSONEditor, self).render(name, value, input_attrs)
         div_attrs = {}
         div_attrs.update(attrs)
         div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
-        final_attrs = self.build_attrs(div_attrs)
+        final_attrs = self.build_attrs(div_attrs, name=name)
         r += '''
         <style type="text/css">
             #id_%(name)s_jsoneditor {
@@ -65,7 +65,7 @@ class JSONEditor(Textarea):
         <div %(attrs)s></div>
         ''' % {
             'attrs': flatatt(final_attrs),
-            'name': "jsoneditor"
+            'name': name
         }
         return mark_safe(r)
 
