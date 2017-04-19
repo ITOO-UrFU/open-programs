@@ -130,14 +130,22 @@ class Command(BaseCommand):
                     module_obj.save()
 
                 for d in module["disciplines"]:
+                    if int(d["testUnits"]) > 0:
+                        try:
+                            discipline = Discipline.objects.get(title=d["title"])
+                        except:
+                            discipline = Discipline(title=d["title"])
+                            discipline.module = module_obj
+                            discipline.labor = int(d["testUnits"])
 
-                    try:
-                        discipline = Discipline.objects.get(title=d["title"])
-                    except:
-                        discipline = Discipline(title=d["title"])
-                        discipline.module = module_obj
-                        discipline.save()
-                        print(d)
+                            discipline.uni_uid = d["uni_uid"]
+                            discipline.uni_discipline = d["uni_discipline"]
+                            discipline.uni_number = d["uni_number"]
+                            discipline.uni_section = d["uni_section"]
+                            discipline.uni_file = d["uni_file"]
+
+                            discipline.save()
+                            print(d)
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]

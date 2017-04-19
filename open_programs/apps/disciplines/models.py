@@ -20,6 +20,12 @@ class Discipline(ObjectBaseClass):
     results = models.ManyToManyField(Result, verbose_name=_("Результаты обучения"), blank=True)
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
 
+    uni_uid = models.CharField(max_length=256, blank=True, null=True)
+    uni_discipline = models.CharField(max_length=256, blank=True, null=True)
+    uni_number = models.CharField(max_length=256, blank=True, null=True)
+    uni_section = models.CharField(max_length=256, blank=True, null=True)
+    uni_file = models.CharField(max_length=256, blank=True, null=True)
+
     class Meta:
         verbose_name = 'дисциплина'
         verbose_name_plural = 'дисциплины'
