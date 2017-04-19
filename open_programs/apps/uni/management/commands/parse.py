@@ -138,11 +138,11 @@ class Command(BaseCommand):
                             discipline.module = module_obj
                             discipline.labor = d["testUnits"]
 
-                            discipline.uni_uid = d["uni_uid"]
-                            discipline.uni_discipline = d["uni_discipline"]
-                            discipline.uni_number = d["uni_number"]
-                            discipline.uni_section = d["uni_section"]
-                            discipline.uni_file = d["uni_file"]
+                            discipline.uni_uid = d["uid"]
+                            discipline.uni_discipline = d["discipline"]
+                            discipline.uni_number = d["number"]
+                            discipline.uni_section = d["section"]
+                            discipline.uni_file = d["file"]
 
                             discipline.status = "p"
 
