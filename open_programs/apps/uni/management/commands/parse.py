@@ -73,7 +73,6 @@ class Command(BaseCommand):
 
         try:
             program = Program.objects.filter(title=program_title).first()
-            print(program, program_title, '!!!!!!!!!')
             program.status = "p"
             program.save()
         except:
@@ -136,9 +135,9 @@ class Command(BaseCommand):
                         discipline = Discipline.objects.get(title=d["title"])
                     except:
                         discipline = Discipline(title=d["title"])
+                        discipline.module = module_obj
                         discipline.save()
-
-
+                        print(d)
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]
