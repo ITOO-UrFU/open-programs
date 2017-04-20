@@ -162,8 +162,8 @@ class Command(BaseCommand):
                 for i in range(1, 10):
                     ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
-                        print(ze)
                         if int(ze) > 0:
+                            print(ze, "i=", i)
                             semester = i
                     except:
                         semester = i - 1
