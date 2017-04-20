@@ -128,6 +128,16 @@ class Command(BaseCommand):
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
+
+            def find_row_index(row_text):
+                headers = table.find_all('th')
+                return headers.index(table.find('th', text=row_text))
+
+            def find_row_index_id(id):
+                headers = table.find_all('th')
+                return headers.index(table.find('th', id=id))
+
+
             rows = []
             for row in table.find_all('tr'):
                 rows.append([val.text.strip() for val in row.find_all('td')])
@@ -222,6 +232,9 @@ class Command(BaseCommand):
 
                         discipline.status = "p"
                         discipline.save()
+
+
+
 
             # Собираем группу выбора
 

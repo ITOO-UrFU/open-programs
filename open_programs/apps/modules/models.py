@@ -29,6 +29,7 @@ class Module(ObjectBaseClass):
     results_text = models.TextField(_("Результаты обучения"), max_length=16384, blank=True, default="")
     competences = models.ManyToManyField(Competence, verbose_name=_("Компетенции"), blank=True)
     semester = models.PositiveIntegerField(_("Семестр"), blank=True, null=True)
+    program = models.ForeignKey("programs.Program", blank=True, null=True)
 
     uni_uuid = models.CharField(max_length=265, null=True, blank=True)
     uni_number = models.IntegerField(null=True, blank=True)
