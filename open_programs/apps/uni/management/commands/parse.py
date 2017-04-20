@@ -221,8 +221,8 @@ class Command(BaseCommand):
                                 find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                             try:
                                 if int(ze) > 0:
-                                    print(d["title"], i+1, ze)
-                                    semester = i + 1
+                                    print(d["title"], i, ze)
+                                    semester = i
                             except:
                                 pass
 
@@ -234,7 +234,7 @@ class Command(BaseCommand):
                         discipline.uni_number = d["number"]
                         discipline.uni_section = d["section"]
                         discipline.uni_file = d["file"]
-                        discipline.period = semester
+                        discipline.period = semester - module_obj.semester + 1
                         try:
                             try:
                                 if int(max(row[5].split("-"))):
