@@ -94,9 +94,9 @@ class Command(BaseCommand):
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
 
-            try:
-                print("try")
-                lps = LearningPlan.objects.filter(uni_number=number)
+
+            lps = LearningPlan.objects.filter(uni_number=number)
+            if lps:
                 for lp in lps:
                     lp.uni_displayableTitle = displayableTitle
                     lp.uni_number = number
@@ -109,7 +109,7 @@ class Command(BaseCommand):
                         program.learning_plans.add(lp)
                         program.save()
                         print('!!!!!!!!!!!!!!!', lp)
-            except:
+            else:
                 print("except")
                 lp = LearningPlan(uni_displayableTitle=displayableTitle,
                                   uni_number=number,
