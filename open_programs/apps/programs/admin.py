@@ -18,7 +18,7 @@ class ProgramAdmin(VersionAdmin):
 
     )
     list_filter = ("level", 'created', 'updated', 'status', 'archived',)
-     filter_horizontal = ("learning_plans", )
+    filter_horizontal = ("learning_plans", )
 
 
 @admin.register(TrainingTarget)
