@@ -96,7 +96,7 @@ class Command(BaseCommand):
             html = soup.find("table", {"class": "basic"}).prettify()
 
             lps = LearningPlan.objects.filter(uni_number=number, status="p")
-            if lps:
+            if len(lps) > 0:
                 for lp in lps:
                     lp.uni_displayableTitle = displayableTitle
                     lp.uni_number = number
