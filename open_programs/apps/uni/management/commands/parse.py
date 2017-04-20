@@ -157,6 +157,8 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
+            print(modules)
+
             for module in [m for m in modules if m["disciplines"]]:
                 try:
                     module_obj = Module.objects.filter(title=module["title"]).first()
@@ -216,19 +218,15 @@ class Command(BaseCommand):
 
                         try:
                             try:
-                                if isinstance(int(max(row[5].split("-"))), int):
-                                    print("Зачет")
+                                if int(max(row[5].split("-"))):
                                     discipline.form = "z"
                             except:
                                 pass
-
                             try:
-                                if isinstance(int(max(row[4].split("-"))), int):
-                                    print("Экзамен")
+                                if int(max(row[4].split("-"))):
                                     discipline.form = "e"
                             except:
                                 pass
-
                         except:
                             pass
 
