@@ -93,6 +93,7 @@ class Command(BaseCommand):
             active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
+            print('!!!!!!!!!!!!', title)
 
             lps = LearningPlan.objects.filter(uni_number=number, status="p")
             if lps:
@@ -119,8 +120,6 @@ class Command(BaseCommand):
                 lp.save()
                 program.learning_plans.add(lp)
                 program.save()
-
-                print('!!!!!!!!!!!!', title)
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
