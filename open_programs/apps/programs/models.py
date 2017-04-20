@@ -16,7 +16,7 @@ class LearningPlan(ObjectBaseClass):
     uni_active = models.CharField(_("Текущая версия"), max_length=32, blank=True, null=True)
     uni_title = models.CharField(_("Название"), max_length=32, blank=True, null=True)
     uni_stage = models.BooleanField(_("План утверждён"), default=True)
-    uni_loadTimeType = models.CharField(_("План утверждён"), max_length=32, blank=True, null=True)
+    uni_loadTimeType = models.CharField(_("Единица измерения нагрузки"), max_length=32, blank=True, null=True)
 
     def __str__(self):
         return self.uni_number
