@@ -130,6 +130,7 @@ class Command(BaseCommand):
             headers = [header.text.strip() for header in table.find_all('th')]
             rows = []
             for row in table.find_all('tr'):
+                print(row)
                 rows.append([val.text.strip() for val in row.find_all('td')])
 
             # Ищем модули
@@ -146,8 +147,6 @@ class Command(BaseCommand):
 
             # Ищем дисциплины
             for module in [m for m in modules if m["disciplines"]]:
-                print(module["title"])
-                # pp.pprint([d["title"] for d in module["disciplines"]])
 
                 try:
                     module_obj = Module.objects.get(title=module["title"])
@@ -157,7 +156,6 @@ class Command(BaseCommand):
 
                 for d in module["disciplines"]:
                     if int(d["testUnits"]) > 0:
-                        print(d)
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
