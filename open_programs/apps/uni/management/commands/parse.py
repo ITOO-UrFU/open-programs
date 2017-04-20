@@ -112,6 +112,8 @@ class Command(BaseCommand):
                     lp.save()
                     if lp not in program.learning_plans.all():
                         program.learning_plans.add(lp)
+                        program.save()
+                        print('!!!!!!!!!!!!!!!', lp)
             except:
                 lp = LearningPlan(uni_displayableTitle=displayableTitle,
                                   uni_number=number,
@@ -121,7 +123,9 @@ class Command(BaseCommand):
                                   uni_loadTimeType=loadTimeType
                                   )
                 lp.save()
+                print('!!!!!!!!!!!!!!!', lp)
                 program.learning_plans.add(lp)
+                program.save()
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
