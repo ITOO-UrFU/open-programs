@@ -147,14 +147,39 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
-                                print(json.dumps(module))
-
             for module in [m for m in modules if m["disciplines"]]:
-
                 try:
-                    module_obj = Module.objects.get(title=module["title"])
+                    module_obj = Module.objects.filter(title=module["title"]).first()
+                    module_obj.uni_uuid = module["uuid"]
+                    module_obj.uni_number = module["number"]
+                    module_obj.uni_coordinator = module["coordinator"]
+                    module_obj.uni_type = module["type"]
+                    module_obj.uni_title = module["title"]
+                    module_obj.uni_competence = module["competence"]
+                    module_obj.uni_testUnits = module["testUnits"]
+                    module_obj.uni_priority = module["priority"]
+                    module_obj.uni_state = module["state"]
+                    module_obj.uni_approvedDate = module["approvedDate"]
+                    module_obj.uni_comment = module["comment"]
+                    module_obj.uni_file = module["uni_file"]
+                    module_obj.uni_specialities = module["uni_specialities"]
+                    module_obj.save()
                 except:
-                    module_obj = Module(title=module["title"])
+                    module_obj = Module(title=module["title"],
+                                        uni_uuid=module["uuid"],
+                                        uni_number=module["number"],
+                                        uni_coordinator=module["coordinator"],
+                                        uni_type=module["type"],
+                                        uni_title=module["title"],
+                                        uni_competence=module["competence"],
+                                        uni_testUnits=module["testUnits"],
+                                        uni_priority=module["priority"],
+                                        uni_state=module["state"],
+                                        uni_approvedDate=module["approvedDate"],
+                                        uni_comment=module["comment"],
+                                        uni_file=module["uni_file"],
+                                        uni_specialities=module["uni_specialities"]
+                                        )
                     module_obj.save()  # Создали модуль
 
 
