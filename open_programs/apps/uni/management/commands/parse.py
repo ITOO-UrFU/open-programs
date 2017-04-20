@@ -187,23 +187,27 @@ class Command(BaseCommand):
                     if int(d["testUnits"]) > 0:
                         for row in rows:
                             if d["title"] in row:
-                                print(row)
                                 break
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
                             discipline = Discipline(title=d["title"])
-                            discipline.module = module_obj
-                            discipline.labor = d["testUnits"]
+                        discipline.module = module_obj
+                        discipline.labor = d["testUnits"]
 
-                            discipline.uni_uid = d["uid"]
-                            discipline.uni_discipline = d["discipline"]
-                            discipline.uni_number = d["number"]
-                            discipline.uni_section = d["section"]
-                            discipline.uni_file = d["file"]
+                        discipline.uni_uid = d["uid"]
+                        discipline.uni_discipline = d["discipline"]
+                        discipline.uni_number = d["number"]
+                        discipline.uni_section = d["section"]
+                        discipline.uni_file = d["file"]
 
-                            discipline.status = "p"
-                            discipline.save()
+                        if isinstance(row[5], int):
+                            discipline.form = "e"
+                        if isinstance(row[5], int):
+                            discipline.form = "z"
+
+                        discipline.status = "p"
+                        discipline.save()
 
             # Собираем группу выбора
 
