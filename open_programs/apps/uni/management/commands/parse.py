@@ -130,7 +130,6 @@ class Command(BaseCommand):
             headers = [header.text.strip() for header in table.find_all('th')]
             rows = []
             for row in table.find_all('tr'):
-                print(row)
                 rows.append([val.text.strip() for val in row.find_all('td')])
 
             # Ищем модули
@@ -141,6 +140,7 @@ class Command(BaseCommand):
 
             for row in rows:
                 if row:
+                    print(row)
                     m = re.search('\d\d+', row[module_numbers_col])
                     if m:
                         [modules.append(module) for module in modules_json if str(module["number"]) == str(m.group(0))]
