@@ -21,6 +21,10 @@ class LearningPlan(ObjectBaseClass):
     def __str__(self):
         return self.uni_number
 
+    class Meta:
+        verbose_name = 'учебный план'
+        verbose_name_plural = 'учебные планы'
+
 
 class Program(ObjectBaseClass):
 
