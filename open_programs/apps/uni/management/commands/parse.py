@@ -202,6 +202,7 @@ class Command(BaseCommand):
                         discipline.uni_file = d["file"]
 
                         try:
+                            print(d["title"], row[2], row[5], row[6])
                             if isinstance(max(row[5].split("-")), int):
                                 discipline.form = "e"
                             if isinstance(max(row[5].split("-")), int):
