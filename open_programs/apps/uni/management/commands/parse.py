@@ -159,7 +159,7 @@ class Command(BaseCommand):
 
             for module in [m for m in modules if m["disciplines"]]:
 
-                for i in range(1, 10):
+                for i in range(10, 1, -1):
                     ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
                         if int(ze) > 0:
