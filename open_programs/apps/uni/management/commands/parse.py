@@ -203,7 +203,7 @@ class Command(BaseCommand):
 
                         if isinstance(row[5], int):
                             discipline.form = "e"
-                        if isinstance(row[5], int):
+                        if isinstance(row[6], int):
                             discipline.form = "z"
 
                         discipline.status = "p"
