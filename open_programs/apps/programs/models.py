@@ -9,6 +9,19 @@ from competences.models import Competence
 from modules.models import Module
 
 
+class LearningPlan(ObjectBaseClass):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uni_displayableTitle = models.CharField(_("Версия"), max_length=32, blank=True, null=True)
+    uni_number = models.CharField(_("Номер УП"), max_length=32, blank=True, null=True)
+    uni_active = models.CharField(_("Текущая версия"), max_length=32, blank=True, null=True)
+    uni_title = models.CharField(_("Название"), max_length=32, blank=True, null=True)
+    uni_stage = models.BooleaField(_("План утверждён"), default=True)
+    uni_loadTimeType = models.CharField(_("План утверждён"), max_length=32, blank=True, null=True)
+
+    def __str__(self):
+        return self.uni_number
+
+
 class Program(ObjectBaseClass):
 
     LEVELS = (
@@ -23,6 +36,7 @@ class Program(ObjectBaseClass):
     training_direction = models.CharField(_("Направление подготовки"), blank=False, max_length=256, default=_(''))
     competences = models.ManyToManyField(Competence, blank=True)
     chief = models.ForeignKey(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
+    learning_plans = models.ManyToManyField("LearningPlan", blank=True)
 
     class Meta:
         verbose_name = 'программа'
@@ -33,6 +47,9 @@ class Program(ObjectBaseClass):
 
     def get_choice_groups(self):
         return [choice_group.id for choice_group in ChoiceGroup.objects.filter(program__id=self.id)]
+
+    def get_modules(self):
+        return
 
 
 class TrainingTarget(ObjectBaseClass):

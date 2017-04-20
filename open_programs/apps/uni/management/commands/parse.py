@@ -7,7 +7,7 @@ import pprint
 
 from django.core.management.base import BaseCommand
 
-from programs.models import Program, ProgramModules
+from programs.models import Program, ProgramModules, LearningPlan
 from disciplines.models import Discipline
 from modules.models import Module
 
@@ -88,17 +88,40 @@ class Command(BaseCommand):
             soup.find('td', id="nav_td").decompose()
 
             stage = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.stage").text.strip().lower() == "утверждено"
-            print("План утверждён") if stage else print("План не утверждён")
-
             displayableTitle = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.displayableTitle").text.strip()
             number = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.number").text.strip()
             active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
+            loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
 
             print("Версия:", displayableTitle, sep=" ")
             print("Номер УП:", number, sep=" ")
             print("Текущая версия:", active, sep=" ")
             print("Название:", title, sep=" ", end="\n")
+            print("План утверждён") if stage else print("План не утверждён")
+
+            try:
+                lps = LearningPlan.objects.filter(uni_number=number)
+                for lp in lps:
+                    lp.uni_displayableTitle = displayableTitle
+                    lp.uni_number = number
+                    lp.uni_active = active
+                    lp.uni_title = title
+                    lp.uni_stage = stage
+                    lp.uni_loadTimeType = loadTimeType
+                    lp.save()
+                    if lp not in program.learning_plans.all():
+                        program.learning_plans.add(lp)
+            except:
+                lp = LearningPlan(uni_displayableTitle=displayableTitle,
+                                  uni_number=number,
+                                  uni_active=active,
+                                  uni_title=title,
+                                  uni_stage=stage,
+                                  uni_loadTimeType=loadTimeType
+                                  )
+                lp.save()
+                program.learning_plans.add(lp)
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
@@ -145,12 +168,13 @@ class Command(BaseCommand):
                             discipline.uni_file = d["file"]
 
                             discipline.status = "p"
-
                             discipline.save()
 
-                # pm = ProgramModules(program=program,
-                #                     module=module_obj)  # TODO: ChoiceGroup
-                # pm.save()
+            # Собираем группу выбора
+
+            # pm = ProgramModules(program=program,
+            #                     module=module_obj)  # TODO: ChoiceGroup
+            # pm.save()
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]

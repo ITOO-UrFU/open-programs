@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan
 
 
 @admin.register(Program)
@@ -64,3 +64,8 @@ class ChoiceGroupAdmin(VersionAdmin):
 @admin.register(ChoiceGroupType)
 class ChoiceGroupTypeAdmin(VersionAdmin):
     list_display = ("title", )
+
+
+@admin.register(LearningPlan)
+class LearningPlanAdmin(VersionAdmin):
+    list_display = ('uni_displayableTitle', 'uni_number', 'uni_title', 'uni_stage', 'uni_loadTimeType')
