@@ -120,6 +120,8 @@ class Command(BaseCommand):
                 program.learning_plans.add(lp)
                 program.save()
 
+                print('!!!!!!!!!!!!', title)
+
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
             rows = []
