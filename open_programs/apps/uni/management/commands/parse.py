@@ -94,7 +94,6 @@ class Command(BaseCommand):
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
             html = soup.find("table", {"class": "basic"})
-            html.purify()
 
             lps = LearningPlan.objects.filter(uni_number=number, status="p")
             if lps:
