@@ -163,10 +163,10 @@ class Command(BaseCommand):
                     ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
                         if int(ze) > 0:
-                            print(ze, "i=", i)
+                            print(ze, "i=", i, "row: ", find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell"))
                             semester = i
                     except:
-                        semester = i - 1
+                        pass
 
                 try:
                     module_obj = Module.objects.filter(title=module["title"]).first()
