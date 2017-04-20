@@ -94,8 +94,7 @@ class Command(BaseCommand):
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
 
-
-            lps = LearningPlan.objects.filter(uni_number=number)
+            lps = LearningPlan.objects.filter(uni_number=number, status="p")
             if lps:
                 for lp in lps:
                     lp.uni_displayableTitle = displayableTitle
@@ -108,18 +107,16 @@ class Command(BaseCommand):
                     if lp not in program.learning_plans.all():
                         program.learning_plans.add(lp)
                         program.save()
-                        print('!!!!!!!!!!!!!!!', lp)
             else:
-                print("except")
                 lp = LearningPlan(uni_displayableTitle=displayableTitle,
                                   uni_number=number,
                                   uni_active=active,
                                   uni_title=title,
                                   uni_stage=stage,
-                                  uni_loadTimeType=loadTimeType
+                                  uni_loadTimeType=loadTimeType,
+                                  status="p"
                                   )
                 lp.save()
-                print('!!!!!!!!!!!!!!!', lp)
                 program.learning_plans.add(lp)
                 program.save()
 
