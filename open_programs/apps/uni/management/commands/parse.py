@@ -233,8 +233,7 @@ class Command(BaseCommand):
                         discipline.uni_number = d["number"]
                         discipline.uni_section = d["section"]
                         discipline.uni_file = d["file"]
-                        discipline.period = semester - module_obj.semester
-
+                        discipline.period = semester
                         try:
                             try:
                                 if int(max(row[5].split("-"))):
