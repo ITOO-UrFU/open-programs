@@ -17,7 +17,7 @@ class ProgramAdmin(VersionAdmin):
         'status',
 
     )
-    list_filter = ("training_direction", "level", 'created', 'updated', 'status', 'archived',)
+    list_filter = ("level", 'created', 'updated', 'status', 'archived',)
     # filter_horizontal = (
     #     'program_modules',
     # )
