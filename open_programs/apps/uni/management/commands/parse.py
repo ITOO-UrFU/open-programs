@@ -93,7 +93,8 @@ class Command(BaseCommand):
             active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
-            print('!!!!!!!!!!!!', title)
+            html = soup.find("table", {"class": "basic"})
+            html.purify()
 
             lps = LearningPlan.objects.filter(uni_number=number, status="p")
             if lps:
@@ -104,6 +105,7 @@ class Command(BaseCommand):
                     lp.uni_title = title
                     lp.uni_stage = stage
                     lp.uni_loadTimeType = loadTimeType
+                    lp.uni_html = html
                     lp.save()
                     if lp not in program.learning_plans.all():
                         program.learning_plans.add(lp)
@@ -115,6 +117,7 @@ class Command(BaseCommand):
                                   uni_title=title,
                                   uni_stage=stage,
                                   uni_loadTimeType=loadTimeType,
+                                  uni_html=html,
                                   status="p"
                                   )
                 lp.save()
