@@ -95,6 +95,7 @@ class Command(BaseCommand):
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
 
             try:
+                print("try")
                 lps = LearningPlan.objects.filter(uni_number=number)
                 for lp in lps:
                     lp.uni_displayableTitle = displayableTitle
@@ -109,6 +110,7 @@ class Command(BaseCommand):
                         program.save()
                         print('!!!!!!!!!!!!!!!', lp)
             except:
+                print("except")
                 lp = LearningPlan(uni_displayableTitle=displayableTitle,
                                   uni_number=number,
                                   uni_active=active,
@@ -120,7 +122,6 @@ class Command(BaseCommand):
                 print('!!!!!!!!!!!!!!!', lp)
                 program.learning_plans.add(lp)
                 program.save()
-            print('!!!!!!!!!!!!!!!', lp)
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
