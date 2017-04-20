@@ -161,8 +161,8 @@ class Command(BaseCommand):
                     module_obj.uni_state = module["state"]
                     module_obj.uni_approvedDate = module["approvedDate"]
                     module_obj.uni_comment = module["comment"]
-                    module_obj.uni_file = module["uni_file"]
-                    module_obj.uni_specialities = module["uni_specialities"]
+                    module_obj.uni_file = module["file"]
+                    module_obj.uni_specialities = module["specialities"]
                     module_obj.save()
                 except:
                     module_obj = Module(title=module["title"],
@@ -177,8 +177,8 @@ class Command(BaseCommand):
                                         uni_state=module["state"],
                                         uni_approvedDate=module["approvedDate"],
                                         uni_comment=module["comment"],
-                                        uni_file=module["uni_file"],
-                                        uni_specialities=module["uni_specialities"]
+                                        uni_file=module["file"],
+                                        uni_specialities=module["specialities"]
                                         )
                     module_obj.save()  # Создали модуль
 
