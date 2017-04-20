@@ -173,6 +173,7 @@ class Command(BaseCommand):
                     module_obj.uni_comment = module["comment"]
                     module_obj.uni_file = module["file"]
                     module_obj.uni_specialities = module["specialities"]
+                    module_obj.program = program
                     module_obj.save()
                 except:
                     module_obj = Module(title=module["title"],
@@ -189,6 +190,7 @@ class Command(BaseCommand):
                                         uni_comment=module["comment"],
                                         uni_file=module["file"],
                                         uni_specialities=module["specialities"]
+                                        program=program
                                         )
                     module_obj.save()  # Создали модуль
 
