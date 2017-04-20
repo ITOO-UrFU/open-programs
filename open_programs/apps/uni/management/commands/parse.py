@@ -94,12 +94,6 @@ class Command(BaseCommand):
             title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
             loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
 
-            print("Версия:", displayableTitle, sep=" ")
-            print("Номер УП:", number, sep=" ")
-            print("Текущая версия:", active, sep=" ")
-            print("Название:", title, sep=" ", end="\n")
-            print("План утверждён") if stage else print("План не утверждён")
-
             try:
                 lps = LearningPlan.objects.filter(uni_number=number)
                 for lp in lps:
@@ -126,6 +120,7 @@ class Command(BaseCommand):
                 print('!!!!!!!!!!!!!!!', lp)
                 program.learning_plans.add(lp)
                 program.save()
+            print('!!!!!!!!!!!!!!!', lp)
 
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
