@@ -205,16 +205,18 @@ class Command(BaseCommand):
                         try:
                             try:
                                 if isinstance(int(max(row[5].split("-"))), int):
-                                    print("Экзамен")
-                                    discipline.form = "e"
-                            except:
-                                pass
-                            try:
-                                if isinstance(int(max(row[5].split("-"))), int):
                                     print("Зачет")
                                     discipline.form = "z"
                             except:
                                 pass
+
+                            try:
+                                if isinstance(int(max(row[5].split("-"))), int):
+                                    print("Экзамен")
+                                    discipline.form = "e"
+                            except:
+                                pass
+
                         except:
                             pass
 
