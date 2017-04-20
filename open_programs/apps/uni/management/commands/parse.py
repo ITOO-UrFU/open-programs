@@ -189,8 +189,8 @@ class Command(BaseCommand):
                                         uni_approvedDate=module["approvedDate"],
                                         uni_comment=module["comment"],
                                         uni_file=module["file"],
-                                        uni_specialities=module["specialities"]
-                                        program=program
+                                        uni_specialities=module["specialities"],
+                                        program=program,
                                         )
                     module_obj.save()  # Создали модуль
 
