@@ -201,10 +201,13 @@ class Command(BaseCommand):
                         discipline.uni_section = d["section"]
                         discipline.uni_file = d["file"]
 
-                        if isinstance(row[5], int):
-                            discipline.form = "e"
-                        if isinstance(row[6], int):
-                            discipline.form = "z"
+                        try:
+                            if isinstance(max(row[5].split("-")), int):
+                                discipline.form = "e"
+                            if isinstance(max(row[5].split("-")), int):
+                                discipline.form = "z"
+                        except:
+                            pass
 
                         discipline.status = "p"
                         discipline.save()
