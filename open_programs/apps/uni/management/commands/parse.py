@@ -140,19 +140,25 @@ class Command(BaseCommand):
 
             for row in rows:
                 if row:
-                    # print(row)
                     m = re.search('\d\d+', row[module_numbers_col])
                     if m:
-                        [modules.append(module) for module in modules_json if str(module["number"]) == str(m.group(0))]
+                        for module in modules_json:
+                            if str(module["number"]) == str(m.group(0)):
+                                module["row"] = row
+                                modules.append(module)
+                                print(module)
 
             for module in [m for m in modules if m["disciplines"]]:
-                print(module)
 
                 try:
                     module_obj = Module.objects.get(title=module["title"])
                 except:
                     module_obj = Module(title=module["title"])
                     module_obj.save()  # Создали модуль
+
+
+
+
 
                 # Ищем дисциплины
                 for d in module["disciplines"]:
@@ -169,8 +175,6 @@ class Command(BaseCommand):
                             discipline.uni_number = d["number"]
                             discipline.uni_section = d["section"]
                             discipline.uni_file = d["file"]
-
-                            i
 
                             discipline.status = "p"
                             discipline.save()
