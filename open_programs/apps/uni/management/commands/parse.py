@@ -163,7 +163,6 @@ class Command(BaseCommand):
                     ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
                         if int(ze) > 0:
-                            print(ze, "i=", i, "row: ", find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell"))
                             semester = i
                     except:
                         pass
@@ -185,7 +184,6 @@ class Command(BaseCommand):
                     module_obj.uni_specialities = module["specialities"]
                     module_obj.program = program
                     module_obj.semester = semester
-
                     module_obj.save()
                 except:
                     module_obj = Module(title=module["title"],
@@ -218,6 +216,15 @@ class Command(BaseCommand):
                         except:
                             discipline = Discipline(title=d["title"])
 
+                        for i in range(10, 0, -1):
+                            ze = module["row"][
+                                find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                            try:
+                                if int(ze) > 0:
+                                    semester = i
+                            except:
+                                pass
+
                         discipline.module = module_obj
                         discipline.labor = d["testUnits"]
 
@@ -226,6 +233,7 @@ class Command(BaseCommand):
                         discipline.uni_number = d["number"]
                         discipline.uni_section = d["section"]
                         discipline.uni_file = d["file"]
+                        discipline.period = semester - module_obj.semester
 
                         try:
                             try:
