@@ -160,7 +160,7 @@ class Command(BaseCommand):
             for module in [m for m in modules if m["disciplines"]]:
 
                 for i in range(1, 10):
-                    ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")].text.strip()
+                    ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
                         int(ze)
                         semester = i
