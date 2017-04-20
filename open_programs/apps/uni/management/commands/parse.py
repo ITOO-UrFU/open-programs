@@ -221,7 +221,8 @@ class Command(BaseCommand):
                                 find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                             try:
                                 if int(ze) > 0:
-                                    semester = i
+                                    print(d["title"], i+1, ze)
+                                    semester = i + 1
                             except:
                                 pass
 
