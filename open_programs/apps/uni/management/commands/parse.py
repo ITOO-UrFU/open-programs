@@ -182,13 +182,13 @@ class Command(BaseCommand):
                                         )
                     module_obj.save()  # Создали модуль
 
-
-
-
-
                 # Ищем дисциплины
                 for d in module["disciplines"]:
                     if int(d["testUnits"]) > 0:
+                        for row in rows:
+                            if d["title"] in row:
+                                print(row)
+                                break
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
