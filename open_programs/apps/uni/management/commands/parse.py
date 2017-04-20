@@ -157,9 +157,16 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
-            print(modules)
-
             for module in [m for m in modules if m["disciplines"]]:
+
+                for i in range(1, 10):
+                    ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")].text.strip()
+                    try:
+                        int(ze)
+                        semester = i
+                    except:
+                        semester = i - 1
+
                 try:
                     module_obj = Module.objects.filter(title=module["title"]).first()
                     module_obj.uni_uuid = module["uuid"]
@@ -176,6 +183,8 @@ class Command(BaseCommand):
                     module_obj.uni_file = module["file"]
                     module_obj.uni_specialities = module["specialities"]
                     module_obj.program = program
+                    module_obj.semester = semester
+
                     module_obj.save()
                 except:
                     module_obj = Module(title=module["title"],
@@ -193,6 +202,7 @@ class Command(BaseCommand):
                                         uni_file=module["file"],
                                         uni_specialities=module["specialities"],
                                         program=program,
+                                        semester=semester,
                                         )
                     module_obj.save()  # Создали модуль
 
