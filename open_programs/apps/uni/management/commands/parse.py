@@ -192,6 +192,7 @@ class Command(BaseCommand):
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
                             discipline = Discipline(title=d["title"])
+
                         discipline.module = module_obj
                         discipline.labor = d["testUnits"]
 
@@ -204,11 +205,13 @@ class Command(BaseCommand):
                         try:
                             try:
                                 if isinstance(int(max(row[5].split("-"))), int):
+                                    print("Экзамен")
                                     discipline.form = "e"
                             except:
                                 pass
                             try:
                                 if isinstance(int(max(row[5].split("-"))), int):
+                                    print("Зачет")
                                     discipline.form = "z"
                             except:
                                 pass
