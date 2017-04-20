@@ -123,6 +123,9 @@ class Command(BaseCommand):
                 program.learning_plans.add(lp)
                 program.save()
 
+            if 'зао' not in number:
+                fulltime = True
+
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
             rows = []
@@ -154,6 +157,7 @@ class Command(BaseCommand):
 
                 for d in module["disciplines"]:
                     if int(d["testUnits"]) > 0:
+                        print(d)
                         try:
                             discipline = Discipline.objects.get(title=d["title"])
                         except:
