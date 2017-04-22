@@ -265,7 +265,7 @@ class Command(BaseCommand):
 
                 discipline.status = "p"
                 discipline.save()
-                self.create_semester(self, program, discipline, module, find_row_index_id)
+                self.create_semester(program, discipline, module, find_row_index_id)
 
 
 
