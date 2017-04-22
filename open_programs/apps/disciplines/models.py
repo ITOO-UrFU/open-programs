@@ -38,3 +38,29 @@ class Discipline(ObjectBaseClass):
 
     def num_courses(self):
         return len(self.courses.all())
+
+
+class TrainingTerms(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(_('Наименование срока обучения'), max_length=256, blank=False, default='')
+    limit = models.PositiveIntegerField(_("Лимит ЗЕ в год"), max_length=4, default=0)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'семестр изучения дисциплины'
+        verbose_name_plural = 'семестры изучения дисциплины'
+
+
+class Semester(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    discipline = models.ForeignKey("Discipline")
+    program = models.ForeignKey("programs.Program")
+    year = models.PositiveIntegerField(_("Год поступления"), max_length=4, default=1970)
+    admission_semester = models.PositiveIntegerField(_("Семестр поступления"), max_length=1, default=0)
+    training_semester = models.PositiveIntegerField(_("Семестр изучения"), max_length=1, default=0)
+    term = models.ForeignKey("TrainingTerms")
+
+    def __str__(self):
+        return f"{self.program} - {self.discipline} - {self.year}"
