@@ -225,8 +225,8 @@ class Command(BaseCommand):
 
     def create_module(self, find_row_index_id, module, program):
         for i in range(10, 0, -1):
-            ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
             print(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")
+            ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
             try:
                 if int(ze) > 0:
                     semester = i
