@@ -186,6 +186,38 @@ class Command(BaseCommand):
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
                     semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program, term)
 
+            else:
+                years = 0
+                for module in [m for m in modules]:
+                    try:
+                        for i in range(1, 10):
+                            try:
+                                ze = module["row"][
+                                    find_row_index_id(
+                                        f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                                try:
+                                    if int(ze) > 0:
+                                        latest_semester = i
+                                except:
+                                    latest_semester = i - 1
+                            except:
+                                pass
+                        if latest_semester / float(2) > years:
+                            years = latest_semester / float(2)
+                    except:
+                        pass
+
+                if years == 5:
+                    term = TrainingTerms.objects.filter(title="5 лет").first()
+                elif years == 4:
+                    term = TrainingTerms.objects.filter(title="4 года").first()
+                else:
+                    term = TrainingTerms.objects.filter(title="3,5 года").first()
+                for module in [m for m in modules if m["disciplines"]]:
+                    module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
+                    semester = self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
+
+
     def create_semester(self, program, discipline, module, find_row_index_id, term):
         """
         1. ИД дисциплины
@@ -330,6 +362,53 @@ class Command(BaseCommand):
                                 semester=semester,
                                 )
             module_obj.save()  # Создали модуль
+
+        return module_obj, semester
+
+    def create_disciplines_not_save(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
+        for d in module["disciplines"]:
+            discipline = None
+            if int(d["testUnits"]) > 0:
+                for row in rows:
+                    if d["title"] in row:
+                        break
+                try:
+                    discipline = Discipline.objects.get(title=d["title"])
+                except:
+                    print("Unknown discipline: ", d["title"])
+
+                for i in range(10, 0, -1):
+                    try:
+                        ze = row[
+                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                        try:
+                            if int(ze) > 0:
+                                semester = i
+                        except:
+                            pass
+                    except:
+                        pass
+
+                if discipline:
+                    self.create_semester(program, discipline, module, find_row_index_id, term)
+        return semester
+
+    def create_module_not_save(self, find_row_index_id, module, program):
+        for i in range(10, 0, -1):
+            try:
+                ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                try:
+                    if int(ze) > 0:
+                        semester = i
+                except:
+                    pass
+            except:
+                pass
+        try:
+            module_obj = Module.objects.filter(title=module["title"]).first()
+
+        except:
+            print("Unknown module: ", module["title"])
 
         return module_obj, semester
 
