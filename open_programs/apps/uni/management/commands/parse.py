@@ -178,12 +178,15 @@ class Command(BaseCommand):
                     discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
-                    ze = row[
-                        find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
-                        if int(ze) > 0:
-                            print(d["title"], i, ze)
-                            semester = i
+                        ze = row[
+                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                        try:
+                            if int(ze) > 0:
+                                print(d["title"], i, ze)
+                                semester = i
+                        except:
+                            pass
                     except:
                         pass
 
@@ -225,11 +228,13 @@ class Command(BaseCommand):
 
     def create_module(self, find_row_index_id, module, program):
         for i in range(10, 0, -1):
-            print(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")
-            ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
             try:
-                if int(ze) > 0:
-                    semester = i
+                ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                try:
+                    if int(ze) > 0:
+                        semester = i
+                except:
+                    pass
             except:
                 pass
         try:
