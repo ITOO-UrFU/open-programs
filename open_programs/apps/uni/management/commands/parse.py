@@ -243,7 +243,6 @@ class Command(BaseCommand):
                                     )
             semester_obj.save()
 
-
     def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
         for d in module["disciplines"]:
             if int(d["testUnits"]) > 0:
@@ -269,7 +268,6 @@ class Command(BaseCommand):
 
                 discipline.module = module_obj
                 discipline.labor = d["testUnits"]
-
                 discipline.uni_uid = d["uid"]
                 discipline.uni_discipline = d["discipline"]
                 discipline.uni_number = d["number"]
@@ -293,15 +291,6 @@ class Command(BaseCommand):
                 discipline.status = "p"
                 discipline.save()
                 self.create_semester(program, discipline, module, find_row_index_id, term)
-
-
-
-
-                # Собираем группу выбора
-
-                # pm = ProgramModules(program=program,
-                #                     module=module_obj)  # TODO: ChoiceGroup
-                # pm.save()
         return semester
 
     def create_module(self, find_row_index_id, module, program):
