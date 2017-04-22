@@ -157,6 +157,7 @@ class Command(BaseCommand):
             fulltime = False
             if 'зао' not in number:
                 fulltime = True
+            print("fulltime: ", fulltime)
             if fulltime:
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program, semester)
