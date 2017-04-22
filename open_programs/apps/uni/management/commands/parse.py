@@ -195,11 +195,11 @@ class Command(BaseCommand):
                     pass
             years = latest_semester / float(2)
             if years == 5:
-                term = TrainingTerms.objects.filter(title="5 лет")
+                term = TrainingTerms.objects.filter(title="5 лет").first()
             elif years == 4:
-                term = TrainingTerms.objects.filter(title="4 года")
+                term = TrainingTerms.objects.filter(title="4 года").first()
             else:
-                term = TrainingTerms.objects.filter(title="3,5 года")
+                term = TrainingTerms.objects.filter(title="3,5 года").first()
         except:
             pass
 
