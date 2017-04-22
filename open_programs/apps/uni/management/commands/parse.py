@@ -1,17 +1,12 @@
 from bs4 import BeautifulSoup
-import csv
-import os
 import re
 import json
-import pprint
 
 from django.core.management.base import BaseCommand
 
 from programs.models import Program, ProgramModules, LearningPlan
-from disciplines.models import Discipline
+from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module
-
-pp = pprint.PrettyPrinter(indent=4)
 
 
 class Command(BaseCommand):
@@ -161,12 +156,68 @@ class Command(BaseCommand):
             if fulltime:
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
-                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester)
+                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program)
+
+    def create_semester(self, program, discipline, module, find_row_index_id):
+        """
+        1. ИД дисциплины
+        2. Дисциплина.Программа
+        3. Год текущий?
+        4. Семестр: 0?
+        5. Срок обучения (парсим)
+        6. Семестр изучения (парсим как семестр модуля)
+        :param program:
+        :param discipline:
+        :return:
+        """
+        for i in range(10, 0, -1):
+            try:
+                ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                try:
+                    if int(ze) > 0:
+                        training_semester = i
+                except:
+                    pass
+            except:
+                pass
+
+        try:
+            for i in range(1, 10):
+                try:
+                    ze = module["row"][
+                        find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                    try:
+                        if int(ze) > 0:
+                            latest_semester = i
+                    except:
+                        latest_semester = i - 1
+                except:
+                    pass
+            years = latest_semester / float(2)
+            if years == 5:
+                term = TrainingTerms.objects.filter(title="5 лет")
+            elif years == 4:
+                term = TrainingTerms.objects.filter(title="4 года")
+            else:
+                term = TrainingTerms.objects.filter(title="3,5 года")
+        except:
+            pass
+
+        print(term)
+
+        try:
+            semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
+        except:
+            semester_obj = Semester(discipline=discipline,
+                                    training_semester=training_semester,
+                                    program=program,
+                                    year='2017',
+                                    admission_semester="0",
+                                    term=term,
+                                    )
 
 
-
-
-    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester):
+    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program):
         for d in module["disciplines"]:
             if int(d["testUnits"]) > 0:
                 for row in rows:
@@ -183,7 +234,6 @@ class Command(BaseCommand):
                             find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                         try:
                             if int(ze) > 0:
-                                print(d["title"], i, ze)
                                 semester = i
                         except:
                             pass
@@ -215,6 +265,7 @@ class Command(BaseCommand):
 
                 discipline.status = "p"
                 discipline.save()
+                self.create_semester(self, program, discipline, module, find_row_index_id)
 
 
 
