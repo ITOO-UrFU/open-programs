@@ -50,8 +50,8 @@ class TrainingTerms(models.Model):
         return self.title
 
     class Meta:
-        verbose_name = 'семестр изучения дисциплины'
-        verbose_name_plural = 'семестры изучения дисциплины'
+        verbose_name = 'срок обучения'
+        verbose_name_plural = 'сроки обучения'
 
 
 class Semester(models.Model):
@@ -61,7 +61,11 @@ class Semester(models.Model):
     year = models.PositiveIntegerField(_("Год поступления"), default=1970)
     admission_semester = models.PositiveIntegerField(_("Семестр поступления"), default=0)
     training_semester = models.PositiveIntegerField(_("Семестр изучения"), default=0)
-    term = models.ForeignKey("TrainingTerms")
+    term = models.ForeignKey("TrainingTerms", blank=True, null=True)
 
     def __str__(self):
         return f"{self.program} - {self.discipline} - {self.year}"
+
+    class Meta:
+        verbose_name = 'семестр изучения дисциплины'
+        verbose_name_plural = 'семестры изучения дисциплины'
