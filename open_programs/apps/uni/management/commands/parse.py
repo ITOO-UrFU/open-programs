@@ -160,7 +160,7 @@ class Command(BaseCommand):
             print("fulltime: ", fulltime)
             if fulltime:
                 for module in [m for m in modules if m["disciplines"]]:
-                    module_obj, semester = self.create_module(find_row_index_id, module, program, semester)
+                    module_obj, semester = self.create_module(find_row_index_id, module, program)
                     semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester)
 
 
@@ -223,7 +223,7 @@ class Command(BaseCommand):
                 # pm.save()
         return semester
 
-    def create_module(self, find_row_index_id, module, program, semester):
+    def create_module(self, find_row_index_id, module, program):
         for i in range(10, 0, -1):
             ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
             try:
