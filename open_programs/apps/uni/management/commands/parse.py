@@ -219,6 +219,7 @@ class Command(BaseCommand):
                                     admission_semester="0",
                                     term=term,
                                     )
+            semester_obj.save()
 
 
     def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
