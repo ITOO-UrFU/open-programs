@@ -44,7 +44,7 @@ class Discipline(ObjectBaseClass):
 class TrainingTerms(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_('Наименование срока обучения'), max_length=256, blank=False, default='')
-    limit = models.PositiveIntegerField(_("Лимит ЗЕ в год"), max_length=4, default=0)
+    limit = models.PositiveIntegerField(_("Лимит ЗЕ в год"), default=0)
 
     def __str__(self):
         return self.title
@@ -58,9 +58,9 @@ class Semester(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     discipline = models.ForeignKey("Discipline")
     program = models.ForeignKey("programs.Program")
-    year = models.PositiveIntegerField(_("Год поступления"), max_length=4, default=1970)
-    admission_semester = models.PositiveIntegerField(_("Семестр поступления"), max_length=1, default=0)
-    training_semester = models.PositiveIntegerField(_("Семестр изучения"), max_length=1, default=0)
+    year = models.PositiveIntegerField(_("Год поступления"), default=1970)
+    admission_semester = models.PositiveIntegerField(_("Семестр поступления"), default=0)
+    training_semester = models.PositiveIntegerField(_("Семестр изучения"), default=0)
     term = models.ForeignKey("TrainingTerms")
 
     def __str__(self):
