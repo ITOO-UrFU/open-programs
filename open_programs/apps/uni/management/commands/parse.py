@@ -82,12 +82,31 @@ class Command(BaseCommand):
             self.decompose(soup, "div", "buttons")
             soup.find('td', id="nav_td").decompose()
 
-            stage = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.stage").text.strip().lower() == "утверждено"
-            displayableTitle = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.displayableTitle").text.strip()
-            number = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.number").text.strip()
-            active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
-            title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
-            loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
+            try:
+                stage = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.stage").text.strip().lower() == "утверждено"
+            except:
+                stage = False
+            try:
+                displayableTitle = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.displayableTitle").text.strip()
+            except:
+                displayableTitle = ""
+            try:
+                number = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.number").text.strip()
+            except:
+                number = ""
+            try:
+                active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
+            except:
+                active = "нет"
+            try:
+                title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
+            except:
+                title = ""
+            try:
+                loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
+            except:
+                loadTimeType = "часов в неделю"
+
             html = soup.find("table", {"class": "basic"}).prettify()
 
             lps = LearningPlan.objects.filter(uni_number=number, status="p")
