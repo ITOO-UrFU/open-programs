@@ -154,6 +154,7 @@ class Command(BaseCommand):
                 fulltime = True
             print("fulltime: ", fulltime)
             if fulltime:
+                years = 0
                 for module in [m for m in modules]:
                     try:
                         for i in range(1, 10):
