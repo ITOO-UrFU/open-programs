@@ -154,11 +154,11 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
+            fulltime = False
             if 'зао' not in number:
                 fulltime = True
             if fulltime:
                 for module in [m for m in modules if m["disciplines"]]:
-
                     module_obj, semester = self.create_module(find_row_index_id, module, program, semester)
                     semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester)
 
