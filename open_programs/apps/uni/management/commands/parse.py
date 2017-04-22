@@ -168,7 +168,8 @@ class Command(BaseCommand):
                                     latest_semester = i - 1
                             except:
                                 pass
-                        years = latest_semester / float(2) if latest_semester / float(2) > years else years = years
+                        if latest_semester / float(2) > years:
+                            years = latest_semester / float(2)
                     except:
                         pass
 
