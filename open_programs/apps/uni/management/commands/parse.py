@@ -154,11 +154,37 @@ class Command(BaseCommand):
                 fulltime = True
             print("fulltime: ", fulltime)
             if fulltime:
+                for module in [m for m in modules]:
+                    try:
+                        for i in range(1, 10):
+                            try:
+                                ze = module["row"][
+                                    find_row_index_id(
+                                        f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                                try:
+                                    if int(ze) > 0:
+                                        latest_semester = i
+                                except:
+                                    latest_semester = i - 1
+                            except:
+                                pass
+                        years = latest_semester / float(2) if latest_semester / float(2) > years else years = years
+                    except:
+                        pass
+
+                if years == 5:
+                    term = TrainingTerms.objects.filter(title="5 лет").first()
+                elif years == 4:
+                    term = TrainingTerms.objects.filter(title="4 года").first()
+                else:
+                    term = TrainingTerms.objects.filter(title="3,5 года").first()
+                print(term)
+
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
-                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program)
+                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program, term)
 
-    def create_semester(self, program, discipline, module, find_row_index_id):
+    def create_semester(self, program, discipline, module, find_row_index_id, term):
         """
         1. ИД дисциплины
         2. Дисциплина.Программа
@@ -182,30 +208,6 @@ class Command(BaseCommand):
                 pass
 
         try:
-            for i in range(1, 10):
-                try:
-                    ze = module["row"][
-                        find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                    try:
-                        if int(ze) > 0:
-                            latest_semester = i
-                    except:
-                        latest_semester = i - 1
-                except:
-                    pass
-            years = latest_semester / float(2)
-            if years == 5:
-                term = TrainingTerms.objects.filter(title="5 лет").first()
-            elif years == 4:
-                term = TrainingTerms.objects.filter(title="4 года").first()
-            else:
-                term = TrainingTerms.objects.filter(title="3,5 года").first()
-        except:
-            pass
-
-        print(latest_semester, term)
-
-        try:
             semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
         except:
             semester_obj = Semester(discipline=discipline,
@@ -217,7 +219,7 @@ class Command(BaseCommand):
                                     )
 
 
-    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program):
+    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
         for d in module["disciplines"]:
             if int(d["testUnits"]) > 0:
                 for row in rows:
@@ -265,7 +267,7 @@ class Command(BaseCommand):
 
                 discipline.status = "p"
                 discipline.save()
-                self.create_semester(program, discipline, module, find_row_index_id)
+                self.create_semester(program, discipline, module, find_row_index_id, term)
 
 
 
