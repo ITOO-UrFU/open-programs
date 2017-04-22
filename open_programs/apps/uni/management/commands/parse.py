@@ -203,7 +203,7 @@ class Command(BaseCommand):
         except:
             pass
 
-        print(term)
+        print(latest_semester, term)
 
         try:
             semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
