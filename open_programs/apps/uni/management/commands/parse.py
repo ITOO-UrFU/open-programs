@@ -123,9 +123,6 @@ class Command(BaseCommand):
                 program.learning_plans.add(lp)
                 program.save()
 
-            if 'зао' not in number:
-                fulltime = True
-
             table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
             headers = [header.text.strip() for header in table.find_all('th')]
 
@@ -157,109 +154,121 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
-            for module in [m for m in modules if m["disciplines"]]:
+            if 'зао' not in number:
+                fulltime = True
+            if fulltime:
+                for module in [m for m in modules if m["disciplines"]]:
+
+                    module_obj, semester = self.create_module(find_row_index_id, module, program, semester)
+                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester)
+
+
+
+
+    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester):
+        for d in module["disciplines"]:
+            if int(d["testUnits"]) > 0:
+                for row in rows:
+                    if d["title"] in row:
+                        break
+                try:
+                    discipline = Discipline.objects.get(title=d["title"])
+                except:
+                    discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
-                    ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                    ze = row[
+                        find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                     try:
                         if int(ze) > 0:
+                            print(d["title"], i, ze)
                             semester = i
                     except:
                         pass
 
+                discipline.module = module_obj
+                discipline.labor = d["testUnits"]
+
+                discipline.uni_uid = d["uid"]
+                discipline.uni_discipline = d["discipline"]
+                discipline.uni_number = d["number"]
+                discipline.uni_section = d["section"]
+                discipline.uni_file = d["file"]
+                discipline.period = semester - module_obj.semester + 1
                 try:
-                    module_obj = Module.objects.filter(title=module["title"]).first()
-                    module_obj.uni_uuid = module["uuid"]
-                    module_obj.uni_number = module["number"]
-                    module_obj.uni_coordinator = module["coordinator"]
-                    module_obj.uni_type = module["type"]
-                    module_obj.uni_title = module["title"]
-                    module_obj.uni_competence = module["competence"]
-                    module_obj.uni_testUnits = module["testUnits"]
-                    module_obj.uni_priority = module["priority"]
-                    module_obj.uni_state = module["state"]
-                    module_obj.uni_approvedDate = module["approvedDate"]
-                    module_obj.uni_comment = module["comment"]
-                    module_obj.uni_file = module["file"]
-                    module_obj.uni_specialities = module["specialities"]
-                    module_obj.program = program
-                    module_obj.semester = semester
-                    module_obj.save()
+                    try:
+                        if int(max(row[5].split("-"))):
+                            discipline.form = "z"
+                    except:
+                        pass
+                    try:
+                        if int(max(row[4].split("-"))):
+                            discipline.form = "e"
+                    except:
+                        pass
                 except:
-                    module_obj = Module(title=module["title"],
-                                        uni_uuid=module["uuid"],
-                                        uni_number=module["number"],
-                                        uni_coordinator=module["coordinator"],
-                                        uni_type=module["type"],
-                                        uni_title=module["title"],
-                                        uni_competence=module["competence"],
-                                        uni_testUnits=module["testUnits"],
-                                        uni_priority=module["priority"],
-                                        uni_state=module["state"],
-                                        uni_approvedDate=module["approvedDate"],
-                                        uni_comment=module["comment"],
-                                        uni_file=module["file"],
-                                        uni_specialities=module["specialities"],
-                                        program=program,
-                                        semester=semester,
-                                        )
-                    module_obj.save()  # Создали модуль
+                    pass
 
-                # Ищем дисциплины
-                for d in module["disciplines"]:
-                    if int(d["testUnits"]) > 0:
-                        for row in rows:
-                            if d["title"] in row:
-                                break
-                        try:
-                            discipline = Discipline.objects.get(title=d["title"])
-                        except:
-                            discipline = Discipline(title=d["title"])
-
-                        for i in range(10, 0, -1):
-                            ze = row[
-                                find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                            try:
-                                if int(ze) > 0:
-                                    print(d["title"], i, ze)
-                                    semester = i
-                            except:
-                                pass
-
-                        discipline.module = module_obj
-                        discipline.labor = d["testUnits"]
-
-                        discipline.uni_uid = d["uid"]
-                        discipline.uni_discipline = d["discipline"]
-                        discipline.uni_number = d["number"]
-                        discipline.uni_section = d["section"]
-                        discipline.uni_file = d["file"]
-                        discipline.period = semester - module_obj.semester + 1
-                        try:
-                            try:
-                                if int(max(row[5].split("-"))):
-                                    discipline.form = "z"
-                            except:
-                                pass
-                            try:
-                                if int(max(row[4].split("-"))):
-                                    discipline.form = "e"
-                            except:
-                                pass
-                        except:
-                            pass
-
-                        discipline.status = "p"
-                        discipline.save()
+                discipline.status = "p"
+                discipline.save()
 
 
 
 
-            # Собираем группу выбора
+                # Собираем группу выбора
 
-            # pm = ProgramModules(program=program,
-            #                     module=module_obj)  # TODO: ChoiceGroup
-            # pm.save()
+                # pm = ProgramModules(program=program,
+                #                     module=module_obj)  # TODO: ChoiceGroup
+                # pm.save()
+        return semester
+
+    def create_module(self, find_row_index_id, module, program, semester):
+        for i in range(10, 0, -1):
+            ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+            try:
+                if int(ze) > 0:
+                    semester = i
+            except:
+                pass
+        try:
+            module_obj = Module.objects.filter(title=module["title"]).first()
+            module_obj.uni_uuid = module["uuid"]
+            module_obj.uni_number = module["number"]
+            module_obj.uni_coordinator = module["coordinator"]
+            module_obj.uni_type = module["type"]
+            module_obj.uni_title = module["title"]
+            module_obj.uni_competence = module["competence"]
+            module_obj.uni_testUnits = module["testUnits"]
+            module_obj.uni_priority = module["priority"]
+            module_obj.uni_state = module["state"]
+            module_obj.uni_approvedDate = module["approvedDate"]
+            module_obj.uni_comment = module["comment"]
+            module_obj.uni_file = module["file"]
+            module_obj.uni_specialities = module["specialities"]
+            module_obj.program = program
+            module_obj.semester = semester
+            module_obj.save()
+        except:
+            module_obj = Module(title=module["title"],
+                                uni_uuid=module["uuid"],
+                                uni_number=module["number"],
+                                uni_coordinator=module["coordinator"],
+                                uni_type=module["type"],
+                                uni_title=module["title"],
+                                uni_competence=module["competence"],
+                                uni_testUnits=module["testUnits"],
+                                uni_priority=module["priority"],
+                                uni_state=module["state"],
+                                uni_approvedDate=module["approvedDate"],
+                                uni_comment=module["comment"],
+                                uni_file=module["file"],
+                                uni_specialities=module["specialities"],
+                                program=program,
+                                semester=semester,
+                                )
+            module_obj.save()  # Создали модуль
+
+        return module_obj, semester
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]
