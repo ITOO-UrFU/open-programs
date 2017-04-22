@@ -205,7 +205,7 @@ class Command(BaseCommand):
                     term = TrainingTerms.objects.filter(title="3,5 года").first()
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
-                    semester = self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
+                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program, term)
 
 
     def create_semester(self, program, discipline, module, find_row_index_id, term):
