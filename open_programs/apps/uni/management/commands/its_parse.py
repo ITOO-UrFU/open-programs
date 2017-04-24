@@ -1,5 +1,5 @@
-import requests
 import json
+import grequests
 
 from django.core.management.base import BaseCommand
 
@@ -15,27 +15,39 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         pass
-    pr_filename = 'uni_fixtures/programs.json'
-    oksos = []
 
     def handle(self, *args, **options):
-        try:
-            with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
-                specialities_json = json.load(specialities)
-                for speciality in specialities_json:
-                    self.oksos.append(speciality["okso"])
-            self.oksos = list(set(self.oksos))
-            print("Всего ОКСО: ", len(self.oksos))
-        except:
-            raise FileNotFoundError
-        open(self.pr_filename, 'w').close()
-        with open(self.pr_filename, 'a') as pr:
-            print("Загружаем программы из ИТС")
-            for okso in self.oksos:
-                r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
-                print(okso, "status: ", r.status_code, "length: ", len(r.json()))
-                if r.json() is not []:
-                    json.dump(r.json(), pr)
+
+        class GetPrograms:
+            def __init__(self):
+                pr_filename = 'uni_fixtures/programs.json'
+                oksos = []
+                try:
+                    with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
+                        specialities_json = json.load(specialities)
+                        for speciality in specialities_json:
+                            self.oksos.append(speciality["okso"])
+                    self.oksos = list(set(self.oksos))
+                    print("Всего ОКСО: ", len(self.oksos))
+                except:
+                    raise FileNotFoundError
+                open(pr_filename, 'w').close()
+                self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in oksos]
+
+            def exception(self, request, exception):
+                print(f"Problem: {request.url}: {exception}")
+
+            def async(self):
+                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=5)
+                with open(self.pr_filename, 'a') as pr:
+                    print("Загружаем программы из ИТС")
+                    if results.json() is not []:
+                        json.dump(results.json(), pr)
+        get_programs = GetPrograms()
+        get_programs.async()
+
+
+
 
 
 
