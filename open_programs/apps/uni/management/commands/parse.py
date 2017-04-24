@@ -74,7 +74,7 @@ class Command(BaseCommand):
             raise NotImplementedError
 
         if raw_html:
-            soup = BeautifulSoup(raw_html, 'html.parser')
+            soup = BeautifulSoup(raw_html, 'lxml')
             [s.extract() for s in soup('script')]
             [s.extract() for s in soup('style')]
             self.decompose(soup, "table", "menu_table")
