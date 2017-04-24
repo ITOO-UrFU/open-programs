@@ -305,7 +305,7 @@ class Command(BaseCommand):
                 discipline.status = "p"
                 discipline.save()
                 self.create_semester(program, discipline, module, find_row_index_id, term)
-                print(f"{bcolors.OKBLUE}{discipline.title}{bcolors.ENDC}")
+                print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
         return semester
 
     def create_module(self, find_row_index_id, module, program):
