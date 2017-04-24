@@ -346,7 +346,6 @@ class Command(BaseCommand):
 
     def create_disciplines_not_save(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
         for d in module["disciplines"]:
-            discipline = None
             if int(d["testUnits"]) > 0:
                 for row in rows:
                     if d["title"] in row:
@@ -354,7 +353,14 @@ class Command(BaseCommand):
                 try:
                     discipline = Discipline.objects.get(title=d["title"])
                 except:
-                    print("Unknown discipline: ", d["title"])
+                    discipline = Discipline(title=d["title"])
+                    discipline.module = module_obj
+                    discipline.labor = d["testUnits"]
+                    discipline.uni_uid = d["uid"]
+                    discipline.uni_discipline = d["discipline"]
+                    discipline.uni_number = d["number"]
+                    discipline.uni_section = d["section"]
+                    discipline.uni_file = d["file"]
 
                 for i in range(10, 0, -1):
                     try:
@@ -367,9 +373,24 @@ class Command(BaseCommand):
                             pass
                     except:
                         pass
+                discipline.period = semester - module_obj.semester + 1
+                try:
+                    try:
+                        if int(max(row[5].split("-"))):
+                            discipline.form = "z"
+                    except:
+                        pass
+                    try:
+                        if int(max(row[4].split("-"))):
+                            discipline.form = "e"
+                    except:
+                        pass
+                except:
+                    pass
 
-                if discipline:
-                    self.create_semester(program, discipline, module, find_row_index_id, term)
+                discipline.status = "p"
+                discipline.save()
+                self.create_semester(program, discipline, module, find_row_index_id, term)
         return semester
 
     def create_module_not_save(self, find_row_index_id, module, program):
