@@ -23,7 +23,7 @@ class Command(BaseCommand):
             oksos = []
             with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
                 specialities_json = json.load(specialities)
-                for speciality in specialities:
+                for speciality in specialities_json:
                     oksos.append(speciality["okso"])
         except:
             raise FileNotFoundError
