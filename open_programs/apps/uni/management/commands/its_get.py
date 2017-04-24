@@ -51,7 +51,7 @@ class Command(BaseCommand):
                     print(f"{bcolors.OKGREEN}Загружаем программы из ИТС{bcolors.ENDC}")
                     data = []
                     [[data.append(i) for i in r.json() if len(i["variants"]) > 0] for r in results]
-                    json.dump(data, pr.name)
+                    json.dump(data, pr)
                     if os.path.exists(pr.name):
                         copyfile(pr.name, self.pr_filename)
 
