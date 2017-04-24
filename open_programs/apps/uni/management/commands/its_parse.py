@@ -1,5 +1,6 @@
 import json
 import grequests
+import time
 
 from django.core.management.base import BaseCommand
 
@@ -17,6 +18,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        start_time = time.time()
 
         class GetPrograms:
             pr_filename = 'uni_fixtures/programs.json'
@@ -29,6 +31,7 @@ class Command(BaseCommand):
                     for speciality in specialities_json:
                         oksos.append(speciality["okso"])
                 oksos = list(set(oksos))
+                oksos=["38.03.02"]
                 print("Всего ОКСО: ", len(oksos))
 
                 open(self.pr_filename, 'w').close()
@@ -49,6 +52,7 @@ class Command(BaseCommand):
 
         get_programs = GetPrograms()
         get_programs.async()
+        print(f"--- {time.time() - start_time} ---")
 
 
 
