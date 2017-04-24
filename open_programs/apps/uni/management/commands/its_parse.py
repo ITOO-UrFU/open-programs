@@ -1,5 +1,4 @@
-from bs4 import BeautifulSoup
-import re
+import requests
 import json
 
 from django.core.management.base import BaseCommand
@@ -17,15 +16,21 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         pass
 
+    programs = []
+    oksos = []
 
     def handle(self, *args, **options):
         try:
-            oksos = []
             with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
                 specialities_json = json.load(specialities)
                 for speciality in specialities_json:
-                    oksos.append(speciality["okso"])
+                    self.oksos.append(speciality["okso"])
         except:
             raise FileNotFoundError
-        print(oksos)
+        for okso in oksos:
+            r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
+            self.programs.append(r.json())
+
+        with open('uni_fixtures/programs.json', 'w') as pr:
+            json.dump(self.programs, pr)
 
