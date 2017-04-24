@@ -31,7 +31,7 @@ class Command(BaseCommand):
             print("Загружаем программы из ИТС")
             for okso in self.oksos:
                 r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
-                print(okso, "status: ", r.status_code)
+                print(okso, "status: ", r.status_code, "length: ", len(r.json))
                 if r.json() is not []:
                     json.dump(r.json(), pr)
 
