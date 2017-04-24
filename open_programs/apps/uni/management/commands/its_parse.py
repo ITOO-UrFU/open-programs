@@ -26,9 +26,9 @@ class Command(BaseCommand):
                 with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
                     specialities_json = json.load(specialities)
                     for speciality in specialities_json:
-                        self.oksos.append(speciality["okso"])
-                self.oksos = list(set(self.oksos))
-                print("Всего ОКСО: ", len(self.oksos))
+                        oksos.append(speciality["okso"])
+                oksos = list(set(oksos))
+                print("Всего ОКСО: ", len(oksos))
 
                 open(pr_filename, 'w').close()
                 self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in oksos]
