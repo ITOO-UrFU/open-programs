@@ -37,7 +37,7 @@ class Command(BaseCommand):
                 print(f"Problem: {request.url}: {exception}")
 
             def async(self):
-                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=5)
+                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=10)
                 with open(self.pr_filename, 'a') as pr:
                     print("Загружаем программы из ИТС")
                     if results.json() is not []:
