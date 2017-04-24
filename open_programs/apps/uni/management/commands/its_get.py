@@ -44,7 +44,7 @@ class Command(BaseCommand):
                 print(f"{bcolors.FAIL}Problem: {request.url}: {exception}{bcolors.ENDC}")
 
             def async(self):
-                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=20)
+                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=100)
                 with open(tempfile.TemporaryFile(), 'a') as pr:
                     print(f"{bcolors.OKGREEN}Загружаем программы из ИТС{bcolors.ENDC}")
                     data = []
