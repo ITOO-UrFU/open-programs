@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import json
+import time
 
 from django.core.management.base import BaseCommand
 
@@ -21,6 +22,7 @@ class Command(BaseCommand):
         parser.add_argument('program_title', nargs=1)
 
     def handle(self, *args, **options):
+        start_time = time.time()
         html_path = options["html_path"][0]
         uni_modules_path = options["uni_modules_path"][0]
         program_title = options["program_title"][0]
@@ -206,6 +208,7 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
                     self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
+        print(f"{bcolors.BOLD}--- {time.time() - start_time} секунд ---{bcolors.ENDC}")
 
 
     def create_semester(self, program, discipline, module, find_row_index_id, term):
