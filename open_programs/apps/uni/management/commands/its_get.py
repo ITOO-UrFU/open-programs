@@ -38,7 +38,6 @@ class Command(BaseCommand):
                     specialities_json = json.load(specialities)
                     [oksos.append(s["okso"]) for s in specialities_json]
                 print(f"{bcolors.OKGREEN}Всего ОКСО: {len(list(set(oksos)))}{bcolors.ENDC}")
-                open(self.pr_filename, 'w').close()
                 self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in list(set(oksos))]
 
             def exception(self, request, exception):
