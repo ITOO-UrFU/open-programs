@@ -273,7 +273,7 @@ class Command(BaseCommand):
                 discipline.uni_number = d["number"]
                 discipline.uni_section = d["section"]
                 discipline.uni_file = d["file"]
-                print(module.obj)
+                print(module_obj)
                 discipline.period = semester - module_obj.semester + 1
                 try:
                     try:
