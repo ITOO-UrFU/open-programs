@@ -29,6 +29,7 @@ class Command(BaseCommand):
                     for speciality in specialities_json:
                         oksos.append(speciality["okso"])
                 oksos = list(set(oksos))
+                oksos = ["50.04.03"]
                 print("Всего ОКСО: ", len(oksos))
 
                 open(self.pr_filename, 'w').close()
@@ -41,7 +42,7 @@ class Command(BaseCommand):
                 results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=10)
                 with open(self.pr_filename, 'a') as pr:
                     print("Загружаем программы из ИТС")
-                    json.dump([r.json() for r in results], pr)
+                    json.dump([[i for i in r.json()] for r in results], pr)
         get_programs = GetPrograms()
         get_programs.async()
 
