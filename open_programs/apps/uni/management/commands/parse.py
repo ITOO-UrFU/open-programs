@@ -321,6 +321,7 @@ class Command(BaseCommand):
             module_obj.uni_specialities = module["specialities"]
             module_obj.program = program
             module_obj.semester = semester
+            module_obj.status = 'O'
             module_obj.save()
         except:
             module_obj = Module(title=module["title"],
@@ -339,6 +340,7 @@ class Command(BaseCommand):
                                 uni_specialities=module["specialities"],
                                 program=program,
                                 semester=semester,
+                                status='O',
                                 )
             module_obj.save()  # Создали модуль
 
