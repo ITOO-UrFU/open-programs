@@ -1,12 +1,11 @@
-import json
-import grequests
+import os
 import time
+import json
+import tempfile
+import grequests
+from shutil import copyfile
 
 from django.core.management.base import BaseCommand
-
-from programs.models import Program, ProgramModules, LearningPlan
-from disciplines.models import Discipline, Semester, TrainingTerms
-from modules.models import Module
 
 
 class Command(BaseCommand):
@@ -47,19 +46,14 @@ class Command(BaseCommand):
 
             def async(self):
                 results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=20)
-                with open(self.pr_filename, 'a') as pr:
+                with open(tempfile.TemporaryFile(), 'a') as pr:
                     print(f"{bcolors.OKGREEN}Загружаем программы из ИТС{bcolors.ENDC}")
                     data = []
                     [[data.append(i) for i in r.json() if len(i["variants"]) > 0] for r in results]
                     json.dump(data, pr)
+                    if os.path.exists(pr):
+                        copyfile(pr, self.pr_filename)
 
         get_programs = GetPrograms()
         get_programs.async()
         print(f"{bcolors.BOLD}--- {time.time() - start_time} секунд ---{bcolors.ENDC}")
-
-
-
-
-
-
-
