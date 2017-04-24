@@ -44,11 +44,17 @@ class Command(BaseCommand):
                 print(f"{bcolors.FAIL}Problem: {request.url}: {exception}{bcolors.ENDC}")
 
             def async(self):
-                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=100)
+                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=10)
                 with tempfile.NamedTemporaryFile(mode='w+') as pr:
                     print(f"{bcolors.OKGREEN}Загружаем программы из ИТС{bcolors.ENDC}")
                     data = []
-                    [[data.append(i) for i in r.json() if len(i["variants"]) > 0] for r in results]
+                    for r in results:
+                        for i in r.json():
+                            try:
+                                if len(i["variants"]) > 0:
+                                    data.append(i)
+                            except:
+                                print(i, r)
                     json.dump(data, pr)
                     if os.path.exists(pr.name):
                         copyfile(pr.name, self.pr_filename)
