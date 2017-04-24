@@ -42,7 +42,12 @@ class Command(BaseCommand):
                 results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=10)
                 with open(self.pr_filename, 'a') as pr:
                     print("Загружаем программы из ИТС")
-                    json.dump([[i for i in r.json()] for r in results], pr)
+                    data = []
+                    for r in results:
+                        for i in r.json():
+                            data.append(i)
+                    json.dump(data, pr)
+
         get_programs = GetPrograms()
         get_programs.async()
 
