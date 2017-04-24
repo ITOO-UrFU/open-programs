@@ -29,7 +29,7 @@ class Command(BaseCommand):
                     for speciality in specialities_json:
                         oksos.append(speciality["okso"])
                 oksos = list(set(oksos))
-                oksos = ["50.04.03"]
+                oksos = ["50.04.03", "38.03.02"]
                 print("Всего ОКСО: ", len(oksos))
 
                 open(self.pr_filename, 'w').close()
