@@ -27,8 +27,10 @@ class Command(BaseCommand):
                     self.oksos.append(speciality["okso"])
         except:
             raise FileNotFoundError
+        print("Загружаем программы из ИТС")
         for okso in self.oksos:
             r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
+            print(okso, "status: ", r.status_code)
             if r.json() is not []:
                 self.programs.append(r.json())
 
