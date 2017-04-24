@@ -22,6 +22,17 @@ class Command(BaseCommand):
         parser.add_argument('program_title', nargs=1)
 
     def handle(self, *args, **options):
+
+        class bcolors:
+            HEADER = '\033[95m'
+            OKBLUE = '\033[94m'
+            OKGREEN = '\033[92m'
+            WARNING = '\033[93m'
+            FAIL = '\033[91m'
+            ENDC = '\033[0m'
+            BOLD = '\033[1m'
+            UNDERLINE = '\033[4m'
+
         start_time = time.time()
         html_path = options["html_path"][0]
         uni_modules_path = options["uni_modules_path"][0]
