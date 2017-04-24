@@ -35,29 +35,22 @@ class Command(BaseCommand):
 
             def __init__(self):
                 oksos = []
-
                 with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
                     specialities_json = json.load(specialities)
-                    for speciality in specialities_json:
-                        oksos.append(speciality["okso"])
-                oksos = list(set(oksos))
+                    [oksos.append(s["okso"]) for s in specialities_json]
                 print(f"{bcolors.OKGREEN}Всего ОКСО: {len(oksos)}{bcolors.ENDC}")
-
                 open(self.pr_filename, 'w').close()
-                self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in oksos]
+                self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in list(set(oksos))]
 
             def exception(self, request, exception):
-                print(f"Problem: {request.url}: {exception}")
+                print(f"{bcolors.FAIL}Problem: {request.url}: {exception}{bcolors.ENDC}")
 
             def async(self):
-                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=10)
+                results = grequests.map((grequests.get(u) for u in self.urls), exception_handler=self.exception, size=20)
                 with open(self.pr_filename, 'a') as pr:
                     print(f"{bcolors.OKGREEN}Загружаем программы из ИТС{bcolors.ENDC}")
                     data = []
-                    for r in results:
-                        for i in r.json():
-                            if len(i["variants"]) > 0:
-                                data.append(i)
+                    [[data.append(i) for i in r.json() if len(i["variants"]) > 0] for r in results]
                     json.dump(data, pr)
 
         get_programs = GetPrograms()
