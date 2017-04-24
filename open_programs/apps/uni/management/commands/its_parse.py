@@ -22,15 +22,14 @@ class Command(BaseCommand):
             def __init__(self):
                 pr_filename = 'uni_fixtures/programs.json'
                 oksos = []
-                try:
-                    with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
-                        specialities_json = json.load(specialities)
-                        for speciality in specialities_json:
-                            self.oksos.append(speciality["okso"])
-                    self.oksos = list(set(self.oksos))
-                    print("Всего ОКСО: ", len(self.oksos))
-                except:
-                    raise FileNotFoundError
+
+                with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
+                    specialities_json = json.load(specialities)
+                    for speciality in specialities_json:
+                        self.oksos.append(speciality["okso"])
+                self.oksos = list(set(self.oksos))
+                print("Всего ОКСО: ", len(self.oksos))
+
                 open(pr_filename, 'w').close()
                 self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in oksos]
 
