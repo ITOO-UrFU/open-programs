@@ -15,6 +15,16 @@ class Command(BaseCommand):
     requires_system_checks = True
     requires_migrations_checks = True
 
+    class bcolors:
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        ENDC = '\033[0m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+
     def add_arguments(self, parser):
         parser.add_argument('html_path', nargs=1)
         parser.add_argument('uni_modules_path', nargs=1)
@@ -22,16 +32,6 @@ class Command(BaseCommand):
         parser.add_argument('program_title', nargs=1)
 
     def handle(self, *args, **options):
-
-        class bcolors:
-            HEADER = '\033[95m'
-            OKBLUE = '\033[94m'
-            OKGREEN = '\033[92m'
-            WARNING = '\033[93m'
-            FAIL = '\033[91m'
-            ENDC = '\033[0m'
-            BOLD = '\033[1m'
-            UNDERLINE = '\033[4m'
 
         start_time = time.time()
         html_path = options["html_path"][0]
@@ -219,7 +219,7 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
                     self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
-        print(f"{bcolors.BOLD}--- {time.time() - start_time} секунд ---{bcolors.ENDC}")
+        print(f"{self.bcolors.BOLD}--- {time.time() - start_time} секунд ---{self.bcolors.ENDC}")
 
 
     def create_semester(self, program, discipline, module, find_row_index_id, term):
