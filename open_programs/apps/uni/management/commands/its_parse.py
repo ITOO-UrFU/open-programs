@@ -15,7 +15,8 @@ class Command(BaseCommand):
     requires_migrations_checks = True
 
     def add_arguments(self, parser):
-        parser.add_argument('un', nargs=1)
+        pass
+
 
     def handle(self, *args, **options):
         try:
