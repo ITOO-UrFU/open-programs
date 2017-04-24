@@ -45,7 +45,7 @@ class Command(BaseCommand):
             raise FileNotFoundError
 
         if raw_programs:
-            programs_soup = BeautifulSoup(raw_programs, 'html.parser')
+            programs_soup = BeautifulSoup(raw_programs, 'lxml')
             rows = []
             for row in programs_soup.find_all('tr', {"class": "main-info"}):
                 rows.append([val.text.strip() for val in row.find_all('td')])
