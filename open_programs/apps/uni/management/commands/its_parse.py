@@ -56,7 +56,8 @@ class Command(BaseCommand):
                     data = []
                     for r in results:
                         for i in r.json():
-                            data.append(i)
+                            if len(i["variants"]) > 0:
+                                data.append(i)
                     json.dump(data, pr)
 
         get_programs = GetPrograms()
