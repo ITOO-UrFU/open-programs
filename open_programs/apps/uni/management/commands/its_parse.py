@@ -43,7 +43,7 @@ class Command(BaseCommand):
                 with open(self.pr_filename, 'a') as pr:
                     print("Загружаем программы из ИТС")
                     if results is not []:
-                        json.dump(results.json(), pr)
+                        json.dump(results, pr)
         get_programs = GetPrograms()
         get_programs.async()
 
