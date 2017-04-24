@@ -15,8 +15,7 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         pass
-
-    programs = []
+    pr_filename = 'uni_fixtures/programs.json'
     oksos = []
 
     def handle(self, *args, **options):
@@ -27,13 +26,15 @@ class Command(BaseCommand):
                     self.oksos.append(speciality["okso"])
         except:
             raise FileNotFoundError
-        print("Загружаем программы из ИТС")
-        for okso in self.oksos:
-            r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
-            print(okso, "status: ", r.status_code)
-            if r.json() is not []:
-                self.programs.append(r.json())
+        open(self.pr_filename, 'w').close()
+        with open(self.pr_filename, 'a') as pr:
+            print("Загружаем программы из ИТС")
+            for okso in self.oksos:
+                r = requests.get(f"http://its.urfu.ru/api/programs?okso={okso}")
+                print(okso, "status: ", r.status_code)
+                if r.json() is not []:
+                    json.dump(r.json(), pr)
 
-        with open('uni_fixtures/programs.json', 'w') as pr:
-            json.dump(self.programs, pr)
+
+
 
