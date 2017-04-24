@@ -205,7 +205,7 @@ class Command(BaseCommand):
                     term = TrainingTerms.objects.filter(title="3,5 года").first()
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
-                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program, term)
+                    semester = self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
 
 
     def create_semester(self, program, discipline, module, find_row_index_id, term):
@@ -273,8 +273,7 @@ class Command(BaseCommand):
                 discipline.uni_number = d["number"]
                 discipline.uni_section = d["section"]
                 discipline.uni_file = d["file"]
-                if module_obj is not None:
-                    discipline.period = semester - module_obj.semester + 1
+                discipline.period = semester - module_obj.semester + 1
                 try:
                     try:
                         if int(max(row[5].split("-"))):
@@ -346,51 +345,52 @@ class Command(BaseCommand):
         return module_obj, semester
 
     def create_disciplines_not_save(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
-        for d in module["disciplines"]:
-            discipline = None
-            if int(d["testUnits"]) > 0:
-                for row in rows:
-                    if d["title"] in row:
-                        break
-                try:
-                    discipline = Discipline.objects.get(title=d["title"])
-                except:
-                    print("Unknown discipline: ", d["title"])
-
-                for i in range(10, 0, -1):
+        if module_obj is not None:
+            for d in module["disciplines"]:
+                discipline = None
+                if int(d["testUnits"]) > 0:
+                    for row in rows:
+                        if d["title"] in row:
+                            break
                     try:
-                        ze = row[
-                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                        discipline = Discipline.objects.get(title=d["title"])
+                    except:
+                        print("Unknown discipline: ", d["title"])
+
+                    for i in range(10, 0, -1):
                         try:
-                            if int(ze) > 0:
-                                semester = i
+                            ze = row[
+                                find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                            try:
+                                if int(ze) > 0:
+                                    semester = i
+                            except:
+                                pass
                         except:
                             pass
+
+                    if discipline:
+                        self.create_semester(program, discipline, module, find_row_index_id, term)
+            return semester
+
+        def create_module_not_save(self, find_row_index_id, module, program):
+            for i in range(10, 0, -1):
+                try:
+                    ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                    try:
+                        if int(ze) > 0:
+                            semester = i
                     except:
                         pass
-
-                if discipline:
-                    self.create_semester(program, discipline, module, find_row_index_id, term)
-        return semester
-
-    def create_module_not_save(self, find_row_index_id, module, program):
-        for i in range(10, 0, -1):
-            try:
-                ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                try:
-                    if int(ze) > 0:
-                        semester = i
                 except:
                     pass
+            try:
+                module_obj = Module.objects.filter(title=module["title"]).first()
+
             except:
-                pass
-        try:
-            module_obj = Module.objects.filter(title=module["title"]).first()
+                print("Unknown module: ", module["title"])
 
-        except:
-            print("Unknown module: ", module["title"])
-
-        return module_obj, semester
+            return module_obj, semester
 
     def decompose(self, soup, tag, classname):
         [el.decompose() for el in soup.find_all(tag, {'class': classname})]
