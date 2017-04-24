@@ -19,8 +19,9 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         class GetPrograms:
+            pr_filename = 'uni_fixtures/programs.json'
+
             def __init__(self):
-                pr_filename = 'uni_fixtures/programs.json'
                 oksos = []
 
                 with open('uni_fixtures/specialities.json', encoding='utf-8') as specialities:
@@ -31,7 +32,7 @@ class Command(BaseCommand):
                 oksos = ["38.03.02", ]
                 print("Всего ОКСО: ", len(oksos))
 
-                open(pr_filename, 'w').close()
+                open(self.pr_filename, 'w').close()
                 self.urls = [f"http://its.urfu.ru/api/programs?okso={okso}" for okso in oksos]
 
             def exception(self, request, exception):
