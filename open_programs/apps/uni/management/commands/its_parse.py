@@ -25,7 +25,7 @@ class Command(BaseCommand):
                 for speciality in specialities_json:
                     self.oksos.append(speciality["okso"])
             self.oksos = list(set(self.oksos))
-            print("Всего ОКСО:", len(self.oksos))
+            print("Всего ОКСО: ", len(self.oksos))
         except:
             raise FileNotFoundError
         open(self.pr_filename, 'w').close()
