@@ -51,7 +51,6 @@ class ResultList(viewsets.ModelViewSet):
     serializer_class = ResultSerializer
 
 
-
 class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
