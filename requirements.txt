@@ -25,4 +25,5 @@ django-rest-swagger
 jsonfield==2.0.1
 django-tinymce4-lite
 django-jsoneditor
+lxml
 beautifulsoup4

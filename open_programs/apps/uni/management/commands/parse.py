@@ -1,6 +1,7 @@
 from bs4 import BeautifulSoup
 import re
 import json
+import time
 
 from django.core.management.base import BaseCommand
 
@@ -14,6 +15,16 @@ class Command(BaseCommand):
     requires_system_checks = True
     requires_migrations_checks = True
 
+    class bcolors:
+        HEADER = '\033[95m'
+        OKBLUE = '\033[94m'
+        OKGREEN = '\033[92m'
+        WARNING = '\033[93m'
+        FAIL = '\033[91m'
+        ENDC = '\033[0m'
+        BOLD = '\033[1m'
+        UNDERLINE = '\033[4m'
+
     def add_arguments(self, parser):
         parser.add_argument('html_path', nargs=1)
         parser.add_argument('uni_modules_path', nargs=1)
@@ -21,6 +32,8 @@ class Command(BaseCommand):
         parser.add_argument('program_title', nargs=1)
 
     def handle(self, *args, **options):
+
+        start_time = time.time()
         html_path = options["html_path"][0]
         uni_modules_path = options["uni_modules_path"][0]
         program_title = options["program_title"][0]
@@ -45,7 +58,7 @@ class Command(BaseCommand):
             raise FileNotFoundError
 
         if raw_programs:
-            programs_soup = BeautifulSoup(raw_programs, 'html.parser')
+            programs_soup = BeautifulSoup(raw_programs, 'lxml')
             rows = []
             for row in programs_soup.find_all('tr', {"class": "main-info"}):
                 rows.append([val.text.strip() for val in row.find_all('td')])
@@ -74,7 +87,7 @@ class Command(BaseCommand):
             raise NotImplementedError
 
         if raw_html:
-            soup = BeautifulSoup(raw_html, 'html.parser')
+            soup = BeautifulSoup(raw_html, 'lxml')
             [s.extract() for s in soup('script')]
             [s.extract() for s in soup('style')]
             self.decompose(soup, "table", "menu_table")
@@ -206,6 +219,7 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
                     self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
+        print(f"{self.bcolors.BOLD}--- {time.time() - start_time} секунд ---{self.bcolors.ENDC}")
 
 
     def create_semester(self, program, discipline, module, find_row_index_id, term):
@@ -291,6 +305,7 @@ class Command(BaseCommand):
                 discipline.status = "p"
                 discipline.save()
                 self.create_semester(program, discipline, module, find_row_index_id, term)
+                print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
         return semester
 
     def create_module(self, find_row_index_id, module, program):
