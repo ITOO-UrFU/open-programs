@@ -2,6 +2,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework.generics import ListCreateAPIView
 
 from django.contrib.auth.models import User
 from courses.models import Course, Session
@@ -55,6 +56,21 @@ class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
 
+class CompetenceListCreateView(ListCreateAPIView):
+    model = Competence
+    serializer_class = CompetenceSerializer
+
+    def create(self, request, *args, **kwargs):
+        data = request.DATA
+
+        c = Competence.objects.create(title=data["title"], status="p",results=Result.objects.get)
+
+        # ... create nested objects from request data ...
+
+        # ...
+        return Response(serializer.data,
+                        status=status.HTTP_201_CREATED,
+                        headers=headers)
 
 class PersonList(viewsets.ModelViewSet):
     queryset = Person.objects.all()
