@@ -116,7 +116,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('h', 'Скрыт'), ('p', 'Опубликован')], default='h', max_length=1, verbose_name='Статус публикации')),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('semester', models.PositiveIntegerField(blank=True, null=True)),
-                ('choice_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='programs.ChoiceGroup')),
+                ('choice_group', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='programs.ChoiceGroup')),
                 ('competence', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='programs.ProgramCompetence')),
                 ('module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='modules.Module')),
                 ('program', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='programs.Program')),
