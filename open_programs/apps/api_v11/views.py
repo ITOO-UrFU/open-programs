@@ -230,5 +230,4 @@ def get_program_modules(request, program_id):
                 "get_labor": mod.get_labor(),
                 "choice_group_title": cg.title,
             })
-        # response.append(tmp)
-    return Response(response)
+    return Response(sorted(response, key=lambda k: k['semester']))
