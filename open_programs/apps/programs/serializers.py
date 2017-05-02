@@ -45,7 +45,7 @@ class ChoiceGroupSerializer(serializers.ModelSerializer):
         fields = ("id", "program", "title", "labor", "get_choice_group_type_display", "get_program_modules", "number")
 
 
-class ProgramModulesSerializer(serializers.ModelSerializer):
+class ProgramModuleSerializer(serializers.ModelSerializer):
     program = ProgramSerializer
     module = ModuleSerializer
     choice_group = ChoiceGroupSerializer
@@ -58,7 +58,7 @@ class ProgramModulesSerializer(serializers.ModelSerializer):
 
 class TargetModulesSerializer(serializers.ModelSerializer):
     target = TrainingTargetSerializer
-    program_module = ProgramModulesSerializer
+    program_module = ProgramModuleSerializer
     choice_group = ChoiceGroupSerializer
 
     class Meta:
