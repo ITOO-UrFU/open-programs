@@ -215,7 +215,7 @@ def get_program_modules(request, program_id):
         for mod in Module.objects.filter(pk__in=mods):
             pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
 
-            tmp.append({
+            response.append({
                 "id": mod.id,
                 "title": mod.title,
                 "description": mod.description,
@@ -230,5 +230,5 @@ def get_program_modules(request, program_id):
                 "get_labor": mod.get_labor(),
                 "choice_group_title": cg.title,
             })
-        response.append(tmp)
+        # response.append(tmp)
     return Response(response)
