@@ -104,7 +104,7 @@ class TargetModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     target = models.ForeignKey("TrainingTarget")
     program_module = models.ForeignKey("ProgramModules")
-    choice_group = models.ForeignKey("ChoiceGroup")
+    choice_group = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = 'модуль цели'
