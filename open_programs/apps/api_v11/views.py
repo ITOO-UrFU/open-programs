@@ -206,6 +206,19 @@ def get_choice_groups_by_program(request, program_id):
 
 
 @api_view(('GET',))
+def get_targets_by_program(request, program_id):
+    response = []
+    for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
+        response.append({
+            "id": target.id,
+            "title": target.title,
+            "number": target.number,
+            "program": target.program.id,
+        })
+    return Response(response)
+
+
+@api_view(('GET',))
 def get_program_modules(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
