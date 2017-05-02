@@ -65,7 +65,7 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='ProgramModules',
+            name='ProgramModule',
             fields=[
                 ('archived', models.BooleanField(default=False, verbose_name='В архиве')),
                 ('created', models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')),
@@ -92,7 +92,7 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('h', 'Скрыт'), ('p', 'Опубликован')], default='h', max_length=1, verbose_name='Статус публикации')),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('choice_group', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='programs.ChoiceGroup')),
-                ('program_module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='programs.ProgramModules')),
+                ('program_module', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='programs.ProgramModule')),
             ],
             options={
                 'verbose_name_plural': 'модули цели',

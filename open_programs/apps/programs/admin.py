@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModule, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan
 
 
 @admin.register(Program)
@@ -42,7 +42,7 @@ class ProgramCompetenceAdmin(VersionAdmin):
     search_fields = ("title", )
 
 
-@admin.register(ProgramModules)
+@admin.register(ProgramModule)
 class ProgramModulesAdmin(VersionAdmin):
     list_display = ("id",  "semester", "module", "program", "choice_group", "competence")
     list_filter = ("program", "semester",)

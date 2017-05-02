@@ -1,4 +1,4 @@
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModule, TargetModules, ChoiceGroup, ChoiceGroupType
 from persons.serializers import PersonSerializer
 from modules.serializers import ModuleSerializer
 
@@ -52,7 +52,7 @@ class ProgramModulesSerializer(serializers.ModelSerializer):
     competence = ProgramCompetenceSerializer
 
     class Meta:
-        model = ProgramModules
+        model = ProgramModule
         fields = ("id", "program", "module", "choice_group", "get_competence_display", "semester")
 
 
