@@ -263,17 +263,21 @@ def change_target_module(request):
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
         if tm:
             tm.choice_group = False
+            tm.status = "p"
             tm.save()
         else:
             tm = TargetModules(target=target, program_module=program_module, choice_group=False)
+            tm.status = "p"
             tm.save()
     elif status == 2:
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
         if tm:
             tm.choice_group = True
+            tm.status = "p"
             tm.save()
         else:
             tm = TargetModules(target=target, program_module=program_module, choice_group=True)
+            tm.status = "p"
             tm.save()
     return Response(status=200)
 
