@@ -7,10 +7,14 @@ from tinymce import HTMLField
 
 
 def container_as_dict(c):
+    try:
+        type_slug = c.type.slug
+    except:
+        type_slug = None
     return {
         "title": c.title,
         "slug": c.slug,
-        "type": c.type.slug,
+        "type": type_slug,
         "weight": c.weight,
         "containers": c.get_containers_dict(),
         "components": c.get_components_dict()
@@ -18,10 +22,14 @@ def container_as_dict(c):
 
 
 def component_as_dict(c):
+    try:
+        type_slug = c.type.slug
+    except:
+        type_slug = None
     return {
         "title": c.title,
         "slug": c.slug,
-        "type": c.type.slug,
+        "type": type_slug,
         "weight": c.weight,
         "content": c.content,
         "json": c.json
