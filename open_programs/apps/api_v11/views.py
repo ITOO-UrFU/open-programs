@@ -252,33 +252,31 @@ def change_target_module(request):
     target_id = request.data["target_id"]
     status = request.data["status"]
 
-    try:
-        program_module = ProgramModules.objects.get(pk=module_id)
-        target = TrainingTarget.objects.get(pk=target_id)
-        status = int(status)
-        if status == 0:
-            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-            if tm:
-                tm.delete()
-        elif status == 1:
-            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-            if tm:
-                tm.choice_group = False
-                tm.save()
-            else:
-                tm = TargetModules(target=target, program_module=program_module, choice_group=False)
-                tm.save()
-        elif status == 2:
-            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-            if tm:
-                tm.choice_group = True
-                tm.save()
-            else:
-                tm = TargetModules(target=target, program_module=program_module, choice_group=True)
-                tm.save()
-        return Response(status=200)
-    except:
-        return Response(status=500)
+    program_module = ProgramModules.objects.get(pk=module_id)
+    target = TrainingTarget.objects.get(pk=target_id)
+    status = int(status)
+    if status == 0:
+        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+        if tm:
+            tm.delete()
+    elif status == 1:
+        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+        if tm:
+            tm.choice_group = False
+            tm.save()
+        else:
+            tm = TargetModules(target=target, program_module=program_module, choice_group=False)
+            tm.save()
+    elif status == 2:
+        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+        if tm:
+            tm.choice_group = True
+            tm.save()
+        else:
+            tm = TargetModules(target=target, program_module=program_module, choice_group=True)
+            tm.save()
+    return Response(status=200)
+
 
 
 # @api_view(("GET", ))
