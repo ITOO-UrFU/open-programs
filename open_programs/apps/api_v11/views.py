@@ -229,7 +229,7 @@ def get_program_modules(request, program_id):
             pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
 
             response.append({
-                "id": mod.id,
+                "id": pr_mod.id,
                 "title": mod.title,
                 "description": mod.description,
                 "get_competence_display": pr_mod.get_competence_display(),
