@@ -232,7 +232,7 @@ def get_program_modules(request, program_id):
             try:
                 tr_targets = TrainingTarget.objects.filter(program__id=program_id).order_by('number')
                 for tt in tr_targets:
-                    tms = TargetModules.objects.filter(program__id=program_id, program_module=pr_mod, target=tt, status="p",
+                    tms = TargetModules.objects.filter(program_module=pr_mod, target=tt, status="p",
                                                        archived=False)
                     print(tms, '!!!!!!!!!!!!!!!!!!!!')
                     if not tms:
