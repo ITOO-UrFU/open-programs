@@ -60,7 +60,7 @@ class Program(ObjectBaseClass):
 class TrainingTarget(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_('Наименование образовательной цели'), blank=False, max_length=256, default=_(''))
-    program = models.ManyToManyField("Program")
+    program = models.ForeignKey("Program")
     number = models.IntegerField(_("Порядковый номер цели"))
 
     class Meta:
