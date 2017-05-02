@@ -252,8 +252,8 @@ def change_target_module(request):
     target_id = request.data["target_id"]
     status = request.data["status"]
 
-    program_module = ProgramModules.objects.get(pk=module_id)
-    target = TrainingTarget.objects.get(pk=target_id)
+    program_module = ProgramModules.objects.get(id=module_id)
+    target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
     if status == 0:
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
