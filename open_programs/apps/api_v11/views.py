@@ -231,6 +231,7 @@ def get_program_modules(request, program_id):
             targets_positions = []
             try:
                 tr_targets = TrainingTarget.objects.filter(program__id=program_id).order_by('-number')
+                print(tr_targets, '!!!!!!!!!!!!!!!!!!!!')
                 for tt in tr_targets:
                     tms = TargetModules.objects.filter(program__id=program_id, program_module=pr_mod, target=tt, status="p",
                                                        archived=False)
