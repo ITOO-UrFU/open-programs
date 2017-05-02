@@ -359,9 +359,8 @@ class Command(BaseCommand):
                                 )
             module_obj.save()  # Создали модуль
 
-        try:
-            program_module = ProgramModules.objects.filter(program=program, module=module_obj)
-        except:
+        program_module = ProgramModules.objects.filter(program=program, module=module_obj)
+        if not program_module:
             program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester)
             program_module.save()
 
