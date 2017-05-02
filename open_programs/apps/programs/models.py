@@ -84,7 +84,7 @@ class ProgramCompetence(ObjectBaseClass):
         return self.title
 
 
-class ProgramModule(ObjectBaseClass):
+class ProgramModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     program = models.ForeignKey("Program")
     module = models.ForeignKey("modules.Module")
@@ -103,7 +103,7 @@ class ProgramModule(ObjectBaseClass):
 class TargetModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     target = models.ForeignKey("TrainingTarget")
-    program_module = models.ForeignKey("ProgramModule")
+    program_module = models.ForeignKey("ProgramModules")
     choice_group = models.ForeignKey("ChoiceGroup")
 
     class Meta:
@@ -130,7 +130,7 @@ class ChoiceGroup(ObjectBaseClass):
         return self.choice_group_type.title
 
     def get_program_modules(self):
-        return [program_module.id for program_module in ProgramModule.objects.filter(program=self.program, choice_group=self, status="p", archived=False)]
+        return [program_module.id for program_module in ProgramModules.objects.filter(program=self.program, choice_group=self, status="p", archived=False)]
 
 
 class ChoiceGroupType(ObjectBaseClass):

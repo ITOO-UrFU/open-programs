@@ -1,4 +1,4 @@
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModule, TargetModules, ChoiceGroup, ChoiceGroupType
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType
 from persons.serializers import PersonSerializer
 from modules.serializers import ModuleSerializer
 
@@ -45,20 +45,20 @@ class ChoiceGroupSerializer(serializers.ModelSerializer):
         fields = ("id", "program", "title", "labor", "get_choice_group_type_display", "get_program_modules", "number")
 
 
-class ProgramModuleSerializer(serializers.ModelSerializer):
+class ProgramModulesSerializer(serializers.ModelSerializer):
     program = ProgramSerializer
     module = ModuleSerializer
     choice_group = ChoiceGroupSerializer
     competence = ProgramCompetenceSerializer
 
     class Meta:
-        model = ProgramModule
+        model = ProgramModules
         fields = ("id", "program", "module", "choice_group", "get_competence_display", "semester")
 
 
 class TargetModulesSerializer(serializers.ModelSerializer):
     target = TrainingTargetSerializer
-    program_module = ProgramModuleSerializer
+    program_module = ProgramModulesSerializer
     choice_group = ChoiceGroupSerializer
 
     class Meta:

@@ -5,7 +5,7 @@ import time
 
 from django.core.management.base import BaseCommand
 
-from programs.models import Program, ProgramModule, LearningPlan
+from programs.models import Program, ProgramModules, LearningPlan
 from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module
 
@@ -359,7 +359,7 @@ class Command(BaseCommand):
                                 )
             module_obj.save()  # Создали модуль
 
-        program_module = ProgramModule(program=program, module=module_obj)
+        program_module = ProgramModules(program=program, module=module_obj)
         program_module.save()
 
         return module_obj, semester
