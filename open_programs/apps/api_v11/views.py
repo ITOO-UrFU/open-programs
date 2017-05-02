@@ -179,14 +179,6 @@ class TargetModulesDetail(serializers.HyperlinkedModelSerializer):
         model = TargetModules
 
 
-class ProgramModulesDetail(serializers.HyperlinkedModelSerializer):
-    module = ModuleSerializer
-
-    class Meta:
-        model = ProgramModules
-        fields = ("id", "program", "module", "choice_group", "competence", "period_start", "period_end")
-
-
 class ChoiceGroupDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = ChoiceGroup
@@ -236,6 +228,7 @@ def get_program_modules(request, program_id):
                 "results_text": mod.results_text,
                 # "competences": mod.competences,
                 "get_labor": mod.get_labor(),
+                "choice_group_title": cg.title,
             })
         response.append(tmp)
     return Response(response)
