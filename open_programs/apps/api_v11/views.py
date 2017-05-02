@@ -276,9 +276,9 @@ def change_target_module(request):
             else:
                 tm = TargetModules(target=target, program_module=program_module, choice_group=True)
                 tm.save()
-        Response(status=200)
+        return Response(status=200)
     except:
-        Response(status=500)
+        return Response(status=500)
 
 
 # @api_view(("GET", ))
