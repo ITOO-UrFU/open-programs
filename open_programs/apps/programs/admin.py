@@ -28,12 +28,9 @@ class TrainingTargetAdmin(VersionAdmin):
         "number"
     )  # TODO: "program"
     list_filter = (
-        "title",
         "program",
         "number"
     )
-    filter_horizontal = ("program", )
-
 
 @admin.register(ProgramCompetence)
 class ProgramCompetenceAdmin(VersionAdmin):
