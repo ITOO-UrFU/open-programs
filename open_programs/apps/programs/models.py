@@ -88,7 +88,7 @@ class ProgramModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     program = models.ForeignKey("Program")
     module = models.ForeignKey("modules.Module")
-    choice_group = models.ForeignKey("ChoiceGroup")
+    choice_group = models.ForeignKey("ChoiceGroup", blank=True, null=True)
     competence = models.ForeignKey(ProgramCompetence, blank=True, null=True)
     semester = models.PositiveIntegerField(blank=True, null=True)
 
