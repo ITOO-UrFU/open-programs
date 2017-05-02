@@ -234,7 +234,6 @@ def get_program_modules(request, program_id):
                 for tt in tr_targets:
                     tms = TargetModules.objects.filter(program_module=pr_mod, target=tt, status="p",
                                                        archived=False)
-                    print(tms, '!!!!!!!!!!!!!!!!!!!!')
                     if not tms:
                         status = 0
 
