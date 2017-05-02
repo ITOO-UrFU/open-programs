@@ -228,6 +228,27 @@ def get_program_modules(request, program_id):
         for mod in Module.objects.filter(pk__in=mods):
             pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
 
+            targets_positions = []
+            try:
+                tr_targets = TrainingTarget.objects.filter(program__id=program_id).order_by('-number')
+                for tt in tr_targets:
+                    tms = TargetModules.objects.filter(program__id=program_id, program_module=pr_mod, target=tt, status="p",
+                                                       archived=False)
+                    if not tms:
+                        status = 0
+
+                    for target_module in tms:
+                        if target_module.choice_group is False:
+                            status = 1
+                        elif target_module.choice_group is True:
+                            status = 2
+
+                    targets_positions.append(status)
+
+            except:
+                pass
+
+
             response.append({
                 "id": pr_mod.id,
                 "title": mod.title,
@@ -242,6 +263,7 @@ def get_program_modules(request, program_id):
                 # "competences": mod.competences,
                 "get_labor": mod.get_labor(),
                 "choice_group_title": cg.title,
+                "targets_positions": targets_positions,
             })
     return Response(sorted(response, key=lambda k: k['semester']))
 
