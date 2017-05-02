@@ -11,7 +11,7 @@ from competences.models import Competence
 from results.models import Result
 from disciplines.models import Discipline
 from modules.models import Module, Type
-from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModule, \
+from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
@@ -21,7 +21,7 @@ from results.serializers import ResultSerializer
 from modules.serializers import ModuleSerializer, TypeSerializer
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
                                  ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
-                                 ChoiceGroupSerializer, ProgramModuleSerializer, TargetModulesSerializer
+                                 ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer
 from disciplines.serializers import DisciplineSerializer
 
 from cms.api_views import *
@@ -98,8 +98,8 @@ class ProgramCompetenceList(viewsets.ModelViewSet):
 
 
 class ProgramModulesList(viewsets.ModelViewSet):
-    queryset = ProgramModule.objects.filter(status="p", archived=False)
-    serializer_class = ProgramModuleSerializer
+    queryset = ProgramModules.objects.filter(status="p", archived=False)
+    serializer_class = ProgramModulesSerializer
 
 
 class TargetModulesList(viewsets.ModelViewSet):
@@ -183,7 +183,7 @@ class ProgramModulesDetail(serializers.HyperlinkedModelSerializer):
     module = ModuleSerializer
 
     class Meta:
-        model = ProgramModule
+        model = ProgramModules
         fields = ("id", "program", "module", "choice_group", "competence", "period_start", "period_end")
 
 
@@ -218,10 +218,10 @@ def get_program_modules(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
         tmp = []
-        mods = [program_module.module.id for program_module in ProgramModule.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, status="p", archived=False)]
+        mods = [program_module.module.id for program_module in ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, status="p", archived=False)]
 
         for mod in Module.objects.filter(pk__in=mods):
-            pr_mod = ProgramModule.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
+            pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
 
             tmp.append({
                 "id": mod.id,
