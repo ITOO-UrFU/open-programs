@@ -236,20 +236,18 @@ def get_program_modules(request, program_id):
                                                        archived=False)
                     if not tms:
                         status = 0
-
                     for target_module in tms:
                         if target_module.choice_group is False:
                             status = 1
                         elif target_module.choice_group is True:
                             status = 2
-
-                        weight = max(list(int(Discipline.objects.filter(pk__in=[tms.get_all_discipline_ids].values("period"))))) + pr_mod.semester
-
-
                     targets_positions.append(status)
 
             except:
                 pass
+
+            weight = max(list(
+                Discipline.objects.filter(pk__in=[tms.get_all_discipline_ids].values("period")))) + pr_mod.semester
 
 
             response.append({
