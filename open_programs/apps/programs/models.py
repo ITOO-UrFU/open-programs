@@ -74,7 +74,7 @@ class TrainingTarget(ObjectBaseClass):
 class ProgramCompetence(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_('Наименование компетенции'), blank=False, max_length=2048, default=_(''))
-    program = models.ForeignKey("Program")
+    program = models.ForeignKey("Program", blank=True, null=True)
     number = models.IntegerField(_("Номер компетенции"))
 
     class Meta:
