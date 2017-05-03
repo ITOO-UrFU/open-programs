@@ -253,12 +253,17 @@ def get_program_modules(request, program_id):
             except:
                 weight = pr_mod.semester
 
+            try:
+                competence_id = pr_mod.competence.id
+            except:
+                competence_id = None
+
 
             response.append({
                 "id": pr_mod.id,
                 "title": mod.title,
                 "description": mod.description,
-                "competence": pr_mod.competence.id,
+                "competence": competence_id,
                 "semester": pr_mod.semester,
                 "weight": weight,
                 "get_all_discipline_ids": mod.get_all_discipline_ids(),
