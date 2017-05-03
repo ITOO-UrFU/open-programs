@@ -318,7 +318,7 @@ class Command(BaseCommand):
                 except:
                     pass
             except:
-                pass
+                semester = 99
         try:
             module_obj = Module.objects.filter(title=module["title"]).first()
             module_obj.uni_uuid = module["uuid"]
