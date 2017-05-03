@@ -258,7 +258,7 @@ def get_program_modules(request, program_id):
                 "id": pr_mod.id,
                 "title": mod.title,
                 "description": mod.description,
-                "get_competence_display": pr_mod.get_competence_display(),
+                "competence": pr_mod.competence.id,
                 "semester": pr_mod.semester,
                 "weight": weight,
                 "get_all_discipline_ids": mod.get_all_discipline_ids(),
