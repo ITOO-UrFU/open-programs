@@ -334,3 +334,14 @@ def change_choice_group(request):
     program_module.save()
     return Response(status=200)
 
+
+@api_view(("POST", ))
+def change_competence(request):
+    module_id = request.data["module_id"]
+    competence_id = request.data["competence_id"]
+
+    program_module = ProgramModules.objects.get(id=module_id)
+    comp = ProgramCompetence.objects.get(id=competence_id)
+    program_module.competence = comp
+    program_module.save()
+    return Response(status=200)

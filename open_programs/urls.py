@@ -101,6 +101,7 @@ urlpatterns.append(url(r'^api/v11/get_targets_by_program/(?P<program_id>.*)/$', 
 urlpatterns.append(url(r'^api/v11/get_competences_by_program/(?P<program_id>.*)/$', get_competences_by_program, name="get_competences_by_program"))
 urlpatterns.append(url(r'^api/v11/change_target_module/$', change_target_module, name="change_target_module"))
 urlpatterns.append(url(r'^api/v11/change_choice_group/$', change_choice_group, name="change_choice_group"))
+urlpatterns.append(url(r'^api/v11/change_competence/$', change_competence, name="change_competence"))
 
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
