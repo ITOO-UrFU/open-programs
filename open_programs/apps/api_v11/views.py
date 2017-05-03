@@ -246,8 +246,10 @@ def get_program_modules(request, program_id):
             except:
                 pass
 
-            weight = max(list(
-                Discipline.objects.filter(pk__in=[tms.get_all_discipline_ids].values("period")))) + pr_mod.semester
+            disciplines_semesters = Discipline.objects.filter(pk__in=[tms.get_all_discipline_ids].values("period"))
+            print(disciplines_semesters, "!!!!!!!!!!!!!!!!!!!!")
+
+            # weight = max(list(  )) + pr_mod.semester
 
 
             response.append({
@@ -264,7 +266,7 @@ def get_program_modules(request, program_id):
                 "results_text": mod.results_text,
                 # "competences": mod.competences,
                 "get_labor": mod.get_labor(),
-                "choice_group_title": cg.title,
+                "choice_group": cg.id,
                 "targets_positions": targets_positions,
             })
     return Response(sorted(response, key=lambda k: k['weight']))
