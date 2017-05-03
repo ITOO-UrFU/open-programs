@@ -243,6 +243,9 @@ def get_program_modules(request, program_id):
                         elif target_module.choice_group is True:
                             status = 2
 
+                        weight = max(list(int(Discipline.objects.filter(pk__in=[tms.get_all_discipline_ids].values("period"))))) + pr_mod.semester
+
+
                     targets_positions.append(status)
 
             except:
@@ -255,6 +258,7 @@ def get_program_modules(request, program_id):
                 "description": mod.description,
                 "get_competence_display": pr_mod.get_competence_display(),
                 "semester": pr_mod.semester,
+                "weight": weight,
                 "get_all_discipline_ids": mod.get_all_discipline_ids(),
                 # "get_all_disciplines": mod.get_all_disciplines(),
                 "get_type_display": mod.get_type_display(),
@@ -265,7 +269,7 @@ def get_program_modules(request, program_id):
                 "choice_group_title": cg.title,
                 "targets_positions": targets_positions,
             })
-    return Response(sorted(response, key=lambda k: k['semester']))
+    return Response(sorted(response, key=lambda k: k['weight']))
 
 
 @api_view(("POST", ))
