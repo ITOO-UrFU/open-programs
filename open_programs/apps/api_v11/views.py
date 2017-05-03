@@ -246,7 +246,7 @@ def get_program_modules(request, program_id):
             except:
                 pass
 
-            disciplines_semesters = Discipline.objects.filter(pk__in=[mod.get_all_discipline_ids()]).values("period")
+            disciplines_semesters = Discipline.objects.filter(pk__in=mod.get_all_discipline_ids()).values("period")
             print(disciplines_semesters, "!!!!!!!!!!!!!!!!!!!!")
 
             # weight = max(list(  )) + pr_mod.semester
