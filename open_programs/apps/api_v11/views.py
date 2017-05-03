@@ -219,6 +219,14 @@ def get_targets_by_program(request, program_id):
 
 
 @api_view(('GET',))
+def get_competences_by_program(request, program_id):
+    response = [{"id": c.id,
+                 "title": c.title,
+                 } for c in ProgramCompetence.objects.filter(program__id=program_id)]
+    return Response(response)
+
+
+@api_view(('GET',))
 def get_program_modules(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
