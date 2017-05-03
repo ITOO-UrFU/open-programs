@@ -304,6 +304,14 @@ def change_target_module(request):
     return Response(status=200)
 
 
+@api_view(("POST", ))
+def change_choice_group(request):
+    module_id = request.data["module_id"]
+    choice_group_id = request.data["choice_group_id"]
 
-# @api_view(("GET", ))
-# def get_target_modules(request):
+    program_module = ProgramModules.objects.get(id=module_id)
+    chg = ChoiceGroup.objects.get(id=choice_group_id)
+    program_module.choice_group = chg
+    program_module.save()
+    return Response(status=200)
+
