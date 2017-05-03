@@ -348,3 +348,8 @@ def change_competence(request):
         program_module.competence = None
     program_module.save()
     return Response(status=200)
+
+
+@api_view(("GET", ))
+def heartbeat(request):
+    return Response(status=200)
