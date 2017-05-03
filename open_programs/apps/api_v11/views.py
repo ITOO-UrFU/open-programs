@@ -248,7 +248,7 @@ def get_program_modules(request, program_id):
 
             disciplines_semesters = Discipline.objects.filter(pk__in=mod.get_all_discipline_ids()).values("period")
             print(list(disciplines_semesters), "!!!!!!!!!!!!!!!!!!!!!!!")
-            weight = max([int(ds) for ds in disciplines_semesters]) + pr_mod.semester
+            weight = max([ds["period"] for ds in disciplines_semesters]) + pr_mod.semester
 
 
             response.append({
