@@ -341,7 +341,10 @@ def change_competence(request):
     competence_id = request.data["competence_id"]
 
     program_module = ProgramModules.objects.get(id=module_id)
-    comp = ProgramCompetence.objects.get(id=competence_id)
-    program_module.competence = comp
+    if competence_id:
+        comp = ProgramCompetence.objects.get(id=competence_id)
+        program_module.competence = comp
+    else:
+        program_module.competence = None
     program_module.save()
     return Response(status=200)
