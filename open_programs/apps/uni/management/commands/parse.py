@@ -136,8 +136,8 @@ class Command(BaseCommand):
                     if lp not in program.learning_plans.all():
                         program.learning_plans.add(lp)
                         program.save()
-                        else:
-                    lp = LearningPlan(uni_displayableTitle=displayableTitle,
+            else:
+                lp = LearningPlan(uni_displayableTitle=displayableTitle,
                                   uni_number=number,
                                   uni_active=active,
                                   uni_title=title,
