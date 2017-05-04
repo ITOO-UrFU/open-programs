@@ -226,65 +226,6 @@ def get_competences_by_program(request, program_id):
     return Response(response)
 
 
-# @api_view(('GET',))
-# def get_program_modules1(request, program_id):
-#     response = []
-#     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
-#         tmp = []
-#         mods = [program_module.module.id for program_module in ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, status="p", archived=False)]
-#
-#         for mod in Module.objects.filter(pk__in=mods):
-#             pr_mod = ProgramModules.objects.filter(program=Program.objects.get(pk=program_id), choice_group=cg, module=mod, status="p", archived=False).first()
-#
-#             targets_positions = []
-#             try:
-#                 tr_targets = TrainingTarget.objects.filter(program__id=program_id).order_by('number')
-#                 for tt in tr_targets:
-#                     tms = TargetModules.objects.filter(program_module=pr_mod, target=tt, status="p",
-#                                                        archived=False)
-#                     if not tms:
-#                         status = 0
-#                     for target_module in tms:
-#                         if target_module.choice_group is False:
-#                             status = 1
-#                         elif target_module.choice_group is True:
-#                             status = 2
-#                     targets_positions.append(status)
-#
-#             except:
-#                 pass
-#
-#             try:
-#                 weight = max([int(ds["period"]) for ds in Discipline.objects.filter(pk__in=mod.get_all_discipline_ids()).values("period")]) + pr_mod.semester
-#             except:
-#                 weight = pr_mod.semester
-#
-#             try:
-#                 competence_id = pr_mod.competence.id
-#             except:
-#                 competence_id = None
-#
-#
-#             response.append({
-#                 "id": pr_mod.id,
-#                 "title": mod.title,
-#                 "description": mod.description,
-#                 "competence": competence_id,
-#                 "semester": pr_mod.semester,
-#                 "weight": weight,
-#                 "get_all_discipline_ids": mod.get_all_discipline_ids(),
-#                 # "get_all_disciplines": mod.get_all_disciplines(),
-#                 "get_type_display": mod.get_type_display(),
-#                 # "results": mod.results,
-#                 "results_text": mod.results_text,
-#                 # "competences": mod.competences,
-#                 "get_labor": mod.get_labor(),
-#                 "choice_group": cg.id,
-#                 "targets_positions": targets_positions,
-#             })
-#     return Response(sorted(response, key=lambda k: k['weight']))
-
-
 @api_view(('GET',))
 def get_program_modules(request, program_id):
     response = []
@@ -349,8 +290,12 @@ def change_choice_group(request):
     choice_group_id = request.data["choice_group_id"]
 
     program_module = ProgramModules.objects.get(id=module_id)
-    chg = ChoiceGroup.objects.get(id=choice_group_id)
-    program_module.choice_group = chg
+
+    if choice_group_id:
+        chg = ChoiceGroup.objects.get(id=choice_group_id)
+        program_module.choice_group = chg
+    else:
+        program_module.choice_group = None
     program_module.save()
     return Response(status=200)
 
