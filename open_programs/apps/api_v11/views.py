@@ -222,8 +222,9 @@ def get_targets_by_program(request, program_id):
 def get_competences_by_program(request, program_id):
     response = [{"id": c.id,
                  "title": c.title,
+                 "number": c.number,
                  } for c in ProgramCompetence.objects.filter(program__id=program_id)]
-    return Response(response)
+    return Response(sorted(response, key=lambda k: k['number']))
 
 
 @api_view(('GET',))
