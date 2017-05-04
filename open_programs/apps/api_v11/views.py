@@ -287,22 +287,23 @@ def get_competences_by_program(request, program_id):
 
 @api_view(('GET',))
 def get_program_modules(request, program_id):
-    mods = ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)
+    response = []
+    for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
 
-    response = [{
-                "id": mod.id,
-                "title": mod.module.title,
-                "description": mod.module.description,
-                "competence": None if not mod.competence else mod.competence.id,
-                "semester": mod.semester,
-                "weight": mod.get_weight(),
-                "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
-                "get_type_display": mod.module.get_type_display(),
-                "results_text": mod.module.results_text,
-                "get_labor": mod.module.get_labor(),
-                "choice_group": mod.choice_group.id,
-                "targets_positions": mod.get_target_positions(),
-                } for mod in mods]
+        response.append({
+                    "id": mod.id,
+                    "title": mod.module.title,
+                    "description": mod.module.description,
+                    "competence": None if not mod.competence else mod.competence.id,
+                    "semester": mod.semester,
+                    "weight": mod.get_weight(),
+                    "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
+                    "get_type_display": mod.module.get_type_display(),
+                    "results_text": mod.module.results_text,
+                    "get_labor": mod.module.get_labor(),
+                    "choice_group": mod.choice_group.id,
+                    "targets_positions": mod.get_target_positions(),
+                    })
     return Response(sorted(response, key=lambda k: k['weight']))
 
 
