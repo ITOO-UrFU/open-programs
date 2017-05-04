@@ -246,7 +246,8 @@ def get_program_modules(request, program_id):
                     "choice_group": None if not mod.choice_group else mod.choice_group.id,
                     "targets_positions": mod.get_target_positions(),
                     })
-    return Response(sorted(response, key=lambda k: (k['weight'], k["title"])))
+    # return Response(sorted(response, key=lambda k: (k['weight'], k["title"])))
+    return Response(response)
 
 
 @api_view(("POST", ))
