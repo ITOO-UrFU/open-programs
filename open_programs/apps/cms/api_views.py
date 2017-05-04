@@ -35,7 +35,7 @@ def get_containers(request):
         {
             "title": c.title,
             "slug": c.slug,
-            "type": c.type.slug,
+            "type": c.type.slug if c.type else None,
             "weight": c.weight,
             "containers": c.get_containers_dict(),
             "components": c.get_components_dict()
