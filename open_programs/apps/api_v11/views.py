@@ -301,7 +301,7 @@ def get_program_modules(request, program_id):
                     "get_type_display": mod.module.get_type_display(),
                     "results_text": mod.module.results_text,
                     "get_labor": mod.module.get_labor(),
-                    "choice_group": mod.choice_group.id,
+                    "choice_group": None if not mod.choice_group else mod.choice_group.id,
                     "targets_positions": mod.get_target_positions(),
                     })
     return Response(sorted(response, key=lambda k: k['weight']))
