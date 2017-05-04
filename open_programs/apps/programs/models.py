@@ -109,7 +109,10 @@ class ProgramModules(ObjectBaseClass):
         except:
             weight = self.semester
 
-        return int(weight) * 100
+        try:
+            return int(weight) * 100
+        except:
+            return 100
 
     def get_target_positions(self):
         targets_positions = []
