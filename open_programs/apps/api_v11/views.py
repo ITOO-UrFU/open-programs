@@ -299,7 +299,7 @@ def get_program_modules(request, program_id):
                 "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
                 "get_type_display": mod.module.get_type_display(),
                 "results_text": mod.module.results_text,
-                "get_labor": mod.get_labor(),
+                "get_labor": mod.module.get_labor(),
                 "choice_group": mod.choice_group.id,
                 "targets_positions": mod.get_target_positions(),
                 } for mod in mods]
