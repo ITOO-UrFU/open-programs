@@ -256,9 +256,9 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:8000',
     'localhost:3000',
     'localhost:4200',
-    '127.0.0.1:4200'
+    '127.0.0.1:4200',
     "http://openprograms.ru",
-    "openprograms.ru"
+    "openprograms.ru",
 )
 
 CORS_URLS_REGEX = r'^/api/v11/.*$'
