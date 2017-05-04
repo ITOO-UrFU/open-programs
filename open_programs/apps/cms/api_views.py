@@ -56,7 +56,7 @@ def containers_by_type(request, slug):
         {
             "title": c.title,
             "slug": c.slug,
-            "type": c.type.slug,
+            "type": c.type.slug if c.type else None,
             "weight": c.weight,
             "containers": c.get_containers_dict(),
             "components": c.get_components_dict()
@@ -77,7 +77,7 @@ def container_by_slug(request, slug):
         {
             "title": c.title,
             "slug": c.slug,
-            "type": c.type.slug,
+            "type": c.type.slug if c.type else None,
             "weight": c.weight,
             "containers": c.get_containers_dict(),
             "components": c.get_components_dict()
