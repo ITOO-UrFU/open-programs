@@ -116,7 +116,8 @@ class ProgramModules(ObjectBaseClass):
         try:
             tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number')
             for tt in tr_targets:
-                tms = TargetModules.objects.filter(target=tt, status="p", archived=False)
+                tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
+                                                   archived=False)
                 if not tms:
                     status = 0
                 for target_module in tms:
