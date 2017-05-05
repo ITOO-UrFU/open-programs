@@ -22,10 +22,5 @@ class Command(BaseCommand):
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
                     m.uni_uuid = module["uuid"]
-                m = Module(uid=speciality["uid"],
-                                  okso=speciality["okso"],
-                                  title=speciality["title"],
-                                  ministerialCode=speciality["ministerialCode"],
-                                  ugnTitle=speciality["ugnTitle"],
-                                  standard=speciality["standard"])
-                spec.save()
+                m = Module()
+                m.save()
