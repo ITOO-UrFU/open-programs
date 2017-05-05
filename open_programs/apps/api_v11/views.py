@@ -245,7 +245,7 @@ def get_program_modules(request, program_id):
                     "get_labor": mod.module.get_labor(),
                     "choice_group": None if not mod.choice_group else mod.choice_group.id,
                     "targets_positions": mod.get_target_positions(),
-                    "priority": None if not mod.module.uni_priority else mod.module.uni_priority
+                    "priority": 0 if not mod.module.uni_priority else mod.module.uni_priority
                     })
     return Response(sorted(response, key=lambda k: (k['weight'], k["priority"], k["title"])))
 
