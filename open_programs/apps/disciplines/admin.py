@@ -10,7 +10,7 @@ class DisciplineAdmin(VersionAdmin):
     list_display = ("id", "title", "description", "module", "get_all", "period", "labor", "form", "status", "archived")
     filter_horizontal = ("courses", "results")
     list_filter = ("archived", "created", "updated", "status", "form")
-    search_fields = ['title', 'module__title']
+    search_fields = ['title', 'module__title', "module__uni_number"]
 
 
 @admin.register(TrainingTerms)
