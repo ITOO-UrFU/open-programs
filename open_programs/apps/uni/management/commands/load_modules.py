@@ -38,12 +38,14 @@ class Command(BaseCommand):
                     print(m.title)
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
+                    if not m.type:
+                        m.type = Type.objects.get(title="Модуль") if not "майнор" not in module["type"] else Type.objects.get(title="Майнор")
                     m.status = "p"
                     m.save()
                 else:
                     m = Module(
                         title=module["title"],
-                        type=Type.objects.get(title="Майнор") if not "модуль" not in module["type"] else Type.objects.get(title="Модуль"),
+                        type=Type.objects.get(title="Модуль") if not "майнор" not in module["type"] else Type.objects.get(title="Майнор"),
                         uni_number=module["number"],
                         uni_coordinator=module["coordinator"],
                         uni_competence=module["competence"],
