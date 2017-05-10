@@ -31,8 +31,7 @@ class Command(BaseCommand):
                       ("uni_approvedDate", "approvedDate"),
                       ("uni_comment", "comment"),
                       ("uni_specialities", "specialities"),
-                      ("uni_file", "file"),
-                      ("status", "p"))
+                      ("uni_file", "file"))
             for module in fixtures:
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
