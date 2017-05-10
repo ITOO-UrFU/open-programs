@@ -20,7 +20,8 @@ class Command(BaseCommand):
         with open(os.path.join(settings.BASE_DIR, "uni_fixtures", "modules.json"), encoding='utf8') as basefile:
             fixtures = json.load(basefile)
             modules_len = len(fixtures)
-            disciplines_len = sum([len(d) for d in [mods for mods in fixtures]])
+            disc_generator = (len(d) for d in (mods for mods in fixtures))
+            disciplines_len = sum(disc_generator)
             discipline_num = 1
             module_num = 1
             fieldset = (("description", "shortTitle"),
@@ -37,6 +38,7 @@ class Command(BaseCommand):
                       ("uni_comment", "comment"),
                       ("uni_specialities", "specialities"),
                       ("uni_file", "file"))
+
             for module in fixtures:
                 print("Load modules: ", round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
                 m = Module.objects.filter(title=module["title"]).first()
