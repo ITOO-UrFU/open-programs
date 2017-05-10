@@ -21,6 +21,7 @@ class Command(BaseCommand):
             for module in fixtures:
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
+                    print(m.title)
                     for field in (("description", "shortTitle"),
                                   ("uni_uuid", "uuid"),
                                   ("uni_number", "number"),
