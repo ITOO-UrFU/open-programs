@@ -38,6 +38,7 @@ class Command(BaseCommand):
                     print(m.title)
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
+                    m.status = "p"
                     m.save()
                 else:
                     m = Module(
