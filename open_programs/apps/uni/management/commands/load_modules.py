@@ -3,6 +3,7 @@ import os
 import json
 from django.conf import settings
 from modules.models import Module, Type
+from disciplines.models import Discipline
 
 
 class Command(BaseCommand):
@@ -59,4 +60,24 @@ class Command(BaseCommand):
                         semester=99
                     )
                     m.save()
+
+            for module in fixtures:
+                print("Loading disciplines")
+                m = Module.objects.filter(title=module["title"]).first()
+                disciplines = module["disciplines"]
+                i = 1
+                for discipline in disciplines:
+                    d = Discipline.objects.filter(module=m, title=discipline["title"])
+                    if not d:
+                        d = Discipline(module=m,
+                                       title=discipline["title"],
+                                       labor=discipline["testUnits"],
+                                       period=i,
+                                       uni_uid=discipline["uid"],
+                                       uni_discipline=discipline["discipline"],
+                                       uni_number=discipline["number"],
+                                       uni_section=discipline["section"],
+                                       uni_file=discipline["file"])
+                        d.save()
+                    i += 1
 
