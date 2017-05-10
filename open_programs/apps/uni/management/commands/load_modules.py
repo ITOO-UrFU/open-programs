@@ -44,4 +44,4 @@ class Command(BaseCommand):
                     #     title=module["title"],
                     #     type=Type.objects.get(title="Модуль") if not "модуль" not in module["type"] else Type.objects.get(title="Майнор")
                     # )
-                    print(module["title"], "   ", Type.objects.get(title="Модуль") if not "модуль" not in module["type"].lower() else Type.objects.get(title="Майнор"))
+                    print(module["title"], "   ", Type.objects.get(title="Майнор") if not "модуль" not in module["type"].lower() else Type.objects.get(title="Модуль"))
