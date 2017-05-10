@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Sum
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 import uuid
@@ -52,7 +53,7 @@ class Module(ObjectBaseClass):
         return [discipline.id for discipline in Discipline.objects.filter(module__id=self.id).order_by("period")]
 
     def get_labor(self):
-        return sum([labor["labor"] for labor in Discipline.objects.filter(module__id=self.id).values('labor')])
+        return Discipline.objects.filter(module__id=self.id).aggregate(Sum('labor'))
 
     class Meta:
         verbose_name = 'модуль'
