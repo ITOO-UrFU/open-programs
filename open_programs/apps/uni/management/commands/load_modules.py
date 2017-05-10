@@ -76,7 +76,7 @@ class Command(BaseCommand):
                 i = 1
                 for discipline in disciplines:
                     d = Discipline.objects.filter(module=m, title=discipline["title"])
-                    if not d:
+                    if not d and discipline["testUnits"] > 0:
                         d = Discipline(module=m,
                                        title=discipline["title"],
                                        labor=discipline["testUnits"],
@@ -87,6 +87,6 @@ class Command(BaseCommand):
                                        uni_section=discipline["section"],
                                        uni_file=discipline["file"])
                         d.save()
-                        discipline_num += 1
                     i += 1
+                discipline_num += len(module["disciplines"])
 
