@@ -35,6 +35,7 @@ class Command(BaseCommand):
                                   ("uni_approvedDate", "approvedDate"),
                                   ("uni_comment", "comment"),
                                   ("uni_specialities", "specialities"),
-                                  ("uni_file", "file")):
+                                  ("uni_file", "file"),
+                                  ("status", "p")):
                         update_if_none(m, field[0], module[field[1]])
                     m.save()
