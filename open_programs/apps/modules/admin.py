@@ -9,6 +9,7 @@ class ModuleAdmin(VersionAdmin):
     list_display = ("title", "program", "semester", "status", "archived", "type") #"get_all_disciplines",
     filter_horizontal = ("results", "competences")
     list_filter = ('archived', "semester", 'created', 'updated', 'type')
+    search_fields = ("title",)
 
 
 @admin.register(Type)
