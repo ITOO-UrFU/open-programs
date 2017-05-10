@@ -85,6 +85,6 @@ class Command(BaseCommand):
                                        uni_section=discipline["section"],
                                        uni_file=discipline["file"])
                         d.save()
-                    discipline_num += 1
+                        discipline_num += 1
                     i += 1
 
