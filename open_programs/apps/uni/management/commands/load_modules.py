@@ -36,7 +36,7 @@ class Command(BaseCommand):
                       ("uni_specialities", "specialities"),
                       ("uni_file", "file"))
             for module in fixtures:
-                print(round(module_num / float(modules_len) * 100, 1), "%", sep='', end='', flush=True)
+                print(round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
                     for field in fieldset:
