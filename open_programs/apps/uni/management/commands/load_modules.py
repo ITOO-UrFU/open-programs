@@ -22,7 +22,7 @@ class Command(BaseCommand):
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
                     for field in (("description", "shortTitle"),
-                                  ("uni_uuid", "uid"),
+                                  ("uni_uuid", "uuid"),
                                   ("uni_number", "number"),
                                   ("uni_coordinator", "coordinator"),
                                   ("uni_type", "type"),
