@@ -21,7 +21,19 @@ class Command(BaseCommand):
             for module in fixtures:
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
-                    for field in ("description", "uni_uuid", "uni_number", "uni_coordinator", "uni_type")
-                    m.uni_uuid = module["uuid"]
-                m = Module()
+                    for field in (("description", "shortTitle"),
+                                  ("uni_uuid", "uid"),
+                                  ("uni_number", "number"),
+                                  ("uni_coordinator", "coordinator"),
+                                  ("uni_type", "type"),
+                                  ("uni_title", "title"),
+                                  ("uni_competence", "competence"),
+                                  ("uni_testUnits", "testUnits"),
+                                  ("uni_priority", "priority"),
+                                  ("uni_state", "state"),
+                                  ("uni_approvedDate", "approvedDate"),
+                                  ("uni_comment", "comment"),
+                                  ("uni_specialities", "specialities"),
+                                  ("uni_file", "file")):
+                        update_if_none(m, field[0], module[field[1]])
                 m.save()
