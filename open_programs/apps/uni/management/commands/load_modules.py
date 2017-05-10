@@ -19,6 +19,8 @@ class Command(BaseCommand):
 
         with open(os.path.join(settings.BASE_DIR, "uni_fixtures", "modules.json"), encoding='utf8') as basefile:
             fixtures = json.load(basefile)
+            modules_len = len(fixtures)
+            module_num = 1
             fieldset = (("description", "shortTitle"),
                       ("uni_uuid", "uuid"),
                       ("uni_number", "number"),
@@ -34,9 +36,9 @@ class Command(BaseCommand):
                       ("uni_specialities", "specialities"),
                       ("uni_file", "file"))
             for module in fixtures:
+                print(module_num / float(modules_len) * 100, "%")
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
-                    print(m.title)
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
                     if not m.type:
@@ -60,6 +62,7 @@ class Command(BaseCommand):
                         semester=99
                     )
                     m.save()
+                module_num += 1
 
             for module in fixtures:
                 print("Loading disciplines")
