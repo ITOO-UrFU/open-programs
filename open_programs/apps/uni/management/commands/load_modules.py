@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 import os
 import json
 from django.conf import settings
-from modules.models import Module
+from modules.models import Module, Type
 
 
 class Command(BaseCommand):
@@ -18,24 +18,31 @@ class Command(BaseCommand):
 
         with open(os.path.join(settings.BASE_DIR, "uni_fixtures", "modules.json"), encoding='utf8') as basefile:
             fixtures = json.load(basefile)
+            fieldset = (("description", "shortTitle"),
+                      ("uni_uuid", "uuid"),
+                      ("uni_number", "number"),
+                      ("uni_coordinator", "coordinator"),
+                      ("uni_type", "type"),
+                      ("uni_title", "title"),
+                      ("uni_competence", "competence"),
+                      ("uni_testUnits", "testUnits"),
+                      ("uni_priority", "priority"),
+                      ("uni_state", "state"),
+                      ("uni_approvedDate", "approvedDate"),
+                      ("uni_comment", "comment"),
+                      ("uni_specialities", "specialities"),
+                      ("uni_file", "file"),
+                      ("status", "p"))
             for module in fixtures:
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
                     print(m.title)
-                    for field in (("description", "shortTitle"),
-                                  ("uni_uuid", "uuid"),
-                                  ("uni_number", "number"),
-                                  ("uni_coordinator", "coordinator"),
-                                  ("uni_type", "type"),
-                                  ("uni_title", "title"),
-                                  ("uni_competence", "competence"),
-                                  ("uni_testUnits", "testUnits"),
-                                  ("uni_priority", "priority"),
-                                  ("uni_state", "state"),
-                                  ("uni_approvedDate", "approvedDate"),
-                                  ("uni_comment", "comment"),
-                                  ("uni_specialities", "specialities"),
-                                  ("uni_file", "file"),
-                                  ("status", "p")):
+                    for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
                     m.save()
+                else:
+                    # m = Module(
+                    #     title=module["title"],
+                    #     type=Type.objects.get(title="Модуль") if not "модуль" not in module["type"] else Type.objects.get(title="Майнор")
+                    # )
+                    print(Type.objects.get(title="Модуль") if not "модуль" not in module["type"] else Type.objects.get(title="Майнор"))
