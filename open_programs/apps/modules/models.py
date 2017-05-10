@@ -53,7 +53,7 @@ class Module(ObjectBaseClass):
         return [discipline.id for discipline in Discipline.objects.filter(module__id=self.id).order_by("period")]
 
     def get_labor(self):
-        return Discipline.objects.filter(module__id=self.id).aggregate(Sum('labor'))
+        return Discipline.objects.filter(module__id=self.id).aggregate(Sum('labor'))["labor__sum"]
 
     class Meta:
         verbose_name = 'модуль'
