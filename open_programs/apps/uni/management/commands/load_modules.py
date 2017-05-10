@@ -41,7 +41,7 @@ class Command(BaseCommand):
 
             for module in fixtures:
                 print("Load modules: ", round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
-                m = Module.objects.filter(title=module["title"]).first()
+                m = Module.objects.filter(title=module["title"], uni_specialities=module["specialities"], uni_coordinator=module["coordinator"]).first()
                 if m:
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
@@ -71,7 +71,8 @@ class Command(BaseCommand):
             for module in fixtures:
                 print("Load disciplines: ", round(discipline_num / float(disciplines_len) * 100, 2), "%", sep='', end='\r',
                       flush=True)
-                m = Module.objects.filter(title=module["title"]).first()
+                m = Module.objects.filter(title=module["title"], uni_specialities=module["specialities"],
+                                          uni_coordinator=module["coordinator"]).first()
                 disciplines = module["disciplines"]
                 i = 1
                 for discipline in disciplines:
