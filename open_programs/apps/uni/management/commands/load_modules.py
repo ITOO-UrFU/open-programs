@@ -20,6 +20,8 @@ class Command(BaseCommand):
         with open(os.path.join(settings.BASE_DIR, "uni_fixtures", "modules.json"), encoding='utf8') as basefile:
             fixtures = json.load(basefile)
             modules_len = len(fixtures)
+            disciplines_len = sum([len(d) for d in [mods for mods in fixtures]])
+            discipline_num = 1
             module_num = 1
             fieldset = (("description", "shortTitle"),
                       ("uni_uuid", "uuid"),
@@ -36,7 +38,7 @@ class Command(BaseCommand):
                       ("uni_specialities", "specialities"),
                       ("uni_file", "file"))
             for module in fixtures:
-                print(round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
+                print("Load modules: ", round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
                 m = Module.objects.filter(title=module["title"]).first()
                 if m:
                     for field in fieldset:
@@ -65,7 +67,8 @@ class Command(BaseCommand):
                 module_num += 1
 
             for module in fixtures:
-                print("Loading disciplines")
+                print("Load modules: ", round(discipline_num / float(disciplines_len) * 100, 1), "%", sep='', end='\r',
+                      flush=True)
                 m = Module.objects.filter(title=module["title"]).first()
                 disciplines = module["disciplines"]
                 i = 1
@@ -82,5 +85,6 @@ class Command(BaseCommand):
                                        uni_section=discipline["section"],
                                        uni_file=discipline["file"])
                         d.save()
+                    discipline_num += 1
                     i += 1
 
