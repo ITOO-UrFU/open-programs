@@ -36,4 +36,4 @@ class Command(BaseCommand):
                                   ("uni_specialities", "specialities"),
                                   ("uni_file", "file")):
                         update_if_none(m, field[0], module[field[1]])
-                m.save()
+                    m.save()
