@@ -45,7 +45,7 @@ class Command(BaseCommand):
                 if m:
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
-                    if not m.type:
+                    if not m.type or m.type == Type.objects.get(title="Майнор"):  # TODO: разобраться, надо ли это
                         m.type = Type.objects.get(title="Майнор") if "майнор" in module["type"] else Type.objects.get(title="Модуль")
                     m.status = "p"
                     m.save()
