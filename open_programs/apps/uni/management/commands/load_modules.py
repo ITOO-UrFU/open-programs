@@ -69,7 +69,7 @@ class Command(BaseCommand):
                 module_num += 1
 
             for module in fixtures:
-                print("Load disciplines: ", round(discipline_num / float(disciplines_len) * 100, 1), "%", sep='', end='\r',
+                print("Load disciplines: ", round(discipline_num / float(disciplines_len) * 100, 2), "%", sep='', end='\r',
                       flush=True)
                 m = Module.objects.filter(title=module["title"]).first()
                 disciplines = module["disciplines"]
