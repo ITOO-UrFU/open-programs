@@ -40,8 +40,20 @@ class Command(BaseCommand):
                         update_if_none(m, field[0], module[field[1]])
                     m.save()
                 else:
-                    # m = Module(
-                    #     title=module["title"],
-                    #     type=Type.objects.get(title="Модуль") if not "модуль" not in module["type"] else Type.objects.get(title="Майнор")
-                    # )
-                    print(module["title"], "   ", Type.objects.get(title="Майнор") if not "модуль" not in module["type"].lower() else Type.objects.get(title="Модуль"))
+                    m = Module(
+                        title=module["title"],
+                        type=Type.objects.get(title="Майнор") if not "модуль" not in module["type"] else Type.objects.get(title="Модуль"),
+                        uni_number=module["number"],
+                        uni_coordinator=module["coordinator"],
+                        uni_competence=module["competence"],
+                        uni_testUnits=module["testUnits"],
+                        uni_priority=module["priority"],
+                        uni_state=module["state"],
+                        uni_approvedDate=module["approvedDate"],
+                        uni_comment=module["comment"],
+                        uni_file=module["file"],
+                        uni_specialities=module["specialities"],
+                        semester=99
+                    )
+                    m.save()
+
