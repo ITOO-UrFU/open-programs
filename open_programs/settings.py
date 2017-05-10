@@ -81,6 +81,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
+    'reversion.middleware.RevisionMiddleware'
 ]
 
 ROOT_URLCONF = 'open_programs.urls'
