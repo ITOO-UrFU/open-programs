@@ -47,13 +47,13 @@ class Module(ObjectBaseClass):
     uni_specialities =models.TextField(null=True, blank=True)
 
     def get_all_disciplines(self):
-        return Discipline.objects.filter(module__id=self.id)
+        return Discipline.objects.filter(module=self)
 
     def get_all_discipline_ids(self):
-        return [discipline.id for discipline in Discipline.objects.filter(module__id=self.id).order_by("period")]
+        return [discipline.id for discipline in Discipline.objects.filter(module=self).order_by("period")]
 
     def get_labor(self):
-        return Discipline.objects.filter(module__id=self.id, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]
+        return Discipline.objects.filter(module=self, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]
 
     class Meta:
         verbose_name = 'модуль'

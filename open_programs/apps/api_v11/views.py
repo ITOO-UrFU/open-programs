@@ -320,3 +320,21 @@ def change_competence(request):
 @api_view(("GET", ))
 def heartbeat(request):
     return Response(status=200)
+
+
+@api_view(('GET',))
+def get_program_disciplines(request, program_id):
+    response = []
+    disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
+    for discipline in disciplines:
+        response.append({
+                    "id": discipline.id,
+                    # "title": mod.module.title,
+                    # "description": mod.module.description,
+                    # "competence": None if not mod.competence else mod.competence.id,
+                    # "semester": mod.semester,
+                    # "weight": mod.get_weight(),
+                    # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
+
+                    })
+    return Response(response)
