@@ -329,7 +329,7 @@ def get_program_disciplines(request, program_id):
     for discipline in disciplines:
         terms = {}
         for term in TrainingTerms.objects.all():
-            terms[term.title] = [s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term).distinct()]
+            terms[term.title] = set([s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term)])
 
         response.append({
                     "id": discipline.id,
