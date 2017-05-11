@@ -329,8 +329,8 @@ def get_program_disciplines(request, program_id):
     for discipline in disciplines:
         response.append({
                     "id": discipline.id,
-                    # "title": mod.module.title,
-                    # "description": mod.module.description,
+                    "title": discipline.title,
+                    "module": discipline.module.title,
                     # "competence": None if not mod.competence else mod.competence.id,
                     # "semester": mod.semester,
                     # "weight": mod.get_weight(),
