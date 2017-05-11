@@ -341,4 +341,4 @@ def get_program_disciplines(request, program_id):
                     # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
 
                     })
-    return Response(response)
+    return Response(sorted(response, key=lambda k: (k["period"])))
