@@ -333,7 +333,7 @@ def get_program_disciplines(request, program_id):
                     "module": discipline.module.title,
                     "labor": discipline.labor,
                     "period": discipline.period,
-                    "terms": [s for s in Semester.objects.filter(discipline=discipline)]
+                    "terms": [s.id for s in Semester.objects.filter(discipline=discipline)]
                     # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
 
                     })
