@@ -104,6 +104,8 @@ urlpatterns.append(url(r'^api/v11/change_target_module/$', change_target_module,
 urlpatterns.append(url(r'^api/v11/change_choice_group/$', change_choice_group, name="change_choice_group"))
 urlpatterns.append(url(r'^api/v11/change_competence/$', change_competence, name="change_competence"))
 
+urlpatterns.append(url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$', get_program_disciplines, name="get_program_disciplines"))
+
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
 urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))
