@@ -9,7 +9,7 @@ from courses.models import Course, Session
 from persons.models import Person
 from competences.models import Competence
 from results.models import Result
-from disciplines.models import Discipline, Semester
+from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType
@@ -327,13 +327,17 @@ def get_program_disciplines(request, program_id):
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
     for discipline in disciplines:
+        terms = {}
+        for term in TrainingTerms.objects.all():
+            terms[term.title] = [s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term)]
+
         response.append({
                     "id": discipline.id,
                     "title": discipline.title,
                     "module": discipline.module.title,
                     "labor": discipline.labor,
                     "period": discipline.period,
-                    "terms": [s.id for s in Semester.objects.filter(discipline=discipline)]
+                    "terms": terms,
                     # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
 
                     })
