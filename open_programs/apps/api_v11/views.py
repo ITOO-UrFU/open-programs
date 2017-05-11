@@ -342,4 +342,4 @@ def get_program_disciplines(request, program_id):
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
 
                     })
-    return Response(sorted(response, key=lambda k: (k["priority"])))
+    return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
