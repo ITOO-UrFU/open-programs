@@ -327,9 +327,9 @@ def get_program_disciplines(request, program_id):
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
     for discipline in disciplines:
-        terms = {}
+        terms = []
         for term in TrainingTerms.objects.all().order_by("title"):
-            terms[term.title] = set((s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term)))
+            terms.append = [term.title, set((s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term)))]
 
         response.append({
                     "id": discipline.id,
