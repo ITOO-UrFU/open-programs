@@ -233,6 +233,8 @@ def get_competences_by_program(request, program_id):
 
 @api_view(('GET',))
 def get_program_modules(request, program_id):
+    import time
+    start_time = time.time()
     trigger = Changed.objects.filter(program__id=program_id).first()
     if not trigger:
         trigger = Changed.objects.create(program=Program.objects.get(id=program_id))
@@ -240,9 +242,10 @@ def get_program_modules(request, program_id):
         trigger.save()
     if not trigger.state():
         return Response(cache.get(f"gpm-{program_id}"))
-
+    print(f"{(start_time - time.time())} - TRIGGER")
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
+        start_time = time.time()
         response.append({
                     "id": mod.id,
                     "title": mod.module.title,
@@ -258,10 +261,11 @@ def get_program_modules(request, program_id):
                     "targets_positions": mod.get_target_positions(),
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                     })
-        response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-        cache.set(f"gpm-{program_id}", response, 3600)
-        trigger.deactivate()
-        trigger.save()
+        print(f"{(start_time - time.time())} - RESPONSE")
+    response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
+    cache.set(f"gpm-{program_id}", response, 3600)
+    trigger.deactivate()
+    trigger.save()
     return Response(response)
 
 
