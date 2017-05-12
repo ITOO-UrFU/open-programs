@@ -232,7 +232,7 @@ def get_program_modules(request, program_id):
     response = []
     import time
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
-        start_time = time.time
+        start_time = time.time()
         response.append({
                     "id": mod.id,
                     "title": mod.module.title,
