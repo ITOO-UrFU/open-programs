@@ -12,7 +12,7 @@ from results.models import Result
 from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
-                            TargetModules, ChoiceGroup, ChoiceGroupType, PMStatus
+                            TargetModules, ChoiceGroup, ChoiceGroupType
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
