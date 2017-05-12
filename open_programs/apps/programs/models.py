@@ -118,7 +118,7 @@ class ProgramModules(ObjectBaseClass):
         targets_positions = []
         tms = []
         # try:
-        for tr_target in TrainingTarget.objects.filter(program=self.program).order_by('number').values("id"):
+        for tr_target in TrainingTarget.objects.filter(program=self.program).order_by('number'):
             tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False)
             if not tms:
                 targets_positions.append(0)
