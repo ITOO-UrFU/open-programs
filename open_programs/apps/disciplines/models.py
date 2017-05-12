@@ -69,3 +69,23 @@ class Semester(models.Model):
     class Meta:
         verbose_name = 'семестр изучения дисциплины'
         verbose_name_plural = 'семестры изучения дисциплины'
+
+
+class Variant(ObjectBaseClass):
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'вариант реализации дисциплин'
+        verbose_name_plural = 'варианты реализации дисциплин'
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    discipline = models.ForeignKey("Discipline")
+    program = models.ForeignKey("programs.Program")
+    # diagram = models.ForeignKey("diagrams.Diagram") TODO: create
+    # technology = models.ForeignKey("technologies.Technology") TODO: create
+    course = models.ForeignKey("courses.Course", null=True)
+    semester = models.ForeignKey("Semester", null=True)
+    parity = models.IntegerField(_("Четность семестра дисциплины"), null=True, blank=True)
+    link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
+

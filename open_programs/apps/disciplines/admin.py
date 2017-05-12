@@ -1,7 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
 
-from .models import Discipline, TrainingTerms, Semester
+from .models import Discipline, TrainingTerms, Semester, Variant
 
 
 @admin.register(Discipline)
@@ -21,3 +21,10 @@ class TrainingTermsAdmin(VersionAdmin):
 @admin.register(Semester)
 class SemesterAdmin(VersionAdmin):
     list_display = ("__str__", )
+
+
+@admin.register(Variant)
+class VariantAdmin(VersionAdmin):
+    list_display = ("discipline", "program", "course", "semester", "parity", "link", "status", "archived")
+    list_filter = ("parity", "archived", "created", "updated", "status")
+    search_fields = ("discipline__title", "program__title", "course__title", "parity", "link")
