@@ -10,7 +10,7 @@ class DisciplineLookup(LookupChannel):
     model = Discipline
 
     def get_query(self, q, request):
-        return Discipline.objects.filter(Q(title__icontains=q) | Q(uni_number__icontains=q) | Q(uni_uid__icontains=q)).order_by('title')
+        return Discipline.objects.filter(Q(title__icontains=q) | Q(uni_number__icontains=q) | Q(uni_uid__icontains=q) | Q(status="p") | Q (archived=False)).order_by('title')
 
     def get_result(self, obj):
         """ result is the simple text that is the completion of what the person typed """
@@ -30,7 +30,7 @@ class SemesterLookup(LookupChannel):
     model = Semester
 
     def get_query(self, q, request):
-        return Semester.objects.filter(Q(discipline__title__icontains=q) | Q(discipline__uni_number__icontains=q) | Q(discipline__uni_uid__icontains=q))
+        return Semester.objects.filter(Q(discipline__title__icontains=q) | Q(discipline__uni_number__icontains=q) | Q(discipline__uni_uid__icontains=q) | Q(discipline__status="p") | Q(discipline__archived=False))
 
     def get_result(self, obj):
         """ result is the simple text that is the completion of what the person typed """
