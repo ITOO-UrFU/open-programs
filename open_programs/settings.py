@@ -294,3 +294,10 @@ AJAX_LOOKUP_CHANNELS = {
     'discipline': ('disciplines.lookups', 'DisciplineLookup'),
     'semester': ('disciplines.lookups', 'SemesterLookup')
 }
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+        'LOCATION': '_cache',
+    }
+}
