@@ -137,6 +137,7 @@ class ProgramModules(ObjectBaseClass):
 
 class Changed(models.Model):
     _changed = models.BooleanField(default=False)
+    program = models.ForeignKey("Program")
 
     def state(self):
         return self._changed
