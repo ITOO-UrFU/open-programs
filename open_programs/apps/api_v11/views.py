@@ -229,6 +229,8 @@ def get_competences_by_program(request, program_id):
 
 @api_view(('GET',))
 def get_program_modules(request, program_id):
+    import time
+    start_time = time.time()
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
 
@@ -247,6 +249,7 @@ def get_program_modules(request, program_id):
                     "targets_positions": mod.get_target_positions(),
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                     })
+        print(f"--- {time.time() - start_time} секунд ---")
     return Response(sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"])))
 
 
