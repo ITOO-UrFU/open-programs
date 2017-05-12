@@ -42,4 +42,4 @@ class SemesterLookup(LookupChannel):
 
     def format_item_display(self, obj):
         """ (HTML) formatted item for displaying item in the selected deck area """
-        return escape(f"{obj.discipline.title} - {obj.term}<br /><span class='tag'>{obj.discipline.module.uni_coordinator}</span>")
+        return f"{obj.discipline.title} - {obj.term}<br /><span class='tag'>{obj.discipline.module.uni_coordinator}</span>"
