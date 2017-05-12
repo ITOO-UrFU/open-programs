@@ -113,10 +113,3 @@ urlpatterns.append(url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$',
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
 urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))
 urlpatterns.append(url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug"))
-
-#### DEBUG ####
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns

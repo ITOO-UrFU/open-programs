@@ -39,8 +39,6 @@ INSTALLED_APPS = [
     'codemirror2',
     'tinymce',
     'corsheaders',
-    # 'debug_panel',
-    'debug_toolbar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -74,7 +72,6 @@ if platform.system() not in ('Windows', 'Darwin', 'FreeBSD', 'Linux'):
     INSTALLED_APPS.append('haystack')
 
 MIDDLEWARE = [
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -86,7 +83,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
     'reversion.middleware.RevisionMiddleware',
-    # 'debug_panel.middleware.DebugPanelMiddleware',
 ]
 
 ROOT_URLCONF = 'open_programs.urls'
@@ -267,8 +263,6 @@ CORS_ORIGIN_WHITELIST = (
     "openprograms.ru",
 )
 
-INTERNAL_IPS = ["*", "10.16.208.124", "127.0.0.1"]
-
 CORS_URLS_REGEX = r'^/api/v11/.*$'
 
 CORS_ALLOW_METHODS = (
@@ -299,11 +293,4 @@ JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/json
 AJAX_LOOKUP_CHANNELS = {
     'discipline': ('disciplines.lookups', 'DisciplineLookup'),
     'semester': ('disciplines.lookups', 'SemesterLookup')
-}
-
-
-def show_toolbar(request):
-    return False
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
