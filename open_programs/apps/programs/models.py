@@ -122,7 +122,7 @@ class ProgramModules(ObjectBaseClass):
             print(tms, "@@@@@@@@@@")
 
             for target_module in tms:
-                if target_module:
+                if len(target_module):
                     if target_module.choice_group is False:
                         targets_positions.append(1)
                     elif target_module.choice_group is True:
