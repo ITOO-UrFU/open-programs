@@ -22,6 +22,8 @@ from django.views.generic.base import RedirectView
 from rest_framework import routers
 from rest_framework_swagger.views import get_swagger_view
 
+from ajax_select import urls as ajax_select_urls
+
 from .apps.api.views import *
 from .apps.api_v11.views import *
 
@@ -69,6 +71,7 @@ urlpatterns = [
 
     url(r'^admin/', include('smuggler.urls')),
     url(r'^admin/', admin.site.urls),
+    url(r'^ajax_select/', include(ajax_select_urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/', include(router_10.urls, namespace='api')),
     url(r'^api/v11/', include(router_11.urls, namespace='api_v11')),
