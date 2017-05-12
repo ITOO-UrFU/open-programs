@@ -120,13 +120,12 @@ class ProgramModules(ObjectBaseClass):
         tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number').values("id")
         tms = TargetModules.objects.filter(target__in=tr_targets, status="p", archived=False)
         if not tms:
-            status = 0
+            targets_positions.append(0)
         for target_module in tms:
             if target_module.choice_group is False:
-                status = 1
+                targets_positions.append(1)
             elif target_module.choice_group is True:
-                status = 2
-        targets_positions.append(status)
+                targets_positions.append(2)
 
         # except:
         #     pass
