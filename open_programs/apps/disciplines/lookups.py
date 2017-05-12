@@ -22,7 +22,8 @@ class DisciplineLookup(LookupChannel):
 
     def format_item_display(self, obj):
         """ (HTML) formatted item for displaying item in the selected deck area """
-        return escape(str(obj))
+        return f"{obj.title} - {obj.labor} з.е.<br /><span style='font-size: 0.9em;padding-left: 1.5em;color: grey;'>" \
+               f"{obj.module.uni_coordinator}</span>"
 
 
 class SemesterLookup(LookupChannel):
@@ -42,5 +43,6 @@ class SemesterLookup(LookupChannel):
 
     def format_item_display(self, obj):
         """ (HTML) formatted item for displaying item in the selected deck area """
-        return f"{obj.discipline.title} - {obj.term}<br /><span class='tag'>{obj.discipline.module.uni_coordinator}</span>"
+        return f"{obj.discipline.title} - {obj.term}<br /><span style='font-size: 0.9em;padding-left: 1.5em;color: grey;'>" \
+               f"{obj.discipline.module.uni_coordinator}</span>"
 
