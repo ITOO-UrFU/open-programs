@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'codemirror2',
     'tinymce',
     'corsheaders',
-    'debug_panel',
+    # 'debug_panel',
     'debug_toolbar',
     'allauth',
     'allauth.account',
@@ -73,7 +73,7 @@ INSTALLED_APPS = [
 if platform.system() not in ('Windows', 'Darwin', 'FreeBSD', 'Linux'):
     INSTALLED_APPS.append('haystack')
 
-MIDDLEWARE_CLASSES = [
+MIDDLEWARE  = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -85,7 +85,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
     'reversion.middleware.RevisionMiddleware',
-    'debug_panel.middleware.DebugPanelMiddleware',
+    # 'debug_panel.middleware.DebugPanelMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
