@@ -267,7 +267,7 @@ CORS_ORIGIN_WHITELIST = (
     "openprograms.ru",
 )
 
-INTERNAL_IPS = ["*", "10.16.208.124" ]
+INTERNAL_IPS = ["*", "10.16.208.124", "127.0.0.1"]
 
 CORS_URLS_REGEX = r'^/api/v11/.*$'
 
@@ -299,4 +299,11 @@ JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/json
 AJAX_LOOKUP_CHANNELS = {
     'discipline': ('disciplines.lookups', 'DisciplineLookup'),
     'semester': ('disciplines.lookups', 'SemesterLookup')
+}
+
+
+def show_toolbar(request):
+    return True
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
 }
