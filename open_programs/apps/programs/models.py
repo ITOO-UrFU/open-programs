@@ -121,12 +121,12 @@ class ProgramModules(ObjectBaseClass):
             tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False)
 
             for target_module in tms:
-                try:
+                if target_module:
                     if target_module.choice_group is False:
                         targets_positions.append(1)
                     elif target_module.choice_group is True:
                         targets_positions.append(2)
-                except:
+                else:
                     targets_positions.append(0)
 
         # except:
