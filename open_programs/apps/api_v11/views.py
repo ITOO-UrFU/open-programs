@@ -241,7 +241,7 @@ def get_program_modules(request, program_id):
                 # "results_text": mod.module.results_text,
                 "get_labor": mod.module.get_labor(),
                 "choice_group": None if not mod.choice_group else mod.choice_group.id,
-                # "targets_positions": mod.get_target_positions(),
+                "targets_positions": mod.get_target_positions(),
                 "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                 } for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)]
     return Response(sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"])))
