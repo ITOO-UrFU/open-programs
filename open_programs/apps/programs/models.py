@@ -118,7 +118,7 @@ class ProgramModules(ObjectBaseClass):
         targets_positions = []
         # try:
         for tr_target in TrainingTarget.objects.filter(program=self.program).order_by('number'):
-            tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False).value("choice_group", flat=True)
+            tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False).values_list("choice_group", flat=True)
             print(tms, "@@@@@@@@@@")
 
             for target_module in tms:
