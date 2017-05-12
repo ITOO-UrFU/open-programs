@@ -267,7 +267,6 @@ def get_program_modules(request, program_id):
 
 @api_view(("POST", ))
 def change_target_module(request):
-    trigger = Changed.objects.all().first()
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
     status = request.data["status"]
@@ -275,6 +274,7 @@ def change_target_module(request):
     program_module = ProgramModules.objects.get(id=module_id)
     target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
+    trigger = Changed.objects.filter(program=program_module.program).first()
     if status == 0:
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
         if tm:
