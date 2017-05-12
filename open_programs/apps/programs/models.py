@@ -115,12 +115,17 @@ class ProgramModules(ObjectBaseClass):
             return 100
 
     def get_target_positions(self):
-
+        targets_positions = []
         training_targets = TrainingTarget.objects.filter(program=self.program, ).order_by('number')
         for training_target in training_targets:
-            target_modules = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True)
-            print(target_modules)
-        targets_positions = []
+            target_module_status = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True)
+            if target_module_status == True:
+                targets_positions.append(2)
+            elif target_module_status == False:
+                targets_positions.append(1)
+            else:
+                targets_positions.append(0)
+
         # for tr_target in TrainingTarget.objects.filter(program=self.program, ).order_by('number'):
         #     tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False).values_list("choice_group", flat=True)
         #     print(tms)
