@@ -116,36 +116,22 @@ class ProgramModules(ObjectBaseClass):
 
     def get_target_positions(self):
         targets_positions = []
-        training_targets = TrainingTarget.objects.filter(program=self.program, ).order_by('number')
-        for training_target in training_targets:
-            target_module = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True)
-            if target_module:
-                target_module_status = target_module[0]
-            else:
-                target_module_status = 0
-            if target_module_status == True:
-                targets_positions.append(2)
-            elif target_module_status == False:
-                targets_positions.append(1)
-            else:
-                targets_positions.append(0)
+        try:
+            tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number')
+            for tt in tr_targets:
+                tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
+                                                   archived=False)
+                if not tms:
+                    status = 0
+                for target_module in tms:
+                    if target_module.choice_group is False:
+                        status = 1
+                    elif target_module.choice_group is True:
+                        status = 2
+                targets_positions.append(status)
 
-        # for tr_target in TrainingTarget.objects.filter(program=self.program, ).order_by('number'):
-        #     tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False).values_list("choice_group", flat=True)
-        #     print(tms)
-        #
-        #     for target_module in tms:
-        #         print(target_module)
-        #         if target_module:
-        #             if target_module is False:
-        #                 targets_positions.append(1)
-        #             elif target_module is True:
-        #                 targets_positions.append(2)
-        #         else:
-        #             targets_positions.append(0)
-        #
-        # # except:
-        # #     pass
+        except:
+            pass
         return targets_positions
 
 
