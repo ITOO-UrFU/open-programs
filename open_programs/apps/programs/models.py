@@ -143,9 +143,11 @@ class Changed(models.Model):
 
     def activate(self):
         self._changed = True
+        self.save()
 
     def deactivate(self):
         self._changed = False
+        self.save()
 
 
 class TargetModules(ObjectBaseClass):
