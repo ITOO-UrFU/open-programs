@@ -84,7 +84,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
-    'reversion.middleware.RevisionMiddleware'
+    'reversion.middleware.RevisionMiddleware',
     'debug_panel.middleware.DebugPanelMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
