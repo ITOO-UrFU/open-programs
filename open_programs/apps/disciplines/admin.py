@@ -9,7 +9,7 @@ from .models import Discipline, TrainingTerms, Semester, Variant
 @admin.register(Discipline)
 class DisciplineAdmin(VersionAdmin):
     fields = ("title", "description", "module", "period",  "labor", "form", "status", "archived", "results", "results_text")
-    list_display = ("id", "title", "description", "module", "get_all", "period", "labor", "form", "status", "archived")
+    list_display = ("id", "title", "description", "module", "period", "labor", "form", "status", "archived")
     filter_horizontal = ("results",)
     list_filter = ("archived", "created", "updated", "status", "form")
     search_fields = ['title', 'module__title', "module__uni_number"]
