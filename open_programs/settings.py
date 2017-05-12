@@ -289,3 +289,7 @@ CORS_ALLOW_HEADERS = (
 
 JSON_EDITOR_JS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/jsoneditor.min.js'
 JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/jsoneditor.min.css'
+
+AJAX_LOOKUP_CHANNELS = {
+    'discipline': ('disciplines.lookups', 'DisciplineLookup'),
+}

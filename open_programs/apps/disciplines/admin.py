@@ -26,7 +26,8 @@ class SemesterAdmin(VersionAdmin):
 
 
 @admin.register(Variant)
-class VariantAdmin(VersionAdmin):
+class VariantAdmin(VersionAdmin, AjaxSelectAdmin):
     list_display = ("discipline", "program", "course", "semester", "parity", "link", "status", "archived")
     list_filter = ("parity", "archived", "created", "updated", "status")
     search_fields = ("discipline__title", "program__title", "course__title", "parity", "link")
+    form = make_ajax_form(Variant, {'discipline': 'discipline'})
