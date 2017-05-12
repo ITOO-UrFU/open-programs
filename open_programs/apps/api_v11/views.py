@@ -237,7 +237,7 @@ def get_program_modules(request, program_id):
                     "title": mod.module.title,
                     # "description": mod.module.description,
                     "competence": None if not mod.competence else mod.competence.id,
-                    "semester": mod.semester,
+                    "semester": 0 if not mod.semester else mod.semester,
                     # "weight": mod.get_weight(),
                     # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
                     # "get_type_display": mod.module.get_type_display(),
