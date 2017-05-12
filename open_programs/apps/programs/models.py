@@ -119,10 +119,9 @@ class ProgramModules(ObjectBaseClass):
         # try:
         for tr_target in TrainingTarget.objects.filter(program=self.program).order_by('number'):
             tms = TargetModules.objects.filter(target=tr_target, status="p", archived=False).values_list("choice_group", flat=True)
-            print(tms, "@@@@@@@@@@")
 
             for target_module in tms:
-                if len(target_module):
+                if target_module:
                     if target_module.choice_group is False:
                         targets_positions.append(1)
                     elif target_module.choice_group is True:
