@@ -118,7 +118,7 @@ class ProgramModules(ObjectBaseClass):
 
         training_targets = TrainingTarget.objects.filter(program=self.program, ).order_by('number')
         for training_target in training_targets:
-            target_modules = TargetModules.objects.filter(target=training_target, program_module=self).first().values_list("choice_group", flat=True)
+            target_modules = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True)
             print(target_modules)
         targets_positions = []
         # for tr_target in TrainingTarget.objects.filter(program=self.program, ).order_by('number'):
