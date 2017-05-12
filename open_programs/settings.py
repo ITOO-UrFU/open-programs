@@ -86,6 +86,7 @@ MIDDLEWARE_CLASSES = [
     'admin_reorder.middleware.ModelAdminReorder',
     'reversion.middleware.RevisionMiddleware'
     'debug_panel.middleware.DebugPanelMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'open_programs.urls'
