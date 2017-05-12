@@ -73,7 +73,8 @@ INSTALLED_APPS = [
 if platform.system() not in ('Windows', 'Darwin', 'FreeBSD', 'Linux'):
     INSTALLED_APPS.append('haystack')
 
-MIDDLEWARE  = [
+MIDDLEWARE = [
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -86,7 +87,6 @@ MIDDLEWARE  = [
     'admin_reorder.middleware.ModelAdminReorder',
     'reversion.middleware.RevisionMiddleware',
     # 'debug_panel.middleware.DebugPanelMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'open_programs.urls'
