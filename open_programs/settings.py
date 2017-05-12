@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'codemirror2',
     'tinymce',
     'corsheaders',
+    'debug_panel',
+    'debug_toolbar',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -83,6 +85,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'admin_reorder.middleware.ModelAdminReorder',
     'reversion.middleware.RevisionMiddleware'
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'open_programs.urls'

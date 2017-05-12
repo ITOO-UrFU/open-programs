@@ -28,3 +28,4 @@ django-jsoneditor
 lxml
 beautifulsoup4
 django-ajax-selects
+django-debug-panel
