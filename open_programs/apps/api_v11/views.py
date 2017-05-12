@@ -26,6 +26,10 @@ from disciplines.serializers import DisciplineSerializer
 
 from cms.api_views import *
 
+from django.core.cache import cache
+from django.utils.cache import get_cache_key
+from django.views.decorators.cache import cache_page
+
 
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
@@ -227,6 +231,7 @@ def get_competences_by_program(request, program_id):
     return Response(sorted(response, key=lambda k: k['number']))
 
 
+@cache_page(60 * 15)
 @api_view(('GET',))
 def get_program_modules(request, program_id):
     response = []
