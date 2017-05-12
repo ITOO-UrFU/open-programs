@@ -133,7 +133,7 @@ class ProgramModules(ObjectBaseClass):
 
         # except:
         #     pass
-        # return targets_positions
+        return targets_positions
 
 
 class TargetModules(ObjectBaseClass):
