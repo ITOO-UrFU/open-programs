@@ -239,7 +239,7 @@ def get_program_modules(request, program_id):
                     "competence": None if not mod.competence else mod.competence.id,
                     "semester": mod.semester,
                     "weight": mod.get_weight(),
-                    "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
+                    # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
                     "get_type_display": mod.module.get_type_display(),
                     "results_text": mod.module.results_text,
                     "get_labor": mod.module.get_labor(),
