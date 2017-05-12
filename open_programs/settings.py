@@ -267,6 +267,8 @@ CORS_ORIGIN_WHITELIST = (
     "openprograms.ru",
 )
 
+INTERNAL_IPS = ["*", "10.16.208.124" ]
+
 CORS_URLS_REGEX = r'^/api/v11/.*$'
 
 CORS_ALLOW_METHODS = (
