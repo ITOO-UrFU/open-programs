@@ -256,6 +256,7 @@ def get_program_modules(request, program_id):
                     })
         cache.set(f"gpm-{program_id}", response, 3600)
         trigger.deactivate()
+        trigger.save()
     return Response(sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"])))
 
 
