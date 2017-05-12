@@ -118,7 +118,7 @@ class ProgramModules(ObjectBaseClass):
         targets_positions = []
         training_targets = TrainingTarget.objects.filter(program=self.program, ).order_by('number')
         for training_target in training_targets:
-            target_module_status = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True)
+            target_module_status = TargetModules.objects.filter(target=training_target, program_module=self).values_list("choice_group", flat=True).first()
             print(target_module_status, "!!!!!!!!!!!!!", target_module_status == True)
             if target_module_status == True:
                 targets_positions.append(2)
