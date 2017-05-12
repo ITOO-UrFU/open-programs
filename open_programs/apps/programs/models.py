@@ -135,6 +135,19 @@ class ProgramModules(ObjectBaseClass):
         return targets_positions
 
 
+class Changed(models.Model):
+    _changed = models.BooleanField(default=False)
+
+    def state(self):
+        return self._changed
+
+    def activate(self):
+        self._changed = True
+
+    def deactivate(self):
+        self._changed = False
+
+
 class TargetModules(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     target = models.ForeignKey("TrainingTarget")

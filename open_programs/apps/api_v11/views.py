@@ -12,7 +12,7 @@ from results.models import Result
 from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
-                            TargetModules, ChoiceGroup, ChoiceGroupType
+                            TargetModules, ChoiceGroup, ChoiceGroupType, Changed
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
@@ -231,9 +231,11 @@ def get_competences_by_program(request, program_id):
     return Response(sorted(response, key=lambda k: k['number']))
 
 
-@cache_page(60 * 15)
 @api_view(('GET',))
 def get_program_modules(request, program_id):
+    trigger = Changed.objects.all().first()
+    if trigger.state():
+        return Response(cache.get(f"gpm-{program_id}"))
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
         response.append({
@@ -251,11 +253,14 @@ def get_program_modules(request, program_id):
                     "targets_positions": mod.get_target_positions(),
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                     })
+        cache.set(f"gpm-{program_id}", response, 3600)
+        trigger.deactivate()
     return Response(sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"])))
 
 
 @api_view(("POST", ))
 def change_target_module(request):
+    trigger = Changed.objects.all().first()
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
     status = request.data["status"]
@@ -287,6 +292,7 @@ def change_target_module(request):
             tm = TargetModules(target=target, program_module=program_module, choice_group=True)
             tm.status = "p"
             tm.save()
+    trigger.activate()
     return Response(status=200)
 
 
