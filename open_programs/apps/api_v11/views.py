@@ -234,8 +234,7 @@ def get_competences_by_program(request, program_id):
 @api_view(('GET',))
 def get_program_modules(request, program_id):
     trigger = Changed.objects.all().first()
-    print(trigger.state())
-    if trigger.state():
+    if not trigger.state():
         return Response(cache.get(f"gpm-{program_id}"))
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
