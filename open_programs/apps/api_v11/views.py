@@ -12,7 +12,7 @@ from results.models import Result
 from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
-                            TargetModules, ChoiceGroup, ChoiceGroupType
+                            TargetModules, ChoiceGroup, ChoiceGroupType, PMStatus
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
@@ -238,7 +238,7 @@ def get_program_modules(request, program_id):
                     "description": mod.module.description,
                     "competence": None if not mod.competence else mod.competence.id,
                     "semester": mod.semester,
-                    "weight": mod.get_weight(),
+                    # "weight": mod.get_weight(),
                     # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
                     "get_type_display": mod.module.get_type_display(),
                     "results_text": mod.module.results_text,
@@ -247,7 +247,7 @@ def get_program_modules(request, program_id):
                     "targets_positions": mod.get_target_positions(),
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                     })
-    return Response(sorted(response, key=lambda k: (k["weight"], k["priority"], k["title"])))
+    return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
 
 @api_view(("POST", ))
