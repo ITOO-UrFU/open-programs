@@ -117,7 +117,8 @@ class ProgramModules(ObjectBaseClass):
     def get_target_positions(self):
         targets_positions = []
         try:
-            tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number')
+            tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number').values("id", float=True)
+            print(tr_targets, "!!!!!!!!!!!!!!")
             for tt in tr_targets:
                 tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
                                                    archived=False)
