@@ -258,7 +258,7 @@ def get_program_modules(request, program_id):
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority
                     })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-    cache.set(f"gpm-{program_id}", response, 3600)
+    cache.set(f"gpm-{program_id}", response, 2678400)
     trigger.deactivate()
     trigger.save()
     return Response(response)
