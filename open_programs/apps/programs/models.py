@@ -116,24 +116,24 @@ class ProgramModules(ObjectBaseClass):
 
     def get_target_positions(self):
         targets_positions = []
-        try:
-            tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number').values("id", float=True)
-            print(tr_targets, "!!!!!!!!!!!!!!")
-            for tt in tr_targets:
-                tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
-                                                   archived=False)
-                if not tms:
-                    status = 0
-                for target_module in tms:
-                    if target_module.choice_group is False:
-                        status = 1
-                    elif target_module.choice_group is True:
-                        status = 2
-                targets_positions.append(status)
+        # try:
+        tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number').values("id", float=True)
+        print(tr_targets, "!!!!!!!!!!!!!!")
+        for tt in tr_targets:
+            tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
+                                               archived=False)
+            if not tms:
+                status = 0
+            for target_module in tms:
+                if target_module.choice_group is False:
+                    status = 1
+                elif target_module.choice_group is True:
+                    status = 2
+            targets_positions.append(status)
 
-        except:
-            pass
-        return targets_positions
+        # except:
+        #     pass
+        # return targets_positions
 
 
 class TargetModules(ObjectBaseClass):
