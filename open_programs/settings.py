@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.odnoklassniki',
     'allauth.socialaccount.providers.openid',
     'allauth.socialaccount.providers.twitter',
+    'ajax_select',
     'courses',
     'directories',
     'journal',
