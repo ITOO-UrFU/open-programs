@@ -122,10 +122,11 @@ class ProgramModules(ObjectBaseClass):
             print(tms)
 
             for target_module in tms:
+                print(target_module)
                 if target_module:
-                    if target_module.choice_group is False:
+                    if target_module is False:
                         targets_positions.append(1)
-                    elif target_module.choice_group is True:
+                    elif target_module is True:
                         targets_positions.append(2)
                 else:
                     targets_positions.append(0)
