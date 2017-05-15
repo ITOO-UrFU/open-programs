@@ -124,7 +124,53 @@ class ChoiceGroupTypeList(viewsets.ModelViewSet):
 class DiagramList(viewsets.ModelViewSet):
     queryset = Diagram.objects.filter(status="p", archived=False)
     serializer_class = DiagramSerializer
+
+
+class TechnologyList(viewsets.ModelViewSet):
+    serializer_class = TechnologySerializer
+    queryset = Technology.objects.filter(status="p", archived=False)
+
+
+class TrainingTermsList(viewsets.ModelViewSet):
+    serializer_class = TrainingTermsSerializer
+    queryset = TrainingTerms.objects.filter(status="p", archived=False)
+
+
+class SemesterList(viewsets.ModelViewSet):
+    serializer_class = SemesterSerializer
+    queryset = TrainingTerms.objects.filter(status="p", archived=False)
+
+
+class VariantList(viewsets.ModelViewSet):
+    serializer_class = VariantSerializer
+    queryset = Variant.objects.filter(status="p", archived=False)
+
+
 #### DETAILS ####
+
+class VariantDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Variant
+
+
+class SemesterDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Semester
+
+
+class TrainingTermsDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TrainingTerms
+
+
+class TechnologyDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Technology
+
+
+class DiagramDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Diagram
 
 
 class ProgramDetail(serializers.HyperlinkedModelSerializer):
