@@ -118,29 +118,3 @@ class Technology(ObjectBaseClass):
     description = models.TextField(_("Описание технологии"), max_length=16384, blank=True, null=True)
     contact_work_category = models.CharField(_("Категория контактной работы"), max_length=512, blank=True, null=True)
     color = models.CharField(_("Цвет технологии"), max_length=16, blank=True, null=True)
-    component = models.ManyToManyField("TechComponent")
-
-
-class TechComponent(ObjectBaseClass):
-
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    part_video = models.FloatField(verbose_name=_("Доля видеолекций"), blank=True, null=True)
-
-    part_text = models.FloatField(verbose_name=_("Доля текстовых материалов"), blank=True, null=True)
-    part_virt_practice = models.FloatField(verbose_name=_("Доля виртуальных практикумов"), blank=True, null=True)
-    part_forum = models.FloatField(verbose_name=_("Доля форумов"), blank=True, null=True)
-    part_ai_control = models.FloatField(verbose_name=_("Доля автоматизированного контроля"), blank=True, null=True)
-    part_webinar = models.FloatField(verbose_name=_("Доля вебинаров и трансляций"), blank=True, null=True)
-    part_auditoria = models.FloatField(verbose_name=_("Доля аудиторных занятий"), blank=True, null=True)
-
-    ed_work_form = models.ForeignKey("EdWorkForm")
-
-
-class EdWorkForm(ObjectBaseClass):
-    def __str__(self):
-        return self.title
-
-    title = models.CharField(_("Название вида учебной работы"), max_length=512)
-
-
-

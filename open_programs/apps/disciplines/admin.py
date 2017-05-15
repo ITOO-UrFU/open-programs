@@ -38,9 +38,3 @@ class TechnologyAdmin(VersionAdmin):
     list_display = ("title", "description", "contact_work_category", "get_color")
     filter_horizontal = ("component", )
     list_filter = ("get_color", )
-
-
-@admin.register(TechComponent)
-class TechComponentAdmin(VersionAdmin):
-    list_display = ("part_video", "part_text", "part_virt_practice", "part_forum", "part_ai_control", "part_webinar", "part_auditoria")
-    list_filter = ("part_video", "part_text", "part_virt_practice", "part_forum", "part_ai_control", "part_webinar", "part_auditoria", "ed_work_form")
