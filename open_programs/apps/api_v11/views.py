@@ -133,7 +133,7 @@ class TechnologyList(viewsets.ModelViewSet):
 
 class TrainingTermsList(viewsets.ModelViewSet):
     serializer_class = TrainingTermsSerializer
-    queryset = TrainingTerms.objects.filter(status="p", archived=False)
+    queryset = TrainingTerms.objects.all()
 
 
 class SemesterList(viewsets.ModelViewSet):
