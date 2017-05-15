@@ -9,7 +9,7 @@ from courses.models import Course, Session
 from persons.models import Person
 from competences.models import Competence
 from results.models import Result
-from disciplines.models import Discipline, Semester, TrainingTerms
+from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType, Changed
@@ -22,13 +22,11 @@ from modules.serializers import ModuleSerializer, TypeSerializer
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
                                  ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
                                  ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer
-from disciplines.serializers import DisciplineSerializer
+from disciplines.serializers import *
 
 from cms.api_views import *
 
 from django.core.cache import cache
-from django.utils.cache import get_cache_key
-from django.views.decorators.cache import cache_page
 
 
 class ProgramList(viewsets.ModelViewSet):
@@ -60,6 +58,7 @@ class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
 
+
 class CompetenceListCreateView(ListCreateAPIView):
     model = Competence
     serializer_class = CompetenceSerializer
@@ -75,6 +74,7 @@ class CompetenceListCreateView(ListCreateAPIView):
         return Response(serializer.data,
                         status=status.HTTP_201_CREATED,
                         headers=headers)
+
 
 class PersonList(viewsets.ModelViewSet):
     queryset = Person.objects.all()
@@ -120,6 +120,10 @@ class ChoiceGroupTypeList(viewsets.ModelViewSet):
     queryset = ChoiceGroupType.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupTypeSerializer
 
+
+class DiagramList(viewsets.ModelViewSet):
+    queryset = Diagram.objects.filter(status="p", archived=False)
+    serializer_class = DiagramSerializer
 #### DETAILS ####
 
 
