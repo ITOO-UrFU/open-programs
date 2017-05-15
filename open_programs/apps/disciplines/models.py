@@ -78,10 +78,69 @@ class Variant(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     discipline = models.ForeignKey("Discipline")
     program = models.ForeignKey("programs.Program")
-    # diagram = models.ForeignKey("diagrams.Diagram") TODO: create
-    # technology = models.ForeignKey("technologies.Technology") TODO: create
+    diagram = models.ForeignKey("diagrams.Diagram")
+    technology = models.ForeignKey("technologies.Technology")
     course = models.ForeignKey("courses.Course", null=True)
     semester = models.ForeignKey("Semester", null=True)
-    parity = models.IntegerField(_("Четность семестра дисциплины"), null=True, blank=True)
+    parity = models.BooleanField(_("Четность семестра дисциплины"), null=True, blank=True)
     link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
+
+
+class Diagram(ObjectBaseClass):
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'график варианта'
+        verbose_names = 'графики варианта'
+
+    title = models.CharField(_("Название графика"), max_length=512)
+    # TODO: What is this?
+    # TODO: add to admin site
+
+
+class Technology(ObjectBaseClass):
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'технология'
+        verbose_name_plural = 'технологии'
+
+    def get_color(self):
+        return f"<div style='background-color:{self.color};width:3em;height:1em'></div>"
+
+    get_color.allow_tags = True
+    get_color.short_description = _("Цвет технологии")
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    title = models.CharField(_("Название технологии"), max_length=512)
+    description = models.TextField(_("Описание технологии"), max_length=16384, blank=True, null=True)
+    contact_work_category = models.CharField(_("Категория контактной работы"), max_length=512, blank=True, null=True)
+    color = models.CharField(_("Цвет технологии"), max_length=16, blank=True, null=True)
+    component = models.ManyToManyField("TechComponent")
+
+
+class TechComponent(ObjectBaseClass):
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    part_video = models.FloatField(verbose_name=_("Доля видеолекций"), blank=True, null=True)
+
+    part_text = models.FloatField(verbose_name=_("Доля текстовых материалов"), blank=True, null=True)
+    part_virt_practice = models.FloatField(verbose_name=_("Доля виртуальных практикумов"), blank=True, null=True)
+    part_forum = models.FloatField(verbose_name=_("Доля форумов"), blank=True, null=True)
+    part_ai_control = models.FloatField(verbose_name=_("Доля автоматизированного контроля"), blank=True, null=True)
+    part_webinar = models.FloatField(verbose_name=_("Доля вебинаров и трансляций"), blank=True, null=True)
+    part_auditoria = models.FloatField(verbose_name=_("Доля аудиторных занятий"), blank=True, null=True)
+
+    ed_work_form = models.ForeignKey("EdWorkForm")
+
+
+class EdWorkForm(ObjectBaseClass):
+    def __str__(self):
+        return self.title
+
+    title = models.CharField(_("Название вида учебной работы"), max_length=512)
+
+
 

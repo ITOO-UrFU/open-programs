@@ -365,3 +365,16 @@ def get_program_disciplines(request, program_id):
 
                     })
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
+
+
+@api_view(('POST',))
+def change_discipline_semester(request):
+    program = Program.objects.get(id=request.data["program_id"])
+    discipline = Discipline.objects.get(id=request.data["discipline_id"])
+    term_title = request.data["term_title"]
+    new_semester = request.data["semester"]
+
+    semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title)
+    semester.training_semester = new_semester
+    semester.save()
+    return Response(status=200)

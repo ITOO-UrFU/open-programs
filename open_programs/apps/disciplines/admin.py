@@ -3,7 +3,7 @@ from reversion.admin import VersionAdmin
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
-from .models import Discipline, TrainingTerms, Semester, Variant
+from .models import Discipline, TrainingTerms, Semester, Variant, Technology, TechComponent
 
 
 @admin.register(Discipline)
@@ -31,3 +31,16 @@ class VariantAdmin(VersionAdmin, AjaxSelectAdmin):
     list_filter = ("parity", "archived", "created", "updated", "status")
     search_fields = ("discipline__title", "program__title", "course__title", "parity", "link")
     form = make_ajax_form(Variant, {'discipline': 'discipline', "semester": "semester"})
+
+
+@admin.register(Technology)
+class TechnologyAdmin(VersionAdmin):
+    list_display = ("title", "description", "contact_work_category", "get_color")
+    filter_horizontal = ("component", )
+    list_filter = ("get_color", )
+
+
+@admin.register(TechComponent)
+class TechComponentAdmin(VersionAdmin):
+    list_display = ("part_video", "part_text", "part_virt_practice", "part_forum", "part_ai_control", "part_webinar", "part_auditoria")
+    list_filter = ("part_video", "part_text", "part_virt_practice", "part_forum", "part_ai_control", "part_webinar", "part_auditoria", "ed_work_form")
