@@ -75,6 +75,8 @@ class Variant(ObjectBaseClass):
         verbose_name = 'вариант реализации дисциплин'
         verbose_name_plural = 'варианты реализации дисциплин'
 
+    PARITY = (('1', 'Нечетный'), ('2', 'Четный'))
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     discipline = models.ForeignKey("Discipline")
     program = models.ForeignKey("programs.Program")
@@ -82,7 +84,7 @@ class Variant(ObjectBaseClass):
     technology = models.ForeignKey("Technology")
     course = models.ForeignKey("courses.Course", null=True)
     semester = models.ForeignKey("Semester", null=True)
-    parity = models.BooleanField(_("Четность семестра дисциплины"), null=True, blank=True)
+    parity = models.CharField(_("Четность семестра дисциплины"), choices=PARITY, null=True, blank=True)
     link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
 
 
