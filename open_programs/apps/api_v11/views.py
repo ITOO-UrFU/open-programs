@@ -131,10 +131,14 @@ class TechnologyList(viewsets.ModelViewSet):
     queryset = Technology.objects.filter(status="p", archived=False)
 
 
+class TrainingTermsList(viewsets.ModelViewSet):
+    serializer_class = TrainingTermsSerializer
+    queryset = TrainingTerms.objects.all()
+
 
 class SemesterList(viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
-    queryset = TrainingTerms.objects.all()
+    queryset = Semester.objects.all()
 
 
 class VariantList(viewsets.ModelViewSet):
@@ -153,6 +157,10 @@ class SemesterDetail(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Semester
 
+
+class TrainingTermsDetail(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = TrainingTerms
 
 
 class TechnologyDetail(serializers.HyperlinkedModelSerializer):
