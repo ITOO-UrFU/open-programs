@@ -459,8 +459,6 @@ def get_variants(request, program_id, discipline_id):
 @api_view(('POST',))
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-    if not variant:
-        return Response(status=404)
     for key, value in request.data.items():
         if key != "variant_id":
             value = request.data.get(key, None)
