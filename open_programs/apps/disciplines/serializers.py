@@ -1,9 +1,11 @@
 from .models import Discipline, Variant, Diagram, Technology, Semester, TrainingTerms
 from courses.models import Course
 from rest_framework import serializers
+from courses.serializers import CourseSerializer
 
 
 class DisciplineSerializer(serializers.HyperlinkedModelSerializer):
+
     results = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
