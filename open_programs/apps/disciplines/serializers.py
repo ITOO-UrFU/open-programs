@@ -2,7 +2,6 @@ from .models import Discipline, Variant, Diagram, Technology, Semester, Training
 from courses.models import Course
 from rest_framework import serializers
 from courses.serializers import CourseSerializer
-from programs.serializers import ProgramSerializer
 
 
 class DisciplineSerializer(serializers.HyperlinkedModelSerializer):
@@ -42,16 +41,14 @@ class TrainingTermsSerializer(serializers.ModelSerializer):
 
 class SemesterSerializer(serializers.ModelSerializer):
     discipline = DisciplineSerializer()
-    program = ProgramSerializer()
     term = TrainingTermsSerializer()
 
     class Meta:
         model = Semester
-        fields = ("discipline", "program", "year", "admission_semester", "training_semester", "term")
+        fields = ("discipline", "year", "admission_semester", "training_semester", "term")
 
 
 class VariantSerializer(serializers.ModelSerializer):
-    program = ProgramSerializer()
     discipline = DisciplineSerializer()
     diagram = DiagramSerializer()
     technology = TechnologySerializer()
@@ -59,4 +56,4 @@ class VariantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Variant
-        fields = ("program", "discipline", "diagram", "technology", "course", "semester", "parity", "link")
+        fields = ("discipline", "diagram", "technology", "course", "semester", "parity", "link")
