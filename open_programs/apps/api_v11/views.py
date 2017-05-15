@@ -245,13 +245,8 @@ def get_program_modules(request, program_id):
         response.append({
                     "id": mod.id,
                     "title": mod.module.title,
-                    # "description": mod.module.description,
                     "competence": None if not mod.competence else mod.competence.id,
                     "semester": 0 if not mod.semester else mod.semester,
-                    # "weight": mod.get_weight(),
-                    # "get_all_discipline_ids": mod.module.get_all_discipline_ids(),
-                    # "get_type_display": mod.module.get_type_display(),
-                    # "results_text": mod.module.results_text,
                     "get_labor": mod.module.get_labor(),
                     "choice_group": None if not mod.choice_group else mod.choice_group.id,
                     "targets_positions": mod.get_target_positions(),
@@ -274,6 +269,8 @@ def change_target_module(request):
     target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
     trigger = Changed.objects.filter(program=program_module.program).first()
+    if not trigger:
+        trigger = Changed.objects.create(program=program_module.program)
     if status == 0:
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
         if tm:
@@ -306,8 +303,11 @@ def change_target_module(request):
 def change_choice_group(request):
     module_id = request.data["module_id"]
     choice_group_id = request.data["choice_group_id"]
-
     program_module = ProgramModules.objects.get(id=module_id)
+
+    trigger = Changed.objects.filter(program=program_module.program).first()
+    if not trigger:
+        trigger = Changed.objects.create(program=program_module.program)
 
     if choice_group_id:
         chg = ChoiceGroup.objects.get(id=choice_group_id)
@@ -315,6 +315,7 @@ def change_choice_group(request):
     else:
         program_module.choice_group = None
     program_module.save()
+    trigger.activate()
     return Response(status=200)
 
 
@@ -322,14 +323,19 @@ def change_choice_group(request):
 def change_competence(request):
     module_id = request.data["module_id"]
     competence_id = request.data["competence_id"]
-
     program_module = ProgramModules.objects.get(id=module_id)
+
+    trigger = Changed.objects.filter(program=program_module.program).first()
+    if not trigger:
+        trigger = Changed.objects.create(program=program_module.program)
+
     if competence_id:
         comp = ProgramCompetence.objects.get(id=competence_id)
         program_module.competence = comp
     else:
         program_module.competence = None
     program_module.save()
+    trigger.activate()
     return Response(status=200)
 
 
