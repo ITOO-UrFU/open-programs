@@ -36,5 +36,4 @@ class VariantAdmin(VersionAdmin, AjaxSelectAdmin):
 @admin.register(Technology)
 class TechnologyAdmin(VersionAdmin):
     list_display = ("title", "description", "contact_work_category", "get_color")
-    filter_horizontal = ("component", )
 
