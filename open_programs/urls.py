@@ -62,7 +62,6 @@ router_11.register(r'programs', ProgramList)
 router_11.register(r'components', ComponentList)
 router_11.register(r'componenttypes', ComponentTypeList)
 router_11.register(r'diagrams', DiagramList)
-
 router_11.register(r'technologies', TechnologyList)
 router_11.register(r'training_terms', TrainingTermsList)
 router_11.register(r'semesters', SemesterList)
@@ -115,7 +114,7 @@ urlpatterns.append(url(r'^api/v11/change_competence/$', change_competence, name=
 
 urlpatterns.append(url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$', get_program_disciplines, name="get_program_disciplines"))
 urlpatterns.append(url(r'^api/v11/change_discipline_semester/$', change_discipline_semester, name="change_discipline_semester"))
-
+urlpatterns.append(url(r'^api/v11/get_variants/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_variants, name="get_variants"))
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
 urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))

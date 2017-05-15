@@ -9,7 +9,7 @@ from courses.models import Course, Session
 from persons.models import Person
 from competences.models import Competence
 from results.models import Result
-from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology
+from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType, Changed
@@ -428,3 +428,28 @@ def change_discipline_semester(request):
     semester.training_semester = new_semester
     semester.save()
     return Response(status=200)
+
+
+@api_view(('GET',))
+def get_variants(request, program_id, discipline_id):
+    variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
+    return Response([{
+                         "id": variant.id,
+                         "diagram": None if not variant.diagram else variant.diagram.diagram,
+                         "course": None if not variant.course else variant.course.id,
+                         "technology": None if not variant.technology else
+                             {
+                                 "title": variant.technology.title,
+                                 "description": variant.technology.description,
+                                 "contact_work_category": variant.technology.contact_work_category,
+                                 "color": variant.technology.color
+                             },
+                         "semester": None if not variant.semester else
+                             {
+                                 "admission_semester": variant.semester.admission_semester,
+                                 "training_semester": variant.semester.training_semester,
+                             },
+                         "parity": None if not variant.parity else variant.parity,
+                         "link": variant.link
+                     } for variant in variants])
+
