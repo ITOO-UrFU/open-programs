@@ -33,15 +33,12 @@ class TechnologySerializer(serializers.ModelSerializer):
         fields = ("title", "description", "contact_work_category", "color")
 
 
-class TrainingTermsSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = TrainingTerms
-        fields = ("title", "limit")
-
-
 class SemesterSerializer(serializers.ModelSerializer):
     discipline = DisciplineSerializer()
-    term = TrainingTermsSerializer()
+    term = serializers.PrimaryKeyRelatedField(
+        many=False,
+        read_only=True
+    )
 
     class Meta:
         model = Semester
