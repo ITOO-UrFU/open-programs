@@ -110,7 +110,7 @@ class Technology(ObjectBaseClass):
         verbose_name_plural = 'технологии'
 
     def get_color(self):
-        return f"<div style='background-color:{self.color};width:3em;height:1em'></div>"
+        return f"<div style='background-color:{self.color};width:6em;height:1.3em'></div>"
 
     get_color.allow_tags = True
     get_color.short_description = _("Цвет технологии")
