@@ -92,7 +92,7 @@ class Diagram(ObjectBaseClass):
 
     class Meta:
         verbose_name = 'график варианта'
-        verbose_names = 'графики варианта'
+        verbose_name_plural = 'графики варианта'
 
     title = models.CharField(_("Название графика"), max_length=512)
     # TODO: What is this?
