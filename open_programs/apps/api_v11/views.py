@@ -5,6 +5,8 @@ from rest_framework.decorators import api_view
 from rest_framework.generics import ListCreateAPIView
 
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+
 from courses.models import Course, Session
 from persons.models import Person
 from competences.models import Competence
@@ -453,3 +455,15 @@ def get_variants(request, program_id, discipline_id):
                          "link": variant.link
                      } for variant in variants])
 
+
+@api_view(('POST',))
+def change_variant(request):
+    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+
+    for field in request.data.keys():
+        value = request.data.get("field", None)
+        if value:
+            variant.__dict__[field] = value
+
+    variant.save()
+    return Response(status=200)
