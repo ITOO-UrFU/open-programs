@@ -64,7 +64,6 @@ router_11.register(r'componenttypes', ComponentTypeList)
 router_11.register(r'diagrams', DiagramList)
 
 router_11.register(r'technologies', TechnologyList)
-router_11.register(r'training_terms', TrainingTermsList)
 router_11.register(r'semesters', SemesterList)
 router_11.register(r'variants', VariantList)
 
