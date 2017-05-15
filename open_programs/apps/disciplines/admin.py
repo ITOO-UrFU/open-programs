@@ -3,7 +3,9 @@ from reversion.admin import VersionAdmin
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
-from .models import Discipline, TrainingTerms, Semester, Variant, Technology
+from cms.admin import JSONEditor
+from jsonfield import JSONField
+from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Diagram
 
 
 @admin.register(Discipline)
@@ -37,3 +39,10 @@ class VariantAdmin(VersionAdmin, AjaxSelectAdmin):
 class TechnologyAdmin(VersionAdmin):
     list_display = ("title", "description", "contact_work_category", "get_color")
 
+
+@admin.register(Diagram)
+class DiagramAdmin(VersionAdmin):
+    list_display = ("title", "diagram")
+    formfield_overrides = {
+        JSONField: {'widget': JSONEditor},
+    }

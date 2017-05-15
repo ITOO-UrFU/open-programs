@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
+from jsonfield import JSONField
 
 from results.models import Result
 
@@ -97,8 +98,7 @@ class Diagram(ObjectBaseClass):
         verbose_name_plural = 'графики варианта'
 
     title = models.CharField(_("Название графика"), max_length=512)
-    # TODO: What is this?
-    # TODO: add to admin site
+    diagram = JSONField(verbose_name=_("График"), null=True, blank=True)
 
 
 class Technology(ObjectBaseClass):
