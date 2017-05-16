@@ -403,7 +403,7 @@ def get_program_disciplines(request, program_id):
     for discipline in disciplines:
         terms = {}
         for term in TrainingTerms.objects.all().order_by("title"):
-            semesters = [s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term)]
+            semesters = [s.training_semester for s in Semester.objects.filter(discipline=discipline, term=term, program=program_id)]
             terms[term.title] = 0 if len(semesters) == 0 else min(semesters)
 
         response.append({
