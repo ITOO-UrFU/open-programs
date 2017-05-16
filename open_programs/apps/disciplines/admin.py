@@ -68,26 +68,26 @@ class JSONEditor(Textarea):
                   console.log(data);
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
-                    {{id: "1", name: "Нед. 1", field: "week1", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "2", name: "Нед. 2", field: "week2", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "3", name: "Нед. 3", field: "week3", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "4", name: "Нед. 4", field: "week4", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "5", name: "Нед. 5", field: "week5", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "6", name: "Нед. 6", field: "week6", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "7", name: "Нед. 7", field: "week7", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "8", name: "Нед. 8", field: "week8", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "9", name: "Нед. 9", field: "week9", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "10", name: "Нед. 10", field: "week10", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "11", name: "Нед. 11", field: "week11", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "12", name: "Нед. 12", field: "week12", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "13", name: "Нед. 13", field: "week13", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "14", name: "Нед. 14", field: "week14", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "15", name: "Нед. 15", field: "week15", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "16", name: "Нед. 16", field: "week16", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "17", name: "Нед. 17", field: "week17", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "18", name: "Нед. 18", field: "week18", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "19", name: "Нед. 19", field: "week19", resizable: true, width: 60, editor: Slick.Editors.Text}},
-                    {{id: "20", name: "Нед. 20", field: "week20", resizable: true, width: 60, editor: Slick.Editors.Text}},
+                    {{id: "1", name: "Нед. 1", field: "week1", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "2", name: "Нед. 2", field: "week2", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "3", name: "Нед. 3", field: "week3", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "4", name: "Нед. 4", field: "week4", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "5", name: "Нед. 5", field: "week5", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "6", name: "Нед. 6", field: "week6", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "7", name: "Нед. 7", field: "week7", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "8", name: "Нед. 8", field: "week8", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "9", name: "Нед. 9", field: "week9", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "10", name: "Нед. 10", field: "week10", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "11", name: "Нед. 11", field: "week11", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "12", name: "Нед. 12", field: "week12", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "13", name: "Нед. 13", field: "week13", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "14", name: "Нед. 14", field: "week14", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "15", name: "Нед. 15", field: "week15", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "16", name: "Нед. 16", field: "week16", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "17", name: "Нед. 17", field: "week17", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "18", name: "Нед. 18", field: "week18", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "19", name: "Нед. 19", field: "week19", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
+                    {{id: "20", name: "Нед. 20", field: "week20", resizable: true, width: 60, formatter: NumericRangeFormatter, editor: NumericRangeEditor}},
 
 
                   ];
@@ -95,6 +95,60 @@ class JSONEditor(Textarea):
                     editable: true,
                     autoHeight: true
                   }};
+
+                  function NumericRangeFormatter(row, cell, value, columnDef, dataContext) {{
+                    return dataContext.from + " - " + dataContext.to;
+                  }}
+
+                  function NumericRangeEditor(args) {{
+                        var $from, $to;
+                        var scope = this;
+                        this.init = function () {{
+                          $from = $("<INPUT type=text style='width:40px' />")
+                              .appendTo(args.container)
+                              .bind("keydown", scope.handleKeyDown);
+                          $(args.container).append("&nbsp; to &nbsp;");
+                          $to = $("<INPUT type=text style='width:40px' />")
+                              .appendTo(args.container)
+                              .bind("keydown", scope.handleKeyDown);
+                          scope.focus();
+                        }};
+                        this.handleKeyDown = function (e) {{
+                          if (e.keyCode == $.ui.keyCode.LEFT || e.keyCode == $.ui.keyCode.RIGHT || e.keyCode == $.ui.keyCode.TAB) {{
+                            e.stopImmediatePropagation();
+                          }}
+                        }};
+                        this.destroy = function () {{
+                          $(args.container).empty();
+                        }};
+                        this.focus = function () {{
+                          $from.focus();
+                        }};
+                        this.serializeValue = function () {{
+                          return {{from: parseInt($from.val(), 10), to: parseInt($to.val(), 10)}};
+                        }};
+                        this.applyValue = function (item, state) {{
+                          item.from = state.from;
+                          item.to = state.to;
+                        }};
+                        this.loadValue = function (item) {{
+                          $from.val(item.from);
+                          $to.val(item.to);
+                        }};
+                        this.isValueChanged = function () {{
+                          return args.item.from != parseInt($from.val(), 10) || args.item.to != parseInt($from.val(), 10);
+                        }};
+                        this.validate = function () {{
+                          if (isNaN(parseInt($from.val(), 10)) || isNaN(parseInt($to.val(), 10))) {{
+                            return {{valid: false, msg: "Please type in valid numbers."}};
+                          }}
+                          if (parseInt($from.val(), 10) > parseInt($to.val(), 10)) {{
+                            return {{valid: false, msg: "'from' cannot be greater than 'to'"}};
+                          }}
+                          return {{valid: true, msg: null}};
+                        }};
+                        this.init();
+                      }}
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
                 grid.setSelectionModel(new Slick.CellSelectionModel());
