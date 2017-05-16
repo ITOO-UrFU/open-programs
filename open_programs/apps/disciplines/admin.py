@@ -21,7 +21,7 @@ from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Di
 class JSONEditor(Textarea):
     class Media:
         js = (
-            getattr(settings, "JQUERY", settings.STATIC_URL + 'jquery-3.1.1.min.js'),
+            getattr(settings, "JQUERY", settings.STATIC_URL + 'jquery-1.7.2.min.js'),
             getattr(settings, "JQUERY_UI", settings.STATIC_URL + 'jquery-ui.min.js'),
             getattr(settings, "JQUERY_EVENT_DRAG", settings.STATIC_URL + 'jquery.event.drag.js'),
 
