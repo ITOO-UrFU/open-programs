@@ -58,9 +58,8 @@ class Program(ObjectBaseClass):
         return
 
     def get_all_disciplines(self):
-        disciplines = []
         pms = ProgramModules.objects.filter(program=self, status="p", archived=False).values_list("module__id", flat=True)
-        print(pms)
+        return Discipline.objects.filter(module__id__in=pms, status="p", archived=False)
 
 
 
