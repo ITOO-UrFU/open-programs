@@ -2,7 +2,6 @@ import uuid
 import json
 from django.db import models
 from django.utils.safestring import mark_safe
-from django.utils.text import slugify
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
@@ -160,7 +159,7 @@ class Diagram(ObjectBaseClass):
                 }}
                 return Math.max.apply(Math, [].concat.apply([], maxArray))
             }}
-            </script>""".format(data=response, id=slugify(self.title))
+            </script>""".format(data=response, id=self.id)
         return mark_safe(r)
 
     get_diagram_display.allow_tags = True
