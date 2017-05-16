@@ -48,7 +48,11 @@ class VariantSerializer(serializers.ModelSerializer):
     discipline = DisciplineSerializer()
     diagram = DiagramSerializer()
     technology = TechnologySerializer()
-    course = CourseSerializer()
+    course = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='course-detail'
+    )
 
     class Meta:
         model = Variant
