@@ -105,7 +105,7 @@ class Diagram(ObjectBaseClass):
         lists = []
         for row in self.diagram:
             lists.append(list(row.values()))
-        return json.dumps(list(zip(*lists)))
+        return json.dumps(list(zip(*lists)).append(WorkingType.objects.all().values_list("color", flat=True)))
 
 
 class WorkingType(models.Model):
