@@ -86,18 +86,15 @@ class JSONEditor(Textarea):
             }}
         </style>
         <script>
-
         document.addEventListener("DOMContentLoaded", function(event) {{
                 var grid;
                 var data = $("#id_diagram").val().replace(/'/g, '"');
-                console.log(data)
                 if (data.length < 1 ) {{
                     data = {data}
                 }}
                 else {{
                     data = JSON.parse(data);
                 }}
-
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
                     {{id: "1", name: "Нед. 1", field: "week1", resizable: true, width: 60, editor: Slick.Editors.Integer}},
@@ -120,18 +117,13 @@ class JSONEditor(Textarea):
                     {{id: "18", name: "Нед. 18", field: "week18", resizable: true, width: 60, editor: Slick.Editors.Integer}},
                     {{id: "19", name: "Нед. 19", field: "week19", resizable: true, width: 60, editor: Slick.Editors.Integer}},
                     {{id: "20", name: "Нед. 20", field: "week20", resizable: true, width: 60, editor: Slick.Editors.Integer}},
-
-
                   ];
                   var options = {{
                     editable: true,
                     autoHeight: true
                   }};
-
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
-
                 grid.onCellChange.subscribe(function (e, args) {{
-                    console.log(JSON.stringify(grid.getData()), grid.getData());
                     $("#id_diagram").val(JSON.stringify(grid.getData()));
                 }});
         }});
