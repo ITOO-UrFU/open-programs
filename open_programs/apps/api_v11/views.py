@@ -522,7 +522,11 @@ def get_program_variants(request, program_id):
                         "contact_work_category": variant.technology.contact_work_category,
                         "color": variant.technology.color
                     },
-                    "semester": None if not variant.semester else variant.semester.training_semester,
+                    "semester": None if not variant.semester else
+                    {
+                        "term": variant.semester.term.title,
+                        "training_semester": variant.semester.training_semester,
+                    },
                     "parity": None if not variant.parity else variant.parity,
                     "link": variant.link
                 }
