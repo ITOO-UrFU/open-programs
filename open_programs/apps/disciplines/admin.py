@@ -136,6 +136,7 @@ class JSONEditor(Textarea):
         )
         return mark_safe(r)
 
+
 @admin.register(Discipline)
 class DisciplineAdmin(VersionAdmin):
     fields = ("title", "description", "module", "period",  "labor", "form", "status", "archived", "results", "results_text")
@@ -172,7 +173,7 @@ class TechnologyAdmin(VersionAdmin):
 
 @admin.register(Diagram)
 class DiagramAdmin(VersionAdmin):
-    list_display = ("title", "diagram")
+    list_display = ("title", "get_diagram")
     formfield_overrides = {
         JSONField: {'widget': JSONEditor},
     }
