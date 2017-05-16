@@ -2,7 +2,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListCreateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
@@ -469,3 +469,7 @@ def change_variant(request):
 
     variant.save()
     return Response(status=200)
+
+
+class CreateVariant(CreateAPIView):
+    serializer_class = VariantSerializer
