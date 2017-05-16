@@ -95,7 +95,7 @@ class JSONEditor(Textarea):
                     enableAddRow: false,
                     enableCellNavigation: false,
                     asyncEditorLoading: false,
-                    autoEdit: false,
+                    autoEdit: true,
                     autoHeight: true
                   }};
 
