@@ -61,7 +61,7 @@ class Semester(models.Model):
     term = models.ForeignKey("TrainingTerms", blank=True, null=True)
 
     def __str__(self):
-        return f"{self.program} - {self.discipline} - {self.year}"
+        return f"{self.program} - {self.discipline} - {self.year} - {self.training_semester} сем."
 
     class Meta:
         verbose_name = 'семестр изучения дисциплины'
@@ -70,7 +70,7 @@ class Semester(models.Model):
 
 class Variant(ObjectBaseClass):
     def __str__(self):
-        return f"{self.id} - {self.discipline.title} - {self.training_semester} сем."
+        return f"{self.id} - {self.discipline.title}"
 
     class Meta:
         verbose_name = 'вариант реализации дисциплин'
