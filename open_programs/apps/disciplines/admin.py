@@ -26,6 +26,7 @@ class TrainingTermsAdmin(VersionAdmin):
 class SemesterAdmin(VersionAdmin):
     list_display = ("__str__", )
     search_fields = ("discipline__title", "discipline__module__title", "program__title")
+    form = make_ajax_form(Semester, {'discipline': 'discipline'})
 
 
 @admin.register(Variant)
