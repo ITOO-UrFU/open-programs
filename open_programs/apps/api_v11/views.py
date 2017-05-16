@@ -506,6 +506,8 @@ def test(request):
     disciplines = program.get_all_disciplines()
     print(disciplines, "!!!!!!!!!!!!!!!!!!!disciplines")
     for discipline in disciplines:
-        variants[discipline.id] = Variant.objects.filter(program=program, discipline__id=discipline.id)
-        print(Variant.objects.filter(program=program, discipline__id=discipline.id))
+        variants[discipline.id] = []
+        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+            serializer = VariantSerializer(variant)
+            variants[discipline.id].append(serializer.data)
     return Response(variants)
