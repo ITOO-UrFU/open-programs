@@ -15,7 +15,7 @@ from django.conf import settings
 import json
 
 from jsonfield import JSONField
-from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Diagram
+from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Diagram, WorkingType
 
 
 class JSONEditor(Textarea):
@@ -87,7 +87,7 @@ class JSONEditor(Textarea):
                   };
 
                 grid = new Slick.Grid("#id_%(name)s_jsoneditor", data, columns, options);
-                grid.setSelectionModel(new Slick.CellSelectionModel());
+                //grid.setSelectionModel(new Slick.CellSelectionModel());
         });
 
 
@@ -141,3 +141,8 @@ class DiagramAdmin(VersionAdmin):
     formfield_overrides = {
         JSONField: {'widget': JSONEditor},
     }
+
+
+@admin.register(WorkingType)
+class WorkingTypeAdmin(VersionAdmin):
+    list_display = ("title", "color")

@@ -101,6 +101,11 @@ class Diagram(ObjectBaseClass):
     diagram = JSONField(verbose_name=_("График"), null=True, blank=True)
 
 
+class WorkingType(models.Model):
+    title = models.CharField(_("Название вида работы"), max_length=512)
+    color = models.CharField(_("Цвет вида работы"), max_length=16, blank=True, null=True)
+
+
 class Technology(ObjectBaseClass):
     def __str__(self):
         return self.title
