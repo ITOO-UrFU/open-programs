@@ -504,6 +504,8 @@ def test(request):
     variants = {}
     program = Program.objects.get(id="295fff4f-8805-47c8-9ef1-0beb491700ac")
     disciplines = program.get_all_disciplines()
+    print(disciplines, "!!!!!!!!!!!!!!!!!!!disciplines")
     for discipline in disciplines:
         variants[discipline] = Variant.objects.filter(program=program, discipline__id=discipline)
+        print(Variant.objects.filter(program=program, discipline__id=discipline))
     return Response(variants)
