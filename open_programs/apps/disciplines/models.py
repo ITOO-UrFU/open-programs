@@ -105,7 +105,7 @@ class Diagram(ObjectBaseClass):
         lists = []
         for row in self.diagram:
             lists.append(list(zip(row.values(), WorkingType.objects.filter(
-                title__in=list(row.values()).values_list("title", flat=True)))))
+                title__in=list(row.values())).values_list("title", flat=True))))
         return json.dumps(list(zip(*lists)))
 
 
