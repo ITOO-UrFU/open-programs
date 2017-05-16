@@ -45,9 +45,18 @@ class SemesterSerializer(serializers.ModelSerializer):
 
 
 class VariantSerializer(serializers.ModelSerializer):
-    discipline = DisciplineSerializer()
-    diagram = DiagramSerializer()
-    technology = TechnologySerializer()
+    discipline = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Discipline.objects.filter(status="p", archived=False)
+    )
+    diagram = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Diagram.objects.filter(status="p", archived=False)
+    )
+    technology = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Technology.objects.filter(status="p", archived=False)
+    )
     course = serializers.PrimaryKeyRelatedField(
         many=True,
         queryset=Course.objects.filter(status="p", archived=False)
