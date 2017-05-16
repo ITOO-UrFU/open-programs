@@ -89,10 +89,10 @@ class JSONEditor(Textarea):
 
         document.addEventListener("DOMContentLoaded", function(event) {{
                 var grid;
-                var data = $("#id_diagram").val();
-                //if (data.length < 10 ) {{
-                //    data = {data}
-                //}}
+                var data = JSON.parse($("#id_diagram").val());
+                if (data.length < 10 ) {{
+                    data = {data}
+                }}
                   console.log(data);
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
