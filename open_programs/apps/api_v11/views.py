@@ -429,6 +429,7 @@ def change_discipline_semester(request):
     semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
     if semester:
         semester.training_semester = new_semester
+        print(semester, semester.training_semester, '!!!!!!!!!!!!!!')
         semester.save()
     else:
         Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester)
