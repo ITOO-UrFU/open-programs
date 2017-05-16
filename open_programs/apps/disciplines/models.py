@@ -106,8 +106,8 @@ class Diagram(ObjectBaseClass):
         for row in self.diagram:
             lists.append(list(row.values()))
         response = list(zip(*lists))
-        response.append(list(WorkingType.objects.all().values_list("color", flat=True)))
-        return response
+        response.insert(0, list(WorkingType.objects.all().values_list("color", flat=True)))
+        return json.dumps(response)
 
 
 class WorkingType(models.Model):
