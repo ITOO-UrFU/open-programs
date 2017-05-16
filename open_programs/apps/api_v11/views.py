@@ -510,6 +510,25 @@ def get_program_variants(request, program_id):
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
-            serializer = VariantSerializer(variant)
-            variants[discipline.id].append(serializer.data)
+            variants[discipline.id].append(
+                {
+                    "id": variant.id,
+                    "diagram": None if not variant.diagram else variant.diagram.diagram,
+                    "course": None if not variant.course else variant.course.id,
+                    "technology": None if not variant.technology else
+                    {
+                        "title": variant.technology.title,
+                        "description": variant.technology.description,
+                        "contact_work_category": variant.technology.contact_work_category,
+                        "color": variant.technology.color
+                    },
+                    "semester": None if not variant.semester else
+                    {
+                        "admission_semester": variant.semester.admission_semester,
+                        "training_semester": variant.semester.training_semester,
+                    },
+                    "parity": None if not variant.parity else variant.parity,
+                    "link": variant.link
+                }
+            )
     return Response(variants)
