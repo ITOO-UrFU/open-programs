@@ -131,7 +131,7 @@ class JSONEditor(Textarea):
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
 
                 grid.onCellChange.subscribe(function (e, args) {{
-                    console.log(JSON.stringify(grid.getData()));
+                    console.log(JSON.stringify(grid.getData()), grid.getData());
                     $("#id_diagram").val(JSON.stringify(grid.getData()));
                 }});
         }});
