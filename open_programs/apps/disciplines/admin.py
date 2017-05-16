@@ -128,7 +128,7 @@ class JSONEditor(Textarea):
 
                 grid.onCellChange.subscribe(function (e, args) {{
                     console.log(JSON.stringify(grid.getData()));
-                    $("#id_diagram").val(JSON.stringify(grid.getData()));
+                    $("#id_diagram").val(JSON.stringify(grid.getData()).replace(/'/g, '"'));
                 }});
         }});
         </script>
