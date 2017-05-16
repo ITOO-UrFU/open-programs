@@ -133,6 +133,10 @@ class Diagram(ObjectBaseClass):
             var draw = SVG('diagram_{id}').size(drawSize[0], drawSize[1])
             var verticalOffset;
 
+            for (var i=0; i<maxValue; i++){{
+                draw.rect(drawSize[0], 1).fill('#888').move(0, 149-(step*i))
+            }}
+
             for (var colIndex = 0; colIndex < data.length; colIndex++) {{
                 if (colIndex != 0) {{
                     var moveX = (drawSize[0] - xOffset)/20*colIndex+xStep/2+xOffset;
