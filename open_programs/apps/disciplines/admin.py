@@ -52,8 +52,6 @@ class JSONEditor(Textarea):
         <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
-            var grid = document.getElementById("id_%(name)s_jsoneditor");
-
                 var grid;
                 var data = [];
               var columns = [
@@ -88,7 +86,7 @@ class JSONEditor(Textarea):
                 autoEdit: false
               };
 
-                grid = new Slick.Grid("#myGrid", data, columns, options);
+                grid = new Slick.Grid("#id_%(name)s_jsoneditor", data, columns, options);
                 grid.setSelectionModel(new Slick.CellSelectionModel());
         });
 
