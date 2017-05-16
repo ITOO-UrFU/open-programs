@@ -58,12 +58,8 @@ class JSONEditor(Textarea):
         <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
-            var jsoncontainer = document.getElementById("id_%(name)s_jsoneditor");
-            var options = {
-                mode: 'code',
-                modes: ['code', 'tree'],
-                onChange: function(){document.getElementById("id_%(name)s").value = JSON.stringify(editor.get())}
-            };
+            var grid = document.getElementById("id_%(name)s_jsoneditor");
+
             var editor = new JSONEditor(jsoncontainer, options);
 
             editor.set(JSON.parse(document.getElementById("id_%(name)s").value.replace(/'/g, '"')));
@@ -104,7 +100,7 @@ class VariantAdmin(VersionAdmin, AjaxSelectAdmin):
     list_display = ("discipline", "program", "course", "semester", "parity", "link", "status", "archived")
     list_filter = ("parity", "archived", "created", "updated", "status")
     search_fields = ("discipline__title", "program__title", "course__title", "parity", "link")
-    form = make_ajax_form(Variant, {'discipline': 'discipline', "semester": "semester"})
+    form = make_ajax_form(Variant, {'discipline': 'discipline'})
 
 
 @admin.register(Technology)
