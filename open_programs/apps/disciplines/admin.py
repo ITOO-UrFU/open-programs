@@ -103,7 +103,6 @@ class JSONEditor(Textarea):
                   }};
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
-                grid.setSelectionModel(new Slick.CellSelectionModel());
         }});
 
 
