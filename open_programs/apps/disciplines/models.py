@@ -118,7 +118,7 @@ class Diagram(ObjectBaseClass):
         response = list(zip(*lists))
         response.insert(0, list(WorkingType.objects.all().values_list("color", flat=True)))
 
-        r = '''
+        r = """
             <div id="diagram_{id}"></div>
             <script>
             "use strict";
@@ -141,7 +141,7 @@ class Diagram(ObjectBaseClass):
                 }}
                 else {{var moveX = xOffset;}}
                 var width = (drawSize[0] - xOffset)/20 - xStep/2;
-                for (var segmentIndex in data[colIndex]) {
+                for (var segmentIndex in data[colIndex]) {{
                     if (segmentIndex != 0) {{
                         verticalOffset += data[colIndex][segmentIndex - 1]*step
                     }}
@@ -159,11 +159,8 @@ class Diagram(ObjectBaseClass):
                      maxArray.push(array[index].reduce(function(a, b) {{ return a + b; }}, 0));
                 }}
                 return Math.max.apply(Math, [].concat.apply([], maxArray))
-            }
-            </script>'''.format(
-            data=response,
-            id=slugify(self.title)
-        )
+            }}
+            </script>""".format(data=response, id=slugify(self.title))
         return mark_safe(r)
 
     get_diagram_display.allow_tags = True
