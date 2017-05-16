@@ -83,8 +83,8 @@ class Variant(ObjectBaseClass):
     program = models.ForeignKey("programs.Program", null=True, blank=True)
     diagram = models.ForeignKey("Diagram", null=True, blank=True)
     technology = models.ForeignKey("Technology", null=True, blank=True)
-    course = models.ForeignKey("courses.Course", null=True)
-    semester = models.ForeignKey("Semester", null=True)
+    course = models.ForeignKey("courses.Course", null=True, blank=True)
+    semester = models.ForeignKey("Semester", null=True, blank=True)
     parity = models.CharField(_("Четность семестра дисциплины"), max_length=2, choices=PARITY, null=True, blank=True)
     link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
 
