@@ -501,5 +501,5 @@ class CreateVariant(CreateAPIView):
 
 @api_view(('GET',))
 def test(request):
-    program = Program.objects.get(id="Строительство зданий и сооружений")
+    program = Program.objects.get(id="82d91cb1-9b19-4444-a77e-aedfaff94600")
     return Response(program.get_all_disciplines())
