@@ -1,6 +1,8 @@
 import uuid
 import json
 from django.db import models
+from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
 from jsonfield import JSONField
@@ -117,53 +119,52 @@ class Diagram(ObjectBaseClass):
         response.insert(0, list(WorkingType.objects.all().values_list("color", flat=True)))
 
         r = '''
-        <div id="diagram_{id}"></div>
-        <script>
-        "use strict";
-        var data = {data}
-        var colors = data[0]
-        var titles = data[1]
-        var drawSize = [300, 150]
-        var xOffset = 10
-        var xStep = 3
-        data.splice(0, 2)
+            <div id="diagram_{id}"></div>
+            <script>
+            "use strict";
+            var data = {data}
+            var colors = data[0]
+            var titles = data[1]
+            var drawSize = [300, 150]
+            var xOffset = 10
+            var xStep = 3
+            data.splice(0, 2)
 
-        var maxValue = findMaxSum(data)
-        var step = drawSize[1]/maxValue
-        var draw = SVG('diagram').size(drawSize[0], drawSize[1])
-        var verticalOffset;
+            var maxValue = findMaxSum(data)
+            var step = drawSize[1]/maxValue
+            var draw = SVG('diagram').size(drawSize[0], drawSize[1])
+            var verticalOffset;
 
-        for (var colIndex in data) {{
-            if (colIndex != 0) {{
-                var moveX = (drawSize[0] - xOffset)/20*colIndex+xStep/2+xOffset;
-            }}
-            else {{var moveX = xOffset;}}
-            var width = (drawSize[0] - xOffset)/20 - xStep/2;
-            for (var segmentIndex in data[colIndex]) {
-                if (segmentIndex != 0) {{
-                    verticalOffset += data[colIndex][segmentIndex - 1]*step
+            for (var colIndex in data) {{
+                if (colIndex != 0) {{
+                    var moveX = (drawSize[0] - xOffset)/20*colIndex+xStep/2+xOffset;
                 }}
-                else {{verticalOffset = 0;}}
-                var moveY = drawSize[1] - (verticalOffset + data[colIndex][segmentIndex]*step);
-                var height = data[colIndex][segmentIndex]*step;
-                var color = colors[segmentIndex];
-                draw.rect(width, height).fill(color).move(moveX, moveY)
-                console.log(moveX+width)
+                else {{var moveX = xOffset;}}
+                var width = (drawSize[0] - xOffset)/20 - xStep/2;
+                for (var segmentIndex in data[colIndex]) {
+                    if (segmentIndex != 0) {{
+                        verticalOffset += data[colIndex][segmentIndex - 1]*step
+                    }}
+                    else {{verticalOffset = 0;}}
+                    var moveY = drawSize[1] - (verticalOffset + data[colIndex][segmentIndex]*step);
+                    var height = data[colIndex][segmentIndex]*step;
+                    var color = colors[segmentIndex];
+                    draw.rect(width, height).fill(color).move(moveX, moveY)
+                    console.log(moveX+width)
+                }}
             }}
-        }}
-        function findMaxSum(array) {{
-            var maxArray = [];
-            for (var index in array) {{
-                 maxArray.push(array[index].reduce(function(a, b) {{ return a + b; }}, 0));
-            }}
-            return Math.max.apply(Math, [].concat.apply([], maxArray))
-        }
-        </script>
-        '''.format(
+            function findMaxSum(array) {{
+                var maxArray = [];
+                for (var index in array) {{
+                     maxArray.push(array[index].reduce(function(a, b) {{ return a + b; }}, 0));
+                }}
+                return Math.max.apply(Math, [].concat.apply([], maxArray))
+            }
+            </script>'''.format(
             data=response,
-            id=self.id
+            id=slugify(self.title)
         )
-        return r
+        return mark_safe(r)
 
     get_diagram_display.allow_tags = True
 
