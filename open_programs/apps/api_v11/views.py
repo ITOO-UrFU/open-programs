@@ -503,4 +503,5 @@ class CreateVariant(CreateAPIView):
 def test(request):
     program = Program.objects.get(id="82d91cb1-9b19-4444-a77e-aedfaff94600")
     disciplines = program.get_all_disciplines()
-    return Response([d.id for d in disciplines])
+    variants = Variant.objects.filter(program=program, discipline__id__in=disciplines)
+    return Response([v.id for v in variants])
