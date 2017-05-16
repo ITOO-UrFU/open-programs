@@ -134,7 +134,7 @@ class Diagram(ObjectBaseClass):
             var verticalOffset;
 
             for (var i=0; i<maxValue; i++){{
-                draw.rect(drawSize[0], 1).fill('#aaa').move(0, 149-(step*i))
+                draw.rect(drawSize[0], 1).fill('#aaa').move(0, drawSize[1]-(step*i)-1)
             }}
 
             for (var colIndex = 0; colIndex < data.length; colIndex++) {{
