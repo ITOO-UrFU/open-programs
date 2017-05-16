@@ -68,4 +68,4 @@ class VariantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Variant
-        fields = ("discipline", "diagram", "technology", "course", "semester", "parity", "link")
+        fields = ("id", "discipline", "diagram", "technology", "course", "semester", "parity", "link")
