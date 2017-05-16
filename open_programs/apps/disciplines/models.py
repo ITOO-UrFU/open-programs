@@ -120,7 +120,7 @@ class Diagram(ObjectBaseClass):
         r = """
             <div id="diagram_{id}"></div>
             <script>
-            var data = {data}
+            var data = JSON.parse('{data}')
             var colors = data[0]
             var titles = data[1]
             var drawSize = [300, 150]
@@ -158,7 +158,7 @@ class Diagram(ObjectBaseClass):
                 }}
                 return Math.max.apply(Math, [].concat.apply([], maxArray))
             }}
-            </script>""".format(data=response, id=self.id)
+            </script>""".format(data=json.dumps(response), id=self.id)
         return mark_safe(r)
 
     get_diagram_display.allow_tags = True
