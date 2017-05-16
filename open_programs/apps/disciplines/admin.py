@@ -33,6 +33,9 @@ class JSONEditor(Textarea):
         css = {'all': (getattr(settings, "SLICK_CSS", settings.STATIC_URL+'slickgrid/slick.grid.css'),)}
 
     def render(self, name, value, attrs=None):
+
+        wts = WorkingType.objects.all().values_list("title", flat=True)
+
         try:
             value = json.loads(value)
         except TypeError:
@@ -53,7 +56,7 @@ class JSONEditor(Textarea):
 
         document.addEventListener("DOMContentLoaded", function(event) {
                 var grid;
-                  var data = [];
+                  var data = [%(wts)s];
                   var columns = [
                     {id: "1", name: "Нед. 1", field: "week1", width: 60, editor: Slick.Editors.Text},
                     {id: "2", name: "Нед. 2", field: "week2", width: 60, editor: Slick.Editors.Text},
@@ -97,7 +100,8 @@ class JSONEditor(Textarea):
         <div %(attrs)s></div>
         ''' % {
             'attrs': flatatt(final_attrs),
-            'name': name
+            'name': name,
+            'wts': wts
         }
         return mark_safe(r)
 
