@@ -94,7 +94,10 @@ class JSONEditor(Textarea):
                 if (data.length < 1 ) {{
                     data = {data}
                 }}
-                console.log(JSON.parse(data))
+                else {{
+                    data = JSON.parse(data);
+                }}
+
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
                     {{id: "1", name: "Нед. 1", field: "week1", resizable: true, width: 60, editor: Slick.Editors.Integer}},
