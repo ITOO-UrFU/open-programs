@@ -57,9 +57,7 @@ class JSONEditor(Textarea):
         final_attrs = self.build_attrs(div_attrs, extra_attrs={"name": name})
         r += '''
         <style>
-            .slick-viewport {{
-              height: 100% !important;
-            }}
+
         </style>
         <script>
 
