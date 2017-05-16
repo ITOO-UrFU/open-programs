@@ -120,7 +120,6 @@ class Diagram(ObjectBaseClass):
         r = """
             <div id="diagram_{id}"></div>
             <script>
-            "use strict";
             var data = {data}
             var colors = data[0]
             var titles = data[1]
