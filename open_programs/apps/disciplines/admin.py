@@ -33,6 +33,33 @@ class JSONEditor(Textarea):
         css = {'all': (getattr(settings, "SLICK_CSS", settings.STATIC_URL+'slickgrid/slick.grid.css'),)}
 
     def render(self, name, value, attrs=None):
+        data = []
+        wts = WorkingType.objects.all()
+        for i, wt in enumerate(wts):
+            data.append({
+                "wt": wt.title,
+                "week1": 0,
+                "week2": 0,
+                "week3": 0,
+                "week4": 0,
+                "week5": 0,
+                "week6": 0,
+                "week7": 0,
+                "week8": 0,
+                "week9": 0,
+                "week10": 0,
+                "week11": 0,
+                "week12": 0,
+                "week13": 0,
+                "week14": 0,
+                "week15": 0,
+                "week16": 0,
+                "week17": 0,
+                "week18": 0,
+                "week19": 0,
+                "week20": 0,
+            })
+
         try:
             value = json.loads(value)
         except TypeError:
@@ -64,15 +91,8 @@ class JSONEditor(Textarea):
                 var grid;
                 var data = $("#id_diagram").val();
                 if (data.length < 10 ) {{
-                    data = [{{'wt': 'Самостоятельная работа', 'week1': 99, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Дистанционно выходные', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Дистанционно будни вечер', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Дистанционно будни день', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Кампус выходные', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Кампус будни вечер', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}},
-                        {{'wt': 'Кампус будни день', 'week1': 0, 'week2': 0, 'week3': 0, 'week4': 0, 'week5': 0, 'week6': 0, 'week7': 0, 'week8': 0, 'week9': 0, 'week10': 0, 'week11': 0, 'week12': 0, 'week13': 0, 'week14': 0, 'week15': 0, 'week16': 0, 'week17': 0, 'week18': 0, 'week19': 0, 'week20': 0}}]
+                    data = {data}
                 }}
-                if
                   console.log(data);
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
@@ -115,7 +135,8 @@ class JSONEditor(Textarea):
         <div {attrs}></div>
         '''.format(
             attrs=flatatt(final_attrs),
-            name=name
+            name=name,
+            data=data
         )
         return mark_safe(r)
 
