@@ -426,10 +426,10 @@ def change_discipline_semester(request):
     term_title = request.data["term_title"]
     new_semester = request.data["semester"]
 
-    # try:
-    Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).update(training_semester=new_semester)
-    # except:
-    #     Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester)
+    try:
+        Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).update(training_semester=new_semester)
+    except:
+        Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester)
     return Response(status=200)
 
 
