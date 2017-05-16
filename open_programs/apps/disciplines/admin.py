@@ -89,7 +89,7 @@ class JSONEditor(Textarea):
 
         document.addEventListener("DOMContentLoaded", function(event) {{
                 var grid;
-                var data = $("#id_diagram").val();
+                var data = $("#id_diagram").val().replace(/'/g, '"');
                 console.log(data)
                 if (data.length < 1 ) {{
                     data = {data}
