@@ -116,7 +116,7 @@ urlpatterns.append(url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$',
 urlpatterns.append(url(r'^api/v11/change_discipline_semester/$', change_discipline_semester, name="change_discipline_semester"))
 urlpatterns.append(url(r'^api/v11/get_variants/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_variants, name="get_variants"))
 urlpatterns.append(url(r'^api/v11/change_variant/$', change_variant, name="change_variant"))
-urlpatterns.append(url(r'^api/v11/create_variant/$', CreateVariant.as_view(), name="create_variant"))
+urlpatterns.append(url(r'^api/v11/create_variant/$', create_variant, name="create_variant"))
 
 urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))
 #### CMS API ####

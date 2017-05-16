@@ -459,30 +459,6 @@ def get_variants(request, program_id, discipline_id):
                      } for variant in variants])
 
 
-@api_view(('GET',))
-def get_program_variants(request, program_id, discipline_id):
-    variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
-    return Response([{
-                         "id": variant.id,
-                         "diagram": None if not variant.diagram else variant.diagram.diagram,
-                         "course": None if not variant.course else variant.course.id,
-                         "technology": None if not variant.technology else
-                             {
-                                 "title": variant.technology.title,
-                                 "description": variant.technology.description,
-                                 "contact_work_category": variant.technology.contact_work_category,
-                                 "color": variant.technology.color
-                             },
-                         "semester": None if not variant.semester else
-                             {
-                                 "admission_semester": variant.semester.admission_semester,
-                                 "training_semester": variant.semester.training_semester,
-                             },
-                         "parity": None if not variant.parity else variant.parity,
-                         "link": variant.link
-                     } for variant in variants])
-
-
 @api_view(('POST',))
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
@@ -498,8 +474,28 @@ def change_variant(request):
     return Response(status=200)
 
 
-class CreateVariant(CreateAPIView):
-    serializer_class = VariantSerializer
+@api_view(('POST',))
+def create_variant(request):
+    program = Program.objects.get(id=request.data["program_id"])
+    discipline = Discipline.objects.get(id=request.data["discipline_id"])
+    term_title = request.data.get("term_title", None)
+
+    technology = request.data.get("technology_id", None)
+    diagram = request.data.get("diagram_id", None)
+    course = request.data.get("course_id", None)
+    parity = request.data.get("parity_id", None)
+    link = request.data.get("link", None)
+
+    if term_title:
+        semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
+        Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
+                               diagram=diagram, link=link)
+    elif course:
+        Variant.objects.create(discipline=discipline, program=program, technology=technology,
+                               course=Course.objects.get(id=course), diagram=diagram, link=link)
+    elif parity:
+        Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
+                               diagram=diagram, link=link)
 
 
 @api_view(('GET',))
