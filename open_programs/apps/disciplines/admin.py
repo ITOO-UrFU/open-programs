@@ -80,8 +80,8 @@ class JSONEditor(Textarea):
                   ];
                   var options = {
                     editable: true,
-                    enableAddRow: true,
-                    enableCellNavigation: true,
+                    enableAddRow: false,
+                    enableCellNavigation: false,
                     asyncEditorLoading: false,
                     autoEdit: false
                   };
