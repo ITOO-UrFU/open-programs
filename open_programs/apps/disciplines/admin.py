@@ -57,52 +57,52 @@ class JSONEditor(Textarea):
         final_attrs = self.build_attrs(div_attrs, extra_attrs={"name": name})
         r += '''
         <style>
-            .slick-viewport {
-            height: 100% !important;
-            }
+            .slick-viewport {{
+              height: 100% !important;
+            }}
         </style>
         <script>
 
-        document.addEventListener("DOMContentLoaded", function(event) {
+        document.addEventListener("DOMContentLoaded", function(event) {{
                 var grid;
                   var data = {data};
                   console.log(data);
                   var columns = [
-                    {id: "title", name: "Вид работы", field: "wt", width: 90},
-                    {id: "1", name: "Нед. 1", field: "week1", width: 60, editor: Slick.Editors.Text},
-                    {id: "2", name: "Нед. 2", field: "week2", width: 60, editor: Slick.Editors.Text},
-                    {id: "3", name: "Нед. 3", field: "week3", width: 60, editor: Slick.Editors.Text},
-                    {id: "4", name: "Нед. 4", field: "week4", width: 60, editor: Slick.Editors.Text},
-                    {id: "5", name: "Нед. 5", field: "week5", width: 60, editor: Slick.Editors.Text},
-                    {id: "6", name: "Нед. 6", field: "week6", width: 60, editor: Slick.Editors.Text},
-                    {id: "7", name: "Нед. 7", field: "week7", width: 60, editor: Slick.Editors.Text},
-                    {id: "8", name: "Нед. 8", field: "week8", width: 60, editor: Slick.Editors.Text},
-                    {id: "9", name: "Нед. 9", field: "week9", width: 60, editor: Slick.Editors.Text},
-                    {id: "10", name: "Нед. 10", field: "week10", width: 60, editor: Slick.Editors.Text},
-                    {id: "11", name: "Нед. 11", field: "week11", width: 60, editor: Slick.Editors.Text},
-                    {id: "12", name: "Нед. 12", field: "week12", width: 60, editor: Slick.Editors.Text},
-                    {id: "13", name: "Нед. 13", field: "week13", width: 60, editor: Slick.Editors.Text},
-                    {id: "14", name: "Нед. 14", field: "week14", width: 60, editor: Slick.Editors.Text},
-                    {id: "15", name: "Нед. 15", field: "week15", width: 60, editor: Slick.Editors.Text},
-                    {id: "16", name: "Нед. 16", field: "week16", width: 60, editor: Slick.Editors.Text},
-                    {id: "17", name: "Нед. 17", field: "week17", width: 60, editor: Slick.Editors.Text},
-                    {id: "18", name: "Нед. 18", field: "week18", width: 60, editor: Slick.Editors.Text},
-                    {id: "19", name: "Нед. 19", field: "week19", width: 60, editor: Slick.Editors.Text},
-                    {id: "20", name: "Нед. 20", field: "week20", width: 60, editor: Slick.Editors.Text},
+                    {{id: "title", name: "Вид работы", field: "wt", width: 90},
+                    {{id: "1", name: "Нед. 1", field: "week1", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "2", name: "Нед. 2", field: "week2", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "3", name: "Нед. 3", field: "week3", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "4", name: "Нед. 4", field: "week4", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "5", name: "Нед. 5", field: "week5", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "6", name: "Нед. 6", field: "week6", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "7", name: "Нед. 7", field: "week7", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "8", name: "Нед. 8", field: "week8", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "9", name: "Нед. 9", field: "week9", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "10", name: "Нед. 10", field: "week10", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "11", name: "Нед. 11", field: "week11", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "12", name: "Нед. 12", field: "week12", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "13", name: "Нед. 13", field: "week13", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "14", name: "Нед. 14", field: "week14", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "15", name: "Нед. 15", field: "week15", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "16", name: "Нед. 16", field: "week16", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "17", name: "Нед. 17", field: "week17", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "18", name: "Нед. 18", field: "week18", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "19", name: "Нед. 19", field: "week19", width: 60, editor: Slick.Editors.Text}},
+                    {{id: "20", name: "Нед. 20", field: "week20", width: 60, editor: Slick.Editors.Text}},
 
 
                   ];
-                  var options = {
+                  var options = {{
                     editable: true,
                     enableAddRow: false,
                     enableCellNavigation: false,
                     asyncEditorLoading: false,
                     autoEdit: false
-                  };
+                  }};
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
                 //grid.setSelectionModel(new Slick.CellSelectionModel());
-        });
+        }});
 
 
 
