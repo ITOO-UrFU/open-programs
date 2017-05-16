@@ -58,7 +58,13 @@ class JSONEditor(Textarea):
         final_attrs = self.build_attrs(div_attrs, extra_attrs={"name": name})
         r += '''
         <style>
-
+            .editor-text {{
+                padding: 2px;
+                margin: 0;
+                border-radius: 0px;
+                width: 52px;
+                border: none;
+            }}
         </style>
         <script>
 
