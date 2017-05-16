@@ -133,13 +133,13 @@ class Diagram(ObjectBaseClass):
             var draw = SVG('diagram').size(drawSize[0], drawSize[1])
             var verticalOffset;
 
-            for (var colIndex in data) {{
+            for (var colIndex = 0; colIndex < data.length; colIndex++) {{
                 if (colIndex != 0) {{
                     var moveX = (drawSize[0] - xOffset)/20*colIndex+xStep/2+xOffset;
                 }}
                 else {{var moveX = xOffset;}}
                 var width = (drawSize[0] - xOffset)/20 - xStep/2;
-                for (var segmentIndex in data[colIndex]) {{
+                for (var segmentIndex = 0; segmentIndex < data[colIndex].length; segmentIndex++){{
                     if (segmentIndex != 0) {{
                         verticalOffset += data[colIndex][segmentIndex - 1]*step
                     }}
@@ -153,7 +153,7 @@ class Diagram(ObjectBaseClass):
             }}
             function findMaxSum(array) {{
                 var maxArray = [];
-                for (var index in array) {{
+                for (var index = 0; index < array.length; index++) {{
                      maxArray.push(array[index].reduce(function(a, b) {{ return a + b; }}, 0));
                 }}
                 return Math.max.apply(Math, [].concat.apply([], maxArray))
