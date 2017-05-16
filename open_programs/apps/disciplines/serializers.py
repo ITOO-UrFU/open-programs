@@ -48,7 +48,10 @@ class VariantSerializer(serializers.ModelSerializer):
     discipline = DisciplineSerializer()
     diagram = DiagramSerializer()
     technology = TechnologySerializer()
-    course = serializers.PrimaryKeyRelatedField(many=True)
+    course = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Course.objects.filter(status="p", archived=False)
+    )
 
     class Meta:
         model = Variant
