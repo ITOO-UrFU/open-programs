@@ -21,6 +21,7 @@ from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Di
 class JSONEditor(Textarea):
     class Media:
         js = (
+            getattr(settings, "JQUERY", settings.STATIC_URL + 'jquery-3.1.1.min.js'),
             getattr(settings, "SLICK_JS_CORE", settings.STATIC_URL+'slickgrid/slick.core.js'),
             getattr(settings, "SLICK_JS_FORMATTERS", settings.STATIC_URL + 'slickgrid/slick.formatters.js'),
             getattr(settings, "SLICK_JS_EDITOR", settings.STATIC_URL + 'slickgrid/slick.editor.js'),
