@@ -130,7 +130,7 @@ class Diagram(ObjectBaseClass):
 
             var maxValue = findMaxSum(data)
             var step = drawSize[1]/maxValue
-            var draw = SVG('diagram').size(drawSize[0], drawSize[1])
+            var draw = SVG('diagram_{id}').size(drawSize[0], drawSize[1])
             var verticalOffset;
 
             for (var colIndex = 0; colIndex < data.length; colIndex++) {{
