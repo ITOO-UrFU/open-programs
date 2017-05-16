@@ -22,6 +22,9 @@ class JSONEditor(Textarea):
     class Media:
         js = (
             getattr(settings, "JQUERY", settings.STATIC_URL + 'jquery-3.1.1.min.js'),
+            getattr(settings, "JQUERY_UI", settings.STATIC_URL + 'jquery-ui.min.js'),
+            getattr(settings, "JQUERY_EVENT_DRAG", settings.STATIC_URL + 'jquery.event.drag.js'),
+
             getattr(settings, "SLICK_JS_CORE", settings.STATIC_URL+'slickgrid/slick.core.js'),
             getattr(settings, "SLICK_JS_FORMATTERS", settings.STATIC_URL + 'slickgrid/slick.formatters.js'),
             getattr(settings, "SLICK_JS_EDITOR", settings.STATIC_URL + 'slickgrid/slick.editor.js'),
