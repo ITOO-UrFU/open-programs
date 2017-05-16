@@ -102,7 +102,7 @@ class Diagram(ObjectBaseClass):
     diagram = JSONField(verbose_name=_("График"), null=True, blank=True)
 
     def get_diagram(self):
-        return list(zip(*self.diagram))
+        return [zip(row.values()) for row in self.diagram]
 
 
 class WorkingType(models.Model):
