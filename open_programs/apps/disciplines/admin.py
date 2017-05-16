@@ -56,11 +56,16 @@ class JSONEditor(Textarea):
         div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
         final_attrs = self.build_attrs(div_attrs, extra_attrs={"name": name})
         r += '''
+        <style>
+            .slick-viewport {
+            height: 100% !important;
+            }
+        </style>
         <script>
 
         document.addEventListener("DOMContentLoaded", function(event) {
                 var grid;
-                  var data = %(data)s;
+                  var data = {data};
                   console.log(data);
                   var columns = [
                     {id: "title", name: "Вид работы", field: "wt", width: 90},
@@ -95,7 +100,7 @@ class JSONEditor(Textarea):
                     autoEdit: false
                   };
 
-                grid = new Slick.Grid("#id_%(name)s_jsoneditor", data, columns, options);
+                grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
                 //grid.setSelectionModel(new Slick.CellSelectionModel());
         });
 
@@ -103,12 +108,12 @@ class JSONEditor(Textarea):
 
 
         </script>
-        <div %(attrs)s></div>
-        ''' % {
-            'attrs': flatatt(final_attrs),
-            'name': name,
-            'data': data
-        }
+        <div {attrs}></div>
+        '''.format(
+            attrs=flatatt(final_attrs),
+            name=name,
+            data=data
+        )
         return mark_safe(r)
 
 @admin.register(Discipline)
