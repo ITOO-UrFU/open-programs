@@ -97,7 +97,8 @@ class JSONEditor(Textarea):
                     enableAddRow: false,
                     enableCellNavigation: false,
                     asyncEditorLoading: false,
-                    autoEdit: false
+                    autoEdit: false,
+                    autoHeight: true
                   }};
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
