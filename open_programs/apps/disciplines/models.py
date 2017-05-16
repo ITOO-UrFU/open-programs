@@ -76,7 +76,7 @@ class Variant(ObjectBaseClass):
         verbose_name = 'вариант реализации дисциплин'
         verbose_name_plural = 'варианты реализации дисциплин'
 
-    PARITY = (('1', 'Нечетный'), ('2', 'Четный'))
+    PARITY = (('1', 'Осенний'), ('2', 'Весенний'), ('3', 'Любой'))
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     discipline = models.ForeignKey("Discipline", null=True, blank=True)
