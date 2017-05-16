@@ -38,7 +38,26 @@ class JSONEditor(Textarea):
         for i, wt in enumerate(wts):
             data.append({
                 "wt": wt.title,
-                "week1": 0
+                "week1": 0,
+                "week2": 0,
+                "week3": 0,
+                "week4": 0,
+                "week5": 0,
+                "week6": 0,
+                "week7": 0,
+                "week8": 0,
+                "week9": 0,
+                "week10": 0,
+                "week11": 0,
+                "week12": 0,
+                "week13": 0,
+                "week14": 0,
+                "week15": 0,
+                "week16": 0,
+                "week17": 0,
+                "week18": 0,
+                "week19": 0,
+                "week20": 0,
             })
 
         try:
@@ -104,10 +123,6 @@ class JSONEditor(Textarea):
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
         }});
-
-
-
-
         </script>
         <div {attrs}></div>
         '''.format(
