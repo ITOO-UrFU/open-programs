@@ -34,7 +34,7 @@ class JSONEditor(Textarea):
 
     def render(self, name, value, attrs=None):
 
-        wts = WorkingType.objects.all().values_list("title", flat=True)
+        wts = [wt.title for wt in WorkingType.objects.all()]
 
         try:
             value = json.loads(value)
