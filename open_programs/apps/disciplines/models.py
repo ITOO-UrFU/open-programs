@@ -70,7 +70,7 @@ class Semester(models.Model):
 
 class Variant(ObjectBaseClass):
     def __str__(self):
-        return f"{self.id} - {self.discipline.title}"
+        return f"{self.id} - {self.discipline.title} - {self.training_semester} сем."
 
     class Meta:
         verbose_name = 'вариант реализации дисциплин'
