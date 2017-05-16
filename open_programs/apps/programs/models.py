@@ -57,6 +57,12 @@ class Program(ObjectBaseClass):
     def get_modules(self):
         return
 
+    def get_all_disciplines(self):
+        disciplines = []
+        pms = ProgramModules.objects.filter(program=self, status="p", archived=False).values("module__id")
+        print(pms)
+
+
 
 class TrainingTarget(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
