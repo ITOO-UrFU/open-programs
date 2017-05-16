@@ -1,5 +1,6 @@
 from .models import Discipline, Variant, Diagram, Technology, Semester, TrainingTerms
 from courses.models import Course
+from programs.models import Program
 from rest_framework import serializers
 from courses.serializers import CourseSerializer
 
@@ -45,6 +46,11 @@ class SemesterSerializer(serializers.ModelSerializer):
 
 
 class VariantSerializer(serializers.ModelSerializer):
+    program = serializers.PrimaryKeyRelatedField(
+        required=False,
+        many=False,
+        queryset=Program.objects.filter(status="p", archived=False)
+    )
     discipline = serializers.PrimaryKeyRelatedField(
         required=False,
         many=False,
@@ -68,4 +74,4 @@ class VariantSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Variant
-        fields = ("id", "discipline", "diagram", "technology", "course", "semester", "parity", "link")
+        fields = ("id", "program", "discipline", "diagram", "technology", "course", "semester", "parity", "link")
