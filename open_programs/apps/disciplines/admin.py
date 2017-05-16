@@ -59,11 +59,11 @@ class JSONEditor(Textarea):
         r += '''
         <style>
             .editor-text {{
-                padding: 2px;
-                margin: 0;
-                border-radius: 0px;
-                width: 52px;
-                border: none;
+                padding: 2px !important;
+                margin: 0 !important;
+                border-radius: 0px !important;
+                width: 52px !important;
+                border: none !important;
             }}
         </style>
         <script>
