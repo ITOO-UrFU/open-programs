@@ -173,7 +173,7 @@ class TechnologyAdmin(VersionAdmin):
 
 @admin.register(Diagram)
 class DiagramAdmin(VersionAdmin):
-    list_display = ("title", "get_diagram")
+    list_display = ("title", "get_diagram_display")
     formfield_overrides = {
         JSONField: {'widget': JSONEditor},
     }
