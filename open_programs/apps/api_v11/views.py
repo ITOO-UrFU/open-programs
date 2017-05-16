@@ -500,11 +500,10 @@ class CreateVariant(CreateAPIView):
 
 
 @api_view(('GET',))
-def test(request):
+def get_program_variants(request, program_id):
     variants = {}
-    program = Program.objects.get(id="82d91cb1-9b19-4444-a77e-aedfaff94600")
+    program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
-    print(disciplines, "!!!!!!!!!!!!!!!!!!!disciplines")
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
