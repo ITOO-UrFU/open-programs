@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 import os
 import sys
+import gc
+import atexit
+
+gc.set_threshold(0)
+atexit.register(os._exit, 0)
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "open_programs.settings")
