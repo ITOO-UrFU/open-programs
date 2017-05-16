@@ -94,9 +94,6 @@ class JSONEditor(Textarea):
                 if (data.length < 1 ) {{
                     data = {data}
                 }}
-                else {{
-                    data = JSON.parse(data);
-                }}
                 console.log(data)
                   var columns = [
                     {{id: "title", name: "Вид работы", field: "wt", width: 250}},
