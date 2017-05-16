@@ -56,7 +56,7 @@ class JSONEditor(Textarea):
 
         document.addEventListener("DOMContentLoaded", function(event) {
                 var grid;
-                  var data = [%(wts)s];
+                  var data = %(wts)s;
                   var columns = [
                     {id: "1", name: "Нед. 1", field: "week1", width: 60, editor: Slick.Editors.Text},
                     {id: "2", name: "Нед. 2", field: "week2", width: 60, editor: Slick.Editors.Text},
