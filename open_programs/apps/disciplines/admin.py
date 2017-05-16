@@ -68,7 +68,7 @@ class JSONEditor(Textarea):
                   var data = {data};
                   console.log(data);
                   var columns = [
-                    {{id: "title", name: "Вид работы", field: "wt", width: 90},
+                    {{id: "title", name: "Вид работы", field: "wt", width: 90}},
                     {{id: "1", name: "Нед. 1", field: "week1", width: 60, editor: Slick.Editors.Text}},
                     {{id: "2", name: "Нед. 2", field: "week2", width: 60, editor: Slick.Editors.Text}},
                     {{id: "3", name: "Нед. 3", field: "week3", width: 60, editor: Slick.Editors.Text}},
