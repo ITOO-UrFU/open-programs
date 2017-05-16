@@ -1,3 +1,4 @@
+from datetime import date
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
@@ -428,9 +429,9 @@ def change_discipline_semester(request):
 
     semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title)
     if semester:
-        semester.update(training_semester=new_semester)
+        semester.update(training_semester=new_semester, year=date.today().year)
     else:
-        Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester)
+        Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
     return Response(status=200)
 
 
