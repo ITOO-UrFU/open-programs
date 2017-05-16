@@ -427,8 +427,11 @@ def change_discipline_semester(request):
     new_semester = request.data["semester"]
 
     semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
-    semester.training_semester = new_semester
-    semester.save()
+    if semester:
+        semester.training_semester = new_semester
+        semester.save()
+    else:
+        Semester.objects.create(program=program, discipline=discipline, term__title=term_title, training_semester=new_semester)
     return Response(status=200)
 
 
@@ -457,7 +460,7 @@ def get_variants(request, program_id, discipline_id):
 
 
 @api_view(('GET',))
-def get_program_variants(request, program_id):
+def get_program_variants(request, program_id, discipline_id):
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     return Response([{
                          "id": variant.id,
