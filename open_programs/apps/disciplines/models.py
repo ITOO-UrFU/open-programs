@@ -148,7 +148,6 @@ class Diagram(ObjectBaseClass):
                     var height = data[colIndex][segmentIndex]*step;
                     var color = colors[segmentIndex];
                     draw.rect(width, height).fill(color).move(moveX, moveY)
-                    console.log(moveX+width)
                 }}
             }}
             function findMaxSum(array) {{
