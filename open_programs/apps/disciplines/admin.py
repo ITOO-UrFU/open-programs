@@ -122,6 +122,12 @@ class JSONEditor(Textarea):
                   }};
 
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
+
+                var selectedIndexes;
+                selectedIndexes = _grid.getSelectedRows();
+                jQuery.each(selectedIndexes, function (index, value) {{
+                  document.getElementById("id_%(name)s").value = JSON.stringify(_grid.getData());
+                }});
         }});
         </script>
         <div {attrs}></div>
