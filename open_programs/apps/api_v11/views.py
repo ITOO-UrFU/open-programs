@@ -469,13 +469,11 @@ def change_variant(request):
         if key != "variant_id":
             value = request.data.get(key, None)
             if value:
-                print(variant.__dict__)
-                print(variant.__dict__[key], value)
                 variant.__dict__[key] = value
-                print(variant.__dict__[key], value)
             else:
                 variant.__dict__[key] = None
 
+    variant.status = "p"
     variant.save()
     return Response(status=200)
 
