@@ -460,6 +460,7 @@ def get_variants(request, program_id, discipline_id):
                     },
                     "semester": None if not variant.semester else
                     {
+                        "id": variant.semester,
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
@@ -540,6 +541,7 @@ def get_program_variants(request, program_id):
                     },
                     "semester": None if not variant.semester else
                     {
+                        "id": variant.semester,
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
