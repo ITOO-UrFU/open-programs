@@ -548,3 +548,10 @@ def get_program_variants(request, program_id):
                 }
             )
     return Response(variants)
+
+
+@api_view(('POST',))
+def delete_variant(request):
+    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+    variant.delete()
+    return Response(status=200)

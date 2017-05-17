@@ -15,7 +15,7 @@ class DisciplineSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Discipline
-        fields = ("title", "labor", "period", "results", "results_text", "status", "archived", "created", "updated")
+        fields = ("id", "title", "labor", "period", "results", "results_text", "status", "archived", "created", "updated")
 
 
 class DiagramSerializer(serializers.ModelSerializer):
@@ -42,7 +42,7 @@ class SemesterSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Semester
-        fields = ("discipline", "year", "admission_semester", "training_semester", "term")
+        fields = ("id", "discipline", "year", "admission_semester", "training_semester", "term")
 
 
 class VariantSerializer(serializers.ModelSerializer):
