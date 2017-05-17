@@ -439,23 +439,26 @@ def change_discipline_semester(request):
 def get_variants(request, program_id, discipline_id):
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     return Response([{
-                         "id": variant.id,
-                         "diagram": None if not variant.diagram else variant.diagram.diagram,
-                         "course": None if not variant.course else variant.course.id,
-                         "technology": None if not variant.technology else
-                             {
-                                 "title": variant.technology.title,
-                                 "description": variant.technology.description,
-                                 "contact_work_category": variant.technology.contact_work_category,
-                                 "color": variant.technology.color
-                             },
-                         "semester": None if not variant.semester else
-                             {
-                                 "admission_semester": variant.semester.admission_semester,
-                                 "training_semester": variant.semester.training_semester,
-                             },
-                         "parity": None if not variant.parity else variant.parity,
-                         "link": variant.link
+                    "id": variant.id,
+                    "diagram": None if not variant.diagram else variant.diagram.diagram,
+                    "course": None if not variant.course else
+                    {
+                        "title": variant.course.title
+                    },
+                    "technology": None if not variant.technology else
+                    {
+                        "title": variant.technology.title,
+                        "description": variant.technology.description,
+                        "contact_work_category": variant.technology.contact_work_category,
+                        "color": variant.technology.color
+                    },
+                    "semester": None if not variant.semester else
+                    {
+                        "term": variant.semester.term.title,
+                        "training_semester": variant.semester.training_semester,
+                    },
+                    "parity": None if not variant.parity else variant.get_parity_display(),
+                    "link": variant.link
                      } for variant in variants])
 
 
