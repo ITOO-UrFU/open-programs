@@ -123,6 +123,7 @@ class JSONEditor(Textarea):
                     autoHeight: true
                   }};
                 grid = new Slick.Grid("#id_{name}_jsoneditor", data, columns, options);
+                $("#id_diagram").val(JSON.stringify(grid.getData()));
                 grid.onCellChange.subscribe(function (e, args) {{
                     $("#id_diagram").val(JSON.stringify(grid.getData()));
                 }});
