@@ -478,7 +478,9 @@ def change_variant(request):
             else:
                 variant.__dict__[key] = None
         elif key == "semester":
-            variant.semester = Semester.objects.filter(discipline=variant.discipline, term__title=request.data[key], program=variant.program).first()
+            semester = Semester.objects.filter(discipline=variant.discipline, term__title=request.data[key], program=variant.program).first()
+            if semester:
+                variant.semester = semester
 
     variant.status = "p"
     variant.save()
@@ -554,5 +556,5 @@ def get_program_variants(request, program_id):
 @api_view(('POST',))
 def delete_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-    variant.archived = True
+    variant.delete()
     return Response(status=200)
