@@ -462,7 +462,7 @@ def get_variants(request, program_id, discipline_id):
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
-                    "parity": None if not variant.parity else variant.get_parity_display(),
+                    "parity": None if not variant.parity else variant.parity,
                     "link": variant.link
                      } for variant in variants])
 
@@ -541,7 +541,7 @@ def get_program_variants(request, program_id):
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
-                    "parity": None if not variant.parity else variant.get_parity_display(),
+                    "parity": None if not variant.parity else variant.parity,
                     "link": variant.link
                 }
             )
