@@ -21,7 +21,7 @@ class DisciplineSerializer(serializers.HyperlinkedModelSerializer):
 class DiagramSerializer(serializers.ModelSerializer):
     class Meta:
         model = Diagram
-        fields = ("title", "diagram")
+        fields = ("id", "title", "diagram")
 
 
 class TechnologySerializer(serializers.ModelSerializer):
