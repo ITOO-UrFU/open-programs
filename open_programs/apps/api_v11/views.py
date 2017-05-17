@@ -499,6 +499,7 @@ def create_variant(request):
     elif parity:
         Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                diagram=diagram, link=link)
+    return Response(status=200)
 
 
 @api_view(('GET',))
