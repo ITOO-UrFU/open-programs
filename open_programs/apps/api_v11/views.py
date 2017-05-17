@@ -440,7 +440,11 @@ def get_variants(request, program_id, discipline_id):
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     return Response([{
                     "id": variant.id,
-                    "diagram": None if not variant.diagram else variant.diagram.diagram,
+                    "diagram": None if not variant.diagram else
+                    {
+                        "id": variant.diagram.id,
+                        "diagram": variant.diagram.diagram
+                    },
                     "course": None if not variant.course else
                     {
                         "title": variant.course.title
