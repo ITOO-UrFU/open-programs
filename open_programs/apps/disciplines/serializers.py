@@ -27,7 +27,7 @@ class DiagramSerializer(serializers.ModelSerializer):
 class TechnologySerializer(serializers.ModelSerializer):
     class Meta:
         model = Technology
-        fields = ("title", "description", "contact_work_category", "color")
+        fields = ("id", "title", "description", "contact_work_category", "color")
 
 
 class TrainingTermsSerializer(serializers.ModelSerializer):
