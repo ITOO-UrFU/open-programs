@@ -471,7 +471,7 @@ def get_variants(request, program_id, discipline_id):
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
-        if key != "variant_id" and key != "semester::
+        if key != "variant_id" and key != "semester":
             value = request.data.get(key, None)
             if value:
                 variant.__dict__[key] = value
