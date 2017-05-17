@@ -469,6 +469,7 @@ def change_variant(request):
         if key != "variant_id":
             value = request.data.get(key, None)
             if value:
+                print(variant.__dict__[key], value)
                 variant.__dict__[key] = value
                 print(variant.__dict__[key], value)
             else:
