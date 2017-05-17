@@ -492,13 +492,13 @@ def create_variant(request):
     if term_title:
         semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
         Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
-                               diagram=diagram, link=link)
+                               diagram=diagram, link=link, status="p")
     elif course:
         Variant.objects.create(discipline=discipline, program=program, technology=technology,
-                               course=Course.objects.get(id=course), diagram=diagram, link=link)
+                               course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
     elif parity:
         Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
-                               diagram=diagram, link=link)
+                               diagram=diagram, link=link, status="p")
     return Response(status=200)
 
 
