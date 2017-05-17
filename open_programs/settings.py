@@ -292,7 +292,8 @@ JSON_EDITOR_CSS = 'https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/5.5.11/json
 
 AJAX_LOOKUP_CHANNELS = {
     'discipline': ('disciplines.lookups', 'DisciplineLookup'),
-    'semester': ('disciplines.lookups', 'SemesterLookup')
+    'semester': ('disciplines.lookups', 'SemesterLookup'),
+    'program': ('programs.lookups', 'ProgramLookup'),
 }
 
 CACHES = {
