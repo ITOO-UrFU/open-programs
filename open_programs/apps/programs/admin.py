@@ -57,7 +57,7 @@ class TargetModulesAdmin(VersionAdmin):
 @admin.register(ChoiceGroup)
 class ChoiceGroupAdmin(VersionAdmin, AjaxSelectAdmin):
     list_display = ("id", "program", "title", "labor", "choice_group_type", "number")
-    form = make_ajax_form(Program, {'program': 'program'})
+    form = make_ajax_form(ChoiceGroup, {'program': 'program'})
 
 
 @admin.register(ChoiceGroupType)
