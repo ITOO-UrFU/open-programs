@@ -415,7 +415,6 @@ def get_program_disciplines(request, program_id):
                     "period": discipline.period,
                     "terms": terms,
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
-
                     })
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
@@ -460,7 +459,6 @@ def get_variants(request, program_id, discipline_id):
                     },
                     "semester": None if not variant.semester else
                     {
-                        "id": variant.semester,
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
@@ -473,7 +471,7 @@ def get_variants(request, program_id, discipline_id):
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
-        if key != "variant_id":
+        if key != "variant_id" and key != "semester::
             value = request.data.get(key, None)
             if value:
                 variant.__dict__[key] = value
@@ -541,7 +539,6 @@ def get_program_variants(request, program_id):
                     },
                     "semester": None if not variant.semester else
                     {
-                        "id": variant.semester,
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
