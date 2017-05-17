@@ -452,6 +452,7 @@ def get_variants(request, program_id, discipline_id):
                     },
                     "technology": None if not variant.technology else
                     {
+                        "id": variant.technology.id,
                         "title": variant.technology.title,
                         "description": variant.technology.description,
                         "contact_work_category": variant.technology.contact_work_category,
@@ -531,6 +532,7 @@ def get_program_variants(request, program_id):
                     },
                     "technology": None if not variant.technology else
                     {
+                        "id": variant.technology.id,
                         "title": variant.technology.title,
                         "description": variant.technology.description,
                         "contact_work_category": variant.technology.contact_work_category,
