@@ -1,5 +1,7 @@
 from django.contrib import admin
 from reversion.admin import VersionAdmin
+from ajax_select.admin import AjaxSelectAdmin
+from ajax_select import make_ajax_form
 
 from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan
 
@@ -32,6 +34,7 @@ class TrainingTargetAdmin(VersionAdmin):
         "number"
     )
 
+
 @admin.register(ProgramCompetence)
 class ProgramCompetenceAdmin(VersionAdmin):
     list_display = ("title", "number", "program")
@@ -52,8 +55,10 @@ class TargetModulesAdmin(VersionAdmin):
 
 
 @admin.register(ChoiceGroup)
-class ChoiceGroupAdmin(VersionAdmin):
+class ChoiceGroupAdmin(VersionAdmin, AjaxSelectAdmin):
     list_display = ("id", "program", "title", "labor", "choice_group_type", "number")
+    form = make_ajax_form(ChoiceGroup, {'program': 'program'})
+    save_as = True
 
 
 @admin.register(ChoiceGroupType)

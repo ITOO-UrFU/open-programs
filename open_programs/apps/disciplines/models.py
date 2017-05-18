@@ -168,6 +168,11 @@ class Diagram(ObjectBaseClass):
 
 
 class WorkingType(models.Model):
+
+    class Meta:
+        verbose_name = 'вид работы'
+        verbose_name_plural = 'виды работ'
+
     title = models.CharField(_("Название вида работы"), max_length=512)
     color = models.CharField(_("Цвет вида работы"), max_length=16, blank=True, null=True)
 

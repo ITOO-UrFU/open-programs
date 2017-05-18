@@ -415,7 +415,6 @@ def get_program_disciplines(request, program_id):
                     "period": discipline.period,
                     "terms": terms,
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
-
                     })
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
@@ -439,23 +438,32 @@ def change_discipline_semester(request):
 def get_variants(request, program_id, discipline_id):
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     return Response([{
-                         "id": variant.id,
-                         "diagram": None if not variant.diagram else variant.diagram.diagram,
-                         "course": None if not variant.course else variant.course.id,
-                         "technology": None if not variant.technology else
-                             {
-                                 "title": variant.technology.title,
-                                 "description": variant.technology.description,
-                                 "contact_work_category": variant.technology.contact_work_category,
-                                 "color": variant.technology.color
-                             },
-                         "semester": None if not variant.semester else
-                             {
-                                 "admission_semester": variant.semester.admission_semester,
-                                 "training_semester": variant.semester.training_semester,
-                             },
-                         "parity": None if not variant.parity else variant.parity,
-                         "link": variant.link
+                    "id": variant.id,
+                    "diagram": None if not variant.diagram else
+                    {
+                        "id": variant.diagram.id,
+                        "title": variant.diagram.title,
+                        "diagram": variant.diagram.diagram
+                    },
+                    "course": None if not variant.course else
+                    {
+                        "title": variant.course.title
+                    },
+                    "technology": None if not variant.technology else
+                    {
+                        "id": variant.technology.id,
+                        "title": variant.technology.title,
+                        "description": variant.technology.description,
+                        "contact_work_category": variant.technology.contact_work_category,
+                        "color": variant.technology.color
+                    },
+                    "semester": None if not variant.semester else
+                    {
+                        "term": variant.semester.term.title,
+                        "training_semester": variant.semester.training_semester,
+                    },
+                    "parity": None if not variant.parity else variant.parity,
+                    "link": variant.link
                      } for variant in variants])
 
 
@@ -463,13 +471,18 @@ def get_variants(request, program_id, discipline_id):
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
-        if key != "variant_id":
+        if key != "variant_id" and key != "semester":
             value = request.data.get(key, None)
             if value:
                 variant.__dict__[key] = value
             else:
                 variant.__dict__[key] = None
+        elif key == "semester":
+            semester = Semester.objects.filter(discipline=variant.discipline, term__title=request.data[key], program=variant.program).first()
+            if semester:
+                variant.semester = semester
 
+    variant.status = "p"
     variant.save()
     return Response(status=200)
 
@@ -489,13 +502,14 @@ def create_variant(request):
     if term_title:
         semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
         Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
-                               diagram=diagram, link=link)
+                               diagram=diagram, link=link, status="p")
     elif course:
         Variant.objects.create(discipline=discipline, program=program, technology=technology,
-                               course=Course.objects.get(id=course), diagram=diagram, link=link)
+                               course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
     elif parity:
         Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
-                               diagram=diagram, link=link)
+                               diagram=diagram, link=link, status="p")
+    return Response(status=200)
 
 
 @api_view(('GET',))
@@ -509,13 +523,19 @@ def get_program_variants(request, program_id):
             variants[discipline.id].append(
                 {
                     "id": variant.id,
-                    "diagram": None if not variant.diagram else variant.diagram.diagram,
+                    "diagram": None if not variant.diagram else
+                    {
+                        "id": variant.diagram.id,
+                        "title": variant.diagram.title,
+                        "diagram": variant.diagram.diagram
+                    },
                     "course": None if not variant.course else
                     {
                         "title": variant.course.title
                     },
                     "technology": None if not variant.technology else
                     {
+                        "id": variant.technology.id,
                         "title": variant.technology.title,
                         "description": variant.technology.description,
                         "contact_work_category": variant.technology.contact_work_category,
@@ -526,8 +546,15 @@ def get_program_variants(request, program_id):
                         "term": variant.semester.term.title,
                         "training_semester": variant.semester.training_semester,
                     },
-                    "parity": None if not variant.parity else variant.get_parity_display(),
+                    "parity": None if not variant.parity else variant.parity,
                     "link": variant.link
                 }
             )
     return Response(variants)
+
+
+@api_view(('POST',))
+def delete_variant(request):
+    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+    variant.delete()
+    return Response(status=200)
