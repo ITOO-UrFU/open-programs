@@ -29,3 +29,4 @@ lxml
 beautifulsoup4
 django-ajax-selects
 django-debug-panel
+drf-extensions
