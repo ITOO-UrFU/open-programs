@@ -401,6 +401,13 @@ def heartbeat(request):
 
 @api_view(('GET',))
 def get_program_disciplines(request, program_id):
+    trigger = Changed.objects.filter(program__id=program_id).first()
+    if not trigger:
+        trigger = Changed.objects.create(program=Program.objects.get(id=program_id))
+        trigger.activate()
+        trigger.save()
+    if not trigger.state():
+        return Response(cache.get(f"gpd-{program_id}"))
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
     for discipline in disciplines:
@@ -418,6 +425,8 @@ def get_program_disciplines(request, program_id):
                     "terms": terms,
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
                     })
+        trigger.deactivate()
+        trigger.save()
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
 
@@ -433,6 +442,10 @@ def change_discipline_semester(request):
         semester.update(training_semester=new_semester, year=date.today().year)
     else:
         Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
+    trigger = Changed.objects.filter(program=semester.program).first()
+    if not trigger:
+        trigger = Changed.objects.create(program=semester.program)
+    trigger.activate()
     return Response(status=200)
 
 
