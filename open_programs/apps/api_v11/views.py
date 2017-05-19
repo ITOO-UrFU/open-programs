@@ -407,8 +407,6 @@ def get_program_disciplines(request, program_id):
         trigger.activate()
         trigger.save()
     if not trigger.state():
-        # import time
-        # time.sleep(3)
         return Response(cache.get(f"gpd-{program_id}"))
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
@@ -454,8 +452,15 @@ def change_discipline_semester(request):
 
 @api_view(('GET',))
 def get_variants(request, program_id, discipline_id):
+    trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program_id=program_id, view="gv")
+        trigger.activate()
+        trigger.save()
+    if not trigger.state():
+        return Response(cache.get(f"gv-{program_id}"))
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
-    return Response([{
+    response = [{
                     "id": variant.id,
                     "diagram": None if not variant.diagram else
                     {
@@ -482,7 +487,12 @@ def get_variants(request, program_id, discipline_id):
                     },
                     "parity": None if not variant.parity else variant.parity,
                     "link": variant.link
-                     } for variant in variants])
+                     } for variant in variants]
+
+    cache.set(f"gv-{program_id}", response, 2678400)
+    trigger.deactivate()
+    trigger.save()
+    return Response(response)
 
 
 @api_view(('POST',))
@@ -502,6 +512,10 @@ def change_variant(request):
 
     variant.status = "p"
     variant.save()
+    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program=variant.program, view="gv")
+    trigger.activate()
     return Response(status=200)
 
 
@@ -527,6 +541,10 @@ def create_variant(request):
     elif parity:
         Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                diagram=diagram, link=link, status="p")
+    trigger = Changed.objects.filter(program=program, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program=program, view="gv")
+    trigger.activate()
     return Response(status=200)
 
 
@@ -574,5 +592,9 @@ def get_program_variants(request, program_id):
 @api_view(('POST',))
 def delete_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program=variant.program, view="gv")
+    trigger.activate()
     variant.delete()
     return Response(status=200)
