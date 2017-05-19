@@ -425,7 +425,7 @@ def get_program_disciplines(request, program_id):
                     "terms": terms,
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
                     })
-    cache.set(f"gpd-{program_id}", response, 2678400)
+    cache.set(f"gpd-{program_id}", sorted(response, key=lambda k: (k["priority"], k["title"])), 2678400)
     trigger.deactivate()
     trigger.save()
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
