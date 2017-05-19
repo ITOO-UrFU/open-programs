@@ -550,6 +550,13 @@ def create_variant(request):
 
 @api_view(('GET',))
 def get_program_variants(request, program_id):
+    trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program_id=program_id, view="gv")
+        trigger.activate()
+        trigger.save()
+    if not trigger.state():
+        return Response(cache.get(f"gv-{program_id}"))
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -586,6 +593,9 @@ def get_program_variants(request, program_id):
                     "link": variant.link
                 }
             )
+    cache.set(f"gv-{program_id}", variants, 2678400)
+    trigger.deactivate()
+    trigger.save()
     return Response(variants)
 
 
