@@ -142,6 +142,7 @@ class ProgramModules(ObjectBaseClass):
 class Changed(models.Model):
     _changed = models.BooleanField(default=True)
     program = models.ForeignKey("Program", null=True)
+    view = models.CharField(max_length=16, blank=True, null=True)
 
     def state(self):
         return self._changed

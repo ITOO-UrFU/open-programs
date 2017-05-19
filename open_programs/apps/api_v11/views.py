@@ -288,9 +288,9 @@ def get_competences_by_program(request, program_id):
 
 @api_view(('GET',))
 def get_program_modules(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id).first()
+    trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
-        trigger = Changed.objects.create(program=Program.objects.get(id=program_id))
+        trigger = Changed.objects.create(program__id=program_id, view="gpm")
         trigger.activate()
         trigger.save()
     if not trigger.state():
@@ -323,9 +323,9 @@ def change_target_module(request):
     program_module = ProgramModules.objects.get(id=module_id)
     target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
-    trigger = Changed.objects.filter(program=program_module.program).first()
+    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
     if not trigger:
-        trigger = Changed.objects.create(program=program_module.program)
+        trigger = Changed.objects.create(program=program_module.program, view="gpm")
     if status == 0:
         tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
         if tm:
@@ -360,9 +360,9 @@ def change_choice_group(request):
     choice_group_id = request.data["choice_group_id"]
     program_module = ProgramModules.objects.get(id=module_id)
 
-    trigger = Changed.objects.filter(program=program_module.program).first()
+    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
     if not trigger:
-        trigger = Changed.objects.create(program=program_module.program)
+        trigger = Changed.objects.create(program=program_module.program, view="gpm")
 
     if choice_group_id:
         chg = ChoiceGroup.objects.get(id=choice_group_id)
@@ -380,9 +380,9 @@ def change_competence(request):
     competence_id = request.data["competence_id"]
     program_module = ProgramModules.objects.get(id=module_id)
 
-    trigger = Changed.objects.filter(program=program_module.program).first()
+    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
     if not trigger:
-        trigger = Changed.objects.create(program=program_module.program)
+        trigger = Changed.objects.create(program=program_module.program, view="gpm")
 
     if competence_id:
         comp = ProgramCompetence.objects.get(id=competence_id)
@@ -401,9 +401,9 @@ def heartbeat(request):
 
 @api_view(('GET',))
 def get_program_disciplines(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id).first()
+    trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
     if not trigger:
-        trigger = Changed.objects.create(program=Program.objects.get(id=program_id))
+        trigger = Changed.objects.create(program__id=program_id, view="gpd")
         trigger.activate()
         trigger.save()
     if not trigger.state():
@@ -444,9 +444,9 @@ def change_discipline_semester(request):
         semester.update(training_semester=new_semester, year=date.today().year)
     else:
         Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
-    trigger = Changed.objects.filter(program=semester.program).first()
+    trigger = Changed.objects.filter(program=semester.program, view="gpd").first()
     if not trigger:
-        trigger = Changed.objects.create(program=semester.program)
+        trigger = Changed.objects.create(program=semester.program, view="gpd")
     trigger.activate()
     return Response(status=200)
 
