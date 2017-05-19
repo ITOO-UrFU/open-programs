@@ -428,6 +428,8 @@ def get_program_disciplines(request, program_id):
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
                     })
     cache.set(f"gpm-{program_id}", response, 2678400)
+    print("CACHE SETTED!")
+    print((cache.get(f"gpd-{program_id}")))
     trigger.deactivate()
     trigger.save()
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
