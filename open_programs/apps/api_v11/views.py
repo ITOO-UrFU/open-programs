@@ -443,9 +443,9 @@ def change_discipline_semester(request):
         semester.update(training_semester=new_semester, year=date.today().year)
     else:
         Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
-    trigger = Changed.objects.filter(program=semester.program, view="gpd").first()
+    trigger = Changed.objects.filter(program=program, view="gpd").first()
     if not trigger:
-        trigger = Changed.objects.create(program=semester.program, view="gpd")
+        trigger = Changed.objects.create(program=program, view="gpd")
     trigger.activate()
     return Response(status=200)
 
