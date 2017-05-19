@@ -407,6 +407,8 @@ def get_program_disciplines(request, program_id):
         trigger.activate()
         trigger.save()
     if not trigger.state():
+        import time
+        time.sleep(3)
         return Response(cache.get(f"gpd-{program_id}"))
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
