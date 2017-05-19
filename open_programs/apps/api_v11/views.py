@@ -407,8 +407,6 @@ def get_program_disciplines(request, program_id):
         trigger.activate()
         trigger.save()
     if not trigger.state():
-        print("TRIGGERED!!!")
-        print(cache.get(f"gpd-{program_id}"))
         return Response(cache.get(f"gpd-{program_id}"))
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False)], status="p", archived=False))
@@ -427,9 +425,7 @@ def get_program_disciplines(request, program_id):
                     "terms": terms,
                     "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
                     })
-    cache.set(f"gpm-{program_id}", response, 2678400)
-    print("CACHE SETTED!")
-    print((cache.get(f"gpd-{program_id}")))
+    cache.set(f"gpd-{program_id}", response, 2678400)
     trigger.deactivate()
     trigger.save()
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
