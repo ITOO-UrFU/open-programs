@@ -290,7 +290,7 @@ def get_competences_by_program(request, program_id):
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
-        trigger = Changed.objects.create(program__id=program_id, view="gpm")
+        trigger = Changed.objects.create(program_id=program_id, view="gpm")
         trigger.activate()
         trigger.save()
     if not trigger.state():
@@ -403,7 +403,7 @@ def heartbeat(request):
 def get_program_disciplines(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
     if not trigger:
-        trigger = Changed.objects.create(program__id=program_id, view="gpd")
+        trigger = Changed.objects.create(program_id=program_id, view="gpd")
         trigger.activate()
         trigger.save()
     if not trigger.state():
