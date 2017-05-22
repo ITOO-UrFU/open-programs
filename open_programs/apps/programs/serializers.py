@@ -28,7 +28,7 @@ class TrainingTargetSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = TrainingTarget
-        fields = ("id", "title", "program", "number")
+        fields = ("id", "title", "program", "number", "get_mandatory_modules_id")
 
 
 class ChoiceGroupTypeSerializer(serializers.ModelSerializer):
