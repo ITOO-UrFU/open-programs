@@ -66,10 +66,10 @@ class Program(ObjectBaseClass):
         for target in TrainingTarget.objects.filter(program=self, status="p", archived=False):
             response[target.title] = []
             for competence in ProgramCompetence.objects.filter(program=self):
-                response[target.title].append(([competence.title, competence.color, competence.get_labor()]))
+                labors = [pm.module.get_labor() for pm in
+                    ProgramModules.objects.filter(program=self.program, competence=self, status="p", archived=False, module__id__in=target.get_mandatory_modules_id())]
+                response[target.title].append(([competence.title, competence.color, sum([0 if not labor else labor for labor in labors])]))
         return response
-
-
 
 
 class TrainingTarget(ObjectBaseClass):
@@ -84,6 +84,15 @@ class TrainingTarget(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+    def get_modules_id(self):
+        return [tm.program_module.module.id for tm in TargetModules.objects.filter(target=self, archived=False, status="p")]
+
+    def get_mandatory_modules_id(self):
+        return [tm.program_module.module.id for tm in TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=False)]
+
+    def get_choice_modules_id(self):
+        return [tm.program_module.module.id for tm in TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=True)]
 
     
 class ProgramCompetence(ObjectBaseClass):
