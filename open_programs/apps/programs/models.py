@@ -63,7 +63,7 @@ class Program(ObjectBaseClass):
 
     def get_competences_diagram(self):
         response = {}
-        for target in TrainingTarget.objects.filter(program=self, status="p", archived=False):
+        for target in TrainingTarget.objects.filter(program=self, status="p", archived=False).order_by("number"):
             response[target.title] = []
             for competence in ProgramCompetence.objects.filter(program=self):
                 labors = [pm.module.get_labor() for pm in
