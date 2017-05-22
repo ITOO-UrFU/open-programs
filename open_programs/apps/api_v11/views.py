@@ -54,7 +54,8 @@ class ProgramList(viewsets.ModelViewSet):
         filter_kwargs = {self.lookup_field: self.kwargs[lookup_url_kwarg]}
         obj = get_object_or_404(queryset, **filter_kwargs)
         print(queryset, "!!!!!!!!!!!!!!!!!!!")
-        print('!!!!!!!!!!!!!!!!!!!', **filter_kwargs["pk"])
+        if filter_kwargs["pk"]:
+            print(filter_kwargs["pk"], '!!!!!!!!!!!!!!')
 
         # May raise a permission denied
         self.check_object_permissions(self.request, obj)
