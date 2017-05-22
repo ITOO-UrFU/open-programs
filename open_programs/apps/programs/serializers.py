@@ -20,7 +20,7 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ("id", "title", "chief", "get_level_display", "get_choice_groups", "training_direction", "competences")
+        fields = ("id", "title", "chief", "get_level_display", "get_choice_groups", "training_direction", "competences", "get_competences_diagram")
 
 
 class TrainingTargetSerializer(serializers.ModelSerializer):
