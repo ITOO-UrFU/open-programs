@@ -550,6 +550,8 @@ def create_variant(request):
 
 @api_view(('GET',))
 def get_program_variants(request, program_id):
+    import time
+    time.sleep(3)
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
         trigger = Changed.objects.create(program_id=program_id, view="gv")
