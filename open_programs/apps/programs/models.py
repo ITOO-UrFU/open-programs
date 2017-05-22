@@ -87,13 +87,13 @@ class TrainingTarget(ObjectBaseClass):
         return self.title
 
     def get_modules_id(self):
-        return [tm.program_module.module.id for tm in TargetModules.objects.filter(target=self, archived=False, status="p")]
+        return TargetModules.objects.filter(target=self, archived=False, status="p").values_list('program_module__module__id', flat=True)
 
     def get_mandatory_modules_id(self):
         return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=False).values_list('program_module__module__id', flat=True)
 
     def get_choice_modules_id(self):
-        return [tm.program_module.module.id for tm in TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=True)]
+        return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=True).values_list('program_module__module__id', flat=True)
 
     
 class ProgramCompetence(ObjectBaseClass):
