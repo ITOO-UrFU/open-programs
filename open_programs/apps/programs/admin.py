@@ -37,8 +37,8 @@ class TrainingTargetAdmin(VersionAdmin):
 
 @admin.register(ProgramCompetence)
 class ProgramCompetenceAdmin(VersionAdmin):
-    list_display = ("title", "number", "program")
-    list_filter = ("title", "number")
+    list_display = ("title", "number", "program", "color")
+    list_filter = ("title", "number", "color")
     search_fields = ("title", )
 
 

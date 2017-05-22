@@ -81,6 +81,7 @@ class ProgramCompetence(ObjectBaseClass):
     title = models.CharField(_('Наименование компетенции'), blank=False, max_length=2048, default=_(''))
     program = models.ForeignKey("Program", blank=True, null=True)
     number = models.IntegerField(_("Номер компетенции"))
+    color = models.CharField(_("Цвет"), max_length=32, blank=True, null=True)
 
     class Meta:
         verbose_name = 'компетенция программы'
