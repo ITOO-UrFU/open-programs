@@ -67,8 +67,10 @@ class Program(ObjectBaseClass):
             response[target.title] = []
             for competence in ProgramCompetence.objects.filter(program=self):
                 labors = [pm.module.get_labor() for pm in
-                    ProgramModules.objects.filter(program=self, competence=competence, status="p", archived=False, module__id__in=target.get_mandatory_modules_id())]
-                response[target.title].append(([competence.title, competence.color, sum([0 if not labor else labor for labor in labors])]))
+                          ProgramModules.objects.filter(program=self, competence=competence, status="p", archived=False,
+                                                        module__id__in=target.get_mandatory_modules_id())]
+                response[target.title].append(
+                    ([competence.title, competence.color, sum([0 if not labor else labor for labor in labors])]))
 
         return response
 
@@ -87,13 +89,16 @@ class TrainingTarget(ObjectBaseClass):
         return self.title
 
     def get_modules_id(self):
-        return TargetModules.objects.filter(target=self, archived=False, status="p").values_list('program_module__module__id', flat=True)
+        return TargetModules.objects.filter(target=self, archived=False, status="p").values_list(
+            'program_module__module__id', flat=True)
 
     def get_mandatory_modules_id(self):
-        return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=False).values_list('program_module__module__id', flat=True)
+        return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=False).values_list(
+            'program_module__module__id', flat=True)
 
     def get_choice_modules_id(self):
-        return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=True).values_list('program_module__module__id', flat=True)
+        return TargetModules.objects.filter(target=self, archived=False, status="p", choice_group=True).values_list(
+            'program_module__module__id', flat=True)
 
     
 class ProgramCompetence(ObjectBaseClass):
@@ -212,7 +217,8 @@ class ChoiceGroup(ObjectBaseClass):
         return self.choice_group_type.title
 
     def get_program_modules(self):
-        return [program_module.id for program_module in ProgramModules.objects.filter(program=self.program, choice_group=self, status="p", archived=False)]
+        return [program_module.id for program_module in
+                ProgramModules.objects.filter(program=self.program, choice_group=self, status="p", archived=False)]
 
 
 class ChoiceGroupType(ObjectBaseClass):
