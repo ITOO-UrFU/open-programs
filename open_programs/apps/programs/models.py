@@ -62,9 +62,9 @@ class Program(ObjectBaseClass):
         return Discipline.objects.filter(module__id__in=pms, status="p", archived=False)
 
     def get_competences_diagram(self):
-        response = []
+        response = {}
         for competence in ProgramCompetence.objects.filter(program=self):
-            response.append([competence.title, competence.color, competence.get_labor()])
+            response[competence.title] = ([competence.color, competence.get_labor()])
         return response
 
 
