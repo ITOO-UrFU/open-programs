@@ -97,7 +97,7 @@ class ProgramCompetence(ObjectBaseClass):
         return self.title
 
     def get_labor(self):
-        return sum([pm.module.get_labor() for pm in
+        return sum([0 if not pm.module else pm.module.get_labor() for pm in
                     ProgramModules.objects.filter(program=self.program, competence=self, status="p", archived=False)])
 
 
