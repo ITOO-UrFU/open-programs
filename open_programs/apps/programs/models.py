@@ -67,7 +67,7 @@ class Program(ObjectBaseClass):
             response[target.title] = []
             for competence in ProgramCompetence.objects.filter(program=self):
                 labors = [pm.module.get_labor() for pm in
-                    ProgramModules.objects.filter(program=self, competence=self, status="p", archived=False, module__id__in=target.get_mandatory_modules_id())]
+                    ProgramModules.objects.filter(program=self, competence=competence, status="p", archived=False, module__id__in=target.get_mandatory_modules_id())]
                 response[target.title].append(([competence.title, competence.color, sum([0 if not labor else labor for labor in labors])]))
 
         return response
