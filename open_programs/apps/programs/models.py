@@ -61,6 +61,12 @@ class Program(ObjectBaseClass):
         pms = ProgramModules.objects.filter(program=self, status="p", archived=False).values_list("module__id", flat=True)
         return Discipline.objects.filter(module__id__in=pms, status="p", archived=False)
 
+    def get_competences_diagram(self):
+        response = []
+        for competence in ProgramCompetence.objects.filter(program=self):
+            response.append([competence.title, competence.color, competence.get_labor()])
+        return response
+
 
 class TrainingTarget(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -74,7 +80,7 @@ class TrainingTarget(ObjectBaseClass):
 
     def __str__(self):
         return self.title
-    
+
     
 class ProgramCompetence(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -89,6 +95,10 @@ class ProgramCompetence(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+    def get_labor(self):
+        return sum([pm.module.get_labor for pm in
+                    ProgramModules.objects.filter(program=self.program, competence=self, status="p", archived=False)])
 
 
 class ProgramModules(ObjectBaseClass):
