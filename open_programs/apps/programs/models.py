@@ -99,7 +99,7 @@ class ProgramCompetence(ObjectBaseClass):
     def get_labor(self):
         response = [pm.module.get_labor() for pm in
                     ProgramModules.objects.filter(program=self.program, competence=self, status="p", archived=False)]
-        return sum([int(labor) for labor in response])
+        return sum([0 if not labor else labor for labor in response])
 
 
 class ProgramModules(ObjectBaseClass):
