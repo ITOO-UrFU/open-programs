@@ -63,9 +63,12 @@ class Program(ObjectBaseClass):
 
     def get_competences_diagram(self):
         response = {}
-        for competence in ProgramCompetence.objects.filter(program=self):
-            response[competence.title] = ([competence.color, competence.get_labor()])
+        for target in TrainingTarget.objects.filter(program=self, status="p", archived=False):
+            for competence in ProgramCompetence.objects.filter(program=self):
+                response[target.title] = ([competence.title, competence.color, competence.get_labor()])
         return response
+
+
 
 
 class TrainingTarget(ObjectBaseClass):
