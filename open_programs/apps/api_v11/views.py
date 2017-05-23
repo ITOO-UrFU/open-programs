@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
 
@@ -39,7 +39,7 @@ from django.core.cache import cache
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
-    permission_classes = ((AllowAny, ))
+    permission_classes = (IsAuthenticatedOrReadOnly , )
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -69,31 +69,31 @@ class ProgramList(viewsets.ModelViewSet):
 class ModuleList(viewsets.ModelViewSet):
     queryset = Module.objects.filter(status="p", archived=False)
     serializer_class = ModuleSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class TypeList(viewsets.ModelViewSet):
     queryset = Type.objects.filter(status="p", archived=False)
     serializer_class = TypeSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class DisciplineList(viewsets.ModelViewSet):
     queryset = Discipline.objects.filter(status="p", archived=False)
     serializer_class = DisciplineSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class ResultList(viewsets.ModelViewSet):
     queryset = Result.objects.filter(status="p", archived=False)
     serializer_class = ResultSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class CompetenceListCreateView(ListCreateAPIView):
@@ -121,7 +121,7 @@ class PersonList(viewsets.ModelViewSet):
 class CourseList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class UserList(viewsets.ModelViewSet):
@@ -132,67 +132,67 @@ class UserList(viewsets.ModelViewSet):
 class TrainingTargetList(viewsets.ModelViewSet):
     queryset = TrainingTarget.objects.filter(status="p", archived=False)
     serializer_class = TrainingTargetSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class ProgramCompetenceList(viewsets.ModelViewSet):
     queryset = ProgramCompetence.objects.filter(status="p", archived=False)
     serializer_class = ProgramCompetenceSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class ProgramModulesList(viewsets.ModelViewSet):
     queryset = ProgramModules.objects.filter(status="p", archived=False)
     serializer_class = ProgramModulesSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class TargetModulesList(viewsets.ModelViewSet):
     queryset = TargetModules.objects.filter(status="p", archived=False)
     serializer_class = TargetModulesSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class ChoiceGroupList(viewsets.ModelViewSet):
     queryset = ChoiceGroup.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class ChoiceGroupTypeList(viewsets.ModelViewSet):
     queryset = ChoiceGroupType.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupTypeSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class DiagramList(viewsets.ModelViewSet):
     queryset = Diagram.objects.filter(status="p", archived=False)
     serializer_class = DiagramSerializer
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class TechnologyList(viewsets.ModelViewSet):
     serializer_class = TechnologySerializer
     queryset = Technology.objects.filter(status="p", archived=False)
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class TrainingTermsList(viewsets.ModelViewSet):
     serializer_class = TrainingTermsSerializer
     queryset = TrainingTerms.objects.all()
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class SemesterList(viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
     queryset = Semester.objects.all()
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly ,)
 
 
 class VariantList(viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
-    permission_classes = (AllowAny, )
+    permission_classes = (IsAuthenticatedOrReadOnly , )
 
 
 #### DETAILS ####
