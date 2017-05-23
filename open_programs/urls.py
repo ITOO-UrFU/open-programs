@@ -20,6 +20,11 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
 from rest_framework import routers
+
+from rest_framework_jwt.views import obtain_jwt_token
+from rest_framework_jwt.views import refresh_jwt_token
+from rest_framework_jwt.views import verify_jwt_token
+
 from rest_framework_swagger.views import get_swagger_view
 
 from ajax_select import urls as ajax_select_urls
@@ -83,6 +88,10 @@ urlpatterns = [
     url(r'^api/docs/', schema_view),
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^accounts/', include('allauth.urls')),
+
+    url(r'^api-token-auth/', obtain_jwt_token),
+    url(r'^api-token-refresh/', refresh_jwt_token),
+    url(r'^api-token-verify/', verify_jwt_token),
  ]
 
 

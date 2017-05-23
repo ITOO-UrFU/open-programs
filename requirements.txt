@@ -17,6 +17,7 @@ django-permission
 django-smuggler
 django-codemirror2
 djangorestframework
+djangorestframework-jwt
 markdown
 django-filter
 google-api-python-client
