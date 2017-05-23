@@ -1,5 +1,6 @@
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .serializers import *
 from .models import Container, Component, ComponentType, ContainerType
@@ -26,6 +27,7 @@ class ComponentTypeDetail(serializers.HyperlinkedModelSerializer):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_containers(request):
     """
     Возвращает список всех контейнеров.
@@ -47,6 +49,7 @@ def get_containers(request):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def containers_by_type(request, slug):
     """
     Возвращает список контейнеров по типу **type**.
@@ -68,6 +71,7 @@ def containers_by_type(request, slug):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def container_by_slug(request, slug):
     """
     Возвращает контейнер с уникальным полем **slug**.
