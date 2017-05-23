@@ -2,8 +2,9 @@ from datetime import date
 from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
+from rest_framework.permissions import AllowAny
 
 from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
@@ -37,6 +38,7 @@ from django.core.cache import cache
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
+    permission_classes = (AllowAny, )
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
