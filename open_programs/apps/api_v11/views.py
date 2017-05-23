@@ -38,7 +38,7 @@ from django.core.cache import cache
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
-    permission_classes = (AllowAny, )
+    permission_classes = ((AllowAny, ))
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -191,7 +191,7 @@ class SemesterList(viewsets.ModelViewSet):
 class VariantList(viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
-permission_classes = (AllowAny, )
+    permission_classes = (AllowAny, )
 
 
 #### DETAILS ####
@@ -292,7 +292,7 @@ class ChoiceGroupTypeDetail(serializers.HyperlinkedModelSerializer):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_choice_groups_by_program(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
@@ -309,7 +309,7 @@ def get_choice_groups_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_targets_by_program(request, program_id):
     response = []
     for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
@@ -323,7 +323,7 @@ def get_targets_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_competences_by_program(request, program_id):
     response = [{"id": c.id,
                  "title": c.title,
@@ -333,7 +333,7 @@ def get_competences_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
@@ -442,13 +442,13 @@ def change_competence(request):
 
 
 @api_view(("GET", ))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def heartbeat(request):
     return Response(status=200)
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_program_disciplines(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
     if not trigger:
@@ -500,7 +500,7 @@ def change_discipline_semester(request):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_variants(request, program_id, discipline_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
@@ -604,7 +604,7 @@ def create_variant(request):
 
 
 @api_view(('GET',))
-@permission_classes(AllowAny, )
+@permission_classes((AllowAny, ))
 def get_program_variants(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
