@@ -68,26 +68,31 @@ class ProgramList(viewsets.ModelViewSet):
 class ModuleList(viewsets.ModelViewSet):
     queryset = Module.objects.filter(status="p", archived=False)
     serializer_class = ModuleSerializer
+    permission_classes = (AllowAny,)
 
 
 class TypeList(viewsets.ModelViewSet):
     queryset = Type.objects.filter(status="p", archived=False)
     serializer_class = TypeSerializer
+    permission_classes = (AllowAny,)
 
 
 class DisciplineList(viewsets.ModelViewSet):
     queryset = Discipline.objects.filter(status="p", archived=False)
     serializer_class = DisciplineSerializer
+    permission_classes = (AllowAny,)
 
 
 class ResultList(viewsets.ModelViewSet):
     queryset = Result.objects.filter(status="p", archived=False)
     serializer_class = ResultSerializer
+    permission_classes = (AllowAny,)
 
 
 class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
+    permission_classes = (AllowAny,)
 
 
 class CompetenceListCreateView(ListCreateAPIView):
@@ -115,6 +120,7 @@ class PersonList(viewsets.ModelViewSet):
 class CourseList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
+    permission_classes = (AllowAny,)
 
 
 class UserList(viewsets.ModelViewSet):
@@ -125,56 +131,67 @@ class UserList(viewsets.ModelViewSet):
 class TrainingTargetList(viewsets.ModelViewSet):
     queryset = TrainingTarget.objects.filter(status="p", archived=False)
     serializer_class = TrainingTargetSerializer
+    permission_classes = (AllowAny,)
 
 
 class ProgramCompetenceList(viewsets.ModelViewSet):
     queryset = ProgramCompetence.objects.filter(status="p", archived=False)
     serializer_class = ProgramCompetenceSerializer
+    permission_classes = (AllowAny,)
 
 
 class ProgramModulesList(viewsets.ModelViewSet):
     queryset = ProgramModules.objects.filter(status="p", archived=False)
     serializer_class = ProgramModulesSerializer
+    permission_classes = (AllowAny,)
 
 
 class TargetModulesList(viewsets.ModelViewSet):
     queryset = TargetModules.objects.filter(status="p", archived=False)
     serializer_class = TargetModulesSerializer
+    permission_classes = (AllowAny,)
 
 
 class ChoiceGroupList(viewsets.ModelViewSet):
     queryset = ChoiceGroup.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupSerializer
+    permission_classes = (AllowAny,)
 
 
 class ChoiceGroupTypeList(viewsets.ModelViewSet):
     queryset = ChoiceGroupType.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupTypeSerializer
+    permission_classes = (AllowAny,)
 
 
 class DiagramList(viewsets.ModelViewSet):
     queryset = Diagram.objects.filter(status="p", archived=False)
     serializer_class = DiagramSerializer
+    permission_classes = (AllowAny,)
 
 
 class TechnologyList(viewsets.ModelViewSet):
     serializer_class = TechnologySerializer
     queryset = Technology.objects.filter(status="p", archived=False)
+    permission_classes = (AllowAny,)
 
 
 class TrainingTermsList(viewsets.ModelViewSet):
     serializer_class = TrainingTermsSerializer
     queryset = TrainingTerms.objects.all()
+    permission_classes = (AllowAny,)
 
 
 class SemesterList(viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
     queryset = Semester.objects.all()
+    permission_classes = (AllowAny,)
 
 
 class VariantList(viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
+permission_classes = (AllowAny, )
 
 
 #### DETAILS ####
@@ -275,6 +292,7 @@ class ChoiceGroupTypeDetail(serializers.HyperlinkedModelSerializer):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_choice_groups_by_program(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
@@ -291,6 +309,7 @@ def get_choice_groups_by_program(request, program_id):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_targets_by_program(request, program_id):
     response = []
     for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
@@ -304,6 +323,7 @@ def get_targets_by_program(request, program_id):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_competences_by_program(request, program_id):
     response = [{"id": c.id,
                  "title": c.title,
@@ -313,6 +333,7 @@ def get_competences_by_program(request, program_id):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
@@ -421,11 +442,13 @@ def change_competence(request):
 
 
 @api_view(("GET", ))
+@permission_classes((AllowAny, ))
 def heartbeat(request):
     return Response(status=200)
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_program_disciplines(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
     if not trigger:
@@ -477,6 +500,7 @@ def change_discipline_semester(request):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_variants(request, program_id, discipline_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
@@ -580,6 +604,7 @@ def create_variant(request):
 
 
 @api_view(('GET',))
+@permission_classes((AllowAny, ))
 def get_program_variants(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
