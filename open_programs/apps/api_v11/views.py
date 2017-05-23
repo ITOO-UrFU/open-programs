@@ -3,7 +3,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, DjangoModelPermissions
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
 
@@ -39,7 +39,7 @@ from django.core.cache import cache
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
-    permission_classes = (DjangoModelPermissions, )
+    permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -192,7 +192,7 @@ class SemesterList(viewsets.ModelViewSet):
 class VariantList(viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
-    permission_classes = (DjangoModelPermissions, )
+    permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 #### DETAILS ####
