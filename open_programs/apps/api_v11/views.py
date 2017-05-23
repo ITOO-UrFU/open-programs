@@ -557,6 +557,11 @@ def create_variant(request):
 
     if term_title:
         semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
+
+        if Variant.objects.filter(discipline=discipline, program=program, semester=semester, technology=technology,
+                               diagram=diagram, link=link, status="p").first():
+            return Response(status=409)
+
         Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
                                diagram=diagram, link=link, status="p")
     elif course:
