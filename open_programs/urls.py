@@ -89,9 +89,9 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^accounts/', include('allauth.urls')),
 
-    url(r'^api-token-auth/', obtain_jwt_token),
-    url(r'^api-token-refresh/', refresh_jwt_token),
-    url(r'^api-token-verify/', verify_jwt_token),
+    url(r'^api/v11/api-token-auth/', obtain_jwt_token),
+    url(r'^api/v11/api-token-refresh/', refresh_jwt_token),
+    url(r'^api/v11/api-token-verify/', verify_jwt_token),
  ]
 
 
