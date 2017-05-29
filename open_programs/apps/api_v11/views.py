@@ -39,7 +39,7 @@ from django.core.cache import cache
 class ProgramList(viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
     def get_object(self):
         queryset = self.filter_queryset(self.get_queryset())
@@ -69,31 +69,31 @@ class ProgramList(viewsets.ModelViewSet):
 class ModuleList(viewsets.ModelViewSet):
     queryset = Module.objects.filter(status="p", archived=False)
     serializer_class = ModuleSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class TypeList(viewsets.ModelViewSet):
     queryset = Type.objects.filter(status="p", archived=False)
     serializer_class = TypeSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class DisciplineList(viewsets.ModelViewSet):
     queryset = Discipline.objects.filter(status="p", archived=False)
     serializer_class = DisciplineSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class ResultList(viewsets.ModelViewSet):
     queryset = Result.objects.filter(status="p", archived=False)
     serializer_class = ResultSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class CompetenceListCreateView(ListCreateAPIView):
@@ -121,7 +121,7 @@ class PersonList(viewsets.ModelViewSet):
 class CourseList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class UserList(viewsets.ModelViewSet):
@@ -132,67 +132,67 @@ class UserList(viewsets.ModelViewSet):
 class TrainingTargetList(viewsets.ModelViewSet):
     queryset = TrainingTarget.objects.filter(status="p", archived=False)
     serializer_class = TrainingTargetSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class ProgramCompetenceList(viewsets.ModelViewSet):
     queryset = ProgramCompetence.objects.filter(status="p", archived=False)
     serializer_class = ProgramCompetenceSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class ProgramModulesList(viewsets.ModelViewSet):
     queryset = ProgramModules.objects.filter(status="p", archived=False)
     serializer_class = ProgramModulesSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class TargetModulesList(viewsets.ModelViewSet):
     queryset = TargetModules.objects.filter(status="p", archived=False)
     serializer_class = TargetModulesSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class ChoiceGroupList(viewsets.ModelViewSet):
     queryset = ChoiceGroup.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class ChoiceGroupTypeList(viewsets.ModelViewSet):
     queryset = ChoiceGroupType.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupTypeSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class DiagramList(viewsets.ModelViewSet):
     queryset = Diagram.objects.filter(status="p", archived=False)
     serializer_class = DiagramSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class TechnologyList(viewsets.ModelViewSet):
     serializer_class = TechnologySerializer
     queryset = Technology.objects.filter(status="p", archived=False)
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class TrainingTermsList(viewsets.ModelViewSet):
     serializer_class = TrainingTermsSerializer
     queryset = TrainingTerms.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class SemesterList(viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
     queryset = Semester.objects.all()
-    permission_classes = (IsAuthenticatedOrReadOnly ,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class VariantList(viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
-    permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 #### DETAILS ####
@@ -363,6 +363,7 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
+@permission_classes((AllowAny, )) #
 def change_target_module(request):
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
@@ -403,6 +404,7 @@ def change_target_module(request):
 
 
 @api_view(("POST", ))
+@permission_classes((AllowAny, )) #
 def change_choice_group(request):
     module_id = request.data["module_id"]
     choice_group_id = request.data["choice_group_id"]
@@ -423,6 +425,7 @@ def change_choice_group(request):
 
 
 @api_view(("POST", ))
+@permission_classes((AllowAny, )) #
 def change_competence(request):
     module_id = request.data["module_id"]
     competence_id = request.data["competence_id"]
@@ -482,6 +485,7 @@ def get_program_disciplines(request, program_id):
 
 
 @api_view(('POST',))
+@permission_classes((AllowAny, )) #
 def change_discipline_semester(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -547,6 +551,7 @@ def get_variants(request, program_id, discipline_id):
 
 
 @api_view(('POST',))
+@permission_classes((AllowAny, )) #
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
@@ -571,6 +576,7 @@ def change_variant(request):
 
 
 @api_view(('POST',))
+@permission_classes((AllowAny, )) #
 def create_variant(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -657,6 +663,7 @@ def get_program_variants(request, program_id):
 
 
 @api_view(('POST',))
+@permission_classes((AllowAny, )) #
 def delete_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     trigger = Changed.objects.filter(program=variant.program, view="gv").first()
