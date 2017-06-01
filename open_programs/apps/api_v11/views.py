@@ -118,7 +118,7 @@ class PersonList(viewsets.ModelViewSet):
     serializer_class = PersonSerializer
 
 
-class CourseList(CacheResponseMixin, viewsets.ModelViewSet):
+class CourseList(viewsets.ModelViewSet): ##CacheResponseMixin,
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
     permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
