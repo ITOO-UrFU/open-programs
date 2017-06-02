@@ -278,13 +278,14 @@ class Command(BaseCommand):
                     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
 
                 try:
-                    print(f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                    discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
-                    if discipline:
-                        print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+                    q = 1 / 0
+                    # print(f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
+                    # discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
+                    # if discipline:
+                    #     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
-                    print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
-                    discipline = Discipline(title=d["title"])
+                    # print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
+                    # discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
                     try:
