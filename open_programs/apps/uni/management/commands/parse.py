@@ -272,7 +272,7 @@ class Command(BaseCommand):
                     if d["title"] in row:
                         break
                 try:
-                    discipline = Discipline.objects.get(title=d["title"])
+                    discipline = Discipline.objects.get(title=d["title"].strip())
                     if discipline:
                         print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
