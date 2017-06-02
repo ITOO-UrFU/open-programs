@@ -190,4 +190,4 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
-            print(modules)
+            print(json.dumps(modules))
