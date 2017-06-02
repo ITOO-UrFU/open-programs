@@ -271,24 +271,20 @@ class Command(BaseCommand):
                 for row in rows:
                     if d["title"] in row:
                         break
-                print(
-                    f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                print(module)
-                discipline = Discipline.objects.filter(title=d["title"], module__in=Module.objects.filter(uni_uuid=module["uuid"]), module__program=program).first()
-                print(discipline)
-                if discipline:
-                    print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+
 
                 try:
-                    pass
-                    # print(f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                    # discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
-                    # if discipline:
-                    #     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+                    print(
+                        f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
+                    discipline = Discipline.objects.filter(title=d["title"],
+                                                           module__in=Module.objects.filter(uni_uuid=module["uuid"]),
+                                                           module__program=program).first()
+                    print(discipline)
+                    if discipline:
+                        print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
-                    # print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
-                    # discipline = Discipline(title=d["title"])
-                    pass
+                    print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
+                    discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
                     try:
