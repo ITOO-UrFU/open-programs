@@ -273,7 +273,7 @@ class Command(BaseCommand):
                         break
                 print(
                     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                print(Discipline.objects.all())
+                print(module)
                 discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
                 print(discipline)
                 if discipline:
