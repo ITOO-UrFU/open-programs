@@ -190,4 +190,8 @@ class Command(BaseCommand):
                                 module["row"] = row
                                 modules.append(module)
 
-            print(json.dumps(modules))
+            program_modules = ProgramModules.objects.filter(program=program)
+
+            for module in modules:
+                if program_modules.filter(module__uni_uuid=module["uuid"]):
+                    print(f"Модуль есть: {module['title']}")
