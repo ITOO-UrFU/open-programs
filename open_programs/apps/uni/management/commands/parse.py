@@ -274,7 +274,7 @@ class Command(BaseCommand):
                 print(
                     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
                 print(module)
-                discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
+                discipline = Discipline.objects.filter(title=d["title"], module=Module.objects.filter(uni_uuid=module["uuid"])).first()
                 print(discipline)
                 if discipline:
                     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
