@@ -276,6 +276,7 @@ class Command(BaseCommand):
                     if discipline:
                         print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
+                    print(f"{self.bcolors.FAIL}Не существует дисциплина {discipline.title}!!{self.bcolors.ENDC}")
                     discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
@@ -313,7 +314,6 @@ class Command(BaseCommand):
                     pass
 
                 discipline.status = "p"
-                print(f"{self.bcolors.WARNING}Не существует дисциплина {discipline.title}!!{self.bcolors.ENDC}")
                 discipline.save()
                 self.create_semester(program, discipline, module, find_row_index_id, term)
                 print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
