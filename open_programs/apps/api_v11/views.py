@@ -93,7 +93,7 @@ class ResultList(viewsets.ModelViewSet):
 class CompetenceList(viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
-    permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
+    permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
 class CompetenceListCreateView(ListCreateAPIView):

@@ -65,8 +65,13 @@ class Command(BaseCommand):
 
             for row in rows:
                 try:
+                    print(f"{self.bcolors.BOLD}Есть ли программа \"{row[1]}\"?{self.bcolors.ENDC}")
                     program = Program.objects.get(title=row[1])
+                    if program:
+                        print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
                 except:
+                    print(f"{self.bcolors.WARNING}Нет, создаём.{self.bcolors.ENDC}")
+
                     def level(x):
                         return {
                             'Магистр'.lower() in str(x).lower(): "m",
@@ -78,6 +83,7 @@ class Command(BaseCommand):
                                       level=level(row[4]),
                                       )
                     program.save()
+                    print(f"{self.bcolors.BOLD}Создана программа программа \"{row[1]}\"?{self.bcolors.ENDC}")
 
         try:
             program = Program.objects.filter(title=program_title).first()
@@ -221,7 +227,6 @@ class Command(BaseCommand):
                     self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester, program, term)
         print(f"{self.bcolors.BOLD}--- {time.time() - start_time} секунд ---{self.bcolors.ENDC}")
 
-
     def create_semester(self, program, discipline, module, find_row_index_id, term):
         """
         1. ИД дисциплины
@@ -246,6 +251,9 @@ class Command(BaseCommand):
                 training_semester = 99
 
         try:
+            print(f"{self.bcolors.BOLD}Есть ли семестр дисциплины {discipline.title} / {training_semester} семестр ?{self.bcolors.ENDC}")
+            if semester_obj:
+                print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
             semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
         except:
             semester_obj = Semester(discipline=discipline,
@@ -264,7 +272,10 @@ class Command(BaseCommand):
                     if d["title"] in row:
                         break
                 try:
+                    print(f"{self.bcolors.BOLD}Есть ли дисциплина {d['title']}{self.bcolors.ENDC}")
                     discipline = Discipline.objects.get(title=d["title"])
+                    if discipline:
+                        print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
                 except:
                     discipline = Discipline(title=d["title"])
 
