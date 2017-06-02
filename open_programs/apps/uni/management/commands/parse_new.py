@@ -25,6 +25,9 @@ class Command(BaseCommand):
         BOLD = '\033[1m'
         UNDERLINE = '\033[4m'
 
+    def decompose(self, soup, tag, classname):
+        [el.decompose() for el in soup.find_all(tag, {'class': classname})]
+
     def add_arguments(self, parser):
         parser.add_argument('html_path', nargs=1)
         parser.add_argument('uni_modules_path', nargs=1)
