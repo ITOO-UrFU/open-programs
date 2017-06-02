@@ -272,10 +272,9 @@ class Command(BaseCommand):
                     if d["title"] in row:
                         break
                 try:
-                    print(f"{self.bcolors.BOLD}Есть ли дисциплина {d['title']}{self.bcolors.ENDC}")
                     discipline = Discipline.objects.get(title=d["title"])
                     if discipline:
-                        print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
+                        print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
                     discipline = Discipline(title=d["title"])
 
@@ -314,6 +313,7 @@ class Command(BaseCommand):
                     pass
 
                 discipline.status = "p"
+                print(f"{self.bcolors.WARNING}Не существует дисциплина {discipline.title}!!{self.bcolors.ENDC}")
                 discipline.save()
                 self.create_semester(program, discipline, module, find_row_index_id, term)
                 print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
