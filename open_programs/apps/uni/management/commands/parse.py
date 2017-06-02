@@ -271,6 +271,12 @@ class Command(BaseCommand):
                 for row in rows:
                     if d["title"] in row:
                         break
+                print(
+                    f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
+                discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
+                if discipline:
+                    print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+
                 try:
                     print(f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
                     discipline = Discipline.objects.filter(title=d["title"], module=module_obj).first()
