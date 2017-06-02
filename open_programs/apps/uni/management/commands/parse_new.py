@@ -189,3 +189,5 @@ class Command(BaseCommand):
                             if str(module["number"]) == str(m.group(0)):
                                 module["row"] = row
                                 modules.append(module)
+
+            print(modules)
