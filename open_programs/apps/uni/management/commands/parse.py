@@ -252,9 +252,9 @@ class Command(BaseCommand):
 
         try:
             print(f"{self.bcolors.BOLD}Есть ли семестр дисциплины {discipline.title} / {training_semester} семестр ?{self.bcolors.ENDC}")
+            semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
             if semester_obj:
                 print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
-            semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
         except:
             semester_obj = Semester(discipline=discipline,
                                     training_semester=training_semester,
@@ -276,7 +276,7 @@ class Command(BaseCommand):
                     if discipline:
                         print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
                 except:
-                    print(f"{self.bcolors.FAIL}Не существует дисциплина {discipline.title}!!{self.bcolors.ENDC}")
+                    print(f"{self.bcolors.FAIL}Не существует дисциплина {d['title']}!!{self.bcolors.ENDC}")
                     discipline = Discipline(title=d["title"])
 
                 for i in range(10, 0, -1):
