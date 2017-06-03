@@ -11,6 +11,9 @@ from modules.models import Module
 
 
 class Command(BaseCommand):
+    """
+    Example: ./manage.py parse_new "/home/developer/КТОМ 4.html" uni_fixtures/modules.json ./get_programs.html "Конструкторско-технологическое обеспечение машиностроительных производств"
+    """
     help = "Create Django objects from raw&ugly UrFU data."
     requires_system_checks = True
     requires_migrations_checks = True
@@ -68,13 +71,8 @@ class Command(BaseCommand):
 
             for row in rows:
                 try:
-                    print(f"{self.bcolors.BOLD}Есть ли программа \"{row[1]}\"?{self.bcolors.ENDC}")
                     program = Program.objects.get(title=row[1])
-                    if program:
-                        print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
                 except:
-                    print(f"{self.bcolors.WARNING}Нет, создаём.{self.bcolors.ENDC}")
-
                     def level(x):
                         return {
                             'Магистр'.lower() in str(x).lower(): "m",
@@ -184,6 +182,7 @@ class Command(BaseCommand):
             for row in rows:
                 if row:
                     m = re.search('\d\d+', row[module_numbers_col])
+                    print(m)
                     if m:
                         for module in modules_json:
                             if str(module["number"]) == str(m.group(0)):
@@ -192,7 +191,8 @@ class Command(BaseCommand):
 
             program_modules = ProgramModules.objects.filter(program=program)
 
-            for module in modules:
-                print("             ", module['title'])
-                if program_modules.filter(module__uni_uuid=module["uuid"]):
-                    print(f"Модуль есть: {module['title']}")
+            # for module in modules:
+            #     print("            ", module['title'])
+            #     if program_modules.filter(module__uni_uuid=module["uuid"]):
+            #         print(f"Модуль есть: {module['title']}")
+            print(rows)
