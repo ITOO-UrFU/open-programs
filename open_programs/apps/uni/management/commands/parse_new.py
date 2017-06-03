@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup
 import re
+import sys
 import json
 import time
 
@@ -94,116 +95,121 @@ class Command(BaseCommand):
         except:
             raise NotImplementedError
 
-        if raw_html:
-            soup = BeautifulSoup(raw_html, 'lxml')
-            [s.extract() for s in soup('script')]
-            [s.extract() for s in soup('style')]
-            self.decompose(soup, "table", "menu_table")
-            self.decompose(soup, "td", "navpath")
-            self.decompose(soup, "div", "buttons")
-            soup.find('td', id="nav_td").decompose()
+        if not raw_html:
+            sys.exit(1)
+        soup = BeautifulSoup(raw_html, 'lxml')
+        [s.extract() for s in soup('script')]
+        [s.extract() for s in soup('style')]
+        self.decompose(soup, "table", "menu_table")
+        self.decompose(soup, "td", "navpath")
+        self.decompose(soup, "div", "buttons")
+        soup.find('td', id="nav_td").decompose()
 
-            try:
-                stage = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.stage").text.strip().lower() == "утверждено"
-            except:
-                stage = False
-            try:
-                displayableTitle = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.displayableTitle").text.strip()
-            except:
-                displayableTitle = ""
-            try:
-                number = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.number").text.strip()
-            except:
-                number = ""
-            try:
-                active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
-            except:
-                active = "нет"
-            try:
-                title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
-            except:
-                title = ""
-            try:
-                loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
-            except:
-                loadTimeType = "часов в неделю"
+        try:
+            stage = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.stage").text.strip().lower() == "утверждено"
+        except:
+            stage = False
+        try:
+            displayableTitle = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.displayableTitle").text.strip()
+        except:
+            displayableTitle = ""
+        try:
+            number = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.number").text.strip()
+        except:
+            number = ""
+        try:
+            active = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.active").text.strip()
+        except:
+            active = "нет"
+        try:
+            title = soup.find('td', id="EduVersionPlanTab.EduVersionPlan.title").text.strip()
+        except:
+            title = ""
+        try:
+            loadTimeType = soup.find("td", id="EduVersionPlanTab.EduVersionPlan.loadTimeType").text.strip()
+        except:
+            loadTimeType = "часов в неделю"
 
-            html = soup.find("table", {"class": "basic"}).prettify()
+        html = soup.find("table", {"class": "basic"}).prettify()
 
-            lps = LearningPlan.objects.filter(uni_number=number, status="p")
-            if len(lps) > 0:
-                for lp in lps:
-                    lp.uni_displayableTitle = displayableTitle
-                    lp.uni_number = number
-                    lp.uni_active = active
-                    lp.uni_title = title
-                    lp.uni_stage = stage
-                    lp.uni_loadTimeType = loadTimeType
-                    lp.uni_html = html
-                    lp.save()
-                    if lp not in program.learning_plans.all():
-                        program.learning_plans.add(lp)
-                        program.save()
-            else:
-                lp = LearningPlan(uni_displayableTitle=displayableTitle,
-                                  uni_number=number,
-                                  uni_active=active,
-                                  uni_title=title,
-                                  uni_stage=stage,
-                                  uni_loadTimeType=loadTimeType,
-                                  uni_html=html,
-                                  status="p"
-                                  )
+        lps = LearningPlan.objects.filter(uni_number=number, status="p")
+        if len(lps) > 0:
+            for lp in lps:
+                lp.uni_displayableTitle = displayableTitle
+                lp.uni_number = number
+                lp.uni_active = active
+                lp.uni_title = title
+                lp.uni_stage = stage
+                lp.uni_loadTimeType = loadTimeType
+                lp.uni_html = html
                 lp.save()
-                program.learning_plans.add(lp)
-                program.save()
+                if lp not in program.learning_plans.all():
+                    program.learning_plans.add(lp)
+                    program.save()
+        else:
+            lp = LearningPlan(uni_displayableTitle=displayableTitle,
+                              uni_number=number,
+                              uni_active=active,
+                              uni_title=title,
+                              uni_stage=stage,
+                              uni_loadTimeType=loadTimeType,
+                              uni_html=html,
+                              status="p"
+                              )
+            lp.save()
+            program.learning_plans.add(lp)
+            program.save()
 
-            table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
-            headers = [header.text.strip() for header in table.find_all('th')]
+        table = soup.find('table', id="EduVersionPlanTab.EduDisciplineList")
+        headers = [header.text.strip() for header in table.find_all('th')]
 
-            def find_row_index(row_text):
-                headers = table.find_all('th')
-                return headers.index(table.find('th', text=row_text))
+        def find_row_index(row_text):
+            headers = table.find_all('th')
+            return headers.index(table.find('th', text=row_text))
 
-            def find_row_index_id(id):
-                headers = table.find_all('th')
-                return headers.index(table.find('th', id=id))
+        def find_row_index_id(id):
+            headers = table.find_all('th')
+            return headers.index(table.find('th', id=id))
 
 
-            rows = []
-            for row in table.find_all('tr'):
-                rows.append([val.text.strip() for val in row.find_all('td')])
+        rows = []
+        for row in table.find_all('tr'):
+            rows.append([val.text.strip() for val in row.find_all('td')])
 
-            # Ищем модули
-            modules = []
-            for header in headers:
-                if "Номер модуля, дисциплины".lower() == header.lower():
-                    module_numbers_col = headers.index(header)
+        # Ищем модули
+        modules = []
+        for header in headers:
+            if "Номер модуля, дисциплины".lower() == header.lower():
+                module_numbers_col = headers.index(header)
 
-            for row in rows:
-                if row:
-                    m = re.search('\d\d+', row[module_numbers_col])
-                    if m and "М" in row[1]:
-                        for module in modules_json:
-                            if str(module["number"]) == str(m.group(0)):
-                                module["row"] = row
-                                modules.append(module)
+        for row in rows:
+            if row:
+                m = re.search('\d\d+', row[module_numbers_col])
+                if m and "М" in row[1]:
+                    for module in modules_json:
+                        if str(module["number"]) == str(m.group(0)):
+                            module["row"] = row
+                            modules.append(module)
 
-            program_modules = ProgramModules.objects.filter(program=program)
+        program_modules = ProgramModules.objects.filter(program=program)
 
-            for module in modules:
-                print("            ", module['title'])
-                if program_modules.filter(module__uni_uuid=module["uuid"]):
-                    print(f"Модуль есть: {module['title']}")
+        for module in modules:
+            print("            ", module['title'])
+            if program_modules.filter(module__uni_uuid=module["uuid"]):
+                print(f"Модуль есть: {module['title']}")
 
-            fulltime = False
-            if 'зао' not in number:
-                fulltime = True
-            print("fulltime: ", fulltime)
-            if fulltime:
-                term = TrainingTerms.objects.filter(title="4 года").first()
-                for module in [m for m in modules if m["disciplines"]]:
-                    module_obj, semester = self.create_module(find_row_index_id, module, program)
+        fulltime = False
+        if 'зао' not in number:
+            fulltime = True
+        print("fulltime: ", fulltime)
+
+        program_modules = []
+        if fulltime:
+            term = TrainingTerms.objects.filter(title="4 года").first()
+            for module in [m for m in modules if m["disciplines"]]:
+                module_obj, semester = self.create_module(find_row_index_id, module, program)
+
+        print(len(program_modules), [pm.module.title for pm in program_modules])
 
         if len(ProgramModules.objects.filter(Q(program=program))) != len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])):
             print(f"{self.bcolors.FAIL}Найдено дублирование модулей программы. Удалите их, либо поправьте в интерфейсе администратора (Ctrl+С).{self.bcolors.ENDC}")
@@ -277,8 +283,6 @@ class Command(BaseCommand):
                                 status='p',
                                 )
             module_obj.save()
-
-        program_modules = []
         program_module = ProgramModules.objects.filter(program=program, module=module_obj).first()
         if not program_module:
             print(f"{self.bcolors.WARNING}Модуль программы не найден, создаём: {module['title']} / {program.title}{self.bcolors.ENDC}")
@@ -288,5 +292,4 @@ class Command(BaseCommand):
             print(
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
         program_modules.append(program_module)
-        print(len(program_modules), [pm.module.title for pm in program_modules])
         return module_obj, semester
