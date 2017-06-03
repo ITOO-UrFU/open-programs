@@ -183,8 +183,9 @@ class Command(BaseCommand):
                 if row:
                     m = re.search('\d\d+', row[module_numbers_col])
                     if m and "М" in row[1]:
-                        print(m.group(0))
+                    if m and "М" in row[1]:
                         for module in modules_json:
+                            print(str(module["number"]), str(m.group(0)), str(module["number"]) == str(m.group(0)))
                             if str(module["number"]) == str(m.group(0)):
                                 module["row"] = row
                                 modules.append(module)
