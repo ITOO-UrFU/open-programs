@@ -209,14 +209,13 @@ class Command(BaseCommand):
             for module in [m for m in modules if m["disciplines"]]:
                 module_obj, semester = self.create_module(find_row_index_id, module, program, program_modules)
 
-            print(len(program_modules), [pm.module.title for pm in program_modules])
+            print(f"{self.bcolors.HEADER} В программе {len(program_modules)} модулей:")
+            print("\n    ".join([pm.module.title for pm in program_modules]))
 
             if len(ProgramModules.objects.filter(Q(program=program))) != len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])):
                 print(f"{self.bcolors.FAIL}Найдено дублирование модулей программы. Удалите их, либо поправьте в интерфейсе администратора (Ctrl+С).{self.bcolors.ENDC}")
 
                 program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]), Q(program=program))
-                print(len(program_modules))
-                print(program_modules_fail)
                 for pmf in program_modules_fail:
                     remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
                     if remove.lower() in ("y", "да", "ok", "ок"):
