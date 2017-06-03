@@ -195,3 +195,74 @@ class Command(BaseCommand):
                 print("            ", module['title'])
                 if program_modules.filter(module__uni_uuid=module["uuid"]):
                     print(f"Модуль есть: {module['title']}")
+
+            fulltime = False
+            if 'зао' not in number:
+                fulltime = True
+            print("fulltime: ", fulltime)
+            if fulltime:
+                term = TrainingTerms.objects.filter(title="4 года").first()
+                for module in [m for m in modules if m["disciplines"]]:
+                    module_obj, semester = self.create_module(find_row_index_id, module, program)
+
+
+
+    def create_module(self, find_row_index_id, module, program):
+        print(f"Ищем или создаём модуль: {module['title']}")
+        for i in range(10, 0, -1):
+            try:
+                ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                try:
+                    if int(ze) > 0:
+                        semester = i
+                except:
+                    pass
+            except:
+                semester = 99
+        print(f"Семестр: {semester}")
+        try:
+            module_obj = Module.objects.filter(title=module["title"]).first()
+            module_obj.uni_uuid = module["uuid"]
+            module_obj.uni_number = module["number"]
+            module_obj.uni_coordinator = module["coordinator"]
+            module_obj.uni_type = module["type"]
+            module_obj.uni_title = module["title"]
+            module_obj.uni_competence = module["competence"]
+            module_obj.uni_testUnits = module["testUnits"]
+            module_obj.uni_priority = module["priority"]
+            module_obj.uni_state = module["state"]
+            module_obj.uni_approvedDate = module["approvedDate"]
+            module_obj.uni_comment = module["comment"]
+            module_obj.uni_file = module["file"]
+            module_obj.uni_specialities = module["specialities"]
+            module_obj.program = program
+            module_obj.semester = semester
+            module_obj.status = 'p'
+            module_obj.save()
+        except:
+            module_obj = Module(title=module["title"],
+                                uni_uuid=module["uuid"],
+                                uni_number=module["number"],
+                                uni_coordinator=module["coordinator"],
+                                uni_type=module["type"],
+                                uni_title=module["title"],
+                                uni_competence=module["competence"],
+                                uni_testUnits=module["testUnits"],
+                                uni_priority=module["priority"],
+                                uni_state=module["state"],
+                                uni_approvedDate=module["approvedDate"],
+                                uni_comment=module["comment"],
+                                uni_file=module["file"],
+                                uni_specialities=module["specialities"],
+                                program=program,
+                                semester=semester,
+                                status='p',
+                                )
+            module_obj.save()
+
+        program_module = ProgramModules.objects.filter(program=program, module=module_obj)
+        if not program_module:
+            program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester, status="p")
+            program_module.save()
+
+        return module_obj, semester
