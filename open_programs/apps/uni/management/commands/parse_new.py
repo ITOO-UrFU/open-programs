@@ -288,5 +288,5 @@ class Command(BaseCommand):
             print(
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
         program_modules.append(program_module)
-        print("")
+        print(len(program_modules), [pm.module.title for pm in program_modules])
         return module_obj, semester
