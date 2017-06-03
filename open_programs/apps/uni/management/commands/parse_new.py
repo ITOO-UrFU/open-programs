@@ -207,7 +207,7 @@ class Command(BaseCommand):
 
 
     def create_module(self, find_row_index_id, module, program):
-        print(f"Ищем или создаём модуль: {module['title']}")
+        print(f"{self.bcolors.HEADER}Ищем или создаём модуль: {module['title']}{self.bcolors.ENDC}")
         for i in range(10, 0, -1):
             try:
                 ze = module["row"][find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
