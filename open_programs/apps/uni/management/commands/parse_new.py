@@ -269,5 +269,8 @@ class Command(BaseCommand):
             print(f"{self.bcolors.WARNING}Модуль программы не найден, создаём: {module['title']} / {program.title}{self.bcolors.ENDC}")
             program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester, status="p")
             program_module.save()
+        else:
+            print(
+                f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
 
         return module_obj, semester
