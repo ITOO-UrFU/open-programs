@@ -185,7 +185,6 @@ class Command(BaseCommand):
                     if m and "М" in row[1]:
                         for module in modules_json:
                             if str(module["number"]) == str(m.group(0)):
-                                print(str(module["number"]), str(m.group(0)), str(module["number"]) == str(m.group(0)))
                                 module["row"] = row
                                 modules.append(module)
 
@@ -267,6 +266,7 @@ class Command(BaseCommand):
 
         program_module = ProgramModules.objects.filter(program=program, module=module_obj)
         if not program_module:
+            print(f"{self.bcolors.WARNING}Модуль программы не найден, создаём: {module['title']} / {program.title}{self.bcolors.ENDC}")
             program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester, status="p")
             program_module.save()
 
