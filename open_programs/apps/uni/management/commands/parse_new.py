@@ -240,6 +240,7 @@ class Command(BaseCommand):
             module_obj.status = 'p'
             module_obj.save()
         except:
+            print(f"{self.bcolors.BOLD}Модуль создан: {module['title']}{self.bcolors.ENDC}")
             module_obj = Module(title=module["title"],
                                 uni_uuid=module["uuid"],
                                 uni_number=module["number"],
