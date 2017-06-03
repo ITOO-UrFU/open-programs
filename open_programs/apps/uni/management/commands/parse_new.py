@@ -291,5 +291,5 @@ class Command(BaseCommand):
         else:
             print(
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
-        program_modules.append(program_module)
+        self.program_modules.append(program_module)
         return module_obj, semester
