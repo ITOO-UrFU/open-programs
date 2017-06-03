@@ -239,6 +239,7 @@ class Command(BaseCommand):
             module_obj.semester = semester
             module_obj.status = 'p'
             module_obj.save()
+            print(f"{self.bcolors.OKBLUE}Модуль найден: {module['title']}{self.bcolors.ENDC}")
         except:
             print(f"{self.bcolors.BOLD}Модуль создан: {module['title']}{self.bcolors.ENDC}")
             module_obj = Module(title=module["title"],
