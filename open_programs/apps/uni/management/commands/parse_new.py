@@ -273,4 +273,5 @@ class Command(BaseCommand):
             print(
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
 
+        print("")
         return module_obj, semester
