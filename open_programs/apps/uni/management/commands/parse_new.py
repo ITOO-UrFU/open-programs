@@ -4,6 +4,7 @@ import json
 import time
 
 from django.core.management.base import BaseCommand
+from django.db.models import Q
 
 from programs.models import Program, ProgramModules, LearningPlan
 from disciplines.models import Discipline, Semester, TrainingTerms
@@ -204,7 +205,12 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
 
-        print(program_modules)
+        program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]) & Q(program=program))
+        for pmf in program_modules_fail:
+            remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
+            if remove.lower() in ("y", "да", "ok", "ок"):
+                pmf.delete()
+                print(f"{self.bcolors.OKGREEN}Удалено.{self.bcolors.ENDC}")
 
 
 
