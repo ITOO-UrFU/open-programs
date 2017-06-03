@@ -204,6 +204,9 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
 
+        print(program_modules)
+
+
 
 
     def create_module(self, find_row_index_id, module, program):
@@ -264,6 +267,7 @@ class Command(BaseCommand):
                                 )
             module_obj.save()
 
+        program_modules = []
         program_module = ProgramModules.objects.filter(program=program, module=module_obj)
         if not program_module:
             print(f"{self.bcolors.WARNING}Модуль программы не найден, создаём: {module['title']} / {program.title}{self.bcolors.ENDC}")
@@ -272,6 +276,6 @@ class Command(BaseCommand):
         else:
             print(
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
-
+        program_modules.append(program_module)
         print("")
-        return module_obj, semester
+        return module_obj, semester, program_modules
