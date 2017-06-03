@@ -205,9 +205,6 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
 
-        print(len(ProgramModules.objects.filter(Q(program=program))))
-        print(len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])))
-
         if len(ProgramModules.objects.filter(Q(program=program))) != len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])):
             print(f"{self.bcolors.FAIL}Найдено дублирование модулей программы. Удалите их, либо поправьте в интерфейсе администратора (Ctrl+С).{self.bcolors.ENDC}")
 
