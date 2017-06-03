@@ -206,6 +206,7 @@ class Command(BaseCommand):
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
 
         program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]) & Q(program=program))
+        print(program_modules_fail)
         for pmf in program_modules_fail:
             remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
             if remove.lower() in ("y", "да", "ok", "ок"):
