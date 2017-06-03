@@ -182,7 +182,7 @@ class Command(BaseCommand):
             for row in rows:
                 if row:
                     m = re.search('\d\d+', row[module_numbers_col])
-                    print(m)
+                    print(m.group(0))
                     if m:
                         for module in modules_json:
                             if str(module["number"]) == str(m.group(0)):
@@ -195,4 +195,4 @@ class Command(BaseCommand):
             #     print("            ", module['title'])
             #     if program_modules.filter(module__uni_uuid=module["uuid"]):
             #         print(f"Модуль есть: {module['title']}")
-            print(rows)
+            # print(rows)
