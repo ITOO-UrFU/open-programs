@@ -205,8 +205,8 @@ class Command(BaseCommand):
                 for module in [m for m in modules if m["disciplines"]]:
                     module_obj, semester = self.create_module(find_row_index_id, module, program)
 
-        print(program_modules)
-        program_modules_fail = ProgramModules.objects.filter(Q(id__in=[o.id for o in program_modules]))  # , Q(program=program)
+        print(len(program_modules))
+        program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]))  # , Q(program=program)
         print(program_modules_fail)
         for pmf in program_modules_fail:
             remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
@@ -234,7 +234,7 @@ class Command(BaseCommand):
         else:
             print(f"Семестр: {semester}")
         try:
-            module_obj = Module.objects.filter(title=module["title"]).first()
+            module_obj = Module.objects.filter(title=module["title"], uni_number=module["number"]).first()
             module_obj.uni_uuid = module["uuid"]
             module_obj.uni_number = module["number"]
             module_obj.uni_coordinator = module["coordinator"]
