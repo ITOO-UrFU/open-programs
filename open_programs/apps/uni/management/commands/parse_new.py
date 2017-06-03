@@ -279,7 +279,7 @@ class Command(BaseCommand):
             module_obj.save()
 
         program_modules = []
-        program_module = ProgramModules.objects.filter(program=program, module=module_obj)
+        program_module = ProgramModules.objects.filter(program=program, module=module_obj).first()
         if not program_module:
             print(f"{self.bcolors.WARNING}Модуль программы не найден, создаём: {module['title']} / {program.title}{self.bcolors.ENDC}")
             program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester, status="p")
