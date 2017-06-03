@@ -207,7 +207,7 @@ class Command(BaseCommand):
         if fulltime:
             term = TrainingTerms.objects.filter(title="4 года").first()
             for module in [m for m in modules if m["disciplines"]]:
-                module_obj, semester = self.create_module(find_row_index_id, module, program)
+                module_obj, semester = self.create_module(find_row_index_id, module, program, program_modules)
 
         print(len(program_modules), [pm.module.title for pm in program_modules])
 
@@ -226,7 +226,7 @@ class Command(BaseCommand):
 
 
 
-    def create_module(self, find_row_index_id, module, program):
+    def create_module(self, find_row_index_id, module, program, program_modules):
         print(f"{self.bcolors.HEADER}Ищем или создаём модуль: {module['title']}{self.bcolors.ENDC}")
         for i in range(10, 0, -1):
             try:
