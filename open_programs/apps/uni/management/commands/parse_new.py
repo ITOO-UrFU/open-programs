@@ -209,17 +209,14 @@ class Command(BaseCommand):
         print(len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])))
 
         if len(ProgramModules.objects.filter(Q(program=program))) != len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])):
-            print(f"{self.bcolors.FAIL}Найдено дублирование модулей программы. Поправьте в интерфейсе администратора.{self.bcolors.ENDC}")
-            import sys
-            sys.exit(1)
+            print(f"{self.bcolors.FAIL}Найдено дублирование модулей программы. Удалите их, либо поправьте в интерфейсе администратора (Ctrl+С).{self.bcolors.ENDC}")
 
-        program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]), Q(program=program))
-        print(program_modules_fail)
-        for pmf in program_modules_fail:
-            remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
-            if remove.lower() in ("y", "да", "ok", "ок"):
-                pmf.delete()
-                print(f"{self.bcolors.OKGREEN}Удалено.{self.bcolors.ENDC}")
+            program_modules_fail = ProgramModules.objects.filter(~Q(id__in=[o.id for o in program_modules]), Q(program=program))
+            for pmf in program_modules_fail:
+                remove = input(f"{self.bcolors.WARNING}Неверный модуль программы: {pmf.module.title}. Удалить?{self.bcolors.ENDC}")
+                if remove.lower() in ("y", "да", "ok", "ок"):
+                    pmf.delete()
+                    print(f"{self.bcolors.OKGREEN}Удалено.{self.bcolors.ENDC}")
 
 
 
