@@ -191,8 +191,7 @@ class Command(BaseCommand):
 
             program_modules = ProgramModules.objects.filter(program=program)
 
-            # for module in modules:
-            #     print("            ", module['title'])
-            #     if program_modules.filter(module__uni_uuid=module["uuid"]):
-            #         print(f"Модуль есть: {module['title']}")
-            print(json.dumps(rows))
+            for module in modules:
+                print("            ", module['title'])
+                if program_modules.filter(module__uni_uuid=module["uuid"]):
+                    print(f"Модуль есть: {module['title']}")
