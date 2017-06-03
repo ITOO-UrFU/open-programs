@@ -209,7 +209,7 @@ class Command(BaseCommand):
             for module in [m for m in modules if m["disciplines"]]:
                 module_obj, semester = self.create_module(find_row_index_id, module, program, program_modules)
 
-            print(f"{self.bcolors.HEADER} В программе {len(program_modules)} модулей:{self.bcolors.ENDC}", end="\n    ")
+            print(f"{self.bcolors.HEADER}В программе {len(program_modules)} модулей:{self.bcolors.ENDC}", end="\n    ")
             print("\n    ".join([pm.module.title for pm in program_modules]))
 
             if len(ProgramModules.objects.filter(Q(program=program))) != len(set([pm.module.title for pm in ProgramModules.objects.filter(Q(program=program))])):
