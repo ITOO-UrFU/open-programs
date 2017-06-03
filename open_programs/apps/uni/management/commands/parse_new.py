@@ -221,7 +221,8 @@ class Command(BaseCommand):
                 semester = 99
         if semester == 99:
             print(f"Семестр: {self.bcolors.FAIL}{semester}{self.bcolors.ENDC}")
-        print(f"Семестр: {semester}")
+        else:
+            print(f"Семестр: {semester}")
         try:
             module_obj = Module.objects.filter(title=module["title"]).first()
             module_obj.uni_uuid = module["uuid"]
