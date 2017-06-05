@@ -335,7 +335,7 @@ class Command(BaseCommand):
                     end_disciplines = i - 1
 
         discipline_titles = [r[2] for r in rows[start_disciplines:end_disciplines]]
-        print(discipline_titles)
+        print(start_disciplines, end_disciplines)
 
         for d in module["disciplines"]:
             if int(d["testUnits"]) > 0 and d["title"] in discipline_titles:
