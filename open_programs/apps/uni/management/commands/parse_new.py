@@ -4,12 +4,43 @@ import sys
 import json
 import time
 
+from collections import OrderedDict
+
 from django.core.management.base import BaseCommand
 from django.db.models import Q
 
 from programs.models import Program, ProgramModules, LearningPlan
 from disciplines.models import Discipline, Semester, TrainingTerms
 from modules.models import Module
+
+
+def write_roman(num):
+    roman = OrderedDict()
+    roman[1000] = "M"
+    roman[900] = "CM"
+    roman[500] = "D"
+    roman[400] = "CD"
+    roman[100] = "C"
+    roman[90] = "XC"
+    roman[50] = "L"
+    roman[40] = "XL"
+    roman[10] = "X"
+    roman[9] = "IX"
+    roman[5] = "V"
+    roman[4] = "IV"
+    roman[1] = "I"
+
+    def roman_num(num):
+        for r in roman.keys():
+            x, y = divmod(num, r)
+            yield roman[r] * x
+            num -= (r * x)
+            if num > 0:
+                roman_num(num)
+            else:
+                break
+
+    return "".join([a for a in roman_num(num)])
 
 
 class Command(BaseCommand):
@@ -208,6 +239,8 @@ class Command(BaseCommand):
             term = TrainingTerms.objects.filter(title="4 года").first()
             for module in [m for m in modules if m["disciplines"]]:
                 module_obj, semester = self.create_module(find_row_index_id, module, program, program_modules)
+                semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester, program,
+                                                   term)
 
             print(f"{self.bcolors.HEADER}В программе {len(program_modules)} модулей:{self.bcolors.ENDC}", end="\n    ")
             print("\n    ".join([pm.module.title for pm in program_modules]))
@@ -221,9 +254,6 @@ class Command(BaseCommand):
                     if remove.lower() in ("y", "да", "ok", "ок"):
                         pmf.delete()
                         print(f"{self.bcolors.OKGREEN}Удалено.{self.bcolors.ENDC}")
-
-
-
 
     def create_module(self, find_row_index_id, module, program, program_modules):
         print(f"{self.bcolors.HEADER}Ищем или создаём модуль: {module['title']}{self.bcolors.ENDC}")
@@ -292,3 +322,67 @@ class Command(BaseCommand):
                 f"{self.bcolors.OKBLUE}Модуль программы найден {module['title']} / {program.title}{self.bcolors.ENDC}")
         program_modules.append(program_module)
         return module_obj, semester
+
+
+    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
+        for d in module["disciplines"]:
+            if int(d["testUnits"]) > 0:
+                for row in rows:
+                    if d["title"] in row:
+                        break
+
+                semesters = []
+
+                for i in range(10, 0, -1):
+                    try:
+                        ze = row[
+                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                        try:
+                            if int(ze) > 0:
+                                semesters.append(semester)
+                        except:
+                            pass
+                    except:
+                        pass
+
+                print(
+                    f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
+                discipline = Discipline.objects.filter(title=d["title"],
+                                                       module__in=Module.objects.filter(uni_uuid=module["uuid"]),
+                                                       module__program=program).first()
+                print(discipline)
+                if discipline:
+                    print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+                else:
+                    print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
+                    discipline = Discipline(title=d["title"])
+
+
+
+                discipline.module = module_obj
+                discipline.labor = d["testUnits"]
+                discipline.uni_uid = d["uid"]
+                discipline.uni_discipline = d["discipline"]
+                discipline.uni_number = d["number"]
+                discipline.uni_section = d["section"]
+                discipline.uni_file = d["file"]
+                discipline.period = semester - module_obj.semester + 1
+                try:
+                    try:
+                        if int(max(row[5].split("-"))):
+                            discipline.form = "z"
+                    except:
+                        pass
+                    try:
+                        if int(max(row[4].split("-"))):
+                            discipline.form = "e"
+                    except:
+                        pass
+                except:
+                    pass
+
+                discipline.status = "p"
+                # discipline.save()
+                # self.create_semester(program, discipline, module, find_row_index_id, term)
+                print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
+        return semesters
