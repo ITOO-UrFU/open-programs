@@ -329,61 +329,62 @@ class Command(BaseCommand):
             if int(d["testUnits"]) > 0:
                 for row in rows:
                     if d["title"] in row:
-                        break
+                        print(f"{self.bcolors.OKGREEN}Дисциплина: {d['title']}{self.bcolors.ENDC}")
 
-                semesters = []
+                        semesters = []
 
-                for i in range(10, 0, -1):
-                    try:
-                        ze = row[
-                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                        try:
-                            if int(ze) > 0:
-                                semesters.append(semester)
-                        except:
-                            pass
-                    except:
-                        pass
-                print(semesters)
+                        for i in range(10, 0, -1):
+                            try:
+                                ze = row[
+                                    find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
+                                try:
+                                    if int(ze) > 0:
+                                        semesters.append(semester)
+                                        print(f"appanded {i} semester")
+                                except:
+                                    pass
+                            except:
+                                pass
+                        print(semesters)
 
-                # print(
-                #     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                # discipline = Discipline.objects.filter(title=d["title"],
-                #                                        module__in=Module.objects.filter(uni_uuid=module["uuid"]),
-                #                                        module__program=program).first()
-                # print(discipline)
-                # if discipline:
-                #     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
-                # else:
-                #     print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
-                #     discipline = Discipline(title=d["title"])
-                #
-                #
-                #
-                # discipline.module = module_obj
-                # discipline.labor = d["testUnits"]
-                # discipline.uni_uid = d["uid"]
-                # discipline.uni_discipline = d["discipline"]
-                # discipline.uni_number = d["number"]
-                # discipline.uni_section = d["section"]
-                # discipline.uni_file = d["file"]
-                # discipline.period = semester - module_obj.semester + 1
-                # try:
-                #     try:
-                #         if int(max(row[5].split("-"))):
-                #             discipline.form = "z"
-                #     except:
-                #         pass
-                #     try:
-                #         if int(max(row[4].split("-"))):
-                #             discipline.form = "e"
-                #     except:
-                #         pass
-                # except:
-                #     pass
-                #
-                # discipline.status = "p"
-                # # discipline.save()
-                # # self.create_semester(program, discipline, module, find_row_index_id, term)
-                # print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
+                        # print(
+                        #     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
+                        # discipline = Discipline.objects.filter(title=d["title"],
+                        #                                        module__in=Module.objects.filter(uni_uuid=module["uuid"]),
+                        #                                        module__program=program).first()
+                        # print(discipline)
+                        # if discipline:
+                        #     print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
+                        # else:
+                        #     print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
+                        #     discipline = Discipline(title=d["title"])
+                        #
+                        #
+                        #
+                        # discipline.module = module_obj
+                        # discipline.labor = d["testUnits"]
+                        # discipline.uni_uid = d["uid"]
+                        # discipline.uni_discipline = d["discipline"]
+                        # discipline.uni_number = d["number"]
+                        # discipline.uni_section = d["section"]
+                        # discipline.uni_file = d["file"]
+                        # discipline.period = semester - module_obj.semester + 1
+                        # try:
+                        #     try:
+                        #         if int(max(row[5].split("-"))):
+                        #             discipline.form = "z"
+                        #     except:
+                        #         pass
+                        #     try:
+                        #         if int(max(row[4].split("-"))):
+                        #             discipline.form = "e"
+                        #     except:
+                        #         pass
+                        # except:
+                        #     pass
+                        #
+                        # discipline.status = "p"
+                        # # discipline.save()
+                        # # self.create_semester(program, discipline, module, find_row_index_id, term)
+                        # print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
         return semesters
