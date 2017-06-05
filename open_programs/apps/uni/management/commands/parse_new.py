@@ -334,7 +334,7 @@ class Command(BaseCommand):
                 elif start_disciplines and "М" in row[1]:
                     end_disciplines = i - 1
 
-        discipline_titles = [r[2] for r in rows[start_disciplines, end_disciplines]]
+        discipline_titles = [r[2] for r in rows[start_disciplines:end_disciplines]]
         print(discipline_titles)
 
         for d in module["disciplines"]:
