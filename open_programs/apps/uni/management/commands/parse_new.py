@@ -361,7 +361,7 @@ class Command(BaseCommand):
                         print(semesters)
 
                         for i, s in enumerate(sorted(semesters)):
-                            print(s, f"{d['title']} {write_roman(i)}")
+                            print(s, f"{d['title']} {write_roman(i + 1)}")
 
 
                         # print(
