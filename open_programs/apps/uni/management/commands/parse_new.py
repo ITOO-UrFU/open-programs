@@ -348,12 +348,9 @@ class Command(BaseCommand):
 
                         if len(row[5]) > 0:
                             cell_values = row[5].split("-")
-                            print("cell_values1: ", cell_values)
                             if len(cell_values) > 1:
                                 cell_values = range(int(cell_values[0]), int(cell_values[1]))
                             semesters += cell_values
-                            print("cell_values: ", cell_values)
-                            print(semesters)
 
                         if len(row[4]) > 0:
                             cell_values = row[4].split("-")
@@ -361,9 +358,8 @@ class Command(BaseCommand):
                             if len(cell_values) > 1:
                                 cell_values = range(int(cell_values[0]), int(cell_values[1]))
                             semesters += cell_values
-                            print("cell_values: ", cell_values)
 
-                        print(list(set(semesters)))
+                        semesters = list(set(semesters))
 
 
                         # print(
