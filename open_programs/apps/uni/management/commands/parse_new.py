@@ -344,6 +344,7 @@ class Command(BaseCommand):
                             pass
                     except:
                         pass
+                print(semesters)
 
                 print(
                     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
