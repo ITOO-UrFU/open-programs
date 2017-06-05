@@ -361,6 +361,9 @@ class Command(BaseCommand):
 
                         semesters = list(set(semesters))
 
+                        for i, s in enumerate(semesters):
+                            print(s, f"{d['title']} {write_roman(i)}")
+
 
                         # print(
                         #     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
