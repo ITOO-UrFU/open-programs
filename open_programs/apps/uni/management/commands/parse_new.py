@@ -357,7 +357,7 @@ class Command(BaseCommand):
                                 cell_values = range(int(cell_values[0]), int(cell_values[1]))
                             semesters += cell_values
 
-                        semesters = list(set(semesters))
+                        semesters = list(set([int(s) for s in semesters]))
                         print(semesters)
 
                         for i, s in enumerate(sorted(semesters)):
