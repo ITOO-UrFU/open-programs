@@ -339,7 +339,7 @@ class Command(BaseCommand):
                                     find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
                                 try:
                                     if int(ze) > 0:
-                                        semesters.append(write_roman(semester))
+                                        semesters.append(i)
                                         print(f"appanded {i} semester")
                                 except:
                                     pass
