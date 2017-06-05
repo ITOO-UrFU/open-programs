@@ -340,7 +340,6 @@ class Command(BaseCommand):
                                 try:
                                     if int(ze) > 0:
                                         semesters.append(i)
-                                        print(f"appanded {i} semester")
                                 except:
                                     pass
                             except:
@@ -354,14 +353,14 @@ class Command(BaseCommand):
 
                         if len(row[4]) > 0:
                             cell_values = row[4].split("-")
-                            print("cell_values1: ", cell_values)
                             if len(cell_values) > 1:
                                 cell_values = range(int(cell_values[0]), int(cell_values[1]))
                             semesters += cell_values
 
                         semesters = list(set(semesters))
+                        print(semesters)
 
-                        for i, s in enumerate(semesters):
+                        for i, s in enumerate(sorted(semesters)):
                             print(s, f"{d['title']} {write_roman(i)}")
 
 
