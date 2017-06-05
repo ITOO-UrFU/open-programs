@@ -347,6 +347,13 @@ class Command(BaseCommand):
                                 pass
                         print(semesters)
 
+                        if len(row[5]) > 0:
+                            cell_values = row[5].split("-")
+                            if len(cell_values) > 1:
+                                cell_values = range(cell_values[0], cell_values[1])
+                        print(cell_values)
+
+
                         # print(
                         #     f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
                         # discipline = Discipline.objects.filter(title=d["title"],
