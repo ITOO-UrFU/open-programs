@@ -325,8 +325,19 @@ class Command(BaseCommand):
 
 
     def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
+        start_disciplines = None
+        end_disciplines = None
+        for i, row in enumerate(rows):
+            if module["title"] in row[2] and "М" in row[1]:
+                start_disciplines = i + 1
+            elif start_disciplines and "М" in row[1]:
+                end_disciplines = i - 1
+
+        discipline_titles = [r[2] for r in rows[start_disciplines, end_disciplines]]
+        print(discipline_titles)
+
         for d in module["disciplines"]:
-            if int(d["testUnits"]) > 0:
+            if int(d["testUnits"]) > 0 and d["title"] in discipline_titles:
                 for row in rows:
                     if d["title"] in row:
                         print(f"{self.bcolors.OKGREEN}Дисциплина: {d['title']}{self.bcolors.ENDC}")
