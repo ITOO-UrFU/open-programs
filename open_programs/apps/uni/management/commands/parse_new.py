@@ -328,7 +328,7 @@ class Command(BaseCommand):
         start_disciplines = None
         end_disciplines = None
         for i, row in enumerate(rows):
-            if len(row) > 2:
+            if len(row) > 3:
                 if module["title"] in row[2] and "М" in row[1]:
                     start_disciplines = i + 1
                 elif start_disciplines and "М" in row[1]:
