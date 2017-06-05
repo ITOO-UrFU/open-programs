@@ -333,6 +333,7 @@ class Command(BaseCommand):
                     start_disciplines = i + 1
                 elif start_disciplines and "М" in row[1]:
                     end_disciplines = i - 1
+                    break
 
         discipline_titles = [r[2] for r in rows[start_disciplines:end_disciplines]]
         print(start_disciplines, end_disciplines)
