@@ -333,7 +333,7 @@ class Command(BaseCommand):
 
                         semesters = []
 
-                        for i in range(10, 0, -1):
+                        for i in range(1, 10):
                             try:
                                 ze = row[
                                     find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
