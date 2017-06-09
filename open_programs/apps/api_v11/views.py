@@ -321,9 +321,7 @@ def get_targets_by_program(request, program_id):
             cgmodules = cg.get_program_modules()
             tm = TargetModules.objects.filter(target=target, program_module__in=cgmodules).count()
             if tm > 0:
-                choice_groups.append({
-                    "id": cg.id,
-                })
+                choice_groups.append(cg.id)
         response.append({
             "id": target.id,
             "title": target.title,
