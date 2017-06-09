@@ -672,3 +672,17 @@ def get_program_variants(request, program_id):
     trigger.deactivate()
     trigger.save()
     return Response(variants)
+
+
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def delete_variant(request):
+    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program=variant.program, view="gv")
+    trigger.activate()
+    variant.delete()
+    return Response(status=200)
+
+
