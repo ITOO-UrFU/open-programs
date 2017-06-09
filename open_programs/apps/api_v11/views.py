@@ -704,6 +704,7 @@ def get_program_student(request, program_id):
             "title": target.title,
             "number": target.number,
             "program": target.program.id,
+            "choice_groups": choice_groups,
         })
 
     return Response(response)
