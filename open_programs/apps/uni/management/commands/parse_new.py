@@ -369,11 +369,11 @@ class Command(BaseCommand):
                             semesters += cell_values
 
                         semesters = list(set([int(s) for s in semesters]))
-                        print(semesters)
-
+                        disciplines = []
                         for i, s in enumerate(sorted(semesters)):
-                            print(s, f"{d['title']} {write_roman(i + 1)}")
+                            disciplines.append(f"{d['title']} {write_roman(i + 1)}")
 
+                        for d in
 
                         print(
                             f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")

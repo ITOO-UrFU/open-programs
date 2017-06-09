@@ -113,10 +113,10 @@ urlpatterns += [
 
 #### API rewrite
 urlpatterns.append(url(r'^api/v11/heartbeat/$', heartbeat, name="heartbeat"))
-urlpatterns.append(url(r'^api/v11/get_choice_groups_by_program/(?P<program_id>.*)/$', get_choice_groups_by_program, name="get_choice_groups_by_program"))
+urlpatterns.append(url(r'^api/v11/get_program_choice_groups/(?P<program_id>.*)/$', get_choice_groups_by_program, name="get_choice_groups_by_program"))
 urlpatterns.append(url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules, name="get_program_modules"))
-urlpatterns.append(url(r'^api/v11/get_targets_by_program/(?P<program_id>.*)/$', get_targets_by_program, name="get_targets_by_program"))
-urlpatterns.append(url(r'^api/v11/get_competences_by_program/(?P<program_id>.*)/$', get_competences_by_program, name="get_competences_by_program"))
+urlpatterns.append(url(r'^api/v11/get_program_targets/(?P<program_id>.*)/$', get_targets_by_program, name="get_targets_by_program"))
+urlpatterns.append(url(r'^api/v11/get_program_competences/(?P<program_id>.*)/$', get_competences_by_program, name="get_competences_by_program"))
 urlpatterns.append(url(r'^api/v11/change_target_module/$', change_target_module, name="change_target_module"))
 urlpatterns.append(url(r'^api/v11/change_choice_group/$', change_choice_group, name="change_choice_group"))
 urlpatterns.append(url(r'^api/v11/change_competence/$', change_competence, name="change_competence"))
