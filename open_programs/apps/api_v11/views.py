@@ -320,6 +320,7 @@ def get_targets_by_program(request, program_id):
         for cg in ChoiceGroup.objects.filter(program=program).order_by("number"):
             cgmodules = cg.get_program_modules()
             tm = TargetModules.objects.filter(target=target, program_module__in=cgmodules).count()
+            print(tm)
             if tm > 0:
                 choice_groups.append(cg.id)
         response.append({
