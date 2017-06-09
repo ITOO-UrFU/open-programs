@@ -128,8 +128,6 @@ urlpatterns.append(url(r'^api/v11/change_variant/$', change_variant, name="chang
 urlpatterns.append(url(r'^api/v11/delete_variant/$', delete_variant, name="delete_variant"))
 urlpatterns.append(url(r'^api/v11/create_variant/$', create_variant, name="create_variant"))
 
-urlpatterns.append(url(r'^api/v11/get_program_student/(?P<program_id>.*)/$', get_program_student, name="get_program_student"))
-
 urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
