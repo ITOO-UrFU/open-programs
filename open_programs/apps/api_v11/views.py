@@ -687,7 +687,8 @@ def get_program_student(request, program_id):
             cg_target_modules = []
             for pm in cgmodules:
                 tm = TargetModules.objects.filter(target=target, program_module=pm).first()
-                cg_target_modules.append(tm.id)
+                if tm:
+                    cg_target_modules.append(tm.id)
 
             choice_groups.append({
                 "id": cg.id,
