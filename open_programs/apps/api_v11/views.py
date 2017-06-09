@@ -700,10 +700,7 @@ def get_program_student(request, program_id):
                 "program": cg.program.id,
             })
         response.append({
-            "id": target.id,
             "title": target.title,
-            "number": target.number,
-            "program": target.program.id,
             "choice_groups": choice_groups,
         })
 
