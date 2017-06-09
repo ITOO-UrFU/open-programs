@@ -678,19 +678,26 @@ def delete_variant(request):
 @permission_classes((AllowAny, ))
 def get_program_student(request, program_id):
     response = []
+    choice_groups = []
     program = Program.objects.get(id=program_id)
-    for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
-        response.append({
-            "id": cg.id,
-            "title": cg.title,
-            "get_choice_group_type_display": cg.get_choice_group_type_display(),
-            "get_program_modules": cg.get_program_modules(),
-            "number": cg.number,
-            "labor": cg.labor,
-            "program": cg.program.id,
-        })
 
-    for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
+    for target in TrainingTarget.objects.filter(program=program).order_by("number"):
+        for cg in ChoiceGroup.objects.filter(program=program).order_by("number"):
+            cgmodules = cg.get_program_modules()
+            cg_target_modules = []
+            for pm in cgmodules:
+                tm = TargetModules.objects.filter(target=target, program_module=pm).first()
+                cg_target_modules.append(tm.id)
+
+            choice_groups.append({
+                "id": cg.id,
+                "title": cg.title,
+                "get_choice_group_type_display": cg.get_choice_group_type_display(),
+                "get_program_modules": cg_target_modules,
+                "number": cg.number,
+                "labor": cg.labor,
+                "program": cg.program.id,
+            })
         response.append({
             "id": target.id,
             "title": target.title,
