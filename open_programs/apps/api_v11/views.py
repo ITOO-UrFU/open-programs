@@ -313,13 +313,25 @@ def get_choice_groups_by_program(request, program_id):
 @permission_classes((AllowAny, ))
 def get_targets_by_program(request, program_id):
     response = []
-    for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
+    program = Program.objects.get(id=program_id)
+
+    for target in TrainingTarget.objects.filter(program=program).order_by("number"):
+        choice_groups = []
+        for cg in ChoiceGroup.objects.filter(program=program).order_by("number"):
+            cgmodules = cg.get_program_modules()
+            tm = TargetModules.objects.filter(target=target, program_module__in=cgmodules).count()
+            if tm > 0:
+                choice_groups.append({
+                    "id": cg.id,
+                })
         response.append({
             "id": target.id,
             "title": target.title,
             "number": target.number,
             "program": target.program.id,
+            "choice_groups": choice_groups,
         })
+
     return Response(response)
 
 
@@ -660,48 +672,3 @@ def get_program_variants(request, program_id):
     trigger.deactivate()
     trigger.save()
     return Response(variants)
-
-
-@api_view(('POST',))
-@permission_classes((AllowAny, )) #
-def delete_variant(request):
-    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=variant.program, view="gv")
-    trigger.activate()
-    variant.delete()
-    return Response(status=200)
-
-
-@api_view(('GET',))
-@permission_classes((AllowAny, ))
-def get_program_student(request, program_id):
-    response = []
-    choice_groups = []
-    program = Program.objects.get(id=program_id)
-
-    for target in TrainingTarget.objects.filter(program=program).order_by("number"):
-        for cg in ChoiceGroup.objects.filter(program=program).order_by("number"):
-            cgmodules = cg.get_program_modules()
-            cg_target_modules = []
-            for pm in cgmodules:
-                tm = TargetModules.objects.filter(target=target, program_module=pm).first()
-                if tm:
-                    cg_target_modules.append(tm.id)
-
-            choice_groups.append({
-                "id": cg.id,
-                "title": cg.title,
-                "get_choice_group_type_display": cg.get_choice_group_type_display(),
-                "get_program_modules": cg_target_modules,
-                "number": cg.number,
-                "labor": cg.labor,
-                "program": cg.program.id,
-            })
-        response.append({
-            "title": target.title,
-            "choice_groups": choice_groups,
-        })
-
-    return Response(response)
