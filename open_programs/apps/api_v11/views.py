@@ -672,3 +672,30 @@ def delete_variant(request):
     trigger.activate()
     variant.delete()
     return Response(status=200)
+
+
+@api_view(('GET',))
+@permission_classes((AllowAny, ))
+def get_program_student(request, program_id):
+    response = []
+    program = Program.objects.get(id=program_id)
+    for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
+        response.append({
+            "id": cg.id,
+            "title": cg.title,
+            "get_choice_group_type_display": cg.get_choice_group_type_display(),
+            "get_program_modules": cg.get_program_modules(),
+            "number": cg.number,
+            "labor": cg.labor,
+            "program": cg.program.id,
+        })
+
+    for target in TrainingTarget.objects.filter(program__id=program_id).order_by("number"):
+        response.append({
+            "id": target.id,
+            "title": target.title,
+            "number": target.number,
+            "program": target.program.id,
+        })
+
+    return Response(response)
