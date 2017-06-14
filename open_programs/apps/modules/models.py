@@ -52,6 +52,14 @@ class Module(ObjectBaseClass):
     def get_all_discipline_ids(self):
         return [discipline.id for discipline in Discipline.objects.filter(module=self)]
 
+    def get_all_discipline_custom(self):
+        return [{"id": discipline.id,
+                 "title": discipline.title,
+                 "description": discipline.description,
+                 "labor": discipline.labor,
+                 "form": discipline.get_form_display()
+                 } for discipline in Discipline.objects.filter(module=self)]
+
     def get_labor(self):
         return Discipline.objects.filter(module=self, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]
 
