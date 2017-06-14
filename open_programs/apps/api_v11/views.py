@@ -79,7 +79,7 @@ class TypeList(viewsets.ModelViewSet):
 
 
 class DisciplineList(viewsets.ModelViewSet):
-    queryset = Discipline.objects.filter(status="p", archived=False)
+    queryset = Discipline.objects.filter(archived=False)
     serializer_class = DisciplineSerializer
     permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
