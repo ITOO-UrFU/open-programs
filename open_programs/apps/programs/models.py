@@ -245,7 +245,7 @@ def student_program_key():
 
 class StudentProgram(ObjectBaseClass):
     # id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    link = models.CharField(primary_key=True, unique=True, null=False, max_length=16, default=student_program_key)
+    link = models.CharField(primary_key=True, unique=True, null=False, max_length=16, default=student_program_key())
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True)
     program = models.ForeignKey("Program")
     json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
