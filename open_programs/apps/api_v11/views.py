@@ -694,4 +694,6 @@ def save_program(request):
 
     student_program = StudentProgram.objects.create(program=program, json=json)
 
-    return Response(status=200, data={"link": student_program.link})
+    return Response(status=200, data={"link": student_program.link,
+                                      "id": student_program.id}
+                    )
