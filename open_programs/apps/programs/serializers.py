@@ -1,5 +1,5 @@
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType
-from persons.serializers import PersonSerializer
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, StudentProgram
+from persons.serializers import PersonSerializer, UserSerializer
 from modules.serializers import ModuleSerializer
 
 from rest_framework import serializers
@@ -64,3 +64,12 @@ class TargetModulesSerializer(serializers.ModelSerializer):
     class Meta:
         model = TargetModules
         fields = ("id", "target", "program_module", "choice_group")
+
+
+class StudentProgramSerializer(serializers.ModelSerializer):
+    program = ProgramSerializer
+    user = UserSerializer
+
+    class Meta:
+        model = StudentProgram
+        fields = ("link", "user", "program", "json")
