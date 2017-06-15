@@ -3,7 +3,7 @@ from reversion.admin import VersionAdmin
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan, StudentProgram
 
 
 @admin.register(Program)
@@ -69,3 +69,8 @@ class ChoiceGroupTypeAdmin(VersionAdmin):
 @admin.register(LearningPlan)
 class LearningPlanAdmin(VersionAdmin):
     list_display = ('uni_displayableTitle', 'uni_number', 'uni_title', 'uni_stage', 'uni_loadTimeType')
+
+
+@admin.register(StudentProgram)
+class StudentProgramAdmin(VersionAdmin):
+    list_display = ("link", "program", "user")

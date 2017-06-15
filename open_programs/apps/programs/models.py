@@ -1,13 +1,18 @@
 import uuid
+from os import urandom
+import hashlib
+from jsonfield import JSONField
 
 from django.db import models
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
+from django.conf import settings
 
 from persons.models import Person
 from competences.models import Competence
 from modules.models import Module
 from disciplines.models import Discipline
+
 
 
 class LearningPlan(ObjectBaseClass):
@@ -231,3 +236,26 @@ class ChoiceGroupType(ObjectBaseClass):
 
     def __str__(self):
         return self.title
+
+
+class StudentProgram(ObjectBaseClass):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    link = models.CharField(primary_key=True, blank=True, null=True, max_length=16, default=student_program_key())
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True)
+    program = models.ForeignKey("Program")
+    json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'сохранение'
+        verbose_name_plural = 'сохранения'
+
+    def __str__(self):
+        return self.title
+
+
+def student_program_key():
+    while True:  # lol hack
+        key = hashlib.md5(urandom(128)).hexdigest()
+        if StudentProgram.objects.filter(link=key).count() == 0:
+            break
+    return key
