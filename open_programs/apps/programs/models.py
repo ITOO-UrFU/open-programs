@@ -238,10 +238,11 @@ class ChoiceGroupType(ObjectBaseClass):
         return self.title
 
 
-class StudentProgram(ObjectBaseClass):
+def student_program_key():
+    return str(hashlib.md5(urandom(128)).hexdigest()[6:])
 
-    def student_program_key():
-        return str(hashlib.md5(urandom(128)).hexdigest()[6:])
+
+class StudentProgram(ObjectBaseClass):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     link = models.CharField(unique=True, max_length=16, default=student_program_key)
