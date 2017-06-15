@@ -245,13 +245,13 @@ def student_program_key():
 class StudentProgram(ObjectBaseClass):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    link = models.CharField(max_length=6, default='None')
+    link = models.CharField(max_length=6, blank=True, null=True)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True)
     program = models.ForeignKey("Program")
     json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
 
     def save(self):
-        if self.link == 'None':
+        if self.link == None or self.link == "":
             self.link = student_program_key()
         super(StudentProgram, self).save()
 
