@@ -74,3 +74,5 @@ class LearningPlanAdmin(VersionAdmin):
 @admin.register(StudentProgram)
 class StudentProgramAdmin(VersionAdmin):
     list_display = ("link", "program", "user")
+    fields = ("link", "user", "program", "json")
+    readonly_fields = ("link", )
