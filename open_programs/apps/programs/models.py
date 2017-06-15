@@ -238,12 +238,13 @@ class ChoiceGroupType(ObjectBaseClass):
         return self.title
 
 
-def student_program_key():
-    return str(hashlib.md5(urandom(128)).hexdigest()[6:])
-
-
 class StudentProgram(ObjectBaseClass):
-    link = models.CharField(primary_key=True, max_length=16, default=student_program_key)
+
+    def student_program_key():
+        return str(hashlib.md5(urandom(128)).hexdigest()[6:])
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    link = models.CharField(unique=True, max_length=16, default=student_program_key)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, blank=True)
     program = models.ForeignKey("Program")
     json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
