@@ -238,6 +238,10 @@ class ChoiceGroupType(ObjectBaseClass):
         return self.title
 
 
+def student_program_key():
+    pass  # o_O
+
+
 class StudentProgram(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     link = models.CharField(primary_key=True, unique=True, null=False, max_length=16, default=student_program_key)
