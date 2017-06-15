@@ -239,7 +239,7 @@ class ChoiceGroupType(ObjectBaseClass):
 
 
 def student_program_key():
-    return str(hashlib.md5(urandom(128)).hexdigest()[6:])
+    return str(hashlib.md5(urandom(128)).hexdigest()[:5])
 
 
 class StudentProgram(ObjectBaseClass):
