@@ -688,11 +688,20 @@ def delete_variant(request):
 
 @api_view(('POST',))
 @permission_classes((AllowAny, )) #
-def save_program(request):
+def new_trajectory(request):
     program = Program.objects.get(id=request.data["program_id"])
-    json = request.data["data"]
+    student_program = StudentProgram.objects.create(program=program)
 
-    student_program = StudentProgram.objects.create(program=program, json=json)
+    return Response(status=200, data={"link": student_program.link,
+                                      "id": student_program.id}
+                    )
+
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def save_trajectory(request):
+    student_program = StudentProgram.objects.get(id=request.data["id"])
+    json = request.data.get("data", None)
+    student_program.update(json=json)
 
     return Response(status=200, data={"link": student_program.link,
                                       "id": student_program.id}
