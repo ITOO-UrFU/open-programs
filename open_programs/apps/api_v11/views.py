@@ -19,7 +19,7 @@ from results.models import Result
 from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
 from modules.models import Module, Type
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
-                            TargetModules, ChoiceGroup, ChoiceGroupType, Changed
+                            TargetModules, ChoiceGroup, ChoiceGroupType, Changed, StudentProgram
 
 from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
 from persons.serializers import UserSerializer, PersonSerializer
@@ -686,3 +686,12 @@ def delete_variant(request):
     return Response(status=200)
 
 
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def save_program(request):
+    program = Program.objects.get(id=request.data["program_id"])
+    json = request.data["data"]
+
+    student_program = StudentProgram.objects.create(program=program, json=json)
+
+    return Response(status=200, data={"link": student_program.link})
