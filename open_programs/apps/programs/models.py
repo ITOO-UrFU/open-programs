@@ -239,7 +239,8 @@ class ChoiceGroupType(ObjectBaseClass):
 
 
 def student_program_key():
-    pass  # o_O
+    key = hashlib.md5(urandom(128)).hexdigest()[6:]
+    return key
 
 
 class StudentProgram(ObjectBaseClass):
@@ -255,13 +256,5 @@ class StudentProgram(ObjectBaseClass):
 
     def __str__(self):
         return self.title
-
-
-def student_program_key():
-    while True:  # lol hack
-        key = hashlib.md5(urandom(128)).hexdigest()[6:]
-        if StudentProgram.objects.filter(link=key).count() == 0:
-            break
-    return key
 
 
