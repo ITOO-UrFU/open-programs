@@ -238,6 +238,14 @@ class ChoiceGroupType(ObjectBaseClass):
         return self.title
 
 
+def student_program_key():
+    while True:  # lol hack
+        key = hashlib.md5(urandom(128)).hexdigest()
+        if StudentProgram.objects.filter(link=key).count() == 0:
+            break
+    return key
+
+
 class StudentProgram(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     link = models.CharField(primary_key=True, blank=True, null=True, max_length=16, default=student_program_key())
@@ -253,9 +261,3 @@ class StudentProgram(ObjectBaseClass):
         return self.title
 
 
-def student_program_key():
-    while True:  # lol hack
-        key = hashlib.md5(urandom(128)).hexdigest()
-        if StudentProgram.objects.filter(link=key).count() == 0:
-            break
-    return key
