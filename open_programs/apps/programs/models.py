@@ -260,6 +260,6 @@ class StudentProgram(ObjectBaseClass):
         verbose_name_plural = 'сохранения'
 
     def __str__(self):
-        return self.title
+        return f"{self.user} - {self.program}"
 
 
