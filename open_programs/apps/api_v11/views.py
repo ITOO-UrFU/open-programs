@@ -732,10 +732,7 @@ def get_trajectory_link(request, link):
 @permission_classes((AllowAny, )) #
 def get_program_trajectory(request, program_id):
     response = []
-    if program_id:
-        student_programs = StudentProgram.objects.filter(program_id=program_id)
-    else:
-        return Response(status=404)
+    student_programs = StudentProgram.objects.filter(program__id=program_id)
 
     for student_program in student_programs:
         response.append(
