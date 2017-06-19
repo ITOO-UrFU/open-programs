@@ -701,7 +701,8 @@ def new_trajectory(request):
 def save_trajectory(request):
     student_program = StudentProgram.objects.get(id=request.data["id"])
     json = request.data.get("data", None)
-    student_program.update(json=json)
+    student_program.json = json
+    student_program.save()
 
     return Response(status=200, data={"link": student_program.link,
                                       "id": student_program.id}
