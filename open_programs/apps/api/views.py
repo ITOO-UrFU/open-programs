@@ -82,12 +82,6 @@ class TypeList(viewsets.ModelViewSet):
     serializer_class = TypeSerializer
 
 
-class DisciplineList(viewsets.ModelViewSet):
-    model = Discipline
-    serializer_class = DisciplineSerializer
-    queryset = Discipline.objects.filter(status="p", archived=False)
-
-
 class ProgramList(viewsets.ModelViewSet):
     model = Program
     serializer_class = ProgramSerializer
