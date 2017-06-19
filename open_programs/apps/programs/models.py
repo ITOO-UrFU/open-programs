@@ -250,7 +250,8 @@ class StudentProgram(ObjectBaseClass):
     program = models.ForeignKey("Program")
     json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
 
-    def save(self):
+    def save(self, *args, **kwargs):
+        kwargs['force_insert'] = True
         if self.link == None or self.link == "":
             self.link = student_program_key()
         super(StudentProgram, self).save()
