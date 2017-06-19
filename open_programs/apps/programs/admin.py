@@ -40,6 +40,8 @@ class ProgramCompetenceAdmin(VersionAdmin):
     list_display = ("title", "number", "program", "color")
     list_filter = ("title", "number", "color")
     search_fields = ("title", )
+    form = make_ajax_form(ChoiceGroup, {'program': 'program'})
+    save_as = True
 
 
 @admin.register(ProgramModules)

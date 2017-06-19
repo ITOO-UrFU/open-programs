@@ -748,3 +748,9 @@ def get_program_trajectory(request):
         )
 
     return Response(response)
+
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def delete_trajectory(request):
+    StudentProgram.objects.remove(id=request.data["id"])
+    return Response(status=200)
