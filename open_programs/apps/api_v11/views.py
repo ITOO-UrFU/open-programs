@@ -727,3 +727,25 @@ def get_trajectory(request):
                      "user": None if not student_program.user else student_program.user.id,
                      "program": student_program.program.id
                      })
+
+
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def get_program_trajectory(request):
+    program_id = request.data.get("program_id", None)
+    response = []
+    if program_id:
+        student_programs = StudentProgram.objects.filter(program_id=program_id)
+    else:
+        return Response(status=404)
+
+    for student_program in student_programs:
+        response.append(
+            {"id": student_program.id,
+             "link": student_program.link,
+             "user": None if not student_program.user else student_program.user.id,
+             "program": student_program.program.id
+             }
+        )
+
+    return Response(response)
