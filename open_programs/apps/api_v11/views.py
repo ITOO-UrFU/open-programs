@@ -708,20 +708,20 @@ def save_trajectory(request):
                                       "id": student_program.id}
                     )
 
-@api_view(('POST',))
+@api_view(('GET',))
 @permission_classes((AllowAny, )) #
-def get_trajectory(request):
-    id = request.data.get("id", None)
-    link = request.data.get("link", None)
-    if id:
-        student_program = StudentProgram.objects.get(id=id)
-    elif link:
-        student_program = StudentProgram.objects.filter(link=link).first()
-    else:
-        return Response(status=404)
+def get_trajectory_id(request):
+    student_program = StudentProgram.objects.get(id=id)
+    return Response({"id": student_program.id,
+                     "link": student_program.link,
+                     "user": None if not student_program.user else student_program.user.id,
+                     "program": student_program.program.id
+                     })
 
-
-
+@api_view(('GET',))
+@permission_classes((AllowAny, )) #
+def get_trajectory_link(request, link):
+    student_program = StudentProgram.objects.filter(link=link).first()
     return Response({"id": student_program.id,
                      "link": student_program.link,
                      "user": None if not student_program.user else student_program.user.id,
