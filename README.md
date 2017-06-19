@@ -1,5 +1,7 @@
 # open-programs
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/04e518824fa34be2b98e7bc3ae14e428)](https://www.codacy.com/app/mastergowen/open-programs?utm_source=github.com&utm_medium=referral&utm_content=ITOO-UrFU/open-programs&utm_campaign=badger)
+
 ## Установка
 1. Установить Python 3
 2. Установить `virtualenv`:
