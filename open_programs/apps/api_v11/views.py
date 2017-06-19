@@ -707,3 +707,22 @@ def save_trajectory(request):
     return Response(status=200, data={"link": student_program.link,
                                       "id": student_program.id}
                     )
+
+@api_view(('POST',))
+@permission_classes((AllowAny, )) #
+def get_trajectory(request):
+    id = request.data.get("id", None)
+    link = request.data.get("link", None)
+    if id:
+        student_program = StudentProgram.objects.get(id=id)
+    elif link:
+        student_program = StudentProgram.objects.filter(link=link).first()
+    else:
+        return Response(status=404)
+
+
+    return Response({"id": student_program.id,
+                     "link": student_program.link,
+                     "user": student_program.user,
+                     "program": student_program.program
+                     })

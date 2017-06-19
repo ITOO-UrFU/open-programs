@@ -130,6 +130,7 @@ urlpatterns.append(url(r'^api/v11/create_variant/$', create_variant, name="creat
 
 urlpatterns.append(url(r'^api/v11/new_trajectory/$', new_trajectory, name="new_trajectory"))
 urlpatterns.append(url(r'^api/v11/save_trajectory/$', save_trajectory, name="save_trajectory"))
+urlpatterns.append(url(r'^api/v11/get_trajectory/$', get_trajectory, name="get_trajectory"))
 
 urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))
 #### CMS API ####
