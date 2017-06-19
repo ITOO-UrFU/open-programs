@@ -96,21 +96,21 @@ class CompetenceList(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class CompetenceListCreateView(ListCreateAPIView):
-    model = Competence
-    serializer_class = CompetenceSerializer
-
-    def create(self, request, *args, **kwargs):
-        data = request.DATA
-
-        c = Competence.objects.create(title=data["title"], status="p",results=Result.objects.get)
-
-        # ... create nested objects from request data ...
-
-        # ...
-        return Response(serializer.data,
-                        status=status.HTTP_201_CREATED,
-                        headers=headers)
+# class CompetenceListCreateView(ListCreateAPIView):
+#     model = Competence
+#     serializer_class = CompetenceSerializer
+#     @classmethod
+#     def create(cls, request, *args, **kwargs):
+#         data = request.DATA
+#
+#         c = Competence.objects.create(title=data["title"], status="p",results=Result.objects.get)
+#
+#         # ... create nested objects from request data ...
+#
+#         # ...
+#         return Response(serializer.data,
+#                         status=status.HTTP_201_CREATED,
+#                         headers=headers)
 
 
 class PersonList(viewsets.ModelViewSet):

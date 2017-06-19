@@ -35,7 +35,7 @@ class JSONEditor(Textarea):
     def render(self, name, value, attrs=None):
         data = []
         wts = WorkingType.objects.all()
-        for i, wt in enumerate(wts):
+        for wt in wts:
             data.append({
                 "wt": wt.title,
                 "week1": 0,

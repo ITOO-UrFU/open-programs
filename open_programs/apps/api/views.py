@@ -41,7 +41,9 @@ class CoursesIdList(viewsets.ViewSet):
     """
     Courses ids.
     """
-    def list(self, request):
+
+    @classmethod
+    def list(cls, request):
         queryset = Course.objects.filter(status="p", archived=False)
         serializer = CourseIdSerializer(queryset, many=True)
         ids = []
@@ -90,10 +92,6 @@ class ProgramList(viewsets.ModelViewSet):
     model = Program
     serializer_class = ProgramSerializer
     queryset = Program.objects.filter(status="p", archived=False)
-
-
-
-
 
 
 class DisciplineDetail(serializers.HyperlinkedModelSerializer):
