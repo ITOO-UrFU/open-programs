@@ -132,7 +132,7 @@ urlpatterns.append(url(r'^api/v11/new_trajectory/$', new_trajectory, name="new_t
 urlpatterns.append(url(r'^api/v11/save_trajectory/$', save_trajectory, name="save_trajectory"))
 urlpatterns.append(url(r'^api/v11/get_trajectory_id/(?P<id>.*)/$', get_trajectory_id, name="get_trajectory"))
 urlpatterns.append(url(r'^api/v11/get_trajectory_link/(?P<link>.*)/$', get_trajectory_link, name="get_link"))
-urlpatterns.append(url(r'^api/v11/get_program_trajectory/$', get_program_trajectory, name="get_program_trajectory"))
+urlpatterns.append(url(r'^api/v11/get_program_trajectory/(?P<program_id>.*)/$', get_program_trajectory, name="get_program_trajectory"))
 urlpatterns.append(url(r'^api/v11/delete_trajectory/$', delete_trajectory, name="delete_trajectory"))
 
 urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))

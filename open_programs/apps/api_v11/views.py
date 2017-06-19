@@ -728,10 +728,9 @@ def get_trajectory_link(request, link):
                      })
 
 
-@api_view(('POST',))
+@api_view(('GET',))
 @permission_classes((AllowAny, )) #
-def get_program_trajectory(request):
-    program_id = request.data.get("program_id", None)
+def get_program_trajectory(request, program_id):
     response = []
     if program_id:
         student_programs = StudentProgram.objects.filter(program_id=program_id)
