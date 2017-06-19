@@ -721,8 +721,9 @@ def get_trajectory(request):
         return Response(status=404)
 
 
+
     return Response({"id": student_program.id,
                      "link": student_program.link,
-                     "user": student_program.user,
-                     "program": student_program.program
+                     "user": None if not student_program.user else student_program.user.id,
+                     "program": student_program.program.id
                      })
