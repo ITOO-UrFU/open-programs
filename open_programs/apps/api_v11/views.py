@@ -710,7 +710,7 @@ def save_trajectory(request):
 
 @api_view(('GET',))
 @permission_classes((AllowAny, )) #
-def get_trajectory_id(request):
+def get_trajectory_id(request, id):
     student_program = StudentProgram.objects.get(id=id)
     return Response({"id": student_program.id,
                      "link": student_program.link,
