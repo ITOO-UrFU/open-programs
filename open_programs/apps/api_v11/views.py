@@ -363,7 +363,7 @@ def get_program_modules(request, program_id):
                     "get_labor": mod.module.get_labor(),
                     "choice_group": None if not mod.choice_group else mod.choice_group.id,
                     "targets_positions": mod.get_target_positions(),
-                    "get_target_positions_indexed": mod.get_target_positions_indexed(),
+                    "target_positions_indexed": mod.get_target_positions_indexed(),
                     "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority,
                     "disciplines": mod.module.get_all_discipline_custom()
                     })
