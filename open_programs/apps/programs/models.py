@@ -174,6 +174,26 @@ class ProgramModules(ObjectBaseClass):
             pass
         return targets_positions
 
+    def get_target_positions_indexed(self):
+        response = {}
+        try:
+            tr_targets = TrainingTarget.objects.filter(program=self.program).order_by('number')
+            for tt in tr_targets:
+                tms = TargetModules.objects.filter(program_module=self, target=tt, status="p",
+                                                   archived=False)
+                if not tms:
+                    status = 0
+                for target_module in tms:
+                    if target_module.choice_group is False:
+                        status = 1
+                    elif target_module.choice_group is True:
+                        status = 2
+                response[tt.id] = status
+
+        except:
+            pass
+        return response
+
 
 class Changed(models.Model):
     _changed = models.BooleanField(default=True)
