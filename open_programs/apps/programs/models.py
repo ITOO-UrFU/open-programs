@@ -188,7 +188,7 @@ class ProgramModules(ObjectBaseClass):
                         status = 1
                     elif target_module.choice_group is True:
                         status = 2
-                response[tt.id] = status
+                response[tt.id.hex()] = status
 
         except:
             pass
