@@ -715,7 +715,8 @@ def get_trajectory_id(request, id):
     return Response({"id": student_program.id,
                      "link": student_program.link,
                      "user": None if not student_program.user else student_program.user.id,
-                     "program": student_program.program.id
+                     "program": student_program.program.id,
+                     "data": student_program.json,
                      })
 
 @api_view(('GET',))
@@ -725,7 +726,8 @@ def get_trajectory_link(request, link):
     return Response({"id": student_program.id,
                      "link": student_program.link,
                      "user": None if not student_program.user else student_program.user.id,
-                     "program": student_program.program.id
+                     "program": student_program.program.id,
+                     "data": student_program.json,
                      })
 
 
