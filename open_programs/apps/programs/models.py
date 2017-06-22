@@ -80,6 +80,7 @@ class Program(ObjectBaseClass):
         return response
 
 
+
 class TrainingTarget(ObjectBaseClass):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title = models.CharField(_('Наименование образовательной цели'), blank=False, max_length=256, default=_(''))

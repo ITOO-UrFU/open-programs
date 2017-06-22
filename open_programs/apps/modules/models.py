@@ -58,7 +58,7 @@ class Module(ObjectBaseClass):
                  "description": discipline.description,
                  "labor": discipline.labor,
                  "form": discipline.get_form_display()
-                 } for discipline in Discipline.objects.filter(module=self)]
+                 } for discipline in Discipline.objects.filter(module=self, archived=False, status="p")]
 
     def get_labor(self):
         return Discipline.objects.filter(module=self, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]
