@@ -54,7 +54,7 @@ def containers_by_type(request, slug):
     """
     Возвращает список контейнеров по типу **type**.
     """
-    queryset = Container.objects.filter(status="p", archived=False, type__slug=slug)
+    queryset = Container.objects.filter(status="p", archived=False, type__slug=slug).order_by("weight")
     context = [
         {
             "title": c.title,
