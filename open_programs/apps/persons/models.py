@@ -29,6 +29,7 @@ class Person(models.Model):
     class Meta:
         verbose_name = 'персона'
         verbose_name_plural = 'персоны'
+        app_label = "persons"
 
     def __str__(self):
         if self.first_name and self.last_name:
