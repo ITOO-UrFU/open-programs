@@ -22,6 +22,7 @@ DEBUG = True
 # Application definition
 
 INSTALLED_APPS = [
+    'persons',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -33,7 +34,6 @@ INSTALLED_APPS = [
     'reversion',
     'rosetta',
     'djcelery_email',
-    'persons',
     'permission',
     'admin_reorder',
     'smuggler',
