@@ -11,6 +11,9 @@ from django.contrib.auth.models import User
 
 from django.utils.translation import ugettext_lazy as _
 
+from persons.serializers import PersonSerializer
+from persons.models import Person
+
 User = get_user_model()
 jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
@@ -80,12 +83,13 @@ class ObtainAuthToken(APIView):
     def post(self, request):
         serializer = AuthCustomTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        user_serializer = PersonSerializer
         user = serializer.validated_data['user']
         token = serializer.validated_data['token']
 
         content = {
             'token': token,
-            'user': user
+            'user': user_serializer(person=Person.objects.get(user=user))
         }
 
         return Response(content)
