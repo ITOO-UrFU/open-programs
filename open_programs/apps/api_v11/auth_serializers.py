@@ -59,7 +59,10 @@ class AuthCustomTokenSerializer(serializers.Serializer):
             msg = _('Must include "email or username" and "password"')
             raise exceptions.ValidationError(msg)
 
+        payload = jwt_payload_handler(user)
+
         attrs['user'] = user
+        attrs["token"] = jwt_encode_handler(payload)
         return attrs
 
 
@@ -78,10 +81,11 @@ class ObtainAuthToken(APIView):
         serializer = AuthCustomTokenSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        token, created = Token.objects.get_or_create(user=user)
+        token = serializer.validated_data['token']
+        # token, created = Token.objects.get_or_create(user=user)
 
         content = {
-            'token': token.key,
+            'token': token,
         }
 
         return Response(content)
