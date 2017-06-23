@@ -1,5 +1,5 @@
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserSerializer, PersonSerializer
+from .serializers import UserSerializer
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.response import Response
 
