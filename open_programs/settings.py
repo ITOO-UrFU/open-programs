@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'admin_reorder',
     'smuggler',
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
     'codemirror2',
     'tinymce',
