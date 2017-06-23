@@ -7,7 +7,6 @@ from rest_framework_jwt.settings import api_settings
 
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, get_user_model
-from django.contrib.auth.models import User
 
 from django.utils.translation import ugettext_lazy as _
 
