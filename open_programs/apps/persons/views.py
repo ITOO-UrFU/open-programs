@@ -11,9 +11,9 @@ User = get_user_model()
 @permission_classes((AllowAny, ))
 def register(request):
     serialized = UserSerializer(data={
-        "username": request.DATA.get("username", None),
-        "email": request.DATA.get("email", None),
-        "password": request.DATA.get("password1", None),
+        "username": request.data.get("username", None),
+        "email": request.data.get("email", None),
+        "password": request.data.get("password1", None),
 
     })
     if serialized.is_valid():
