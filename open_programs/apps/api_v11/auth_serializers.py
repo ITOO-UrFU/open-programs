@@ -89,7 +89,7 @@ class ObtainAuthToken(APIView):
 
         content = {
             'token': token,
-            'user': user_serializer(person=Person.objects.get(user=user))
+            'user': user_serializer(Person.objects.get(user=user))
         }
 
         return Response(content)
