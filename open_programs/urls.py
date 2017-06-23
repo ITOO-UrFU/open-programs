@@ -94,7 +94,6 @@ urlpatterns = [
     url(r'^api/v11/api-token-auth/', auth_serializers.obtain_jwt_token),
     url(r'^api/v11/api-token-refresh/', refresh_jwt_token),
     url(r'^api/v11/api-token-verify/', verify_jwt_token),
-    url(r'/api/v11/register', register),
  ]
 
 
@@ -139,6 +138,7 @@ urlpatterns.append(url(r'^api/v11/get_program_trajectory/(?P<program_id>.*)/$', 
 urlpatterns.append(url(r'^api/v11/delete_trajectory/$', delete_trajectory, name="delete_trajectory"))
 
 urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))
+urlpatterns.append(url(r'/api/v11/register', register, name="register"))
 #### CMS API ####
 urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
 urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))
