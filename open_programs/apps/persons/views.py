@@ -8,7 +8,12 @@ User = get_user_model()
 
 @api_view(['POST'])
 def register(request):
-    serialized = UserSerializer(data=request.DATA)
+    serialized = UserSerializer(data={
+        "username": request.DATA.get("username", None),
+        "email": request.DATA.get("email", None),
+        "password": request.DATA.get("password1", None),
+
+    })
     if serialized.is_valid():
         User.objects.create_user(
             serialized.init_data['email'],
