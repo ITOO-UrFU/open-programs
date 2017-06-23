@@ -1,7 +1,7 @@
 from rest_framework import serializers, parsers, renderers, exceptions
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
+from django.conf import settings
 
 from rest_framework_jwt.settings import api_settings
 
@@ -49,7 +49,7 @@ class AuthCustomTokenSerializer(serializers.Serializer):
             user = authenticate(username=email_or_username, password=password)
 
             if user:
-                if not user.is_active:
+                if not user.is_active and settings.NEED_ACTIVATE:
                     msg = _('User account is disabled.')
                     raise exceptions.ValidationError(msg)
             else:
@@ -82,10 +82,10 @@ class ObtainAuthToken(APIView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         token = serializer.validated_data['token']
-        # token, created = Token.objects.get_or_create(user=user)
 
         content = {
             'token': token,
+            'user': user
         }
 
         return Response(content)
