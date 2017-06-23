@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'courses',
     'directories',
     'journal',
-    "persons.app.PersonsConfig",
+    "persons.apps.PersonsConfig",
     # 'persons',
     'professions',
     'programs',
