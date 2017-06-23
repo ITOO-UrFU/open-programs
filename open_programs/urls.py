@@ -32,7 +32,7 @@ from ajax_select import urls as ajax_select_urls
 from .apps.api.views import *
 from .apps.api_v11.views import *
 from .apps.api_v11 import auth_serializers
-from .apps.persons.views import register
+from persons.views import register
 
 permission.autodiscover()
 
