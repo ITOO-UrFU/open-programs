@@ -76,7 +76,7 @@ def container_by_slug(request, slug):
     """
     Возвращает контейнер с уникальным полем **slug**.
     """
-    queryset = Container.objects.filter(status="p", archived=False, slug=slug)
+    queryset = Container.objects.filter(status="p", archived=False, slug=slug).order_by("weight")
     context = [
         {
             "title": c.title,
