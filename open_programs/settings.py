@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     'persons',
     'professions',
     'programs',
-    "persons",
     'modules',
     'disciplines',
     "competences",
