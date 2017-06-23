@@ -31,6 +31,7 @@ from ajax_select import urls as ajax_select_urls
 
 from .apps.api.views import *
 from .apps.api_v11.views import *
+from .apps.api_v11 import auth_serializers
 
 permission.autodiscover()
 
@@ -89,7 +90,7 @@ urlpatterns = [
     url(r'^tinymce/', include('tinymce.urls')),
     url(r'^accounts/', include('allauth.urls')),
 
-    url(r'^api/v11/api-token-auth/', obtain_jwt_token),
+    url(r'^api/v11/api-token-auth/', auth_serializers.obtain_jwt_token),
     url(r'^api/v11/api-token-refresh/', refresh_jwt_token),
     url(r'^api/v11/api-token-verify/', verify_jwt_token),
  ]
