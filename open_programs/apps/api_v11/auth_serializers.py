@@ -3,6 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 
+from rest_framework_jwt.settings import api_settings
+
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.models import User
@@ -10,6 +12,10 @@ from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 
 User = get_user_model()
+jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
+jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 
 
 def validate_email_custom(email):
@@ -66,7 +72,7 @@ class ObtainAuthToken(APIView):
         parsers.JSONParser,
     )
 
-    renderer_classes = (renderers.JSONRenderer,)
+    renderer_classes = (renderers.JSONRenderer, renderers.BrowsableAPIRenderer)
 
     def post(self, request):
         serializer = AuthCustomTokenSerializer(data=request.data)
