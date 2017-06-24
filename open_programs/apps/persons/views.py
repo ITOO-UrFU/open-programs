@@ -33,7 +33,6 @@ def register(request):
             username=serialized.validated_data['username'],
             password=request.data['password1']
         )
-        user.save()
 
         person = Person.objects.filter(user=user).first()
         if person:
