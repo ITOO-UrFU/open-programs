@@ -20,18 +20,6 @@ jwt_decode_handler = api_settings.JWT_DECODE_HANDLER
 jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 
 
-def validate_email_custom(email):
-    from django.core.validators import validate_email
-    from django.core.exceptions import ValidationError
-    print(email, "!!!!!!!!!!!!!!!!!!!")
-    try:
-        validate_email(email)
-        print(email, "ok !!!!!!!!!!!!!!!!!!!")
-        return True
-    except ValidationError:
-        return False
-
-
 class AuthCustomTokenSerializer(serializers.Serializer):
     email_or_username = serializers.CharField()
     password = serializers.CharField()
@@ -42,15 +30,23 @@ class AuthCustomTokenSerializer(serializers.Serializer):
 
         if email_or_username and password:
             # Check if user sent email
-            if validate_email_custom(email_or_username):
+            try:
                 user_request = get_object_or_404(
                     User,
                     email=email_or_username,
                 )
+            except:
+                user_request = get_object_or_404(
+                    User,
+                    username=email_or_username,
+                )
 
                 email_or_username = user_request.username
 
+                print(email_or_username, "!!!!!!!!!!!!!!!!!")
+
             user = authenticate(username=email_or_username, password=password)
+            print(user, "!!!!!!!!!!!!!!!!!")
 
             if user:
                 if not user.is_active and settings.NEED_ACTIVATE:
