@@ -8,9 +8,9 @@ from django.dispatch import receiver
 
 class Person(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
-    first_name = models.CharField(_('Имя пользователя'), max_length=32, blank=False, default='')
-    last_name = models.CharField(_('Фамилия пользователя'), max_length=32, blank=False, default='')
-    second_name = models.CharField(_('Отчество пользователя'), max_length=32, blank=True, default='')
+    first_name = models.CharField(_('Имя пользователя'), max_length=32, blank=True, null=True, default='')
+    last_name = models.CharField(_('Фамилия пользователя'), max_length=32, blank=True, null=True, default='')
+    second_name = models.CharField(_('Отчество пользователя'), max_length=32, blank=True, null=True, default='')
     SEXES = (
         ('U', _('Не выбран')),
         ('F', _('Женский')),
