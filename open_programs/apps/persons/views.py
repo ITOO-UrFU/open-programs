@@ -13,14 +13,13 @@ def register(request):
     serialized = UserSerializer(data={
         "username": request.data.get("username", None),
         "email": request.data.get("email", None),
-        "password": request.data.get("password1", None),
 
     })
-    if serialized.is_valid() and request.data['password1'] == request.data['password2']:
+    if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
         User.objects.create_user(
             serialized.validated_data['email'],
             serialized.validated_data['username'],
-            serialized.validated_data['password']
+            request.data['password1']
         )
 
         return Response(serialized.data, status=201)
