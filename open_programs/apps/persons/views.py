@@ -24,16 +24,17 @@ def register(request):
             password=request.data['password1']
         )
         user.save()
+        print(user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         if user:
             person = Person(
                 user=user,
-                first_name=request.data.get("first_name", None),
-                last_name=request.data.get("last_name", None),
-                second_name=request.data.get("second_name", None),
+                first_name=request.data.get("first_name", ""),
+                last_name=request.data.get("last_name", ""),
+                second_name=request.data.get("second_name", ""),
                 sex=request.data.get("sex", 'U'),
-                alt_email=request.data.get("alt_email", None),
-                birthday_date=request.data.get("birthday_date", None),
+                alt_email=request.data.get("alt_email", ""),
+                birthday_date=request.data.get("birthday_date", ""),
                 biography=request.data.get("biography", ""),
             )
             print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
