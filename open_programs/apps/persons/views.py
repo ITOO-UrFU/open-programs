@@ -24,7 +24,6 @@ def register(request):
             password=request.data['password1']
         )
         user.save()
-        print(user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         if user:
             person = Person(
@@ -37,7 +36,6 @@ def register(request):
                 birthday_date=request.data.get("birthday_date", None),
                 biography=request.data.get("biography", ""),
             )
-            print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             person.save()
 
             person = PersonSerializer(person)
