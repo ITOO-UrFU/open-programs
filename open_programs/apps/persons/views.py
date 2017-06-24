@@ -13,12 +13,6 @@ from .models import Person
 User = get_user_model()
 
 
-@receiver(post_save, sender=User)
-def create_favorites(sender, instance, created, **kwargs):
-    if created:
-        Person.objects.create(user=instance)
-
-
 @api_view(['POST'])
 @permission_classes((AllowAny, ))
 def register(request):
@@ -36,21 +30,21 @@ def register(request):
 
         user.save()
 
-        person = Person.objects.filter(user=user).first()
-        if person:
-            person.first_name = request.data.get("first_name", ""),
-            person.last_name = request.data.get("last_name", ""),
-            person.second_name = request.data.get("second_name", ""),
-            person.sex = request.data.get("sex", 'U'),
-            person.alt_email = request.data.get("alt_email", ""),
-            person.birthday_date = request.data.get("birthday_date", None),
-            person.biography = request.data.get("biography", ""),
+        person = Person(
+            user=user,
+            first_name = request.data.get("first_name", ""),
+            last_name = request.data.get("last_name", ""),
+            second_name = request.data.get("second_name", ""),
+            sex = request.data.get("sex", 'U'),
+            alt_email = request.data.get("alt_email", ""),
+            birthday_date = request.data.get("birthday_date", None),
+            biography = request.data.get("biography", ""),
+        )
 
-            person.save()
+        person.save()
+        person = PersonSerializer(person)
 
-            person = PersonSerializer(person)
-
-            return Response(person, status=201)
+        return Response(person, status=201)
     else:
         return Response(status=400)
 
