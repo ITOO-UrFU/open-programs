@@ -32,11 +32,11 @@ def register(request):
 
         person = Person.objects.filter(user=user).first()
         if person:
-            person.first_name = request.data.get("first_name", ""),
-            person.last_name = request.data.get("last_name", ""),
-            person.second_name = request.data.get("second_name", ""),
-            person.alt_email = request.data.get("alt_email", ""),
-            person.biography = request.data.get("biography", "")
+            person.first_name = request.data.get("first_name"),
+            person.last_name = request.data.get("last_name"),
+            person.second_name = request.data.get("second_name"),
+            person.alt_email = request.data.get("alt_email"),
+            person.biography = request.data.get("biography")
 
             person.save()
 
