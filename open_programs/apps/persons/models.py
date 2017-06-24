@@ -24,7 +24,7 @@ class Person(models.Model):
     country = CountryField(blank=True, default='RU')
     birthday_date = models.DateField(_('Дата рождения'), null=True, blank=True)
 #   roles = models.ManyToManyField(ROLE)  TODO: Сделать модель 'Роль'
-    biography = models.TextField(_('Биография пользователя'), blank=True, default='')
+    biography = models.TextField(_('Биография пользователя'), blank=True, null=True)
 
     class Meta:
         verbose_name = 'персона'
