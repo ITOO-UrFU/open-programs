@@ -34,7 +34,7 @@ def register(request):
                 second_name=request.data.get("second_name", ""),
                 sex=request.data.get("sex", 'U'),
                 alt_email=request.data.get("alt_email", ""),
-                birthday_date=request.data.get("birthday_date", ""),
+                birthday_date=request.data.get("birthday_date", None),
                 biography=request.data.get("biography", ""),
             )
             print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
