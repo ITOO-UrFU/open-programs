@@ -18,13 +18,14 @@ def register(request):
 
     })
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
-        user = User.objects.create_user(
-            serialized.validated_data['email'],
-            serialized.validated_data['username'],
-            request.data['password1']
+        user = User(
+            email=serialized.validated_data['email'],
+            username=serialized.validated_data['username'],
+            password=request.data['password1']
         )
-        if user:
+        user.save()
 
+        if user:
             person = Person(
                 user=user,
                 first_name=request.data.get("first_name", None),
