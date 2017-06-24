@@ -23,23 +23,23 @@ def register(request):
             serialized.validated_data['username'],
             request.data['password1']
         )
-        print(user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+        if user:
 
-        person = Person(
-            user__id=user.id,
-            first_name=request.data.get("first_name", None),
-            last_name=request.data.get("last_name", None),
-            second_name=request.data.get("second_name", None),
-            sex=request.data.get("sex", 'U'),
-            alt_email=request.data.get("alt_email", None),
-            birthday_date=request.data.get("birthday_date", None),
-            biography=request.data.get("biography", ""),
-        )
-        print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-        person.save()
+            person = Person(
+                user=user,
+                first_name=request.data.get("first_name", None),
+                last_name=request.data.get("last_name", None),
+                second_name=request.data.get("second_name", None),
+                sex=request.data.get("sex", 'U'),
+                alt_email=request.data.get("alt_email", None),
+                birthday_date=request.data.get("birthday_date", None),
+                biography=request.data.get("biography", ""),
+            )
+            print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            person.save()
 
-        person = PersonSerializer(person)
+            person = PersonSerializer(person)
 
-        return Response(person, status=201)
+            return Response(person, status=201)
     else:
         return Response(serialized._errors, status=400)
