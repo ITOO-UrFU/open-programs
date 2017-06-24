@@ -19,6 +19,22 @@ def create_favorites(sender, instance, created, **kwargs):
         Person.objects.create(user=instance)
 
 
+def create_person(user, request):
+    person = Person.objects.filter(user=user).first()
+    if person:
+        person.first_name = request.data.get("first_name", ""),
+        person.last_name = request.data.get("last_name", ""),
+        person.second_name = request.data.get("second_name", ""),
+        person.sex = request.data.get("sex", 'U'),
+        person.alt_email = request.data.get("alt_email", ""),
+        person.birthday_date = request.data.get("birthday_date", None),
+        person.biography = request.data.get("biography", ""),
+
+        person.save()
+        person = PersonSerializer(person)
+        return person
+
+
 @api_view(['POST'])
 @permission_classes((AllowAny, ))
 def register(request):
@@ -33,21 +49,12 @@ def register(request):
             username=serialized.validated_data['username'],
             password=request.data['password1']
         )
+        user.save()
 
-        person = Person.objects.filter(user=user).first()
-        if person:
-            person.first_name = request.data.get("first_name", ""),
-            person.last_name = request.data.get("last_name", ""),
-            person.second_name = request.data.get("second_name", ""),
-            person.sex = request.data.get("sex", 'U'),
-            person.alt_email = request.data.get("alt_email", ""),
-            person.birthday_date = request.data.get("birthday_date", None),
-            person.biography = request.data.get("biography", ""),
+        person = create_person(user, request)
 
-            person.save()
-
-            person = PersonSerializer(person)
-
-            return Response(status=201)
+        return Response(person, status=201)
     else:
         return Response(serialized._errors, status=400)
+
+
