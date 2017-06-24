@@ -46,8 +46,8 @@ def register(request):
 
             person = PersonSerializer(person)
 
-            return Response(person, status=201)
+            return Response(person.data, status=201)
     else:
-        return Response(status=400)
+        return Response(serialized.error, status=400)
 
 
