@@ -16,11 +16,11 @@ def register(request):
         "password": request.data.get("password1", None),
 
     })
-    if serialized.is_valid():
+    if serialized.is_valid() and serialized.validated_data['password1'] == serialized.validated_data['password2']:
         User.objects.create_user(
             serialized.validated_data['email'],
             serialized.validated_data['username'],
-            serialized.validated_data['password']
+            serialized.validated_data['password1']
         )
 
         return Response(serialized.data, status=201)
