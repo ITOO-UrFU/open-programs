@@ -23,9 +23,10 @@ def register(request):
             serialized.validated_data['username'],
             request.data['password1']
         )
+        print(user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
         person = Person(
-            user=user,
+            user__id=user.id,
             first_name=request.data.get("first_name", None),
             last_name=request.data.get("last_name", None),
             second_name=request.data.get("second_name", None),
@@ -34,6 +35,7 @@ def register(request):
             birthday_date=request.data.get("birthday_date", None),
             biography=request.data.get("biography", ""),
         )
+        print(person, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
         person.save()
 
         person = PersonSerializer(person)
