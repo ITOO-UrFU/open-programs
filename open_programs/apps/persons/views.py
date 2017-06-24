@@ -17,23 +17,6 @@ User = get_user_model()
 def create_favorites(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
-        print("ok !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-
-
-def create_person(user, request):
-    person = Person.objects.filter(user=user).first()
-    if person:
-        person.first_name = request.data.get("first_name", ""),
-        person.last_name = request.data.get("last_name", ""),
-        person.second_name = request.data.get("second_name", ""),
-        person.sex = request.data.get("sex", 'U'),
-        person.alt_email = request.data.get("alt_email", ""),
-        person.birthday_date = request.data.get("birthday_date", None),
-        person.biography = request.data.get("biography", ""),
-
-        person.save()
-        person = PersonSerializer(person)
-        return person
 
 
 @api_view(['POST'])
@@ -45,14 +28,27 @@ def register(request):
 
     })
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
-        user = User.objects.create(
-            email=serialized.validated_data['email'],
-            username=serialized.validated_data['username'],
-            password=request.data['password1']
-        )
-        person = create_person(user, request)
 
-        return Response(person, status=201)
+        person = Person.objects.filter(user=User(
+                                                   email=serialized.validated_data['email'],
+                                                   username=serialized.validated_data['username'],
+                                                   password=request.data['password1']
+                                                 )
+                                       ).first()
+        if person:
+            person.first_name = request.data.get("first_name", ""),
+            person.last_name = request.data.get("last_name", ""),
+            person.second_name = request.data.get("second_name", ""),
+            person.sex = request.data.get("sex", 'U'),
+            person.alt_email = request.data.get("alt_email", ""),
+            person.birthday_date = request.data.get("birthday_date", None),
+            person.biography = request.data.get("biography", ""),
+
+            person.save()
+
+            person = PersonSerializer(person)
+
+            return Response(person, status=201)
     else:
         return Response(serialized._errors, status=400)
 
