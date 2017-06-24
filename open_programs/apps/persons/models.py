@@ -20,7 +20,7 @@ class Person(models.Model):
                            choices=SEXES,
                            default='U'
                            )
-    alt_email = models.EmailField(_('Альтернативный e-mail'), max_length=254, blank=True)
+    alt_email = models.EmailField(_('Альтернативный e-mail'), max_length=254, blank=True, null=True,)
     country = CountryField(blank=True, default='RU')
     birthday_date = models.DateField(_('Дата рождения'), null=True, blank=True)
 #   roles = models.ManyToManyField(ROLE)  TODO: Сделать модель 'Роль'
