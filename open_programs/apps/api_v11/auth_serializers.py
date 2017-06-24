@@ -43,10 +43,7 @@ class AuthCustomTokenSerializer(serializers.Serializer):
 
                 email_or_username = user_request.username
 
-                print(email_or_username, "!!!!!!!!!!!!!!!!!")
-
             user = authenticate(username=email_or_username, password=password)
-            print(user, "!!!!!!!!!!!!!!!!!")
 
             if user:
                 if not user.is_active and settings.NEED_ACTIVATE:

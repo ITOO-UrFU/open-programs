@@ -1,8 +1,10 @@
 from rest_framework.decorators import api_view, permission_classes
-from .serializers import UserSerializer
+from .serializers import UserSerializer, PersonSerializer
 from django.contrib.auth import authenticate, get_user_model
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+
+from .models import Person
 
 User = get_user_model()
 
@@ -16,12 +18,26 @@ def register(request):
 
     })
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
-        User.objects.create_user(
+        user = User.objects.create_user(
             serialized.validated_data['email'],
             serialized.validated_data['username'],
             request.data['password1']
         )
 
-        return Response(serialized.data, status=201)
+        person = Person(
+            user=user,
+            first_name=request.data.get("first_name", None),
+            last_name=request.data.get("last_name", None),
+            second_name=request.data.get("second_name", None),
+            sex=request.data.get("sex", None),
+            alt_email=request.data.get("alt_email", None),
+            birthday_date=request.data.get("birthday_date", None),
+            biography=request.data.get("biography", None),
+        )
+        person.save()
+
+        person = PersonSerializer(person)
+
+        return Response(person, status=201)
     else:
         return Response(serialized._errors, status=400)
