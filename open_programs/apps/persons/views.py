@@ -17,6 +17,7 @@ User = get_user_model()
 def create_favorites(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
+        print("ok !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 
 
 def create_person(user, request):
