@@ -20,7 +20,7 @@ def register(request):
         User.objects.create_user(
             serialized.validated_data['email'],
             serialized.validated_data['username'],
-            serialized.validated_data['password1']
+            serialized.validated_data['password']
         )
 
         return Response(serialized.data, status=201)
