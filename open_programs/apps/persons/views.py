@@ -29,7 +29,7 @@ def register(request):
             first_name=request.data.get("first_name", None),
             last_name=request.data.get("last_name", None),
             second_name=request.data.get("second_name", None),
-            sex=request.data.get("sex", None),
+            sex=request.data.get("sex", 'U'),
             alt_email=request.data.get("alt_email", None),
             birthday_date=request.data.get("birthday_date", None),
             biography=request.data.get("biography", None),
