@@ -48,6 +48,6 @@ def register(request):
 
             person = PersonSerializer(person)
 
-            return Response(person, status=201)
+            return Response(status=201)
     else:
         return Response(serialized._errors, status=400)
