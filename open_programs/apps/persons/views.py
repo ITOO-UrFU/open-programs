@@ -45,13 +45,11 @@ def register(request):
 
     })
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
-        user = User(
+        user = User.objects.create(
             email=serialized.validated_data['email'],
             username=serialized.validated_data['username'],
             password=request.data['password1']
         )
-        user.save()
-
         person = create_person(user, request)
 
         return Response(person, status=201)
