@@ -23,8 +23,10 @@ jwt_get_username_from_payload = api_settings.JWT_PAYLOAD_GET_USERNAME_HANDLER
 def validate_email_custom(email):
     from django.core.validators import validate_email
     from django.core.exceptions import ValidationError
+    print(email, "!!!!!!!!!!!!!!!!!!!")
     try:
         validate_email(email)
+        print(email, "ok !!!!!!!!!!!!!!!!!!!")
         return True
     except ValidationError:
         return False
