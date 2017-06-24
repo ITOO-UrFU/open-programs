@@ -29,12 +29,14 @@ def register(request):
     })
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
 
-        person = Person.objects.filter(user=User(
-                                                   email=serialized.validated_data['email'],
-                                                   username=serialized.validated_data['username'],
-                                                   password=request.data['password1']
-                                                 )
-                                       ).first()
+        user = User(email=serialized.validated_data['email'],
+                    username=serialized.validated_data['username'],
+                    password=request.data['password1']
+                    )
+
+        user.save()
+
+        person = Person.objects.filter(user=user).first()
         if person:
             person.first_name = request.data.get("first_name", ""),
             person.last_name = request.data.get("last_name", ""),
