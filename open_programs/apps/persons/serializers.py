@@ -16,6 +16,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         model = User
         fields = ("id", "username", "email", "is_staff", "groups")
         read_only_fields = ('is_staff', 'groups')
+        extra_kwargs = {'is_staff': {'required': 'False'},
+                        'groups': {'required': 'False'}
+                        }
 
     def validate(self, data):
         if not data['username'] and not data['email']:
