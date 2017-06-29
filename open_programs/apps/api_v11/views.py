@@ -43,11 +43,9 @@ class IsManager(BasePermission):
     def has_permission(self, request, view):
         def get_or_update_person_by_jwt(self):
             jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
-            print(jwt_token, "!!!!!!!!!!!!!!!!!!!!!!!!")
             if jwt_token:
                 try:
                     token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
-                    print(token_data, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 except jwt.exceptions.ExpiredSignatureError:
                     return Response({"status": "Session expired"})
 
@@ -414,7 +412,6 @@ def get_program_modules(request, program_id):
 class ChangeTargetModule(APIView):
     permission_classes = (IsManager, )
     def post(self, request):
-        print(request.user, "!!!!!!!!!!!!!!!!!!!!")
         module_id = request.data["module_id"]
         target_id = request.data["target_id"]
         status = request.data["status"]
