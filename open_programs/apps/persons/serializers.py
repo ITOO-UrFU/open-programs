@@ -15,9 +15,9 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = User
         fields = ("id", "username", "email", "is_staff", "groups")
+        read_only_fields = ('is_staff', 'groups')
 
     def validate(self, data):
-        print(data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         if not data['username'] and not data['email']:
             raise serializers.ValidationError("Not enought data")
         return data
