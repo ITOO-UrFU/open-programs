@@ -20,6 +20,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                         'groups': {'required': 'False'}
                         }
 
+
 class PersonSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer(
         many=False,
