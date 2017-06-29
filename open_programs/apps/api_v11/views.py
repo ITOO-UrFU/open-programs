@@ -41,6 +41,7 @@ from django.utils.decorators import available_attrs
 import logging
 
 def is_manager(f):
+    print("sdfdsfdsfdsfsdf")
     def decorator(func):
         @wraps(func, assigned=available_attrs(func))
         def inner(request, *args, **kwargs):
