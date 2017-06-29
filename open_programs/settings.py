@@ -168,6 +168,7 @@ FIXTURE_DIRS = [
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 AUTHENTICATION_BACKENDS = (
+    'persons.auth_backends.JSONWebTokenAuthentication',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
     'permission.backends.PermissionBackend',
