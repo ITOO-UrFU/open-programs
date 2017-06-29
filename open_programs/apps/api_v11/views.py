@@ -387,7 +387,6 @@ def get_program_modules(request, program_id):
     return Response(response)
 
 
-@api_view(("POST", ))
 class ChangeTargetModule(APIView):
     permission_classes = ((DjangoModelPermissions, ))
     def post(self, request):
