@@ -36,7 +36,7 @@ from cms.api_views import *
 from django.core.cache import cache
 
 
-class ProgramList(viewsets.ModelViewSet):
+class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
     permission_classes = (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -135,13 +135,13 @@ class TrainingTargetList(viewsets.ModelViewSet):
     permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ProgramCompetenceList(viewsets.ModelViewSet):
+class ProgramCompetenceList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = ProgramCompetence.objects.filter(status="p", archived=False)
     serializer_class = ProgramCompetenceSerializer
     permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ProgramModulesList(viewsets.ModelViewSet):
+class ProgramModulesList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = ProgramModules.objects.filter(status="p", archived=False)
     serializer_class = ProgramModulesSerializer
     permission_classes =  (AllowAny,)  # (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
