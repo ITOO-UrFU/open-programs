@@ -389,6 +389,7 @@ def get_program_modules(request, program_id):
 
 class ChangeTargetModule(APIView):
     permission_classes = ((DjangoModelPermissions, ))
+    queryset = ProgramModules.objects.all()
     def post(self, request):
         module_id = request.data["module_id"]
         target_id = request.data["target_id"]
