@@ -38,7 +38,7 @@ from django.core.cache import cache
 
 
 class IsManager(BasePermission):
-    def has_object_permission(self, request, view, obj):
+    def has_permission(self, request, view):
         print(request.user.groups.filter(name='manager').exists(), "!!!!!!!!!!!!!!!!!!")
         return request.user.groups.filter(name='manager').exists()
 
