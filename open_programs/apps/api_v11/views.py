@@ -391,6 +391,7 @@ class ChangeTargetModule(APIView):
     permission_classes = ((DjangoModelPermissions, ))
     queryset = ProgramModules.objects.all()
     def post(self, request):
+        print(request.user, "!!!!!!!!!!!!!!!!!!!!")
         module_id = request.data["module_id"]
         target_id = request.data["target_id"]
         status = request.data["status"]
