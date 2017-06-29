@@ -170,6 +170,7 @@ SOCIALACCOUNT_QUERY_EMAIL = True
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
+    "permission.backends.PermissionBackend",
 )
 
 #### HAYSTACK ####
