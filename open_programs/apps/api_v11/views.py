@@ -403,7 +403,6 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@permission_classes((IsAuthenticatedOrReadOnly, ))
 @is_manager
 def change_target_module(request):
     module_id = request.data["module_id"]
