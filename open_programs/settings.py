@@ -168,10 +168,8 @@ FIXTURE_DIRS = [
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 AUTHENTICATION_BACKENDS = (
-    'persons.auth_backends.JSONWebTokenAuthentication',
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
-    'permission.backends.PermissionBackend',
 )
 
 #### HAYSTACK ####
@@ -285,7 +283,7 @@ JWT_AUTH = {
     'JWT_VERIFY': True,
     'JWT_VERIFY_EXPIRATION': True,
     'JWT_LEEWAY': 0,
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=300),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3000),
     'JWT_AUDIENCE': None,
     'JWT_ISSUER': None,
 
