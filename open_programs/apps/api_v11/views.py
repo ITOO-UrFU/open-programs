@@ -4,7 +4,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, BasePermission, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
 
@@ -37,6 +37,9 @@ from cms.api_views import *
 from django.core.cache import cache
 
 
+class IsManager(BasePermission):
+    def has_object_permission(self, request, view, obj):
+        return request.user.groups.filter(name='manager').exists()
 
 
 class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
@@ -388,7 +391,7 @@ def get_program_modules(request, program_id):
 
 
 class ChangeTargetModule(APIView):
-    permission_classes = ((DjangoModelPermissions, ))
+    permission_classes = (IsManager, )
     queryset = ProgramModules.objects.all()
     def post(self, request):
         print(request.user, "!!!!!!!!!!!!!!!!!!!!")
@@ -452,7 +455,7 @@ def change_choice_group(request):
 
 
 @api_view(("POST", ))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsManager, )) #
 def change_competence(request):
     module_id = request.data["module_id"]
     competence_id = request.data["competence_id"]
@@ -512,7 +515,7 @@ def get_program_disciplines(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsManager, )) #
 def change_discipline_semester(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -578,7 +581,7 @@ def get_variants(request, program_id, discipline_id):
 
 
 @api_view(('POST',))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsManager, )) #
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
@@ -603,7 +606,7 @@ def change_variant(request):
 
 
 @api_view(('POST',))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsManager, )) #
 def create_variant(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -690,7 +693,7 @@ def get_program_variants(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsManager, )) #
 def delete_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     trigger = Changed.objects.filter(program=variant.program, view="gv").first()
