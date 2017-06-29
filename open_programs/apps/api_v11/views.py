@@ -38,6 +38,7 @@ from django.core.cache import cache
 from functools import wraps
 from django.http import HttpResponseForbidden
 from django.utils.decorators import available_attrs
+import logging
 
 
 def is_manager(f):
@@ -45,7 +46,7 @@ def is_manager(f):
         @wraps(func, assigned=available_attrs(func))
         def inner(request, *args, **kwargs):
             print(request.user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            if request.user.groups.filter(name__in=['manager']).exists():
+            if not request.user.groups.filter(name__in=['manager']).exists():
                 return HttpResponseForbidden(f)
             return func(request, *args, **kwargs)
         return inner
