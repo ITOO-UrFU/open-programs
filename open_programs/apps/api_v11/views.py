@@ -42,7 +42,7 @@ from django.core.cache import cache
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         def get_or_update_person_by_jwt(self):
-            jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
+            jwt_token = request.META.get('Authorization', None)
             print(jwt_token, "!!!!!!!!!!!!!!!!!!!!!!!!")
             if jwt_token:
                 try:
