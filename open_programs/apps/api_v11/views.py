@@ -445,7 +445,6 @@ def change_target_module(request):
 
 
 @api_view(("POST", ))
-@permission_classes((IsAuthenticatedOrReadOnly, )) #
 @is_manager
 def change_choice_group(request):
     module_id = request.data["module_id"]
