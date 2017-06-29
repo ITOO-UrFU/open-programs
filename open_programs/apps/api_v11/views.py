@@ -47,7 +47,7 @@ def is_manager(f):
             logging.critical(request.user)
             print(request.user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             if not request.user.groups.filter(name__in=['manager']).exists():
-                return HttpResponseForbidden(f)
+                pass #return HttpResponseForbidden(f)
             return func(request, *args, **kwargs)
         return inner
     return decorator
