@@ -430,7 +430,6 @@ class ChangeTargetModule(APIView):
 change_target_module = ChangeTargetModule.as_view()
 
 @api_view(("POST", ))
-@is_manager
 def change_choice_group(request):
     module_id = request.data["module_id"]
     choice_group_id = request.data["choice_group_id"]
