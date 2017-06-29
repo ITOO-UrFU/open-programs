@@ -21,7 +21,7 @@ def register(request):
         "email": request.data.get("email", None),
 
     })
-    print(request.data.get("username", None), request.data.get("email", None),
+    print(request.data.get("username", None), request.data.get("email", None), serialized.is_valid(),
           "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
 
