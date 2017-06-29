@@ -20,12 +20,6 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
                         'groups': {'required': 'False'}
                         }
 
-    def validate(self, data):
-        if not data['username'] and not data['email']:
-            raise serializers.ValidationError("Not enought data")
-        return data
-
-
 class PersonSerializer(serializers.HyperlinkedModelSerializer):
     user = UserSerializer(
         many=False,
