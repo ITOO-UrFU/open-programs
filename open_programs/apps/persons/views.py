@@ -21,10 +21,12 @@ def register(request):
         "email": request.data.get("email", None),
 
     })
-    if request.data['password1'] == request.data['password2'] and request.data['password1']:
+    print(request.data.get("username", None), request.data.get("email", None),
+          "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
 
-        user = User.objects.create_user(serialized.data['username'],
-                                        serialized.data['email'],
+        user = User.objects.create_user(serialized.validated_data['username'],
+                                        serialized.validated_data['email'],
                                         request.data['password1']
                                         )
         user.is_active = True
