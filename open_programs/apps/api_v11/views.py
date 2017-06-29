@@ -293,7 +293,7 @@ class ChoiceGroupTypeDetail(serializers.HyperlinkedModelSerializer):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_choice_groups_by_program(request, program_id):
     response = []
     for cg in ChoiceGroup.objects.filter(program__id=program_id).order_by("number"):
@@ -310,7 +310,7 @@ def get_choice_groups_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_targets_by_program(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpt").first()
     if not trigger:
@@ -344,7 +344,7 @@ def get_targets_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_competences_by_program(request, program_id):
     response = [{"id": c.id,
                  "title": c.title,
@@ -354,7 +354,7 @@ def get_competences_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
@@ -385,7 +385,7 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def change_target_module(request):
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
@@ -426,7 +426,7 @@ def change_target_module(request):
 
 
 @api_view(("POST", ))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def change_choice_group(request):
     module_id = request.data["module_id"]
     choice_group_id = request.data["choice_group_id"]
@@ -447,7 +447,7 @@ def change_choice_group(request):
 
 
 @api_view(("POST", ))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def change_competence(request):
     module_id = request.data["module_id"]
     competence_id = request.data["competence_id"]
@@ -474,7 +474,7 @@ def heartbeat(request):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_program_disciplines(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
     if not trigger:
@@ -507,7 +507,7 @@ def get_program_disciplines(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def change_discipline_semester(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -527,7 +527,7 @@ def change_discipline_semester(request):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_variants(request, program_id, discipline_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
@@ -573,7 +573,7 @@ def get_variants(request, program_id, discipline_id):
 
 
 @api_view(('POST',))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def change_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     for key, value in request.data.items():
@@ -598,7 +598,7 @@ def change_variant(request):
 
 
 @api_view(('POST',))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def create_variant(request):
     program = Program.objects.get(id=request.data["program_id"])
     discipline = Discipline.objects.get(id=request.data["discipline_id"])
@@ -633,7 +633,7 @@ def create_variant(request):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, ))
+@permission_classes((IsAuthenticatedOrReadOnly, ))
 def get_program_variants(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
     if not trigger:
@@ -685,7 +685,7 @@ def get_program_variants(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((AllowAny, )) #
+@permission_classes((DjangoModelPermissions, )) #
 def delete_variant(request):
     variant = get_object_or_404(Variant, pk=request.data["variant_id"])
     trigger = Changed.objects.filter(program=variant.program, view="gv").first()
@@ -730,7 +730,7 @@ def get_trajectory_id(request, id):
                      })
 
 @api_view(('GET',))
-@permission_classes((AllowAny, )) #
+@permission_classes((IsAuthenticatedOrReadOnly, )) #
 def get_trajectory_link(request, link):
     student_program = StudentProgram.objects.filter(link=link).first()
     return Response({"id": student_program.id,
@@ -742,7 +742,7 @@ def get_trajectory_link(request, link):
 
 
 @api_view(('GET',))
-@permission_classes((AllowAny, )) #
+@permission_classes((IsAuthenticatedOrReadOnly, )) #
 def get_program_trajectory(request, program_id):
     response = []
     student_programs = StudentProgram.objects.filter(program__id=program_id)
