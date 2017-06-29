@@ -392,7 +392,6 @@ def get_program_modules(request, program_id):
 
 class ChangeTargetModule(APIView):
     permission_classes = (IsManager, )
-    queryset = ProgramModules.objects.all()
     def post(self, request):
         print(request.user, "!!!!!!!!!!!!!!!!!!!!")
         module_id = request.data["module_id"]
