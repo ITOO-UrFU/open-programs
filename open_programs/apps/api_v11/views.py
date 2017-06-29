@@ -46,7 +46,7 @@ def is_manager(f):
         def inner(request, *args, **kwargs):
             logging.critical(request.user)
             print(request.user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            if not request.user.groups.filter(name__in=['manager']).exists():
+            if not request.user.groups.filter(name=f).exists():
                 pass #return HttpResponseForbidden(f)
             return func(request, *args, **kwargs)
         return inner
@@ -403,7 +403,7 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@is_manager()
+@is_manager("manager")
 def change_target_module(request):
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
