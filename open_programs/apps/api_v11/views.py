@@ -47,6 +47,7 @@ class IsManager(BasePermission):
             if jwt_token:
                 try:
                     token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
+                    print(token_data, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
                 except jwt.exceptions.ExpiredSignatureError:
                     return Response({"status": "Session expired"})
 
