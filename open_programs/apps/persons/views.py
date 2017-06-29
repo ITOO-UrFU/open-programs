@@ -44,6 +44,6 @@ def register(request):
 
             return Response(person.data, status=201)
     else:
-        return Response(serialized.error, status=400)
+        return Response({"message": "Invalid data"}, status=400)
 
 
