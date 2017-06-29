@@ -392,6 +392,7 @@ def change_target_module(request):
     status = request.data["status"]
 
     program_module = ProgramModules.objects.get(id=module_id)
+    queryset = program_module
     target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
     trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
