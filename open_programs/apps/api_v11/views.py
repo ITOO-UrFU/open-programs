@@ -35,6 +35,22 @@ from cms.api_views import *
 
 from django.core.cache import cache
 
+from functools import wraps
+from django.http import HttpResponseForbidden
+from django.utils.decorators import available_attrs
+
+
+def is_manager(f):
+    def decorator(func):
+        @wraps(func, assigned=available_attrs(func))
+        def inner(request, *args, **kwargs):
+            if request.user.groups.filter(name__in=['manager']).exists():
+                return HttpResponseForbidden(f)
+            return func(request, *args, **kwargs)
+        return inner
+    return decorator
+
+
 
 class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
@@ -385,12 +401,9 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsAuthenticatedOrReadOnly, ))
+@is_manager
 def change_target_module(request):
-
-    def get_queryset(request):
-        return ProgramModules.objects.get(id=module_id)
-
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
     status = request.data["status"]
@@ -430,7 +443,8 @@ def change_target_module(request):
 
 
 @api_view(("POST", ))
-@permission_classes((DjangoModelPermissions, )) #
+@permission_classes((IsAuthenticatedOrReadOnly, )) #
+@is_manager
 def change_choice_group(request):
     module_id = request.data["module_id"]
     choice_group_id = request.data["choice_group_id"]
