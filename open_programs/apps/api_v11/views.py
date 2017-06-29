@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
+from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, DjangoModelPermissions, DjangoModelPermissionsOrAnonReadOnly
 from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
@@ -35,22 +36,6 @@ from cms.api_views import *
 
 from django.core.cache import cache
 
-from functools import wraps
-from django.http import HttpResponseForbidden
-from django.utils.decorators import available_attrs
-import logging
-
-def is_manager(f):
-    def decorator(func):
-        @wraps(func, assigned=available_attrs(func))
-        def inner(request, *args, **kwargs):
-            logging.critical(request.user)
-            print(request.user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-            if not request.user.groups.filter(name=f).exists():
-                pass #return HttpResponseForbidden(f)
-            return func(request, *args, **kwargs)
-        return inner
-    return decorator
 
 
 
@@ -403,45 +388,47 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@is_manager("manager")
-def change_target_module(request):
-    module_id = request.data["module_id"]
-    target_id = request.data["target_id"]
-    status = request.data["status"]
+class ChangeTargetModule(APIView):
+    permission_classes = ((DjangoModelPermissions, ))
+    def post(self, request):
+        module_id = request.data["module_id"]
+        target_id = request.data["target_id"]
+        status = request.data["status"]
 
-    program_module = ProgramModules.objects.get(id=module_id)
-    target = TrainingTarget.objects.get(id=target_id)
-    status = int(status)
-    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=program_module.program, view="gpm")
-    if status == 0:
-        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-        if tm:
-            tm.delete()
-    elif status == 1:
-        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-        if tm:
-            tm.choice_group = False
-            tm.status = "p"
-            tm.save()
-        else:
-            tm = TargetModules(target=target, program_module=program_module, choice_group=False)
-            tm.status = "p"
-            tm.save()
-    elif status == 2:
-        tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
-        if tm:
-            tm.choice_group = True
-            tm.status = "p"
-            tm.save()
-        else:
-            tm = TargetModules(target=target, program_module=program_module, choice_group=True)
-            tm.status = "p"
-            tm.save()
-    trigger.activate()
-    return Response(status=200)
+        program_module = ProgramModules.objects.get(id=module_id)
+        target = TrainingTarget.objects.get(id=target_id)
+        status = int(status)
+        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=program_module.program, view="gpm")
+        if status == 0:
+            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+            if tm:
+                tm.delete()
+        elif status == 1:
+            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+            if tm:
+                tm.choice_group = False
+                tm.status = "p"
+                tm.save()
+            else:
+                tm = TargetModules(target=target, program_module=program_module, choice_group=False)
+                tm.status = "p"
+                tm.save()
+        elif status == 2:
+            tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
+            if tm:
+                tm.choice_group = True
+                tm.status = "p"
+                tm.save()
+            else:
+                tm = TargetModules(target=target, program_module=program_module, choice_group=True)
+                tm.status = "p"
+                tm.save()
+        trigger.activate()
+        return Response(status=200)
 
+change_target_module = ChangeTargetModule.as_view()
 
 @api_view(("POST", ))
 @is_manager
