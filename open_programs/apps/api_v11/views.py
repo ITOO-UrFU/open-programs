@@ -312,6 +312,14 @@ def get_choice_groups_by_program(request, program_id):
 @api_view(('GET',))
 @permission_classes((AllowAny, ))
 def get_targets_by_program(request, program_id):
+    trigger = Changed.objects.filter(program__id=program_id, view="gpt").first()
+    if not trigger:
+        trigger = Changed.objects.create(program_id=program_id, view="gpt")
+        trigger.activate()
+        trigger.save()
+    if not trigger.state():
+        return Response(cache.get(f"gpt-{program_id}"))
+
     response = []
     program = Program.objects.get(id=program_id)
 
@@ -329,7 +337,9 @@ def get_targets_by_program(request, program_id):
             "program": target.program.id,
             "choice_groups": choice_groups,
         })
-
+    cache.set(f"gpt-{program_id}", response, 2678400)
+    trigger.deactivate()
+    trigger.save()
     return Response(response)
 
 
