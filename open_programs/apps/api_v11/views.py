@@ -54,7 +54,7 @@ class IsManager(BasePermission):
 
             else:
                 return None
-        user = get_or_update_person_by_jwt()
+        user = get_or_update_person_by_jwt(self)
         return user.groups.filter(name='manager').exists()
 
 
