@@ -387,12 +387,15 @@ def get_program_modules(request, program_id):
 @api_view(("POST", ))
 @permission_classes((DjangoModelPermissions, )) #
 def change_target_module(request):
+
+    def get_queryset(request):
+        return ProgramModules.objects.get(id=module_id)
+
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
     status = request.data["status"]
 
     program_module = ProgramModules.objects.get(id=module_id)
-    queryset = program_module
     target = TrainingTarget.objects.get(id=target_id)
     status = int(status)
     trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
