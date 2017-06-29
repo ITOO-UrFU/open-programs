@@ -43,7 +43,7 @@ class IsManager(BasePermission):
     def has_permission(self, request, view):
         def get_or_update_person_by_jwt(self):
             jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
-            print(jwt_token, request.META, "!!!!!!!!!!!!!!!!!!!!!!!!")
+            print(jwt_token, "!!!!!!!!!!!!!!!!!!!!!!!!")
             if jwt_token:
                 try:
                     token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
