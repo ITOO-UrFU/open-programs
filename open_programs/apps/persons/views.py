@@ -21,8 +21,7 @@ def register(request):
         "email": request.data.get("email", None),
 
     })
-    print(serialized.is_valid(), serialized.errors,
-          "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+
     if serialized.is_valid() and request.data['password1'] == request.data['password2'] and request.data['password1']:
 
         user = User.objects.create_user(serialized.validated_data['username'],
@@ -46,6 +45,6 @@ def register(request):
 
             return Response(person.data, status=201)
     else:
-        return Response({"message": "Invalid data"}, status=400)
+        return Response(serialized.errors, status=400)
 
 
