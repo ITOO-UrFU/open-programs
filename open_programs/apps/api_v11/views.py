@@ -346,7 +346,7 @@ def get_competences_by_program(request, program_id):
 @api_view(('GET',))
 @permission_classes((AllowAny, ))
 def get_program_modules(request, program_id):
-    trigger = None  # Changed.objects.filter(program__id=program_id, view="gpm").first()
+    trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
         trigger = Changed.objects.create(program_id=program_id, view="gpm")
         trigger.activate()
