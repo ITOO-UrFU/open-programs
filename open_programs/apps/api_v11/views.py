@@ -44,7 +44,8 @@ def is_manager(f):
     def decorator(func):
         @wraps(func, assigned=available_attrs(func))
         def inner(request, *args, **kwargs):
-            logging.info(request.user)
+            logging.critical(request.user)
+            print(request.user, "!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             if not request.user.groups.filter(name__in=['manager']).exists():
                 return HttpResponseForbidden(f)
             return func(request, *args, **kwargs)
