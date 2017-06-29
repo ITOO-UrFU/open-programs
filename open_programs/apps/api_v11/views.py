@@ -91,31 +91,31 @@ class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
         return obj
 
 
-class ModuleList(viewsets.ModelViewSet):
+class ModuleList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Module.objects.filter(status="p", archived=False)
     serializer_class = ModuleSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class TypeList(viewsets.ModelViewSet):
+class TypeList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Type.objects.filter(status="p", archived=False)
     serializer_class = TypeSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class DisciplineList(viewsets.ModelViewSet):
+class DisciplineList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Discipline.objects.filter(archived=False)
     serializer_class = DisciplineSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ResultList(viewsets.ModelViewSet):
+class ResultList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Result.objects.filter(status="p", archived=False)
     serializer_class = ResultSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class CompetenceList(viewsets.ModelViewSet):
+class CompetenceList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Competence.objects.filter(status="p", archived=False)
     serializer_class = CompetenceSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -141,9 +141,10 @@ class CompetenceList(viewsets.ModelViewSet):
 class PersonList(viewsets.ModelViewSet):
     queryset = Person.objects.all()
     serializer_class = PersonSerializer
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class CourseList(viewsets.ModelViewSet): ##CacheResponseMixin,
+class CourseList(CacheResponseMixin, viewsets.ModelViewSet): ##CacheResponseMixin,
     queryset = Course.objects.filter(status="p", archived=False)
     serializer_class = CourseSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -152,9 +153,10 @@ class CourseList(viewsets.ModelViewSet): ##CacheResponseMixin,
 class UserList(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    permission_classes = (DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class TrainingTargetList(viewsets.ModelViewSet):
+class TrainingTargetList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = TrainingTarget.objects.filter(status="p", archived=False)
     serializer_class = TrainingTargetSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -172,49 +174,49 @@ class ProgramModulesList(CacheResponseMixin, viewsets.ModelViewSet):
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class TargetModulesList(viewsets.ModelViewSet):
+class TargetModulesList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = TargetModules.objects.filter(status="p", archived=False)
     serializer_class = TargetModulesSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ChoiceGroupList(viewsets.ModelViewSet):
+class ChoiceGroupList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = ChoiceGroup.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class ChoiceGroupTypeList(viewsets.ModelViewSet):
+class ChoiceGroupTypeList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = ChoiceGroupType.objects.filter(status="p", archived=False)
     serializer_class = ChoiceGroupTypeSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class DiagramList(viewsets.ModelViewSet):
+class DiagramList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Diagram.objects.filter(status="p", archived=False)
     serializer_class = DiagramSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class TechnologyList(viewsets.ModelViewSet):
+class TechnologyList(CacheResponseMixin, viewsets.ModelViewSet):
     serializer_class = TechnologySerializer
     queryset = Technology.objects.filter(status="p", archived=False)
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class TrainingTermsList(viewsets.ModelViewSet):
+class TrainingTermsList(CacheResponseMixin, viewsets.ModelViewSet):
     serializer_class = TrainingTermsSerializer
     queryset = TrainingTerms.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class SemesterList(viewsets.ModelViewSet):
+class SemesterList(CacheResponseMixin, viewsets.ModelViewSet):
     serializer_class = SemesterSerializer
     queryset = Semester.objects.all()
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
 
 
-class VariantList(viewsets.ModelViewSet):
+class VariantList(CacheResponseMixin, viewsets.ModelViewSet):
     serializer_class = VariantSerializer
     queryset = Variant.objects.filter(status="p", archived=False)
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -449,48 +451,46 @@ class ChangeTargetModule(APIView):
         trigger.activate()
         return Response(status=200)
 
-change_target_module = ChangeTargetModule.as_view()
+class ChangeChoiceGroup(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        module_id = request.data["module_id"]
+        choice_group_id = request.data["choice_group_id"]
+        program_module = ProgramModules.objects.get(id=module_id)
 
-@api_view(("POST", ))
-def change_choice_group(request):
-    module_id = request.data["module_id"]
-    choice_group_id = request.data["choice_group_id"]
-    program_module = ProgramModules.objects.get(id=module_id)
+        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=program_module.program, view="gpm")
 
-    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=program_module.program, view="gpm")
-
-    if choice_group_id:
-        chg = ChoiceGroup.objects.get(id=choice_group_id)
-        program_module.choice_group = chg
-    else:
-        program_module.choice_group = None
-    program_module.save()
-    trigger.activate()
-    return Response(status=200)
+        if choice_group_id:
+            chg = ChoiceGroup.objects.get(id=choice_group_id)
+            program_module.choice_group = chg
+        else:
+            program_module.choice_group = None
+        program_module.save()
+        trigger.activate()
+        return Response(status=200)
 
 
-@api_view(("POST", ))
-@permission_classes((IsManager, )) #
-def change_competence(request):
-    module_id = request.data["module_id"]
-    competence_id = request.data["competence_id"]
-    program_module = ProgramModules.objects.get(id=module_id)
+class ChangeCompetence(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        module_id = request.data["module_id"]
+        competence_id = request.data["competence_id"]
+        program_module = ProgramModules.objects.get(id=module_id)
 
-    trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=program_module.program, view="gpm")
+        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=program_module.program, view="gpm")
 
-    if competence_id:
-        comp = ProgramCompetence.objects.get(id=competence_id)
-        program_module.competence = comp
-    else:
-        program_module.competence = None
-    program_module.save()
-    trigger.activate()
-    return Response(status=200)
-
+        if competence_id:
+            comp = ProgramCompetence.objects.get(id=competence_id)
+            program_module.competence = comp
+        else:
+            program_module.competence = None
+        program_module.save()
+        trigger.activate()
+        return Response(status=200)
 
 @api_view(("GET", ))
 @permission_classes((AllowAny, ))
@@ -531,24 +531,24 @@ def get_program_disciplines(request, program_id):
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
 
-@api_view(('POST',))
-@permission_classes((IsManager, )) #
-def change_discipline_semester(request):
-    program = Program.objects.get(id=request.data["program_id"])
-    discipline = Discipline.objects.get(id=request.data["discipline_id"])
-    term_title = request.data["term_title"]
-    new_semester = request.data["semester"]
+class ChangeDisciplineSemester(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        program = Program.objects.get(id=request.data["program_id"])
+        discipline = Discipline.objects.get(id=request.data["discipline_id"])
+        term_title = request.data["term_title"]
+        new_semester = request.data["semester"]
 
-    semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title)
-    if semester:
-        semester.update(training_semester=new_semester, year=date.today().year)
-    else:
-        Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
-    trigger = Changed.objects.filter(program=program, view="gpd").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=program, view="gpd")
-    trigger.activate()
-    return Response(status=200)
+        semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title)
+        if semester:
+            semester.update(training_semester=new_semester, year=date.today().year)
+        else:
+            Semester.objects.create(program=program, discipline=discipline, term=TrainingTerms.objects.filter(title=term_title).first(), training_semester=new_semester, year=date.today().year)
+        trigger = Changed.objects.filter(program=program, view="gpd").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=program, view="gpd")
+        trigger.activate()
+        return Response(status=200)
 
 
 @api_view(('GET',))
@@ -597,64 +597,64 @@ def get_variants(request, program_id, discipline_id):
     return Response(response)
 
 
-@api_view(('POST',))
-@permission_classes((IsManager, )) #
-def change_variant(request):
-    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-    for key, value in request.data.items():
-        if key != "variant_id" and key != "semester":
-            value = request.data.get(key, None)
-            if value:
-                variant.__dict__[key] = value
-            else:
-                variant.__dict__[key] = None
-        elif key == "semester":
-            semester = Semester.objects.filter(discipline=variant.discipline, term__title=request.data[key], program=variant.program).first()
-            if semester:
-                variant.semester = semester
+class ChangeVariant(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+        for key, value in request.data.items():
+            if key != "variant_id" and key != "semester":
+                value = request.data.get(key, None)
+                if value:
+                    variant.__dict__[key] = value
+                else:
+                    variant.__dict__[key] = None
+            elif key == "semester":
+                semester = Semester.objects.filter(discipline=variant.discipline, term__title=request.data[key], program=variant.program).first()
+                if semester:
+                    variant.semester = semester
 
-    variant.status = "p"
-    variant.save()
-    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=variant.program, view="gv")
-    trigger.activate()
-    return Response(status=200)
+        variant.status = "p"
+        variant.save()
+        trigger = Changed.objects.filter(program=variant.program, view="gv").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=variant.program, view="gv")
+        trigger.activate()
+        return Response(status=200)
 
 
-@api_view(('POST',))
-@permission_classes((IsManager, )) #
-def create_variant(request):
-    program = Program.objects.get(id=request.data["program_id"])
-    discipline = Discipline.objects.get(id=request.data["discipline_id"])
-    term_title = request.data.get("term_title", None)
+class CreateVariant(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        program = Program.objects.get(id=request.data["program_id"])
+        discipline = Discipline.objects.get(id=request.data["discipline_id"])
+        term_title = request.data.get("term_title", None)
 
-    technology = request.data.get("technology_id", None)
-    diagram = request.data.get("diagram_id", None)
-    course = request.data.get("course_id", None)
-    parity = request.data.get("parity_id", None)
-    link = request.data.get("link", None)
+        technology = request.data.get("technology_id", None)
+        diagram = request.data.get("diagram_id", None)
+        course = request.data.get("course_id", None)
+        parity = request.data.get("parity_id", None)
+        link = request.data.get("link", None)
 
-    if term_title:
-        semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
+        if term_title:
+            semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
 
-        if Variant.objects.filter(discipline=discipline, program=program, semester=semester, technology=technology,
-                               diagram=diagram, link=link, status="p").first():
-            return Response(status=409)
+            if Variant.objects.filter(discipline=discipline, program=program, semester=semester, technology=technology,
+                                   diagram=diagram, link=link, status="p").first():
+                return Response(status=409)
 
-        Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
-                               diagram=diagram, link=link, status="p")
-    elif course:
-        Variant.objects.create(discipline=discipline, program=program, technology=technology,
-                               course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
-    elif parity:
-        Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
-                               diagram=diagram, link=link, status="p")
-    trigger = Changed.objects.filter(program=program, view="gv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=program, view="gv")
-    trigger.activate()
-    return Response(status=200)
+            Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
+                                   diagram=diagram, link=link, status="p")
+        elif course:
+            Variant.objects.create(discipline=discipline, program=program, technology=technology,
+                                   course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
+        elif parity:
+            Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
+                                   diagram=diagram, link=link, status="p")
+        trigger = Changed.objects.filter(program=program, view="gv").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=program, view="gv")
+        trigger.activate()
+        return Response(status=200)
 
 
 @api_view(('GET',))
@@ -709,17 +709,16 @@ def get_program_variants(request, program_id):
     return Response(variants)
 
 
-@api_view(('POST',))
-@permission_classes((IsManager, )) #
-def delete_variant(request):
-    variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-    trigger = Changed.objects.filter(program=variant.program, view="gv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program=variant.program, view="gv")
-    trigger.activate()
-    variant.delete()
-    return Response(status=200)
-
+class DeleteVariant(APIView):
+    permission_classes = (IsManager, )
+    def post(self, request):
+        variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+        trigger = Changed.objects.filter(program=variant.program, view="gv").first()
+        if not trigger:
+            trigger = Changed.objects.create(program=variant.program, view="gv")
+        trigger.activate()
+        variant.delete()
+        return Response(status=200)
 
 @api_view(('POST',))
 @permission_classes((AllowAny, )) #
@@ -789,3 +788,11 @@ def get_program_trajectory(request, program_id):
 def delete_trajectory(request):
     StudentProgram.objects.remove(id=request.data["id"])
     return Response(status=200)
+
+change_target_module = ChangeTargetModule.as_view()
+change_choice_group = ChangeChoiceGroup.as_view()
+change_competence = ChangeCompetence.as_view()
+change_discipline_semester = ChangeDisciplineSemester.as_view()
+change_variant = ChangeVariant.as_view()
+create_variant = CreateVariant.as_view()
+delete_variant = DeleteVariant.as_view()
