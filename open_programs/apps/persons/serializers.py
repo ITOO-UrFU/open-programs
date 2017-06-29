@@ -17,6 +17,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
         fields = ("id", "username", "email", "is_staff", "groups")
 
     def validate(self, data):
+        print(data, '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         if not data['username'] and not data['email']:
             raise serializers.ValidationError("Not enought data")
         return data
