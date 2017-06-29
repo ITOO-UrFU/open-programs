@@ -403,7 +403,7 @@ def get_program_modules(request, program_id):
 
 
 @api_view(("POST", ))
-@is_manager
+@is_manager()
 def change_target_module(request):
     module_id = request.data["module_id"]
     target_id = request.data["target_id"]
