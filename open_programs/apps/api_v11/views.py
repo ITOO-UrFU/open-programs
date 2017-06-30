@@ -33,6 +33,7 @@ from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
 from disciplines.serializers import *
 import jwt
 from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 
 from cms.api_views import *
 
@@ -48,7 +49,7 @@ def get_or_update_person_by_jwt(request):
             return User.objects.filter(is_anonymous=True).first()
         return User.objects.get(pk=token_data['user_id'])
     else:
-        return User.objects.filter(is_anonymous=True).first()
+        return AnonymousUser
 
 
 class IsManager(BasePermission):
