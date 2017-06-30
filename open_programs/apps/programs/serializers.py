@@ -1,8 +1,8 @@
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, StudentProgram
-from persons.serializers import PersonSerializer, UserSerializer
 from modules.serializers import ModuleSerializer
-
+from persons.serializers import PersonSerializer, UserSerializer
 from rest_framework import serializers
+
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, StudentProgram
 
 
 class ProgramCompetenceSerializer(serializers.ModelSerializer):

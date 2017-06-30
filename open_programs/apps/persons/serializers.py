@@ -1,6 +1,7 @@
-from .models import Person
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
+
+from .models import Person
 
 
 class GroupSerializer(serializers.ModelSerializer):
@@ -29,5 +30,5 @@ class PersonSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Person
-        fields = ("user", "first_name", "last_name", "second_name", "sex", "alt_email", "birthday_date", "biography")  # "country" is not JSON serializable
-
+        fields = ("user", "first_name", "last_name", "second_name", "sex", "alt_email", "birthday_date",
+                  "biography")  # "country" is not JSON serializable

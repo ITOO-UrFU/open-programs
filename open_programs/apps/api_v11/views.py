@@ -1,43 +1,43 @@
 from datetime import date
-from rest_framework import viewsets
-from rest_framework import serializers
-from rest_framework.response import Response
-from rest_framework.decorators import api_view, permission_classes
-from rest_framework.views import APIView
-from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, BasePermission, DjangoModelPermissionsOrAnonReadOnly
-from rest_framework.generics import ListCreateAPIView, CreateAPIView
 
+import jwt
+from cms.api_views import *
 
-from rest_framework_extensions.cache.mixins import CacheResponseMixin
+from competences.models import Competence
+from competences.serializers import CompetenceSerializer
 
+from courses.models import Course
+from courses.serializers import CourseSerializer
+
+from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
+from disciplines.serializers import *
+
+from django.conf import settings
+from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth.models import User
+from django.core.cache import cache
 from django.shortcuts import get_object_or_404
 
-from courses.models import Course, Session
-from persons.models import Person
-from competences.models import Competence
-from results.models import Result
-from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
 from modules.models import Module, Type
+from modules.serializers import ModuleSerializer, TypeSerializer
+from persons.models import Person
+from persons.serializers import UserSerializer, PersonSerializer
 from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramModules, \
                             TargetModules, ChoiceGroup, ChoiceGroupType, Changed, StudentProgram
-
-from courses.serializers import CourseSerializer, SessionSerializer, CourseIdSerializer
-from persons.serializers import UserSerializer, PersonSerializer
-from competences.serializers import CompetenceSerializer
-from results.serializers import ResultSerializer
-from modules.serializers import ModuleSerializer, TypeSerializer
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
                                  ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
                                  ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer
-from disciplines.serializers import *
-import jwt
-from django.conf import settings
-from django.contrib.auth.models import AnonymousUser
 
-from cms.api_views import *
+from rest_framework import serializers
+from rest_framework import viewsets
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, BasePermission, DjangoModelPermissionsOrAnonReadOnly
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework_extensions.cache.mixins import CacheResponseMixin
 
-from django.core.cache import cache
+from results.models import Result
+from results.serializers import ResultSerializer
 
 
 def get_user_by_jwt(request):
