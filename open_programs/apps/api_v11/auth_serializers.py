@@ -84,4 +84,5 @@ class ObtainAuthToken(APIView):
 
         return Response(content)
 
+
 obtain_jwt_token = ObtainAuthToken.as_view()

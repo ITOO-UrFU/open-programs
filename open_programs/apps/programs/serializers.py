@@ -2,11 +2,11 @@ from modules.serializers import ModuleSerializer
 from persons.serializers import PersonSerializer, UserSerializer
 from rest_framework import serializers
 
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, StudentProgram
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, \
+    ChoiceGroupType, StudentProgram
 
 
 class ProgramCompetenceSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ProgramCompetence
         fields = ("id", "title", "number")
@@ -20,7 +20,8 @@ class ProgramSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Program
-        fields = ("id", "title", "chief", "get_level_display", "get_choice_groups", "training_direction", "competences", "get_competences_diagram")
+        fields = ("id", "title", "chief", "get_level_display", "get_choice_groups", "training_direction", "competences",
+                  "get_competences_diagram")
 
 
 class TrainingTargetSerializer(serializers.ModelSerializer):

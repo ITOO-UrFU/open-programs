@@ -14,28 +14,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 import permission
-from django.conf import settings
+from ajax_select import urls as ajax_select_urls
 from django.conf.urls import url, include
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.views.generic.base import RedirectView
+from persons.views import register
 from rest_framework import routers
-
-from rest_framework_jwt.views import obtain_jwt_token
 from rest_framework_jwt.views import refresh_jwt_token
 from rest_framework_jwt.views import verify_jwt_token
-
 from rest_framework_swagger.views import get_swagger_view
 
-from ajax_select import urls as ajax_select_urls
-
 from .apps.api.views import *
-from .apps.api_v11.views import *
 from .apps.api_v11 import auth_serializers
-from persons.views import register
+from .apps.api_v11.views import *
 
 permission.autodiscover()
-
 
 router_10 = routers.DefaultRouter()
 router_10.register(r'courses', CourseList)
@@ -74,9 +68,7 @@ router_11.register(r'training_terms', TrainingTermsList)
 router_11.register(r'semesters', SemesterList)
 router_11.register(r'variants', VariantList)
 
-
 schema_view = get_swagger_view(title='Open programs')
-
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/constructor/', permanent=False), name='index'),
@@ -94,8 +86,7 @@ urlpatterns = [
     url(r'^api/v11/api-token-auth/', auth_serializers.obtain_jwt_token),
     url(r'^api/v11/api-token-refresh/', refresh_jwt_token),
     url(r'^api/v11/api-token-verify/', verify_jwt_token),
- ]
-
+]
 
 if 'rosetta' in settings.INSTALLED_APPS:
     urlpatterns += [url(r'^rosetta/', include('rosetta.urls')),
@@ -114,32 +105,43 @@ urlpatterns += [
 ]
 
 #### API rewrite
-urlpatterns.append(url(r'^api/v11/heartbeat/$', heartbeat, name="heartbeat"))
-urlpatterns.append(url(r'^api/v11/get_program_choice_groups/(?P<program_id>.*)/$', get_choice_groups_by_program, name="get_choice_groups_by_program"))
-urlpatterns.append(url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules, name="get_program_modules"))
-urlpatterns.append(url(r'^api/v11/get_program_targets/(?P<program_id>.*)/$', get_targets_by_program, name="get_targets_by_program"))
-urlpatterns.append(url(r'^api/v11/get_program_competences/(?P<program_id>.*)/$', get_competences_by_program, name="get_competences_by_program"))
-urlpatterns.append(url(r'^api/v11/change_target_module/$', change_target_module, name="change_target_module"))
-urlpatterns.append(url(r'^api/v11/change_choice_group/$', change_choice_group, name="change_choice_group"))
-urlpatterns.append(url(r'^api/v11/change_competence/$', change_competence, name="change_competence"))
+urlpatterns += [
+    url(r'^api/v11/heartbeat/$', heartbeat, name="heartbeat"),
+    url(r'^api/v11/get_program_choice_groups/(?P<program_id>.*)/$', get_choice_groups_by_program,
+        name="get_choice_groups_by_program"),
+    url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules,
+        name="get_program_modules"),
+    url(r'^api/v11/get_program_targets/(?P<program_id>.*)/$', get_targets_by_program,
+        name="get_targets_by_program"),
+    url(r'^api/v11/get_program_competences/(?P<program_id>.*)/$', get_competences_by_program,
+        name="get_competences_by_program"),
+    url(r'^api/v11/change_target_module/$', change_target_module, name="change_target_module"),
+    url(r'^api/v11/change_choice_group/$', change_choice_group, name="change_choice_group"),
+    url(r'^api/v11/change_competence/$', change_competence, name="change_competence"),
 
-urlpatterns.append(url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$', get_program_disciplines, name="get_program_disciplines"))
-urlpatterns.append(url(r'^api/v11/change_discipline_semester/$', change_discipline_semester, name="change_discipline_semester"))
-urlpatterns.append(url(r'^api/v11/get_variants/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_variants, name="get_variants"))
-urlpatterns.append(url(r'^api/v11/change_variant/$', change_variant, name="change_variant"))
-urlpatterns.append(url(r'^api/v11/delete_variant/$', delete_variant, name="delete_variant"))
-urlpatterns.append(url(r'^api/v11/create_variant/$', create_variant, name="create_variant"))
+    url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$', get_program_disciplines,
+        name="get_program_disciplines"),
+    url(r'^api/v11/change_discipline_semester/$', change_discipline_semester,
+        name="change_discipline_semester"),
+    url(r'^api/v11/get_variants/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_variants,
+        name="get_variants"),
+    url(r'^api/v11/change_variant/$', change_variant, name="change_variant"),
+    url(r'^api/v11/delete_variant/$', delete_variant, name="delete_variant"),
+    url(r'^api/v11/create_variant/$', create_variant, name="create_variant"),
 
-urlpatterns.append(url(r'^api/v11/new_trajectory/$', new_trajectory, name="new_trajectory"))
-urlpatterns.append(url(r'^api/v11/save_trajectory/$', save_trajectory, name="save_trajectory"))
-urlpatterns.append(url(r'^api/v11/get_trajectory_id/(?P<id>.*)/$', get_trajectory_id, name="get_trajectory"))
-urlpatterns.append(url(r'^api/v11/get_trajectory_link/(?P<link>.*)/$', get_trajectory_link, name="get_link"))
-urlpatterns.append(url(r'^api/v11/get_program_trajectory/(?P<program_id>.*)/$', get_program_trajectory, name="get_program_trajectory"))
-urlpatterns.append(url(r'^api/v11/delete_trajectory/$', delete_trajectory, name="delete_trajectory"))
+    url(r'^api/v11/new_trajectory/$', new_trajectory, name="new_trajectory"),
+    url(r'^api/v11/save_trajectory/$', save_trajectory, name="save_trajectory"),
+    url(r'^api/v11/get_trajectory_id/(?P<id>.*)/$', get_trajectory_id, name="get_trajectory"),
+    url(r'^api/v11/get_trajectory_link/(?P<link>.*)/$', get_trajectory_link, name="get_link"),
+    url(r'^api/v11/get_program_trajectory/(?P<program_id>.*)/$', get_program_trajectory,
+        name="get_program_trajectory"),
+    url(r'^api/v11/delete_trajectory/$', delete_trajectory, name="delete_trajectory"),
 
-urlpatterns.append(url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants, name="get_program_variants"))
-urlpatterns.append(url(r'^api/v11/register', register, name="register"))
-#### CMS API ####
-urlpatterns.append(url(r'^api/v11/containers/$', get_containers, name="get_containers"))
-urlpatterns.append(url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"))
-urlpatterns.append(url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug"))
+    url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants,
+        name="get_program_variants"),
+    url(r'^api/v11/register', register, name="register"),
+    #### CMS API ####
+    url(r'^api/v11/containers/$', get_containers, name="get_containers")
+    url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
+    url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug")
+]
