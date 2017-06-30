@@ -40,7 +40,7 @@ from cms.api_views import *
 from django.core.cache import cache
 
 
-def get_or_update_person_by_jwt(request):
+def get_user_by_jwt(request):
     jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
     if jwt_token:
         try:
@@ -54,7 +54,7 @@ def get_or_update_person_by_jwt(request):
 
 class IsManager(BasePermission):
     def has_permission(self, request, view):
-        user = get_or_update_person_by_jwt(request)
+        user = get_user_by_jwt(request)
         if user and not user.is_anonymous:
             return user.groups.filter(name='manager').exists()
         else:
@@ -63,7 +63,7 @@ class IsManager(BasePermission):
 
 class IsStudent(BasePermission):
     def has_permission(self, request, view):
-        user = get_or_update_person_by_jwt(request)
+        user = get_user_by_jwt(request)
         if user and not user.is_anonymous:
             return True
         else:
@@ -745,6 +745,7 @@ def save_trajectory(request):
     student_program = StudentProgram.objects.get(id=request.data["id"])
     json = request.data.get("data", None)
     student_program.json = json
+    student_program.user = get_user_by_jwt(request)
     student_program.save()
 
     return Response(status=200, data={"link": student_program.link,
