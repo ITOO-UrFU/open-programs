@@ -141,7 +141,7 @@ urlpatterns += [
         name="get_program_variants"),
     url(r'^api/v11/register', register, name="register"),
     #### CMS API ####
-    url(r'^api/v11/containers/$', get_containers, name="get_containers")
+    url(r'^api/v11/containers/$', get_containers, name="get_containers"),
     url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
     url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug")
 ]
