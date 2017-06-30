@@ -39,24 +39,32 @@ from cms.api_views import *
 from django.core.cache import cache
 
 
+def get_or_update_person_by_jwt(request):
+    jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
+    if jwt_token:
+        try:
+            token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
+        except jwt.exceptions.ExpiredSignatureError:
+            return User.objects.filter(is_anonymous=True).first()
+        return User.objects.get(pk=token_data['user_id'])
+    else:
+        return User.objects.filter(is_anonymous=True).first()
+
+
 class IsManager(BasePermission):
     def has_permission(self, request, view):
-        def get_or_update_person_by_jwt(self):
-            jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
-            if jwt_token:
-                try:
-                    token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
-                except jwt.exceptions.ExpiredSignatureError:
-                    return Response({"status": "Session expired"})
-
-                current_user = User.objects.get(pk=token_data['user_id'])
-                return current_user
-
-            else:
-                return None
-        user = get_or_update_person_by_jwt(self)
+        user = get_or_update_person_by_jwt(request)
         if user:
             return user.groups.filter(name='manager').exists()
+        else:
+            return False
+
+
+class IsStudent(BasePermission):
+    def has_permission(self, request, view):
+        user = get_or_update_person_by_jwt(request)
+        if user:
+            return True
         else:
             return False
 
