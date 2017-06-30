@@ -760,6 +760,8 @@ def save_trajectory(request):
     student_program.user = None if get_user_by_jwt(request).is_anonymous else get_user_by_jwt(request)
     student_program.save()
 
+    print(student_program.user, "USER")
+
     return Response(status=200, data={"link": student_program.link,
                                       "id": student_program.id}
                     )
