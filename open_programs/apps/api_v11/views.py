@@ -55,7 +55,7 @@ def get_or_update_person_by_jwt(request):
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         user = get_or_update_person_by_jwt(request)
-        if user and not user.is_anonymous():
+        if user and not user.is_anonymous:
             return user.groups.filter(name='manager').exists()
         else:
             return False
@@ -64,7 +64,7 @@ class IsManager(BasePermission):
 class IsStudent(BasePermission):
     def has_permission(self, request, view):
         user = get_or_update_person_by_jwt(request)
-        if user and not user.is_anonymous():
+        if user and not user.is_anonymous:
             return True
         else:
             return False
