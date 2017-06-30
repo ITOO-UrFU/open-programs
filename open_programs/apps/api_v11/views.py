@@ -757,7 +757,7 @@ def save_trajectory(request):
     student_program = StudentProgram.objects.get(id=request.data["id"])
     json = request.data.get("data", None)
     student_program.json = json
-    student_program.user = get_user_by_jwt(request)
+    student_program.user = None if get_user_by_jwt(request).is_anonymous else get_user_by_jwt(request)
     student_program.save()
 
     return Response(status=200, data={"link": student_program.link,
