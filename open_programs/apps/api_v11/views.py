@@ -46,7 +46,7 @@ def get_or_update_person_by_jwt(request):
         try:
             token_data = jwt.decode(jwt_token, settings.SECRET_KEY)
         except jwt.exceptions.ExpiredSignatureError:
-            return User.objects.filter(is_anonymous=True).first()
+            return AnonymousUser
         return User.objects.get(pk=token_data['user_id'])
     else:
         return AnonymousUser
@@ -55,8 +55,7 @@ def get_or_update_person_by_jwt(request):
 class IsManager(BasePermission):
     def has_permission(self, request, view):
         user = get_or_update_person_by_jwt(request)
-        if user:
-            print(user.username, "!!!!!!!!!!!!!!!")
+        if user and not user.is_anonymous:
             return user.groups.filter(name='manager').exists()
         else:
             return False
@@ -65,7 +64,7 @@ class IsManager(BasePermission):
 class IsStudent(BasePermission):
     def has_permission(self, request, view):
         user = get_or_update_person_by_jwt(request)
-        if user:
+        if user and not user.is_anonymous:
             return True
         else:
             return False
