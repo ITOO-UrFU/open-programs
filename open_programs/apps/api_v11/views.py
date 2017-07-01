@@ -727,6 +727,58 @@ def get_program_variants(request, program_id):
     return Response(variants)
 
 
+@api_view(('GET',))
+@permission_classes((IsAuthenticatedOrReadOnly,))
+def get_program_variants_constructor(request, program_id):
+    trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
+    if not trigger:
+        trigger = Changed.objects.create(program_id=program_id, view="gv")
+        trigger.activate()
+        trigger.save()
+    if not trigger.state():
+        return Response(cache.get(f"gv-{program_id}"))
+    variants = {}
+    program = Program.objects.get(id=program_id)
+    disciplines = program.get_all_disciplines()
+    for discipline in disciplines:
+        variants[discipline.id] = []
+        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+            variants[discipline.id].append(
+                {
+                    "id": variant.id,
+                    "diagram": None if not variant.diagram else
+                    {
+                        "id": variant.diagram.id,
+                        "title": variant.diagram.title,
+                        "diagram": variant.diagram.diagram
+                    },
+                    "course": None if not variant.course else
+                    {
+                        "title": variant.course.title
+                    },
+                    "technology": None if not variant.technology else
+                    {
+                        "id": variant.technology.id,
+                        "title": variant.technology.title,
+                        "description": variant.technology.description,
+                        "contact_work_category": variant.technology.contact_work_category,
+                        "color": variant.technology.color
+                    },
+                    "semester": None if not variant.semester else
+                    {
+                        "term": variant.semester.term.title,
+                        "training_semester": variant.semester.training_semester,
+                    },
+                    "parity": None if not variant.parity else variant.parity,
+                    "link": variant.link
+                }
+            )
+    cache.set(f"gv-{program_id}", variants, 2678400)
+    trigger.deactivate()
+    trigger.save()
+    return Response(variants)
+
+
 class DeleteVariant(APIView):
     permission_classes = (IsManager,)
 

@@ -139,6 +139,8 @@ urlpatterns += [
 
     url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants,
         name="get_program_variants"),
+url(r'^api/v11/get_program_variants_constructor/(?P<program_id>.*)/$', get_program_variants_constructor,
+        name="get_program_variants_constructor"),
     url(r'^api/v11/register', register, name="register"),
     #### CMS API ####
     url(r'^api/v11/containers/$', get_containers, name="get_containers"),
