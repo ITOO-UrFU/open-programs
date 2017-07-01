@@ -10,7 +10,7 @@ class ModuleLookup(LookupChannel):
 
     @classmethod
     def get_query(cls, q, request):
-        return Module.objects.filter(Q(title__icontains=q) | Q(uni_number__icontains=q) | Q(uni_uid__icontains=q), Q(status="p") & Q(archived=False)).order_by('title')
+        return Module.objects.filter(Q(title__icontains=q) | Q(uni_number__icontains=q) | Q(uni_uuid__icontains=q), Q(status="p") & Q(archived=False)).order_by('title')
 
     @classmethod
     def get_result(cls, obj):
