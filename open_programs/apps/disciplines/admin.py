@@ -16,6 +16,7 @@ import json
 
 from jsonfield import JSONField
 from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Diagram, WorkingType
+from modules.models import Module
 
 
 class JSONEditor(Textarea):
@@ -145,6 +146,7 @@ class DisciplineAdmin(VersionAdmin):
     filter_horizontal = ("results",)
     list_filter = ("archived", "created", "updated", "status", "form")
     search_fields = ['title', 'module__title', "module__uni_number"]
+    form = make_ajax_form(Module, {'module': 'module'})
 
 
 @admin.register(TrainingTerms)

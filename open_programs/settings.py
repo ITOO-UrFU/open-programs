@@ -345,6 +345,7 @@ AJAX_LOOKUP_CHANNELS = {
     'discipline': ('disciplines.lookups', 'DisciplineLookup'),
     'semester': ('disciplines.lookups', 'SemesterLookup'),
     'program': ('programs.lookups', 'ProgramLookup'),
+    'module': ('modules.lookups', 'ModuleLookup'),
 }
 
 CACHES = {
