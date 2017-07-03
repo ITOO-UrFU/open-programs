@@ -69,4 +69,15 @@ class ChangePerson(APIView):
 
         return Response(person.data, status=201)
 
+
+class GetUser(APIView):
+    permission_classes = (IsStudent, )
+
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        person = Person.objects.filter(user=user)
+        person = PersonSerializer(person)
+        return Response(person.data, status=201)
+
 change_person = ChangePerson.as_view()
+get_user = GetUser.as_view()

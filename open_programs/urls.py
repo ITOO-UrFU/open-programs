@@ -28,7 +28,7 @@ from rest_framework_swagger.views import get_swagger_view
 from .apps.api.views import *
 from .apps.api_v11 import auth_serializers
 from .apps.api_v11.views import *
-from persons.views import change_person
+from persons.views import change_person, get_user
 
 permission.autodiscover()
 
@@ -144,6 +144,7 @@ url(r'^api/v11/get_program_variants_constructor/(?P<program_id>.*)/$', get_progr
         name="get_program_variants_constructor"),
     url(r'^api/v11/register', register, name="register"),
     url(r'^api/v11/change_person', change_person, name="change_person"),
+    url(r'^api/v11/get_user', get_user, name="get_user"),
     #### CMS API ####
     url(r'^api/v11/containers/$', get_containers, name="get_containers"),
     url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
