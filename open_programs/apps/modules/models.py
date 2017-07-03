@@ -58,7 +58,8 @@ class Module(ObjectBaseClass):
                  "description": discipline.description,
                  "labor": discipline.labor,
                  "form": discipline.get_form_display(),
-                 "semester": discipline.period
+                 "semester": discipline.period,
+                 "default_semester": self.semester + discipline.period,
                  } for discipline in Discipline.objects.filter(module=self, archived=False, status="p").order_by("period")]
 
     def get_labor(self):
