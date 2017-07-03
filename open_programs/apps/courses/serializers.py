@@ -3,17 +3,17 @@ from rest_framework import serializers
 
 
 class CourseSerializer(serializers.HyperlinkedModelSerializer):
-    authors = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='person-detail'
-    )
-
-    staff = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='person-detail'
-    )
+    # authors = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='person-detail'
+    # )
+    #
+    # staff = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='person-detail'
+    # )
 
     sessions = serializers.HyperlinkedRelatedField(
         many=True,
@@ -30,8 +30,8 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Course
         fields = ("id", "title", "description", "slug", "about", "cover", "video", "video_cover", "workload", "points",
-                  "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created",
-                  "updated")  # "authors", "authors_ordering",
+                  "duration", "sessions",  "results", "results_text", "status", "archived", "created",
+                  "updated")  # "authors", "authors_ordering", "staff",
 
 
 class CourseIdSerializer(serializers.ModelSerializer):
