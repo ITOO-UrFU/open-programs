@@ -691,12 +691,13 @@ def get_program_variants(request, program_id):
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
-            if 'заоч' in variant.technology.title:
-                presence = "z"
-            elif 'лайн' in variant.technology.title:
-                presence = 'online'
-            else:
-                presence = "o"
+            if variant.technology:
+                if 'заоч' in variant.technology.title:
+                    presence = "z"
+                elif 'лайн' in variant.technology.title:
+                    presence = 'online'
+                else:
+                    presence = "o"
             variants[discipline.id].append(
                 {
                     "id": variant.id,
