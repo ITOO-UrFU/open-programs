@@ -29,15 +29,17 @@ class CourseSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Course
-        fields = ("id", "title", "description", "slug", "authors", "authors_ordering", "about", "cover", "video", "video_cover", "workload", "points", "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created", "updated")
+        fields = ("id", "title", "description", "slug", "about", "cover", "video", "video_cover", "workload", "points",
+                  "duration", "sessions", "staff", "results", "results_text", "status", "archived", "created",
+                  "updated")  # "authors", "authors_ordering",
 
 
 class CourseIdSerializer(serializers.ModelSerializer):
     class Meta:
         depth = 1
         model = Course
-        fields = ('id', )
-        read_only_fields = ('id', )
+        fields = ('id',)
+        read_only_fields = ('id',)
 
 
 class SessionSerializer(serializers.HyperlinkedModelSerializer):
