@@ -672,7 +672,7 @@ class CreateVariant(APIView):
         if not trigger:
             trigger = Changed.objects.create(program=program, view="gv")
         trigger.activate()
-        return Response({"status": 200})
+        return Response(status=200)
 
 
 @api_view(('GET',))
