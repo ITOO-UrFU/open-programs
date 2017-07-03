@@ -28,6 +28,7 @@ from rest_framework_swagger.views import get_swagger_view
 from .apps.api.views import *
 from .apps.api_v11 import auth_serializers
 from .apps.api_v11.views import *
+from .apps.persons.views import change_person
 
 permission.autodiscover()
 
