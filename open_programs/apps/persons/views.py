@@ -52,7 +52,7 @@ def register(request):
 
 
 class ChangePerson(APIView):
-    permission_classes = (IsStudent,)
+    permission_classes = (AllowAny,)
 
     def post(self, request):
         user = get_user_by_jwt(request)
