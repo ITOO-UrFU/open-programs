@@ -7,8 +7,11 @@ from django.dispatch import receiver
 
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
+from rest_framework.views import APIView
 
 from .models import Person
+
+from api_v11.views import IsStudent, get_user_by_jwt
 
 User = get_user_model()
 
@@ -48,3 +51,22 @@ def register(request):
         return Response(serialized.errors, status=400)
 
 
+class ChangePerson(APIView):
+    permission_classes = (IsStudent,)
+
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        person = Person.objects.filter(user=user)
+
+        person.first_name = request.data.get("first_name", "")
+        person.last_name = request.data.get("last_name", "")
+        person.second_name = request.data.get("second_name", "")
+        person.alt_email = request.data.get("alt_email", "")
+        person.biography = request.data.get("biography", "")
+        person.save()
+
+        person = PersonSerializer(person)
+
+        return Response(person.data, status=201)
+
+change_person = ChangePerson.as_view()
