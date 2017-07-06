@@ -75,7 +75,7 @@ class GetUser(APIView):
 
     def post(self, request):
         user = get_user_by_jwt(request)
-        person = Person.objects.filter(user=user)
+        person = Person.objects.filter(user=user).first()
         person = PersonSerializer(person)
         return Response(person.data, status=201)
 
