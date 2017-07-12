@@ -302,7 +302,7 @@ class StudentProgram(ObjectBaseClass):
 
     def save(self, *args, **kwargs):
         kwargs['force_insert'] = True
-        if self.link == None or self.link == "":
+        if self.link is None or self.link == "":
             self.link = student_program_key()
         super(StudentProgram, self).save()
 
