@@ -7,7 +7,6 @@ import uuid
 from results.models import Result
 from competences.models import Competence
 from disciplines.models import Discipline, Semester
-from programs.models import ProgramModules
 
 
 class Type(ObjectBaseClass):
@@ -46,25 +45,6 @@ class Module(ObjectBaseClass):
     uni_comment = models.CharField(max_length=4096, null=True, blank=True)
     uni_file = models.CharField(max_length=265, null=True, blank=True)
     uni_specialities =models.TextField(null=True, blank=True)
-
-    def get_all_disciplines(self):
-        pm = ProgramModules.objects.filter(module=self, program=self.program).first()
-        return Discipline.objects.filter(module=pm.module)
-
-    def get_all_discipline_ids(self):
-        pm = ProgramModules.objects.filter(module=self, program=self.program).first()
-        return [discipline.id for discipline in Discipline.objects.filter(module=pm.module)]
-
-    def get_all_discipline_custom(self):
-        pm = ProgramModules.objects.filter(module=self, program=self.program).first()
-        return [{"id": discipline.id,
-                 "title": discipline.title,
-                 "description": discipline.description,
-                 "labor": discipline.labor,
-                 "form": discipline.get_form_display(),
-                 "semester": discipline.period,
-                 "default_semester": [[str(self.program), s.id, s.term.title, s.training_semester] for s in Semester.objects.filter(discipline=discipline, program=self.program)]
-                 } for discipline in Discipline.objects.filter(module=pm.module, archived=False, status="p").order_by("period")]
 
     def get_labor(self):
         return Discipline.objects.filter(module=self, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]

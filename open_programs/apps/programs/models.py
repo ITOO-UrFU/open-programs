@@ -11,7 +11,7 @@ from django.conf import settings
 from persons.models import Person
 from competences.models import Competence
 from modules.models import Module
-from disciplines.models import Discipline
+from disciplines.models import Discipline, Semester
 
 
 
@@ -134,6 +134,22 @@ class ProgramModules(ObjectBaseClass):
     choice_group = models.ForeignKey("ChoiceGroup", blank=True, null=True)
     competence = models.ForeignKey(ProgramCompetence, blank=True, null=True)
     semester = models.PositiveIntegerField(blank=True, null=True)
+
+    def get_all_disciplines(self):
+        return Discipline.objects.filter(module=self.module)
+
+    def get_all_discipline_ids(self):
+        return [discipline.id for discipline in Discipline.objects.filter(module=self.module)]
+
+    def get_all_discipline_custom(self):
+        return [{"id": discipline.id,
+                 "title": discipline.title,
+                 "description": discipline.description,
+                 "labor": discipline.labor,
+                 "form": discipline.get_form_display(),
+                 "semester": discipline.period,
+                 "default_semester": [[str(self.program), s.id, s.term.title, s.training_semester] for s in Semester.objects.filter(discipline=discipline, program=self.program)]
+                 } for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
 
     class Meta:
         verbose_name = 'модуль программы'

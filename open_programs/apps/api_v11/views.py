@@ -405,7 +405,7 @@ def get_program_modules(request, program_id):
             "targets_positions": mod.get_target_positions(),
             "targets_positions_indexed": mod.get_target_positions_indexed(),
             "priority": 9999 if not mod.module.uni_priority else mod.module.uni_priority,
-            "disciplines": mod.module.get_all_discipline_custom()
+            "disciplines": mod.get_all_discipline_custom()
         })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
     cache.set(f"gpm-{program_id}", response, 2678400)
