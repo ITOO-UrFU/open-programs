@@ -143,6 +143,8 @@ class ProgramModules(ObjectBaseClass):
 
     def get_all_discipline_custom(self):
         q = [[s for s in Semester.objects.filter(discipline=discipline, program=self.program)]for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
+        for sem in q:
+            print(sem)
         print(q)
         return [{"id": discipline.id,
                  "title": discipline.title,
