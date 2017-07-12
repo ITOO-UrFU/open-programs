@@ -153,7 +153,7 @@ class ProgramModules(ObjectBaseClass):
                 title = s.term.title
                 trsemester = s.training_semester
 
-        [s.delete() for s in for_delete]
+        print(len(for_delete), ["; ".join([s.term.title, s.training_semester]) for s in for_delete])
 
         return [{"id": discipline.id,
                  "title": discipline.title,
