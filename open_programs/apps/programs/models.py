@@ -143,9 +143,18 @@ class ProgramModules(ObjectBaseClass):
 
     def get_all_discipline_custom(self):
         q = [[s for s in Semester.objects.filter(discipline=discipline, program=self.program)]for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
+        for_delete = []
         for sem in q:
+            title = None
+            trsemester = 0
             for s in sem:
-                print(s.term.title, s.training_semester)
+                if s.term.title == title and s.training_semester == trsemester:
+                    for_delete.append(s)
+                title = s.term.title
+                trsemester = s.training_semester
+
+        print(len[s], [s.id for s in for_delete])
+
         print(q)
         return [{"id": discipline.id,
                  "title": discipline.title,
