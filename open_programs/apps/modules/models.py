@@ -6,7 +6,7 @@ import uuid
 
 from results.models import Result
 from competences.models import Competence
-from disciplines.models import Discipline
+from disciplines.models import Discipline, Semester
 
 
 class Type(ObjectBaseClass):
@@ -59,7 +59,7 @@ class Module(ObjectBaseClass):
                  "labor": discipline.labor,
                  "form": discipline.get_form_display(),
                  "semester": discipline.period,
-                 "default_semester": self.semester + discipline.period,
+                 "default_semester": [[s.term, s.training_semester] for s in Semester.objects.filter(discipline=discipline, program=self.program)]
                  } for discipline in Discipline.objects.filter(module=self, archived=False, status="p").order_by("period")]
 
     def get_labor(self):

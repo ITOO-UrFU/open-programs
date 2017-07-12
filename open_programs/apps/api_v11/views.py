@@ -718,7 +718,7 @@ def get_program_variants(request, program_id):
                         "description": variant.technology.description,
                         "contact_work_category": variant.technology.contact_work_category,
                         "color": variant.technology.color,
-                        "presense": presence,
+                        "presence": presence,
 
                     },
                     "semester": None if not variant.semester else
