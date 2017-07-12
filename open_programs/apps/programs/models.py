@@ -162,7 +162,7 @@ class ProgramModules(ObjectBaseClass):
                  "labor": discipline.labor,
                  "form": discipline.get_form_display(),
                  "semester": discipline.period,
-                 "default_semester": [[str(self.program), s.id, s.term.title, s.training_semester] for s in Semester.objects.filter(discipline=discipline, program=self.program)]
+                 "default_semester": [[s.term.title, s.training_semester] for s in Semester.objects.filter(discipline=discipline, program=self.program)]
                  } for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
 
     class Meta:
