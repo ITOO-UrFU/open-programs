@@ -142,18 +142,19 @@ class ProgramModules(ObjectBaseClass):
         return [discipline.id for discipline in Discipline.objects.filter(module=self.module)]
 
     def get_all_discipline_custom(self):
-        q = [[s for s in Semester.objects.filter(discipline=discipline, program=self.program).order_by("term")] for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
-        for_delete = []
-        for sem in q:
-            title = None
-            trsemester = 0
-            for s in sem:
-                if s.term.title == title and s.training_semester == trsemester:
-                    for_delete.append(s)
-                title = s.term.title
-                trsemester = s.training_semester
-
-        print(len(for_delete), [s.delete() for s in for_delete])
+        # """Delete not unique"""
+        # q = [[s for s in Semester.objects.filter(discipline=discipline, program=self.program).order_by("term")] for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
+        # for_delete = []
+        # for sem in q:
+        #     title = None
+        #     trsemester = 0
+        #     for s in sem:
+        #         if s.term.title == title and s.training_semester == trsemester:
+        #             for_delete.append(s)
+        #         title = s.term.title
+        #         trsemester = s.training_semester
+        #
+        # print(len(for_delete), [s.delete() for s in for_delete])
 
         return [{"id": discipline.id,
                  "title": discipline.title,
