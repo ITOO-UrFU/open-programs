@@ -155,7 +155,6 @@ class ProgramModules(ObjectBaseClass):
 
         print(len[s], [s.id for s in for_delete])
 
-        print(q)
         return [{"id": discipline.id,
                  "title": discipline.title,
                  "description": discipline.description,
