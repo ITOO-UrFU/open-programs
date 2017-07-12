@@ -142,6 +142,8 @@ class ProgramModules(ObjectBaseClass):
         return [discipline.id for discipline in Discipline.objects.filter(module=self.module)]
 
     def get_all_discipline_custom(self):
+        q = [[s for s in Semester.objects.filter(discipline=discipline, program=self.program)]for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
+        print("\n".join(q))
         return [{"id": discipline.id,
                  "title": discipline.title,
                  "description": discipline.description,
