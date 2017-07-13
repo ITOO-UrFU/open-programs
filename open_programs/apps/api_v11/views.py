@@ -694,7 +694,7 @@ def get_program_variants(request, program_id):
             if variant.diagram:
                 if 'заоч' in variant.diagram.title:
                     presence = "z"
-                elif 'лайн' in variant.technology.title:
+                elif 'лайн' in variant.diagram.title:
                     presence = 'online'
                 else:
                     presence = "o"
