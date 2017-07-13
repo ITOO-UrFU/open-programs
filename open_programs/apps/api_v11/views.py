@@ -707,12 +707,12 @@ def get_program_variants(request, program_id):
             variants[discipline.id].append(
                 {
                     "id": variant.id,
-                    # "diagram": None if not variant.diagram else
-                    # {
-                    #     "id": variant.diagram.id,
-                    #     "title": variant.diagram.title,
-                    #     "diagram": variant.diagram.diagram
-                    # },
+                    "diagram": None if not variant.diagram else
+                    {
+                        "id": variant.diagram.id,
+                        "title": variant.diagram.title,
+                        # "diagram": variant.diagram.diagram
+                    },
                     "course": None if not variant.course else
                     {
                         "title": variant.course.title
