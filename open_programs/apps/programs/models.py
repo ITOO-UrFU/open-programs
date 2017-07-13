@@ -156,13 +156,26 @@ class ProgramModules(ObjectBaseClass):
         #
         # print(len(for_delete), [s.delete() for s in for_delete])
 
+        result = []
+        for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period"):
+            default_semester = {}
+            for s in Semester.objects.filter(discipline=discipline, program=self.program):
+                if s.term.title in default_semester.keys():
+                    if s.training_semester < default_semester[s.term.title]:
+                        default_semester[s.term.title] = s.training_semester
+                else:
+                    default_semester[s.term.title] = s.training_semester
+
+
+
+
         return [{"id": discipline.id,
                  "title": discipline.title,
                  "description": discipline.description,
                  "labor": discipline.labor,
                  "form": discipline.get_form_display(),
                  "semester": discipline.period,
-                 "default_semester": [{s.term.title: s.training_semester} for s in Semester.objects.filter(discipline=discipline, program=self.program)]
+                 "default_semester": default_semester
                  } for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
 
     class Meta:
