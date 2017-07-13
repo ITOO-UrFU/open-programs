@@ -166,17 +166,18 @@ class ProgramModules(ObjectBaseClass):
                 else:
                     default_semester[s.term.title] = s.training_semester
 
-
-
-
-        return [{"id": discipline.id,
+            result.append(
+                {"id": discipline.id,
                  "title": discipline.title,
                  "description": discipline.description,
                  "labor": discipline.labor,
                  "form": discipline.get_form_display(),
                  "semester": discipline.period,
                  "default_semester": default_semester
-                 } for discipline in Discipline.objects.filter(module=self.module, archived=False, status="p").order_by("period")]
+                 }
+            )
+
+        return result
 
     class Meta:
         verbose_name = 'модуль программы'
