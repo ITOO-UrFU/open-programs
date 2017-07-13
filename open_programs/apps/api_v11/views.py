@@ -691,13 +691,19 @@ def get_program_variants(request, program_id):
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
-            if variant.technology:
-                if 'заоч' in variant.technology.title or 'истанционн' in variant.technology.title:
+            if variant.diagram:
+                if 'заоч' in variant.diagram.title:
                     presence = "z"
                 elif 'лайн' in variant.technology.title:
                     presence = 'online'
                 else:
                     presence = "o"
+
+                if "традиционная" in variant.technology.title.lower():
+                    technology_type = "t"
+                else:
+                    technology_type = "d"
+
             variants[discipline.id].append(
                 {
                     "id": variant.id,
@@ -719,6 +725,7 @@ def get_program_variants(request, program_id):
                         "contact_work_category": variant.technology.contact_work_category,
                         "color": variant.technology.color,
                         "presence": presence,
+                        "technology_type": technology_type,
 
                     },
                     "semester": None if not variant.semester else
