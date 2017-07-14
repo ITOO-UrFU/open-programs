@@ -2,6 +2,7 @@ from django.contrib import admin
 from reversion.admin import VersionAdmin
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
+from django.utils.translation import ugettext_lazy as _
 
 # from cms.admin import JSONEditor
 
@@ -17,6 +18,11 @@ import json
 from jsonfield import JSONField
 from .models import Discipline, TrainingTerms, Semester, Variant, Technology, Diagram, WorkingType
 from modules.models import Module
+
+
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.short_description = _("Опубликовать")
 
 
 class JSONEditor(Textarea):
@@ -147,6 +153,7 @@ class DisciplineAdmin(VersionAdmin):
     list_filter = ("archived", "created", "updated", "status", "form")
     search_fields = ['title', 'module__title', "module__uni_number"]
     form = make_ajax_form(Discipline, {'module': 'module'})
+    actions = [make_published]
 
 
 @admin.register(TrainingTerms)
@@ -185,3 +192,5 @@ class DiagramAdmin(VersionAdmin):
 @admin.register(WorkingType)
 class WorkingTypeAdmin(VersionAdmin):
     list_display = ("title", "color")
+
+
