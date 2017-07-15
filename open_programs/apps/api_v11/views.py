@@ -21,7 +21,7 @@ from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramM
     TargetModules, ChoiceGroup, ChoiceGroupType, Changed, StudentProgram
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
     ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
-    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer, StudentProgramSerializer
+    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer, StudentProgramSerializer, StudentProgramSerializer_nouser
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -867,7 +867,7 @@ class GetTrajectories(APIView):
         user = get_user_by_jwt(request)
         if user:
             student_programs = StudentProgram.objects.filter(user=user)
-            student_programs = StudentProgramSerializer(student_programs)
+            student_programs = StudentProgramSerializer_nouser(student_programs)
             return Response(student_programs.data, status=200)
         else:
             return Response(status=204)

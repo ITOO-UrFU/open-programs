@@ -74,3 +74,11 @@ class StudentProgramSerializer(serializers.ModelSerializer):
     class Meta:
         model = StudentProgram
         fields = ("link", "user", "program", "json")
+
+
+class StudentProgramSerializer_nouser(serializers.ModelSerializer):
+    program = ProgramSerializer
+
+    class Meta:
+        model = StudentProgram
+        fields = ("link", "program", "json")
