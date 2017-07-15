@@ -865,10 +865,12 @@ class GetTrajectories(APIView):
 
     def get(self, request):
         user = get_user_by_jwt(request)
-        student_programs = StudentProgram.objects.filter(user=user)
-        student_programs = StudentProgramSerializer(student_programs)
-
-        return Response(student_programs.data, status=200)
+        if user:
+            student_programs = StudentProgram.objects.filter(user=user)
+            student_programs = StudentProgramSerializer(student_programs)
+            return Response(student_programs.data, status=200)
+        else:
+            return Response(status=204)
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))  #
