@@ -861,7 +861,7 @@ def get_trajectory_link(request, link):
 
 
 class GetTrajectories(APIView):
-    permission_classes = (IsStudent, )
+    permission_classes = (IsStudent, IsManager )
 
     def get(self, request):
         user = get_user_by_jwt(request)
