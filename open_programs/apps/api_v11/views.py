@@ -867,8 +867,7 @@ class GetTrajectories(APIView):
         user = get_user_by_jwt(request)
         if user:
             student_programs = StudentProgram.objects.filter(user=user)
-            student_programs = StudentProgramSerializer_nouser(student_programs)
-            print(student_programs)
+            student_programs = StudentProgramSerializer_nouser(student_programs, many=True)
             return Response(student_programs.data, status=200)
         else:
             return Response(status=204)
