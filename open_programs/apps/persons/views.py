@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
+from django.contrib.auth.models import Group
 
 from .models import Person
 
@@ -32,6 +33,8 @@ def register(request):
                                         request.data['password1']
                                         )
         user.is_active = True
+        usergroup = Group.objects.get(name="user")
+        usergroup.user_set.add(user)
         user.save()
 
         person = Person.objects.filter(user=user).first()
