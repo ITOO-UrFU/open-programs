@@ -21,7 +21,7 @@ from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramM
     TargetModules, ChoiceGroup, ChoiceGroupType, Changed, StudentProgram
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
     ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
-    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer
+    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer, StudentProgramSerializer
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -860,6 +860,16 @@ def get_trajectory_link(request, link):
                      })
 
 
+class GetTrajectories(APIView):
+    permission_classes = (IsStudent, )
+
+    def get(self, request):
+        user = get_user_by_jwt(request)
+        student_programs = StudentProgram.objects.filter(user=user)
+        student_programs = StudentProgramSerializer(student_programs)
+
+        return Response(student_programs.data, status=200)
+
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))  #
 def get_program_trajectory(request, program_id):
@@ -893,3 +903,5 @@ change_discipline_semester = ChangeDisciplineSemester.as_view()
 change_variant = ChangeVariant.as_view()
 create_variant = CreateVariant.as_view()
 delete_variant = DeleteVariant.as_view()
+
+get_trajectories = GetTrajectories.as_view()

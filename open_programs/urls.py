@@ -140,11 +140,13 @@ urlpatterns += [
 
     url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants,
         name="get_program_variants"),
-url(r'^api/v11/get_program_variants_constructor/(?P<program_id>.*)/$', get_program_variants_constructor,
+    url(r'^api/v11/get_program_variants_constructor/(?P<program_id>.*)/$', get_program_variants_constructor,
         name="get_program_variants_constructor"),
     url(r'^api/v11/register', register, name="register"),
     url(r'^api/v11/change_person', change_person, name="change_person"),
     url(r'^api/v11/get_user', get_user, name="get_user"),
+    url(r'^api/v11/get_trajectories', get_trajectories, name="get_trajectories"),
+
     #### CMS API ####
     url(r'^api/v11/containers/$', get_containers, name="get_containers"),
     url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
