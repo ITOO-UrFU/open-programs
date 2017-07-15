@@ -6,7 +6,7 @@ from .models import Module, Type
 
 @admin.register(Module)
 class ModuleAdmin(VersionAdmin):
-    list_display = ("title", "program", "uni_uuid", "semester", "status", "archived", "type") #"get_all_disciplines",
+    list_display = ("title", "program", "uni_uuid", "uni_coordinator", "semester", "status", "archived", "type") #"get_all_disciplines",
     filter_horizontal = ("results", "competences")
     list_filter = ('archived', "semester", 'created', 'updated', 'type')
     search_fields = ("title", "uni_number", "uni_uuid")
