@@ -4,6 +4,7 @@ from django_countries.fields import CountryField
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.contrib.auth.models import Group
 
 
 class Person(models.Model):
@@ -42,6 +43,9 @@ class Person(models.Model):
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         Person.objects.create(user=instance)
+        usergroup = Group.objects.get(name="user")
+        usergroup.user_set.add(instance)
+
 
 
 class AcademicDegree(models.Model):
