@@ -360,9 +360,10 @@ def _activate_trigger(cache_key=None):
 
 def _cache(cache_key=None, response=None):
     trigger = Changed.objects.filter(view=cache_key).first()
-    cache.set(cache_key, response, 2678400)
-    trigger.deactivate()
-    trigger.save()
+    if trigger():
+        cache.set(cache_key, response, 2678400)
+        trigger.deactivate()
+        trigger.save()
 
 
 @api_view(('GET',))
@@ -542,7 +543,7 @@ def get_program_disciplines(request, program_id):
         })
 
     response = sorted(response, key=lambda k: (k["priority"], k["title"]))
-    _cache(f"get_program_modules:{program_id}", response)
+    _cache(f"get_program_disciplines:{program_id}", response)
     return Response(response)
 
 
