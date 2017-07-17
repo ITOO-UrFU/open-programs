@@ -122,6 +122,10 @@ urlpatterns += [
 
     url(r'^api/v11/get_program_disciplines/(?P<program_id>.*)/$', get_program_disciplines,
         name="get_program_disciplines"),
+
+    url(r'^api/v11/get_program_discipline/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_program_discipline,
+        name="get_program_discipline"),
+
     url(r'^api/v11/change_discipline_semester/$', change_discipline_semester,
         name="change_discipline_semester"),
     url(r'^api/v11/get_variants/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_variants,

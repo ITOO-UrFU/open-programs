@@ -21,7 +21,8 @@ from programs.models import Program, TrainingTarget, ProgramCompetence, ProgramM
     TargetModules, ChoiceGroup, ChoiceGroupType, Changed, StudentProgram
 from programs.serializers import ProgramSerializer, TrainingTargetSerializer, \
     ProgramCompetenceSerializer, ChoiceGroupTypeSerializer, \
-    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer, StudentProgramSerializer, StudentProgramSerializer_nouser
+    ChoiceGroupSerializer, ProgramModulesSerializer, TargetModulesSerializer, StudentProgramSerializer, \
+    StudentProgramSerializer_nouser
 from rest_framework import serializers
 from rest_framework import viewsets
 from rest_framework.decorators import api_view, permission_classes
@@ -33,15 +34,6 @@ from rest_framework_extensions.cache.mixins import CacheResponseMixin
 from results.models import Result
 from results.serializers import ResultSerializer
 
-
-def oop_cache(fn=None, method="cache"):
-    def decorator(fn):
-        def wrapped(*args, **kwargs):
-            cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
-            print(method, cache_key)
-            return fn(*args, **kwargs)
-
-        return wrapped
 
 def get_user_by_jwt(request):
     jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
@@ -348,16 +340,26 @@ def get_choice_groups_by_program(request, program_id):
     return Response(response)
 
 
-@api_view(('GET',))
-@permission_classes((IsAuthenticatedOrReadOnly,))
-def get_targets_by_program(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gpt").first()
+def _check_trigger(cache_key=None):
+    trigger = Changed.objects.filter(view=cache_key).first()
     if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gpt")
+        trigger = Changed.objects.create(view=cache_key)
         trigger.activate()
         trigger.save()
     if not trigger.state():
-        return Response(cache.get(f"gpt-{program_id}"))
+        return Response(cache.get(f"{view}-{program_id}"))
+
+
+# def _cache(program_id=None, view=None, response=None):
+#     cache.set(f"gpt-{program_id}", response, 2678400)
+#     trigger.deactivate()
+#     trigger.save()
+
+
+@api_view(('GET',))
+@permission_classes((IsAuthenticatedOrReadOnly,))
+def get_targets_by_program(request, program_id):
+    _check_trigger(program_id=program_id, view="gpt")
 
     response = []
     program = Program.objects.get(id=program_id)
@@ -376,9 +378,7 @@ def get_targets_by_program(request, program_id):
             "program": target.program.id,
             "choice_groups": choice_groups,
         })
-    cache.set(f"gpt-{program_id}", response, 2678400)
-    trigger.deactivate()
-    trigger.save()
+
     return Response(response)
 
 
@@ -513,9 +513,7 @@ class ChangeCompetence(APIView):
 @api_view(("GET",))
 @permission_classes((AllowAny,))
 def heartbeat(request, lol):
-    @oop_cache("cache")
-    def view():
-        return Response(status=200)
+    return Response(status=200)
 
 
 @api_view(('GET',))
@@ -553,6 +551,30 @@ def get_program_disciplines(request, program_id):
     cache.set(f"gpd-{program_id}", sorted(response, key=lambda k: (k["priority"], k["title"])), 2678400)
     trigger.deactivate()
     trigger.save()
+    return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
+
+
+@api_view(('GET',))
+@permission_classes((IsAuthenticatedOrReadOnly,))
+def get_program_discipline(request, program_id, discipline_id):
+
+    discipline = Discipline.objects.get(discipline_id)
+    terms = {}
+    for term in TrainingTerms.objects.all().order_by("title"):
+        semesters = [s.training_semester for s in
+                     Semester.objects.filter(discipline=discipline, term=term, program=program_id)]
+        terms[term.title] = 0 if len(semesters) == 0 else min(semesters)
+
+    response= {
+        "id": discipline.id,
+        "title": discipline.title,
+        "module": discipline.module.title,
+        "module_uni_number": None if not discipline.module.uni_number else discipline.module.uni_number,
+        "labor": discipline.labor,
+        "period": discipline.period,
+        "terms": terms,
+        "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
+    }
     return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
 
 
@@ -873,7 +895,7 @@ def get_trajectory_link(request, link):
 
 
 class GetTrajectories(APIView):
-    permission_classes = (AllowAny, )
+    permission_classes = (AllowAny,)
 
     def get(self, request):
         user = get_user_by_jwt(request)
@@ -883,6 +905,7 @@ class GetTrajectories(APIView):
             return Response(student_programs.data, status=200)
         else:
             return Response(status=204)
+
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))  #
