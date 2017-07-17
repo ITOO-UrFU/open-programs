@@ -360,7 +360,7 @@ def _cache(cache_key=None, response=None):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_targets_by_program(request, program_id):
-    response = _check_trigger(cache_key=f"get_targets_by_program:{program_id}")
+    response = _check_trigger(f"get_targets_by_program:{program_id}")
     if response:
         return response
 
@@ -382,7 +382,7 @@ def get_targets_by_program(request, program_id):
             "choice_groups": choice_groups,
         })
 
-    _cache(cache_key=f"get_targets_by_program:{program_id}")
+    _cache(f"get_targets_by_program:{program_id}", response)
 
     return Response(response)
 
