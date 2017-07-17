@@ -360,7 +360,9 @@ def _cache(cache_key=None, response=None):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_targets_by_program(request, program_id):
-    _check_trigger(cache_key=f"get_targets_by_program:{program_id}")
+    response = _check_trigger(cache_key=f"get_targets_by_program:{program_id}")
+    if response:
+        return response
 
     response = []
     program = Program.objects.get(id=program_id)
