@@ -558,7 +558,7 @@ def get_program_disciplines(request, program_id):
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_discipline(request, program_id, discipline_id):
 
-    discipline = Discipline.objects.get(discipline_id)
+    discipline = Discipline.objects.get(id=discipline_id)
     terms = {}
     for term in TrainingTerms.objects.all().order_by("title"):
         semesters = [s.training_semester for s in
