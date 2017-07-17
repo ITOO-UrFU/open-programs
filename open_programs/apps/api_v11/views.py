@@ -571,13 +571,13 @@ class ChangeDisciplineSemester(APIView):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_variants(request, program_id, discipline_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gv")
-        trigger.activate()
-        trigger.save()
-    if not trigger.state():
-        return Response(cache.get(f"gv-{program_id}"))
+    # trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
+    # if not trigger:
+    #     trigger = Changed.objects.create(program_id=program_id, view="gv")
+    #     trigger.activate()
+    #     trigger.save()
+    # if not trigger.state():
+    #     return Response(cache.get(f"gv-{discipline_id}"))
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     response = [{
                     "id": variant.id,
@@ -608,9 +608,9 @@ def get_variants(request, program_id, discipline_id):
                     "link": variant.link
                 } for variant in variants]
 
-    cache.set(f"gv-{program_id}", response, 2678400)
-    trigger.deactivate()
-    trigger.save()
+    # cache.set(f"gv-{discipline_id}", response, 2678400)
+    # trigger.deactivate()
+    # trigger.save()
     return Response(response)
 
 
@@ -748,13 +748,13 @@ def get_program_variants(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants_constructor(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
+    trigger = Changed.objects.filter(program__id=program_id, view="gpvc").first()
     if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gv")
+        trigger = Changed.objects.create(program_id=program_id, view="gpvc")
         trigger.activate()
         trigger.save()
     if not trigger.state():
-        return Response(cache.get(f"gv-{program_id}"))
+        return Response(cache.get(f"gpvc-{program_id}"))
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -791,7 +791,7 @@ def get_program_variants_constructor(request, program_id):
                     "link": variant.link
                 }
             )
-    cache.set(f"gv-{program_id}", variants, 2678400)
+    cache.set(f"gpvc-{program_id}", variants, 2678400)
     trigger.deactivate()
     trigger.save()
     return Response(variants)
