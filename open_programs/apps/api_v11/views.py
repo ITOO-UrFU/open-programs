@@ -393,7 +393,6 @@ def get_competences_by_program(request, program_id):
 
 
 @api_view(('GET',))
-@oop_cache()
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
