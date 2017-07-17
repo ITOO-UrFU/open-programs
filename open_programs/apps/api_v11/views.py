@@ -350,6 +350,14 @@ def _check_trigger(cache_key=None):
         return Response(cache.get(cache_key))
 
 
+def _activate_trigger(cache_key=None):
+    trigger = Changed.objects.filter(view=cache_key).first()
+    if not trigger:
+        trigger = Changed.objects.create(view=cache_key)
+        trigger.activate()
+        trigger.save()
+
+
 def _cache(cache_key=None, response=None):
     trigger = Changed.objects.filter(view=cache_key).first()
     cache.set(cache_key, response, 2678400)
@@ -363,7 +371,6 @@ def get_targets_by_program(request, program_id):
     response = _check_trigger(f"get_targets_by_program:{program_id}")
     if response:
         return response
-
     response = []
     program = Program.objects.get(id=program_id)
 
@@ -400,13 +407,9 @@ def get_competences_by_program(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_modules(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
-    if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gpm")
-        trigger.activate()
-        trigger.save()
-    if not trigger.state():
-        return Response(cache.get(f"gpm-{program_id}"))
+    response = _check_trigger(f"get_program_modules:{program_id}")
+    if response:
+        return response
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
         response.append({
@@ -423,9 +426,7 @@ def get_program_modules(request, program_id):
             "disciplines": mod.get_all_discipline_custom()
         })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-    cache.set(f"gpm-{program_id}", response, 2678400)
-    trigger.deactivate()
-    trigger.save()
+    _cache(f"get_targets_by_program:{program_id}", response)
     return Response(response)
 
 
@@ -440,9 +441,6 @@ class ChangeTargetModule(APIView):
         program_module = ProgramModules.objects.get(id=module_id)
         target = TrainingTarget.objects.get(id=target_id)
         status = int(status)
-        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=program_module.program, view="gpm")
         if status == 0:
             tm = TargetModules.objects.filter(target=target, program_module=program_module).first()
             if tm:
@@ -467,7 +465,7 @@ class ChangeTargetModule(APIView):
                 tm = TargetModules(target=target, program_module=program_module, choice_group=True)
                 tm.status = "p"
                 tm.save()
-        trigger.activate()
+        _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
@@ -479,17 +477,14 @@ class ChangeChoiceGroup(APIView):
         choice_group_id = request.data["choice_group_id"]
         program_module = ProgramModules.objects.get(id=module_id)
 
-        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=program_module.program, view="gpm")
-
         if choice_group_id:
             chg = ChoiceGroup.objects.get(id=choice_group_id)
             program_module.choice_group = chg
         else:
             program_module.choice_group = None
+
         program_module.save()
-        trigger.activate()
+        _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
@@ -501,23 +496,19 @@ class ChangeCompetence(APIView):
         competence_id = request.data["competence_id"]
         program_module = ProgramModules.objects.get(id=module_id)
 
-        trigger = Changed.objects.filter(program=program_module.program, view="gpm").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=program_module.program, view="gpm")
-
         if competence_id:
             comp = ProgramCompetence.objects.get(id=competence_id)
             program_module.competence = comp
         else:
             program_module.competence = None
         program_module.save()
-        trigger.activate()
+        _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
 @api_view(("GET",))
 @permission_classes((AllowAny,))
-def heartbeat(request, lol):
+def heartbeat(request):
     return Response(status=200)
 
 
