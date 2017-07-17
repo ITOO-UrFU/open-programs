@@ -34,10 +34,10 @@ from results.models import Result
 from results.serializers import ResultSerializer
 
 
-def oop_cache(fn, method):
+def oop_cache(fn):
     def wrapped(*args, **kwargs):
         cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
-        print(method, cache_key)
+        print(cache_key)
         return fn(*args, **kwargs)
 
     return wrapped
