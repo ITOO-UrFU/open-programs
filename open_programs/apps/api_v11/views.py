@@ -37,7 +37,7 @@ from results.serializers import ResultSerializer
 def oop_cache(fn):
     def wrapped(*args, **kwargs):
         for key in kwargs.keys():
-            print(fn.__name__, key, kwargs[key])
+            print(f"{fn.__name__}:{key}-{kwargs[key]}")
         return fn(*args, **kwargs)
 
     return wrapped
