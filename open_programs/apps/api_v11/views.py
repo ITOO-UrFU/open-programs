@@ -34,7 +34,7 @@ from results.models import Result
 from results.serializers import ResultSerializer
 
 
-def oop_cache(method="cache"):
+def oop_cache(fn=None, method="cache"):
     def decorator(fn):
         def wrapped(*args, **kwargs):
             cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
