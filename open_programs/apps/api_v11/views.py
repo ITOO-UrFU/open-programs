@@ -799,7 +799,7 @@ def get_program_variants(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants:{program_id}", response)
+    _cache(f"get_program_variants:{program_id}", variants)
     return Response(variants)
 
 
@@ -845,7 +845,7 @@ def get_program_variants_constructor(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants_constructor:{program_id}", response)
+    _cache(f"get_program_variants_constructor:{program_id}", variants)
     return Response(variants)
 
 
