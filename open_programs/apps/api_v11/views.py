@@ -510,7 +510,7 @@ class ChangeCompetence(APIView):
 
 @api_view(("GET",))
 @permission_classes((AllowAny,))
-@oop_cache()
+@oop_cache
 def heartbeat(request, lol):
     return Response(status=200)
 
