@@ -34,10 +34,10 @@ from results.models import Result
 from results.serializers import ResultSerializer
 
 
-def oop_cache(fn):
+def oop_cache(fn, method):
     def wrapped(*args, **kwargs):
         cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
-        print(cache_key)
+        print(method, cache_key)
         return fn(*args, **kwargs)
 
     return wrapped
@@ -393,7 +393,7 @@ def get_competences_by_program(request, program_id):
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
-@oop_cache
+@oop_cache(method="cache")
 def get_program_modules(request, program_id):
     trigger = Changed.objects.filter(program__id=program_id, view="gpm").first()
     if not trigger:
