@@ -350,10 +350,11 @@ def _check_trigger(cache_key=None):
         return Response(cache.get(cache_key))
 
 
-# def _cache(program_id=None, view=None, response=None):
-#     cache.set(f"gpt-{program_id}", response, 2678400)
-#     trigger.deactivate()
-#     trigger.save()
+def _cache(cache_key=None, response=None):
+    trigger = Changed.objects.filter(view=cache_key).first()
+    cache.set(cache_key, response, 2678400)
+    trigger.deactivate()
+    trigger.save()
 
 
 @api_view(('GET',))
@@ -378,6 +379,8 @@ def get_targets_by_program(request, program_id):
             "program": target.program.id,
             "choice_groups": choice_groups,
         })
+
+    _cache(cache_key=f"get_targets_by_program:{program_id}")
 
     return Response(response)
 
