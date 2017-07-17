@@ -533,6 +533,7 @@ def get_program_disciplines(request, program_id):
             "id": discipline.id,
             "title": discipline.title,
             "module": discipline.module.title,
+            "module_uni_number": None if not discipline.module.uni_number else discipline.module.uni_number,
             "labor": discipline.labor,
             "period": discipline.period,
             "terms": terms,
