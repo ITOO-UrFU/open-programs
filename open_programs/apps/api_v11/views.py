@@ -575,7 +575,7 @@ def get_program_discipline(request, program_id, discipline_id):
         "terms": terms,
         "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
     }
-    return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
+    return Response(response)
 
 
 class ChangeDisciplineSemester(APIView):
