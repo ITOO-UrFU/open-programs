@@ -347,7 +347,7 @@ def _check_trigger(cache_key=None):
         trigger.activate()
         trigger.save()
     if not trigger.state():
-        return Response(cache.get(f"{view}-{program_id}"))
+        return Response(cache.get(cache_key))
 
 
 # def _cache(program_id=None, view=None, response=None):
