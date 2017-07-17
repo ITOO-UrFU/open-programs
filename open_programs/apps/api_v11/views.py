@@ -360,7 +360,7 @@ def _activate_trigger(cache_key=None):
 
 def _cache(cache_key=None, response=None):
     trigger = Changed.objects.filter(view=cache_key).first()
-    if trigger():
+    if trigger:
         cache.set(cache_key, response, 2678400)
         trigger.deactivate()
         trigger.save()
