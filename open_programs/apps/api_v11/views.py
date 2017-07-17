@@ -426,7 +426,7 @@ def get_program_modules(request, program_id):
             "disciplines": mod.get_all_discipline_custom()
         })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-    _cache(f"get_targets_by_program:{program_id}", response)
+    _cache(f"get_program_modules:{program_id}", response)
     return Response(response)
 
 
