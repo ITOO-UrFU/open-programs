@@ -107,7 +107,7 @@ urlpatterns += [
 
 #### API rewrite
 urlpatterns += [
-    url(r'^api/v11/heartbeat/$', heartbeat, name="heartbeat"),
+    url(r'^api/v11/heartbeat/(?P<lol>.*)$', heartbeat, name="heartbeat"),
     url(r'^api/v11/get_program_choice_groups/(?P<program_id>.*)/$', get_choice_groups_by_program,
         name="get_choice_groups_by_program"),
     url(r'^api/v11/get_program_modules/(?P<program_id>.*)/$', get_program_modules,
