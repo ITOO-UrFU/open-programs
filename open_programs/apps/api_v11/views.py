@@ -359,7 +359,7 @@ def _check_trigger(cache_key=None):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_targets_by_program(request, program_id):
-    _check_trigger(program_id=program_id, view="gpt")
+    _check_trigger(view=f"get_targets_by_program:{program_id}")
 
     response = []
     program = Program.objects.get(id=program_id)
