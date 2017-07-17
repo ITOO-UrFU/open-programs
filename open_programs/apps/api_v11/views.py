@@ -34,6 +34,13 @@ from results.models import Result
 from results.serializers import ResultSerializer
 
 
+def oop_cache(fn):
+    def wrapped(*args, **kwargs):
+        print(*args)
+        return fn()
+
+    return wrapped
+
 def get_user_by_jwt(request):
     jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
     if jwt_token:
@@ -503,7 +510,8 @@ class ChangeCompetence(APIView):
 
 @api_view(("GET",))
 @permission_classes((AllowAny,))
-def heartbeat(request):
+@oop_cache()
+def heartbeat(request, lol):
     return Response(status=200)
 
 
