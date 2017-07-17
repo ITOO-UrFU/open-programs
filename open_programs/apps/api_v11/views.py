@@ -35,7 +35,7 @@ from results.serializers import ResultSerializer
 
 
 def oop_cache(fn):
-    def wrapped():
+    def wrapped(*args, **kwargs):
         print(fn)
         return fn()
 
