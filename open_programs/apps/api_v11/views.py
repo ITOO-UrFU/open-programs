@@ -34,13 +34,14 @@ from results.models import Result
 from results.serializers import ResultSerializer
 
 
-def oop_cache(fn):
-    def wrapped(*args, **kwargs):
-        cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
-        print(cache_key)
-        return fn(*args, **kwargs)
+def oop_cache(method="cache"):
+    def decorator(fn):
+        def wrapped(*args, **kwargs):
+            cache_key = "".join([f"{fn.__name__}:{key}:{kwargs[key]}" for key in kwargs.keys() ])
+            print(method, cache_key)
+            return fn(*args, **kwargs)
 
-    return wrapped
+        return wrapped
 
 def get_user_by_jwt(request):
     jwt_token = request.META.get('HTTP_AUTHORIZATION', None)
