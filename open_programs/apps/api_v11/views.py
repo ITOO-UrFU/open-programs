@@ -515,13 +515,9 @@ def heartbeat(request):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_disciplines(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gpd").first()
-    if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gpd")
-        trigger.activate()
-        trigger.save()
-    if not trigger.state():
-        return Response(cache.get(f"gpd-{program_id}"))
+    response = _check_trigger(f"get_program_disciplines:{program_id}")
+    if response:
+        return response
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in
                                                              ProgramModules.objects.filter(program__id=program_id,
@@ -544,15 +540,18 @@ def get_program_disciplines(request, program_id):
             "terms": terms,
             "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
         })
-    cache.set(f"gpd-{program_id}", sorted(response, key=lambda k: (k["priority"], k["title"])), 2678400)
-    trigger.deactivate()
-    trigger.save()
-    return Response(sorted(response, key=lambda k: (k["priority"], k["title"])))
+
+    response = sorted(response, key=lambda k: (k["priority"], k["title"]))
+    _cache(f"get_program_modules:{program_id}", response)
+    return Response(response)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_discipline(request, program_id, discipline_id):
+    response = _check_trigger(f"get_program_discipline:{program_id}")
+    if response:
+        return response
 
     discipline = Discipline.objects.get(id=discipline_id)
     terms = {}
@@ -561,7 +560,7 @@ def get_program_discipline(request, program_id, discipline_id):
                      Semester.objects.filter(discipline=discipline, term=term, program=program_id)]
         terms[term.title] = 0 if len(semesters) == 0 else min(semesters)
 
-    response= {
+    response = {
         "id": discipline.id,
         "title": discipline.title,
         "module": discipline.module.title,
@@ -571,6 +570,7 @@ def get_program_discipline(request, program_id, discipline_id):
         "terms": terms,
         "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
     }
+    _cache(f"get_program_discipline:{program_id}", response)
     return Response(response)
 
 
@@ -590,56 +590,97 @@ class ChangeDisciplineSemester(APIView):
             Semester.objects.create(program=program, discipline=discipline,
                                     term=TrainingTerms.objects.filter(title=term_title).first(),
                                     training_semester=new_semester, year=date.today().year)
-        trigger = Changed.objects.filter(program=program, view="gpd").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=program, view="gpd")
-        trigger.activate()
+        _activate_trigger(f"get_program_disciplines:{program.id}")
+        _activate_trigger(f"get_program_discipline:{program.id}")
         return Response(status=200)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_variants(request, program_id, discipline_id):
-    # trigger = Changed.objects.filter(program__id=program_id, view="gv").first()
-    # if not trigger:
-    #     trigger = Changed.objects.create(program_id=program_id, view="gv")
-    #     trigger.activate()
-    #     trigger.save()
-    # if not trigger.state():
-    #     return Response(cache.get(f"gv-{discipline_id}"))
+    response = _check_trigger(f"get_variants:{program_id}:{discipline_id}")
+    if response:
+        return response
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
-    response = [{
-                    "id": variant.id,
-                    "diagram": None if not variant.diagram else
-                    {
-                        "id": variant.diagram.id,
-                        "title": variant.diagram.title,
-                        "diagram": variant.diagram.diagram
-                    },
-                    "course": None if not variant.course else
-                    {
-                        "title": variant.course.title
-                    },
-                    "technology": None if not variant.technology else
-                    {
-                        "id": variant.technology.id,
-                        "title": variant.technology.title,
-                        "description": variant.technology.description,
-                        "contact_work_category": variant.technology.contact_work_category,
-                        "color": variant.technology.color
-                    },
-                    "semester": None if not variant.semester else
-                    {
-                        "term": variant.semester.term.title,
-                        "training_semester": variant.semester.training_semester,
-                    },
-                    "parity": None if not variant.parity else variant.parity,
-                    "link": variant.link
-                } for variant in variants]
+    response = []
+    for variant in variants:
+        if variant.diagram:
+            if 'заоч' in variant.diagram.title.lower():
+                presence = "z"
+            elif 'лайн' in variant.technology.title.lower():
+                presence = 'online'
+            else:
+                presence = "o"
 
-    # cache.set(f"gv-{discipline_id}", response, 2678400)
-    # trigger.deactivate()
-    # trigger.save()
+            if "традиционная" in variant.technology.title.lower():
+                technology_type = "t"
+            else:
+                technology_type = "d"
+
+        response.append(
+            {
+                "id": variant.id,
+                "diagram": None if not variant.diagram else
+                {
+                    "id": variant.diagram.id,
+                    "title": variant.diagram.title,
+                    # "diagram": variant.diagram.diagram
+                },
+                "course": None if not variant.course else
+                {
+                    "title": variant.course.title
+                },
+                "technology": None if not variant.technology else
+                {
+                    "id": variant.technology.id,
+                    "title": variant.technology.title,
+                    "description": variant.technology.description,
+                    "contact_work_category": variant.technology.contact_work_category,
+                    "color": variant.technology.color,
+                    "presence": presence,
+                    "technology_type": technology_type,
+
+                },
+                "semester": None if not variant.semester else
+                {
+                    "term": variant.semester.term.title,
+                    "training_semester": variant.semester.training_semester,
+                },
+                "parity": None if not variant.parity else variant.parity,
+                "link": variant.link
+            }
+        )
+
+    # response = [{
+    #                 "id": variant.id,
+    #                 "diagram": None if not variant.diagram else
+    #                 {
+    #                     "id": variant.diagram.id,
+    #                     "title": variant.diagram.title,
+    #                     "diagram": variant.diagram.diagram
+    #                 },
+    #                 "course": None if not variant.course else
+    #                 {
+    #                     "title": variant.course.title
+    #                 },
+    #                 "technology": None if not variant.technology else
+    #                 {
+    #                     "id": variant.technology.id,
+    #                     "title": variant.technology.title,
+    #                     "description": variant.technology.description,
+    #                     "contact_work_category": variant.technology.contact_work_category,
+    #                     "color": variant.technology.color
+    #                 },
+    #                 "semester": None if not variant.semester else
+    #                 {
+    #                     "term": variant.semester.term.title,
+    #                     "training_semester": variant.semester.training_semester,
+    #                 },
+    #                 "parity": None if not variant.parity else variant.parity,
+    #                 "link": variant.link
+    #             } for variant in variants]
+
+    _cache(f"get_variants:{program_id}:{discipline_id}", response)
     return Response(response)
 
 
@@ -663,10 +704,7 @@ class ChangeVariant(APIView):
 
         variant.status = "p"
         variant.save()
-        trigger = Changed.objects.filter(program=variant.program, view="gv").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=variant.program, view="gv")
-        trigger.activate()
+        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         return Response(status=200)
 
 
@@ -699,23 +737,16 @@ class CreateVariant(APIView):
         elif parity:
             Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                    diagram=diagram, link=link, status="p")
-        trigger = Changed.objects.filter(program=program, view="gv").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=program, view="gv")
-        trigger.activate()
+        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         return Response(status=200)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gpv").first()
-    if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gpv")
-        trigger.activate()
-        trigger.save()
-    if not trigger.state():
-        return Response(cache.get(f"gpv-{program_id}"))
+    response = _check_trigger(f"get_program_variants:{program_id}")
+    if response:
+        return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -768,22 +799,16 @@ def get_program_variants(request, program_id):
                     "link": variant.link
                 }
             )
-    cache.set(f"gpv-{program_id}", variants, 2678400)
-    trigger.deactivate()
-    trigger.save()
+    _cache(f"get_program_variants:{program_id}", response)
     return Response(variants)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants_constructor(request, program_id):
-    trigger = Changed.objects.filter(program__id=program_id, view="gpvc").first()
-    if not trigger:
-        trigger = Changed.objects.create(program_id=program_id, view="gpvc")
-        trigger.activate()
-        trigger.save()
-    if not trigger.state():
-        return Response(cache.get(f"gpvc-{program_id}"))
+    response = _check_trigger(f"get_program_variants_constructor:{program_id}")
+    if response:
+        return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -820,9 +845,7 @@ def get_program_variants_constructor(request, program_id):
                     "link": variant.link
                 }
             )
-    cache.set(f"gpvc-{program_id}", variants, 2678400)
-    trigger.deactivate()
-    trigger.save()
+    _cache(f"get_program_variants_constructor:{program_id}", response)
     return Response(variants)
 
 
@@ -831,10 +854,9 @@ class DeleteVariant(APIView):
 
     def post(self, request):
         variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-        trigger = Changed.objects.filter(program=variant.program, view="gv").first()
-        if not trigger:
-            trigger = Changed.objects.create(program=variant.program, view="gv")
-        trigger.activate()
+        _activate_trigger(f"get_program_variants_constructor:{variant.program.id}")
+        _activate_trigger(f"get_program_variants:{variant.program.id}")
+        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         variant.delete()
         return Response(status=200)
 
