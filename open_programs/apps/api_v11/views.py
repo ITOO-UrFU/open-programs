@@ -739,6 +739,8 @@ class CreateVariant(APIView):
             variant = Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                    diagram=diagram, link=link, status="p")
         _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
+        _activate_trigger(f"get_program_variants_constructor:{request.data['program_id']}")
+        _activate_trigger(f"get_program_variants:{request.data['program_id']}")
         return Response(status=200)
 
 
