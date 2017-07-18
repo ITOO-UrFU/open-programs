@@ -854,7 +854,7 @@ class DeleteVariant(APIView):
     permission_classes = (IsManager,)
 
     def post(self, request):
-        variant = get_object_or_404(Variant, pk=request.data["variant_id"])
+        variant, _ = get_object_or_404(Variant, pk=request.data["variant_id"])
         _activate_trigger(f"get_program_variants_constructor:{variant.program.id}")
         _activate_trigger(f"get_program_variants:{variant.program.id}")
         _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
