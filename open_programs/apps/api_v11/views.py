@@ -738,7 +738,7 @@ class CreateVariant(APIView):
         elif parity:
             variant = Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                    diagram=diagram, link=link, status="p")
-        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
+        _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
         return Response(status=200)
 
 
