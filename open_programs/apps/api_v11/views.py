@@ -599,9 +599,9 @@ class ChangeDisciplineSemester(APIView):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_variants(request, program_id, discipline_id):
-    response = _check_trigger(f"get_variants:{program_id}:{discipline_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_variants:{program_id}:{discipline_id}")
+    # if response:
+    #     return response
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id)
     response = []
     for variant in variants:
@@ -681,7 +681,7 @@ def get_variants(request, program_id, discipline_id):
     #                 "link": variant.link
     #             } for variant in variants]
 
-    _cache(f"get_variants:{program_id}:{discipline_id}", response)
+    # _cache(f"get_variants:{program_id}:{discipline_id}", response)
     return Response(response)
 
 
