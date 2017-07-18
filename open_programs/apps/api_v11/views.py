@@ -730,15 +730,16 @@ class CreateVariant(APIView):
                                       diagram=diagram, link=link, status="p").first():
                 return Response(status=409)
 
-            Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
+            variant = Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
                                    diagram=diagram, link=link, status="p")
         elif course:
-            Variant.objects.create(discipline=discipline, program=program, technology=technology,
+            variant = Variant.objects.create(discipline=discipline, program=program, technology=technology,
                                    course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
         elif parity:
-            Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
+            variant = Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                    diagram=diagram, link=link, status="p")
-        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
+        if variant:
+            _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         return Response(status=200)
 
 
