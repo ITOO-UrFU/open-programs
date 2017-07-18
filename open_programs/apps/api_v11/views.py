@@ -516,9 +516,9 @@ def heartbeat(request):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_disciplines(request, program_id):
-    response = _check_trigger(f"get_program_disciplines:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_disciplines:{program_id}")
+    # if response:
+    #     return response
     response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in
                                                              ProgramModules.objects.filter(program__id=program_id,
@@ -543,7 +543,7 @@ def get_program_disciplines(request, program_id):
         })
 
     response = sorted(response, key=lambda k: (k["priority"], k["title"]))
-    _cache(f"get_program_disciplines:{program_id}", response)
+    # _cache(f"get_program_disciplines:{program_id}", response)
     return Response(response)
 
 
