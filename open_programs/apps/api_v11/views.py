@@ -747,9 +747,9 @@ class CreateVariant(APIView):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants(request, program_id):
-    response = _check_trigger(f"get_program_variants:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_variants:{program_id}")
+    # if response:
+    #     return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -802,7 +802,7 @@ def get_program_variants(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants:{program_id}", variants)
+    # _cache(f"get_program_variants:{program_id}", variants)
     return Response(variants)
 
 
