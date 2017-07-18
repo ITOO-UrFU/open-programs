@@ -408,9 +408,9 @@ def get_competences_by_program(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_modules(request, program_id):
-    response = _check_trigger(f"get_program_modules:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_modules:{program_id}")
+    # if response:
+    #     return response
     response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
         response.append({
@@ -427,7 +427,7 @@ def get_program_modules(request, program_id):
             "disciplines": mod.get_all_discipline_custom()
         })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-    _cache(f"get_program_modules:{program_id}", response)
+    # _cache(f"get_program_modules:{program_id}", response)
     return Response(response)
 
 
@@ -466,7 +466,7 @@ class ChangeTargetModule(APIView):
                 tm = TargetModules(target=target, program_module=program_module, choice_group=True)
                 tm.status = "p"
                 tm.save()
-        _activate_trigger(f"get_program_modules:{program_module.program.id}")
+        # _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
@@ -485,7 +485,7 @@ class ChangeChoiceGroup(APIView):
             program_module.choice_group = None
 
         program_module.save()
-        _activate_trigger(f"get_program_modules:{program_module.program.id}")
+        # _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
@@ -503,7 +503,7 @@ class ChangeCompetence(APIView):
         else:
             program_module.competence = None
         program_module.save()
-        _activate_trigger(f"get_program_modules:{program_module.program.id}")
+        # _activate_trigger(f"get_program_modules:{program_module.program.id}")
         return Response(status=200)
 
 
@@ -550,9 +550,9 @@ def get_program_disciplines(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_discipline(request, program_id, discipline_id):
-    response = _check_trigger(f"get_program_discipline:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_discipline:{program_id}")
+    # if response:
+    #     return response
 
     discipline = Discipline.objects.get(id=discipline_id)
     terms = {}
@@ -571,7 +571,7 @@ def get_program_discipline(request, program_id, discipline_id):
         "terms": terms,
         "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
     }
-    _cache(f"get_program_discipline:{program_id}", response)
+    # _cache(f"get_program_discipline:{program_id}", response)
     return Response(response)
 
 
@@ -591,8 +591,8 @@ class ChangeDisciplineSemester(APIView):
             Semester.objects.create(program=program, discipline=discipline,
                                     term=TrainingTerms.objects.filter(title=term_title).first(),
                                     training_semester=new_semester, year=date.today().year)
-        _activate_trigger(f"get_program_disciplines:{program.id}")
-        _activate_trigger(f"get_program_discipline:{program.id}")
+        # _activate_trigger(f"get_program_disciplines:{program.id}")
+        # _activate_trigger(f"get_program_discipline:{program.id}")
         return Response(status=200)
 
 
@@ -705,7 +705,7 @@ class ChangeVariant(APIView):
 
         variant.status = "p"
         variant.save()
-        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
+        # _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         return Response(status=200)
 
 
@@ -738,9 +738,9 @@ class CreateVariant(APIView):
         elif parity:
             variant = Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
                                    diagram=diagram, link=link, status="p")
-        _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
-        _activate_trigger(f"get_program_variants_constructor:{request.data['program_id']}")
-        _activate_trigger(f"get_program_variants:{request.data['program_id']}")
+        # _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
+        # _activate_trigger(f"get_program_variants_constructor:{request.data['program_id']}")
+        # _activate_trigger(f"get_program_variants:{request.data['program_id']}")
         return Response(status=200)
 
 
@@ -809,9 +809,9 @@ def get_program_variants(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants_constructor(request, program_id):
-    response = _check_trigger(f"get_program_variants_constructor:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_variants_constructor:{program_id}")
+    # if response:
+    #     return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -848,7 +848,7 @@ def get_program_variants_constructor(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants_constructor:{program_id}", variants)
+    # _cache(f"get_program_variants_constructor:{program_id}", variants)
     return Response(variants)
 
 
@@ -857,9 +857,9 @@ class DeleteVariant(APIView):
 
     def post(self, request):
         variant = get_object_or_404(Variant, pk=request.data["variant_id"])
-        _activate_trigger(f"get_program_variants_constructor:{variant.program.id}")
-        _activate_trigger(f"get_program_variants:{variant.program.id}")
-        _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
+        # _activate_trigger(f"get_program_variants_constructor:{variant.program.id}")
+        # _activate_trigger(f"get_program_variants:{variant.program.id}")
+        # _activate_trigger(f"get_variants:{variant.program.id}:{variant.discipline.id}")
         variant.delete()
         return Response(status=200)
 
