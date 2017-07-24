@@ -65,6 +65,8 @@ class IsStudent(BasePermission):
             return False
 
 
+IsAuthorized = IsStudent
+
 class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer

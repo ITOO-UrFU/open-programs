@@ -12,7 +12,7 @@ from django.contrib.auth.models import Group
 
 from .models import Person
 
-from api_v11.views import IsStudent, get_user_by_jwt
+from api_v11.views import IsStudent, IsAuthorized, get_user_by_jwt
 
 User = get_user_model()
 
@@ -55,7 +55,7 @@ def register(request):
 
 
 class ChangePerson(APIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthorized,)
 
     def post(self, request):
         user = get_user_by_jwt(request)
@@ -66,6 +66,13 @@ class ChangePerson(APIView):
         person.second_name = request.data.get("second_name", "")
         person.alt_email = request.data.get("alt_email", "")
         person.biography = request.data.get("biography", "")
+
+        password1 = request.data.get("password1", "")
+        password2 = request.data.get("password2", "")
+
+        if password1 == password2 and password1 != "":
+            user.set_password(password1)
+            user.save()
         person.save()
 
         person = PersonSerializer(person)
