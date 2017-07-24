@@ -69,8 +69,9 @@ class ChangePerson(APIView):
 
         password1 = request.data.get("password1", "")
         password2 = request.data.get("password2", "")
+        is_correct_password = user.check_password(request.data.get("old_password", ""))
 
-        if password1 == password2 and password1 != "":
+        if password1 == password2 and password1 != "" and is_correct_password:
             user.set_password(password1)
             user.save()
         person.save()
