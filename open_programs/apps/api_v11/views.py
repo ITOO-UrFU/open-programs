@@ -952,7 +952,11 @@ def get_program_trajectory(request, program_id):
 @api_view(('POST',))
 @permission_classes((AllowAny,))  #
 def delete_trajectory(request):
-    StudentProgram.objects.remove(id=request.data["id"])
+    id = request.data.get("id", "")
+    if id != "":
+        StudentProgram.objects.remove(id)
+    else:
+        return Response(status=999)
     return Response(status=200)
 
 
