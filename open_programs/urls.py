@@ -141,6 +141,7 @@ urlpatterns += [
     url(r'^api/v11/get_program_trajectory/(?P<program_id>.*)/$', get_program_trajectory,
         name="get_program_trajectory"),
     url(r'^api/v11/delete_trajectory/$', delete_trajectory, name="delete_trajectory"),
+    url(r'^api/v11/copy_trajectory/$', copy_trajectory, name="copy_trajectory"),
 
     url(r'^api/v11/get_program_variants/(?P<program_id>.*)/$', get_program_variants,
         name="get_program_variants"),

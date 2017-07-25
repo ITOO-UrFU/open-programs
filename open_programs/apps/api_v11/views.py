@@ -931,7 +931,7 @@ class GetTrajectories(APIView):
 
 
 @api_view(('GET',))
-@permission_classes((IsAuthenticatedOrReadOnly,))  #
+@permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_trajectory(request, program_id):
     response = []
     student_programs = StudentProgram.objects.filter(program__id=program_id)
@@ -950,7 +950,7 @@ def get_program_trajectory(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((IsStudent,))  #
+@permission_classes((IsStudent,))
 def delete_trajectory(request):
     user = get_user_by_jwt(request)
     id = request.data.get("id", "")
@@ -963,6 +963,32 @@ def delete_trajectory(request):
     else:
         return Response(status=403)
     return Response(status=200)
+
+
+@api_view(('POST',))
+@permission_classes((IsStudent,))
+def copy_trajectory(request):
+    user = get_user_by_jwt(request)
+    id = request.data.get("id", "")
+    if id != "":
+        sp = StudentProgram.objects.get(pk=id)
+        if sp.user == user:
+            new_sp = StudentProgram.objects.create(
+                program=sp.program,
+                user=sp.user,
+                json=sp.json,
+            )
+            return Response({"id": new_sp.id,
+                             "link": new_sp.link,
+                             "user": new_sp.user.id,
+                             "program": new_sp.program.id,
+                             "data": new_sp.json,
+                             })
+        else:
+            return Response(status=403)
+    else:
+        return Response(status=403)
+
 
 
 change_target_module = ChangeTargetModule.as_view()
