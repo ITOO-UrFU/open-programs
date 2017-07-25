@@ -81,6 +81,27 @@ class ChangePerson(APIView):
         return Response(person.data, status=201)
 
 
+class ChangePersonPass(APIView):
+    permission_classes = (IsAuthorized,)
+
+    def post(self, request):
+        user = get_user_by_jwt(request)
+        person = Person.objects.filter(user=user).first()
+
+        password1 = request.data.get("password1", "")
+        password2 = request.data.get("password2", "")
+        is_correct_password = user.check_password(request.data.get("old_password", ""))
+
+        if password1 == password2 and password1 != "" and is_correct_password:
+            user.set_password(password1)
+            user.save()
+        person.save()
+
+        person = PersonSerializer(person)
+
+        return Response(person.data, status=201)
+
+
 class GetUser(APIView):
     permission_classes = (IsStudent, )
 
@@ -91,4 +112,5 @@ class GetUser(APIView):
         return Response(person.data, status=201)
 
 change_person = ChangePerson.as_view()
+change_password = ChangePersonPass.as_view()
 get_user = GetUser.as_view()

@@ -28,7 +28,7 @@ from rest_framework_swagger.views import get_swagger_view
 from .apps.api.views import *
 from .apps.api_v11 import auth_serializers
 from .apps.api_v11.views import *
-from persons.views import change_person, get_user
+from persons.views import change_person, get_user, change_password
 
 permission.autodiscover()
 
@@ -149,6 +149,7 @@ urlpatterns += [
         name="get_program_variants_constructor"),
     url(r'^api/v11/register', register, name="register"),
     url(r'^api/v11/change_person', change_person, name="change_person"),
+    url(r'^api/v11/change_password', change_password, name="change_password"),
     url(r'^api/v11/get_user', get_user, name="get_user"),
     url(r'^api/v11/get_trajectories', get_trajectories, name="get_trajectories"),
 
