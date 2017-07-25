@@ -950,11 +950,16 @@ def get_program_trajectory(request, program_id):
 
 
 @api_view(('POST',))
-@permission_classes((AllowAny,))  #
+@permission_classes((IsStudent,))  #
 def delete_trajectory(request):
+    user = get_user_by_jwt()
     id = request.data.get("id", "")
     if id != "":
-        StudentProgram.objects.get(pk=id).delete()
+        sp = StudentProgram.objects.get(pk=id)
+        if sp.user == user:
+            StudentProgram.objects.get(pk=id).delete()
+        else:
+            return Response(status=403)
     else:
         return Response(status=403)
     return Response(status=200)
