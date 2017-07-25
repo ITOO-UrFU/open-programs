@@ -902,6 +902,7 @@ def get_trajectory_id(request, id):
                      "user": None if not student_program.user else student_program.user.id,
                      "program": student_program.program.id,
                      "data": student_program.json,
+                     "program_name": student_program.program.title,
                      })
 
 
@@ -914,6 +915,7 @@ def get_trajectory_link(request, link):
                      "user": None if not student_program.user else student_program.user.id,
                      "program": student_program.program.id,
                      "data": student_program.json,
+                     "program_name": student_program.program.title,
                      })
 
 
@@ -943,6 +945,7 @@ def get_program_trajectory(request, program_id):
              "user": None if not student_program.user else student_program.user.id,
              "program": student_program.program.id,
              "data": student_program.json,
+             "program_name": student_program.program.title,
              }
         )
 
@@ -983,6 +986,7 @@ def copy_trajectory(request):
                              "user": new_sp.user.id,
                              "program": new_sp.program.id,
                              "data": new_sp.json,
+                             "program_name": new_sp.program.title,
                              })
         else:
             return Response(status=403)
