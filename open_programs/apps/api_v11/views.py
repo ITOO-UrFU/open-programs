@@ -954,9 +954,9 @@ def get_program_trajectory(request, program_id):
 def delete_trajectory(request):
     id = request.data.get("id", "")
     if id != "":
-        StudentProgram.objects.remove(id)
+        StudentProgram.objects.get(pk=id).delete()
     else:
-        return Response(status=999)
+        return Response(status=403)
     return Response(status=200)
 
 
