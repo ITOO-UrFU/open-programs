@@ -96,7 +96,7 @@ class ChangePersonPass(APIView):
             user.set_password(password1)
             user.save()
         else:
-            return Response(status=403)
+            return Response({"msg": [password1 == password2, password1 != "", is_correct_password]}, status=403, )
         person.save()
         person = PersonSerializer(person)
 
