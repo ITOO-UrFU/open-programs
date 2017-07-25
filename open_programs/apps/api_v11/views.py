@@ -952,7 +952,7 @@ def get_program_trajectory(request, program_id):
 @api_view(('POST',))
 @permission_classes((IsStudent,))  #
 def delete_trajectory(request):
-    user = get_user_by_jwt()
+    user = get_user_by_jwt(request)
     id = request.data.get("id", "")
     if id != "":
         sp = StudentProgram.objects.get(pk=id)
