@@ -59,7 +59,7 @@ class ChangePerson(APIView):
 
     def post(self, request):
         user = get_user_by_jwt(request)
-        person = Person.objects.filter(user=user)
+        person = Person.objects.filter(user=user).first()
 
         person.first_name = request.data.get("first_name", "")
         person.last_name = request.data.get("last_name", "")
