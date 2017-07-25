@@ -78,7 +78,8 @@ class StudentProgramSerializer(serializers.ModelSerializer):
 
 class StudentProgramSerializer_nouser(serializers.ModelSerializer):
     program = ProgramSerializer
+    program_name = program.data()["title"]
 
     class Meta:
         model = StudentProgram
-        fields = ("id", "program", "json")
+        fields = ("id", "program", "program_name", "json")
