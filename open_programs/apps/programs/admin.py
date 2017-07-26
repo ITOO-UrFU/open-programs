@@ -21,6 +21,7 @@ class ProgramAdmin(VersionAdmin):
     )
     list_filter = ("level", 'created', 'updated', 'status', 'archived',)
     filter_horizontal = ("learning_plans", )
+    save_as = True
 
 
 @admin.register(TrainingTarget)
@@ -33,6 +34,7 @@ class TrainingTargetAdmin(VersionAdmin):
         "program",
         "number"
     )
+    save_as = True
 
 
 @admin.register(ProgramCompetence)
@@ -67,11 +69,13 @@ class ChoiceGroupAdmin(VersionAdmin, AjaxSelectAdmin):
 @admin.register(ChoiceGroupType)
 class ChoiceGroupTypeAdmin(VersionAdmin):
     list_display = ("title", )
+    save_as = True
 
 
 @admin.register(LearningPlan)
 class LearningPlanAdmin(VersionAdmin):
     list_display = ('uni_displayableTitle', 'uni_number', 'uni_title', 'uni_stage', 'uni_loadTimeType')
+    save_as = True
 
 
 @admin.register(StudentProgram)
@@ -79,3 +83,4 @@ class StudentProgramAdmin(VersionAdmin):
     list_display = ("link", "program", "user")
     fields = ("link", "user", "program", "json")
     readonly_fields = ("link", )
+    save_as = True
