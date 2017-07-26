@@ -49,6 +49,7 @@ class ProgramModulesAdmin(VersionAdmin):
     list_display = ("id",  "semester", "module", "program", "choice_group", "competence")
     list_filter = ("program", "semester",)
     raw_id_fields = ("module", )
+    save_as = True
 
 
 @admin.register(TargetModules)
