@@ -371,9 +371,9 @@ def _cache(cache_key=None, response=None):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_targets_by_program(request, program_id):
-    response = _check_trigger(f"get_targets_by_program:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_targets_by_program:{program_id}")
+    # if response:
+    #     return response
     response = []
     program = Program.objects.get(id=program_id)
 
@@ -392,7 +392,7 @@ def get_targets_by_program(request, program_id):
             "choice_groups": choice_groups,
         })
 
-    _cache(f"get_targets_by_program:{program_id}", response)
+    # _cache(f"get_targets_by_program:{program_id}", response)
 
     return Response(response)
 
