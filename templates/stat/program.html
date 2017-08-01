@@ -7,8 +7,7 @@
 
     <div class="ui slider checkbox">
         <input type="checkbox" checked name="newsletter" id="toggleDisciplines">
-        <p id="hideDisciplines">Скрыть дисциплины</p>
-        <p id="showDisciplines" hidden="hidden">Показать дисциплины</p>
+        <label id="labelDisciplines">Скрыть дисциплины</label>
     </div>
 
     <table class="ui selectable celled table">
@@ -51,8 +50,13 @@
 
         function toggleDisciplines() {
             $('.discipline').toggle();
-            $('#hideDisciplines').toggle();
-            $('#showDisciplines').toggle();
+            if ($('.disciplines').is(":visible")){
+                $('#labelDisciplines').text("Скрыть дисциплины")
+            } else {
+                $('#labelDisciplines').text("Показать дисциплины")
+            }
+
+
         }
 
 
