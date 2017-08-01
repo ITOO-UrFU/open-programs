@@ -60,7 +60,7 @@ class Program(ObjectBaseClass):
         return [choice_group.id for choice_group in ChoiceGroup.objects.filter(program__id=self.id)]
 
     def get_modules(self):
-        return
+        return [m.module for m in ProgramModules.objects.filter(program=self, status="p", archived=False)]
 
     def get_all_disciplines(self):
         pms = ProgramModules.objects.filter(program=self, status="p", archived=False).values_list("module__id", flat=True)
