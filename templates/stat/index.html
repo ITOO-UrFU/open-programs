@@ -3,19 +3,31 @@
 {% block content %}
 
     <div class="ui statistic">
-  <div class="value">
-    {{ programs|length }}
-  </div>
-  <div class="label">
-    программ
-  </div>
-</div>
+        <div class="value">
+            {{ programs|length }}
+        </div>
+        <div class="label">
+            программ
+        </div>
+    </div>
 
     {% for program in programs %}
-        <div class="ui segment pointer" id="{{ program.id }}">
+        <div class="ui segment pointer program" id="{{ program.id }}">
             <h3>{{ program.title }}</h3>
         </div>
     {% endfor %}
+
+    <script type="text/javascript">
+        let programList = document.getElementsByClassName("pointer");
+        programList.forEach(function (v, i) {
+            console.log(v);
+            v.addEventListener("click", function () {
+                document.location.href = "{% url v.id %}";
+            });
+        });
+
+
+    </script>
 
 
     <style type="text/css">
