@@ -50,12 +50,9 @@
 
         function toggleDisciplines() {
             $('.discipline').toggle();
-            console.log($('.discipline').is(":visible"));
             if ($('.discipline').is(":visible")) {
-                console.log("visible");
                 $('#labelDisciplines').text("Скрыть дисциплины")
             } else if ($('.discipline').is(":hidden")) {
-                console.log("hidden");
                 $('#labelDisciplines').text("Показать дисциплины")
             }
         }
