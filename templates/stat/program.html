@@ -5,17 +5,32 @@
     <h1>{{ program.title }}</h1>
     <p>{{ program.training_direction }}</p>
 
+    <table class="ui celled table">
+        <thead>
+        <tr>
+            <th>Наименование</th>
+            <th>Номер модуля</th>
+            <th>Координатор</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for module in program.get_modules() %}
+            <tr>
+                <td>{{ module.title }}</td>
+                <td>{{ module.uni_number }}</td>
+                <td>{{ module.uni_coordinator }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
 
 
+        <style type="text/css">
+            div.header {
+                text-align: center;
+            }
 
-
-    <style type="text/css">
-        div.header {
-            text-align: center;
-        }
-
-        div.pointer {
-            cursor: pointer;
-        }
-    </style>
+            div.pointer {
+                cursor: pointer;
+            }
+        </style>
 {% endblock %}
