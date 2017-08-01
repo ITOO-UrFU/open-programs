@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "api_v11",
     "uni",
     "cms",
+    "stat",
 ]
 
 if platform.system() not in ('Windows', 'Darwin', 'FreeBSD', 'Linux'):
