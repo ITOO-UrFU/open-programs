@@ -44,8 +44,13 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-            document.querySelector('#toggleDisciplines').addEventListener('change', $('.discipline').toggle());
+            document.querySelector('#toggleDisciplines').addEventListener('change', toggleDisciplines);
+
         });
+
+        function toggleDisciplines() {
+            $('.discipline').toggle();
+        }
 
 
     </script>
