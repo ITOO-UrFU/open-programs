@@ -1,0 +1,31 @@
+{% extends "./base.html" %}
+{% load i18n %}
+{% block content %}
+
+    <div class="ui cards">
+        <div class="card" id="programs">
+            <div class="content">
+                <div class="header">Образовательные программы</div>
+            </div>
+        </div>
+        <div class="card" id="courses">
+            <div class="content">
+                <div class="header">Курсы</div>
+            </div>
+        </div>
+        <div class="card" id="professions">
+            <div class="content">
+                <div class="header">Профессии</div>
+            </div>
+        </div>
+    </div>
+
+    <style type="text/css">
+        div.header{
+            text-align: center;
+        }
+        div.card {
+            cursor: pointer;
+        }
+    </style>
+{% endblock %}

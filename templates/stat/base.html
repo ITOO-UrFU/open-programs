@@ -1,0 +1,92 @@
+{% load i18n %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{title}}</title>
+    <script type="text/javascript" src="{% static "jquery-3.1.1.min.js" %}"></script>
+    <script type="text/javascript" src="{% static "semantic/semantic.min.js" %}"></script>
+
+    <link rel="stylesheet" type="text/css" href="{% static "semantic/semantic.min.css" %}">
+</head>
+<body>
+
+<div class="ui borderless main menu fixed">
+<div class="ui container">
+  <a href="{% url "constructor_index" %}" class="header item">
+   <!-- <img class="logo" src="assets/images/logo.png"> -->
+    {{title}}
+  </a>
+  <a href="{% url "programs" %}" class="item" style="border-bottom: 5px solid #35bb35;">{% trans 'Образовательные программы' %}</a>
+    <a href="{% url "courses" %}" class="item" style="border-bottom: 5px solid rgb(243, 122, 0);">{% trans 'Курсы' %}</a>
+      <a href="{% url "professions" %}" class="item" style="border-bottom: 5px solid #328ab3;">{% trans 'Профессии' %}</a>
+  <!--<div class="ui simple dropdown item">
+    Dropdown <i class="dropdown icon"></i>
+    <div class="menu">
+      <a class="item" href="#">Link Item</a>
+      <a class="item" href="#">Link Item</a>
+      <div class="divider"></div>
+      <div class="header">Header Item</div>
+      <div class="item">
+        <i class="dropdown icon"></i>
+        Sub Menu
+        <div class="menu">
+          <a class="item" href="#">Link Item</a>
+          <a class="item" href="#">Link Item</a>
+        </div>
+      </div>
+      <a class="item" href="#">Link Item</a>
+    </div>
+  </div>-->
+</div>
+</div>
+
+<div class="ui main container">
+
+<div id="content">
+{% block content %}
+
+
+
+{% endblock %}
+</div>
+
+  </div>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+  <p>&nbsp;</p>
+
+<style type="text/css">
+    nav.links {
+        display: inline-flex;
+    }
+    nav.links h2 {
+        padding-left: 1em;
+        color: darkblue;
+    }
+    .main.menu {
+        height: 4em;
+    }
+
+   .ui.menu .item img.logo {
+    margin-right: 1.5em;
+  }
+  .main.container {
+    margin-top: 7em;
+  }
+  .wireframe {
+    margin-top: 2em;
+  }
+  .ui.footer.segment {
+    margin: 5em 0em 0em;
+    padding: 5em 0em;
+  }
+  #content {
+    min-width: 700px;
+    width: 1000px;
+  }
+</style>
+
+</body>
+</html>
