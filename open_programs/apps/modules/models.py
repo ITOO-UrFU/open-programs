@@ -59,4 +59,8 @@ class Module(ObjectBaseClass):
     def get_type_display(self):
         return self.type.title
 
+    def get_disciplines(self):
+        disciplines = Discipline.objects.filter(module=self)
+        return disciplines
+
 
