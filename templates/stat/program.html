@@ -20,7 +20,13 @@
                 <td>{{ module.uni_number }}</td>
                 <td>{{ module.uni_coordinator }}</td>
             </tr>
-            {% for discipline in module. %}
+            {% for discipline in module.get_disciplines %}
+                <tr class="ui inverted olive">
+                <td>{{ discipline.title }}</td>
+                <td>{{ discipline.uni_number }}</td>
+                <td>{{ discipline.uni_discipline }}</td>
+                </tr>
+            {% endfor %}
         {% endfor %}
         </tbody>
     </table>
