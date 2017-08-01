@@ -18,15 +18,11 @@
     {% endfor %}
 
     <script type="text/javascript">
-        let programList = document.getElementsByClassName("pointer");
-        [].forEach.call(programList, function (el) {
-            console.log(el);
+        [].forEach.call(document.getElementsByClassName("pointer"), function (el) {
             el.addEventListener("click", function () {
                 document.location.href = el.id;
             });
         });
-
-
     </script>
 
 
