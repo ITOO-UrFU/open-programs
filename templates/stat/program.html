@@ -25,17 +25,20 @@
     </table>
 
     <script>
-    $('table').tablesort();
+        $('table').tablesort();
+        $('#home').click(function () {
+            document.location.href = "stat";
+        });
     </script>
 
 
-        <style type="text/css">
-            div.header {
-                text-align: center;
-            }
+    <style type="text/css">
+        div.header {
+            text-align: center;
+        }
 
-            div.pointer {
-                cursor: pointer;
-            }
-        </style>
+        div.pointer {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
