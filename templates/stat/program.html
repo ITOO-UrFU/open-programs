@@ -14,8 +14,8 @@
         <thead>
         <tr>
             <th class="sorted ascending">Наименование</th>
-            <th>Номер модуля</th>
             <th>Семестр</th>
+            <th>Номер модуля</th>
             <th>Координатор</th>
         </tr>
         </thead>
@@ -23,15 +23,15 @@
         {% for module in program.get_modules %}
             <tr class="module">
                 <td>{{ module.title }}</td>
-                <td>{{ module.uni_number }}</td>
                 <td>{{ module.semester }}</td>
+                <td>{{ module.uni_number }}</td>
                 <td>{{ module.uni_coordinator }}</td>
             </tr>
             {% for discipline in module.get_disciplines %}
                 <tr class="discipline">
                     <td>{{ discipline.title }}</td>
-                    <td>{{ discipline.uni_number }}</td>
                     <td>{{ module.semester|add:discipline.period }}</td>
+                    <td>{{ discipline.uni_number }}</td>
                     <td>---</td>
                 </tr>
             {% endfor %}
