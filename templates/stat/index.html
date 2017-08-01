@@ -2,11 +2,21 @@
 {% load i18n %}
 {% block content %}
 
+    <div class="ui statistic">
+  <div class="value">
+    {{ programs|length }}
+  </div>
+  <div class="label">
+    программ
+  </div>
+</div>
+
     {% for program in programs %}
         <div class="ui segment pointer" id="{{ program.id }}">
             <h3>{{ program.title }}</h3>
         </div>
     {% endfor %}
+
 
     <style type="text/css">
         div.header {
