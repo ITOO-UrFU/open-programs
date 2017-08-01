@@ -19,10 +19,10 @@
 
     <script type="text/javascript">
         let programList = document.getElementsByClassName("pointer");
-        programList.forEach(function (v, i) {
-            console.log(v);
-            v.addEventListener("click", function () {
-                document.location.href = "stat/" + v.id;
+        [].forEach.call(programList, function (el) {
+            console.log(el);
+            el.addEventListener("click", function () {
+                document.location.href = el.id;
             });
         });
 
