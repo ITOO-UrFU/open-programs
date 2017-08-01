@@ -5,6 +5,11 @@
     <h1>{{ program.title }}</h1>
     <p>{{ program.training_direction }}</p>
 
+    <div class="ui slider checkbox">
+        <input type="checkbox" name="newsletter" id="toggleDisciplines">
+        <label>Скрыть дисциплины</label>
+    </div>
+
     <table class="ui selectable celled table">
         <thead>
         <tr>
@@ -36,13 +41,21 @@
         $('#home').click(function () {
             document.location.href = "/stat/";
         });
+
+
+        document.addEventListener('DOMContentLoaded', function () {
+            document.querySelector('#toggleDisciplines').addEventListener('change', $('.discipline').toggle());
+        });
+
+
     </script>
 
 
     <style type="text/css">
-    tr.module {
-        font-weight: 600;
-    }
+        tr.module {
+            font-weight: 600;
+        }
+
         tr.discipline {
             background-color: lightsalmon;
         }
