@@ -22,7 +22,7 @@
         programList.forEach(function (v, i) {
             console.log(v);
             v.addEventListener("click", function () {
-                document.location.href = "{% url v.id %}";
+                document.location.href = "stat/" + v.id;
             });
         });
 
