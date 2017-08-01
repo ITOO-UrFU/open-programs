@@ -3,27 +3,23 @@
 {% block content %}
 
     <div class="ui cards">
-        <div class="card" id="programs">
-            <div class="content">
-                <div class="header">Образовательные программы</div>
+        {% for program in programs %}
+            <div class="card" id="{{ program.id }}">
+                <div class="content">
+                    <div class="header">
+                    {{ program.title }}
+                    </div>
+                </div>
             </div>
-        </div>
-        <div class="card" id="courses">
-            <div class="content">
-                <div class="header">Курсы</div>
-            </div>
-        </div>
-        <div class="card" id="professions">
-            <div class="content">
-                <div class="header">Профессии</div>
-            </div>
-        </div>
+        {% endfor %}
+
     </div>
 
     <style type="text/css">
-        div.header{
+        div.header {
             text-align: center;
         }
+
         div.card {
             cursor: pointer;
         }
