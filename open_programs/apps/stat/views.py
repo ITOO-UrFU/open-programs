@@ -14,4 +14,4 @@ def index(request):
 @staff_member_required
 def instance(request, id):
     program = Program.objects.get(pk=id)
-    return render(request, "stats/program.html", {"program": program})
+    return render(request, "stat/program.html", {"program": program})
