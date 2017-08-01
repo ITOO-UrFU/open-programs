@@ -3,8 +3,8 @@
 {% block content %}
 
     {% for program in programs %}
-        <div class="ui segment" id="{{ program.id }}">
-            {{ program.title }}
+        <div class="ui segment pointer" id="{{ program.id }}">
+            <h3>{{ program.title }}</h3>
         </div>
     {% endfor %}
 
@@ -13,7 +13,7 @@
             text-align: center;
         }
 
-        div.card {
+        div.pointer {
             cursor: pointer;
         }
     </style>
