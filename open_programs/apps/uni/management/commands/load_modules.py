@@ -25,34 +25,37 @@ class Command(BaseCommand):
             discipline_num = 1
             module_num = 1
             fieldset = (("description", "shortTitle"),
-                      ("uni_uuid", "uuid"),
-                      ("uni_number", "number"),
-                      ("uni_coordinator", "coordinator"),
-                      ("uni_type", "type"),
-                      ("uni_title", "title"),
-                      ("uni_competence", "competence"),
-                      ("uni_testUnits", "testUnits"),
-                      ("uni_priority", "priority"),
-                      ("uni_state", "state"),
-                      ("uni_approvedDate", "approvedDate"),
-                      ("uni_comment", "comment"),
-                      ("uni_specialities", "specialities"),
-                      ("uni_file", "file"))
+                        ("uni_uuid", "uuid"),
+                        ("uni_number", "number"),
+                        ("uni_coordinator", "coordinator"),
+                        ("uni_type", "type"),
+                        ("uni_title", "title"),
+                        ("uni_competence", "competence"),
+                        ("uni_testUnits", "testUnits"),
+                        ("uni_priority", "priority"),
+                        ("uni_state", "state"),
+                        ("uni_approvedDate", "approvedDate"),
+                        ("uni_comment", "comment"),
+                        ("uni_specialities", "specialities"),
+                        ("uni_file", "file"))
 
             for module in fixtures:
-                print("Load modules: ", round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r', flush=True)
+                print("Load modules: ", round(module_num / float(modules_len) * 100, 1), "%", sep='', end='\r',
+                      flush=True)
                 m = Module.objects.filter(uni_number=module["uni_number"]).first()
                 if m:
                     for field in fieldset:
                         update_if_none(m, field[0], module[field[1]])
                     if not m.type or m.type == Type.objects.get(title="Майнор"):  # TODO: разобраться, надо ли это
-                        m.type = Type.objects.get(title="Майнор") if "майнор" in module["type"] else Type.objects.get(title="Модуль")
+                        m.type = Type.objects.get(title="Майнор") if "майнор" in module["type"] else Type.objects.get(
+                            title="Модуль")
                     m.status = "p"
                     m.save()
                 else:
                     m = Module(
                         title=module["title"],
-                        type=Type.objects.get(title="Майнор") if "майнор" in module["type"] else Type.objects.get(title="Модуль"),
+                        type=Type.objects.get(title="Майнор") if "майнор" in module["type"] else Type.objects.get(
+                            title="Модуль"),
                         uni_number=module["number"],
                         uni_coordinator=module["coordinator"],
                         uni_competence=module["competence"],
@@ -69,7 +72,8 @@ class Command(BaseCommand):
                 module_num += 1
 
             for module in fixtures:
-                print("Load disciplines: ", round(discipline_num / float(disciplines_len) * 100, 2), "%", sep='', end='\r',
+                print("Load disciplines: ", round(discipline_num / float(disciplines_len) * 100, 2), "%", sep='',
+                      end='\r',
                       flush=True)
                 m = Module.objects.filter(uni_number=module["uni_number"]).first()
                 disciplines = module["disciplines"]
@@ -89,4 +93,3 @@ class Command(BaseCommand):
                         d.save()
                     i += 1
                 discipline_num += len(module["disciplines"])
-
