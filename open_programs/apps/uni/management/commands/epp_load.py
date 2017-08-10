@@ -70,6 +70,8 @@ class Command(BaseCommand):
 
             # Добавили учебный план
 
+        print("Semesters count: ", term)
+
         if term == 8:
             term = TrainingTerms.objects.filter(title="4 года").first()
             for epp_module in epp["modules"]:
