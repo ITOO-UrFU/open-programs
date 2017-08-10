@@ -105,57 +105,57 @@ class Command(BaseCommand):
             for_delete = []
             for discipline in Discipline.objects.filter(module=module_obj):
                 epp_disciplines = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']]
+                print([t["titleheaderCell"] for t in epp_disciplines])
+                for epp_discipline in epp_disciplines:
+                    training_semester = int(epp_discipline["firstSemester"])
+                    if discipline.title != epp_discipline['titleheaderCell']:
+                        for_delete.append(discipline.id)
 
-            for epp_discipline in epp_disciplines:
-                training_semester = int(epp_discipline["firstSemester"])
-                if discipline.title != epp_discipline['titleheaderCell']:
-                    for_delete.append(discipline.id)
+                    # print(epp_discipline['titleheaderCell'])
+                    if epp_discipline["exam"] > epp_discipline["credit"]:
+                        form = "e"
+                    else:
+                        form = "z"
 
-                # print(epp_discipline['titleheaderCell'])
-                if epp_discipline["exam"] > epp_discipline["credit"]:
-                    form = "e"
-                else:
-                    form = "z"
+                    if "атематика" in epp_discipline['titleheaderCell']:
+                        print(epp_discipline['titleheaderCell'])
+                    parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
+                                                                  module=module_obj, status="p",
+                                                                  archived=False).first()
 
-                if "атематика" in epp_discipline['titleheaderCell']:
-                    print(epp_discipline['titleheaderCell'])
-                parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
-                                                              module=module_obj, status="p",
-                                                              archived=False).first()
+                    if not parted_discipline:
+                        parted_discipline = Discipline.objects.create(
+                            title=epp_discipline['titleheaderCell'],
+                            description=discipline.description,
+                            module=module_obj,
+                            labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
+                            period=training_semester - semester + 1,
+                            form=form,
+                            uni_uid=discipline.uni_uid,
+                            uni_discipline=discipline.uni_discipline,
+                            uni_number=discipline.uni_number,
+                            uni_section=discipline.uni_section,
+                            uni_file=discipline.uni_file,
+                            status="p"
+                        )
 
-                if not parted_discipline:
-                    parted_discipline = Discipline.objects.create(
-                        title=epp_discipline['titleheaderCell'],
-                        description=discipline.description,
-                        module=module_obj,
-                        labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
-                        period=training_semester - semester + 1,
-                        form=form,
-                        uni_uid=discipline.uni_uid,
-                        uni_discipline=discipline.uni_discipline,
-                        uni_number=discipline.uni_number,
-                        uni_section=discipline.uni_section,
-                        uni_file=discipline.uni_file,
-                        status="p"
-                    )
+                    if term == 8:
+                        cur_term = TrainingTerms.objects.filter(title="4 года").first()
+                    elif term == 10:
+                        cur_term = TrainingTerms.objects.filter(title="5 лет").first()
+                    elif term == 7:
+                        cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-                if term == 8:
-                    cur_term = TrainingTerms.objects.filter(title="4 года").first()
-                elif term == 10:
-                    cur_term = TrainingTerms.objects.filter(title="5 лет").first()
-                elif term == 7:
-                    cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
-
-                semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
-                                                       program=program, term=cur_term).first()
-                if not semester_obj:
-                    semester_obj = Semester.objects.create(discipline=discipline,
-                                                           training_semester=training_semester,
-                                                           program=program,
-                                                           year='2017',
-                                                           admission_semester="0",
-                                                           term=cur_term,
-                                                           )
+                    semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
+                                                   program=program, term=cur_term).first()
+                    if not semester_obj:
+                        semester_obj = Semester.objects.create(discipline=discipline,
+                                                               training_semester=training_semester,
+                                                               program=program,
+                                                               year='2017',
+                                                               admission_semester="0",
+                                                               term=cur_term,
+                                                               )
 
             Discipline.objects.filter(id__in=for_delete).delete()
         else:
