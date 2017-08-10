@@ -103,13 +103,8 @@ class Command(BaseCommand):
                 program_module.save()
 
             for_delete = []
-            for discipline in Discipline.objects.filter(module=module_obj):
-                epp_disciplines = []
-                for d in epp_module["disciplines"]:
-                    if discipline.title in d['titleheaderCell']:
-                        epp_disciplines.append(d)
 
-            for epp_discipline in epp_disciplines:
+            for epp_discipline in epp_module["disciplines"]:
                 training_semester = int(epp_discipline["firstSemester"])
                 if Discipline.objects.filter(module=module_obj, title=epp_discipline['titleheaderCell']).count() == 0:
                     for_delete.append(discipline.id)
