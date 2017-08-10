@@ -126,7 +126,7 @@ class Command(BaseCommand):
                             form=form,
                             uni_uid=epp_discipline["uuid"],
                             uni_discipline=epp_discipline["discipline"],
-                            uni_number=epp_discipline["number"],
+                            uni_number=epp_discipline["disciplineNumberheaderCell"],
                             uni_section=epp_discipline["section"],
                             uni_file=epp_discipline["file"],
                             status="p"
