@@ -124,7 +124,7 @@ class Command(BaseCommand):
                             description=discipline.description,
                             module=module_obj,
                             labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
-                            period=training_semester - semester + 1,
+                            period=int(training_semester) - int(semester) + 1,
                             form=form,
                             uni_uid=discipline.uni_uid,
                             uni_discipline=discipline.uni_discipline,
