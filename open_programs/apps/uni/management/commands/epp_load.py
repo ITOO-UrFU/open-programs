@@ -72,16 +72,16 @@ class Command(BaseCommand):
 
         print("Semesters count: ", term)
 
-        if term == 8:
-            term = TrainingTerms.objects.filter(title="4 года").first()
-            for epp_module in epp["modules"]:
-                module_obj, semester = self.create_module(epp_module, program)
-                print(semester, " semester;    ", module_obj)
+        for epp_module in epp["modules"]:
+            module_obj, semester = self.create_module(epp_module, program, term)
+            print(semester, " semester;    ", module_obj)
 
-    def create_module(self, epp_module, program):
+    def create_module(self, epp_module, program, term):
+        # term = TrainingTerms.objects.filter(title="4 года").first()
         semester = min([int(d["firstSemester"]) for d in epp_module["disciplines"]])
         module_obj = Module.objects.filter(uni_number=epp_module["disciplineNumberheaderCell"]).first()
-        if module_obj:
+
+        if module_obj and term == 8:
             module_obj.uni_uuid = epp_module["uuid"]
             module_obj.uni_number = epp_module["disciplineNumberheaderCell"]
             module_obj.uni_coordinator = epp_module["coordinator"]
@@ -99,27 +99,26 @@ class Command(BaseCommand):
             module_obj.semester = semester
             module_obj.status = 'p'
             module_obj.save()
+
+            program_module = ProgramModules.objects.filter(program=program, module=module_obj)
+            if not program_module:
+                program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
+                                                status="p")
+                program_module.save()
+
+            for discipline in Discipline.objects.filter(module=module_obj):
+                epp_discipline = [d for d in epp_module["disciplines"] if d['title'] == discipline.title][0]
+                training_semester = epp_discipline["firstSemester"]
+                print(discipline.title, training_semester)
+                # semester_obj = Semester(discipline=discipline,
+                #                         training_semester=training_semester,
+                #                         program=program,
+                #                         year='2017',
+                #                         admission_semester="0",
+                #                         term=term,
+                #                         )
+                # semester_obj.save()
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
-
-        program_module = ProgramModules.objects.filter(program=program, module=module_obj)
-        if not program_module:
-            program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
-                                            status="p")
-            program_module.save()
-
-        for discipline in Discipline.objects.filter(module=module_obj):
-            epp_discipline = filter(lambda d: d['title'] == discipline.title, epp_module["disciplines"])[0]
-            training_semester = epp_discipline["firstSemester"]
-            print(discipline.title, training_semester)
-            # semester_obj = Semester(discipline=discipline,
-            #                         training_semester=training_semester,
-            #                         program=program,
-            #                         year='2017',
-            #                         admission_semester="0",
-            #                         term=term,
-            #                         )
-            # semester_obj.save()
-
 
         return module_obj, semester
