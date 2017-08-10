@@ -112,19 +112,21 @@ class Command(BaseCommand):
                 if len(epp_disciplines) > 1:
                     for_delete.append(discipline.id)
                 for epp_discipline in epp_disciplines:
-                    training_semester = epp_discipline["firstSemester"]
+                    training_semester = int(epp_discipline["firstSemester"])
                     if not discipline.title == epp_discipline['titleheaderCell']:
                         if epp_discipline["exam"] > epp_discipline["credit"]:
                             form = "e"
                         elif epp_discipline["exam"] < epp_discipline["credit"]:
                             form = "z"
 
+                            print(epp_discipline['titleheaderCell'])
+
                         parted_discipline = Discipline.objects.create(
                             title=epp_discipline['titleheaderCell'],
                             description=discipline.description,
                             module=module_obj,
                             labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
-                            period=int(training_semester) - int(semester) + 1,
+                            period=training_semester - semester + 1,
                             form=form,
                             uni_uid=discipline.uni_uid,
                             uni_discipline=discipline.uni_discipline,
