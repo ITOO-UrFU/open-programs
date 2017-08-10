@@ -114,12 +114,11 @@ class Command(BaseCommand):
                 for epp_discipline in epp_disciplines:
                     training_semester = int(epp_discipline["firstSemester"])
                     if not discipline.title == epp_discipline['titleheaderCell']:
+                        print(epp_discipline['titleheaderCell'])
                         if epp_discipline["exam"] > epp_discipline["credit"]:
                             form = "e"
                         elif epp_discipline["exam"] < epp_discipline["credit"]:
                             form = "z"
-
-                            print(epp_discipline['titleheaderCell'])
 
                         parted_discipline = Discipline.objects.create(
                             title=epp_discipline['titleheaderCell'],
