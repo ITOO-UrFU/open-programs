@@ -74,7 +74,7 @@ class Command(BaseCommand):
 
         for epp_module in epp["modules"]:
             module_obj, semester = self.create_module(epp_module, program, term)
-            print(semester, " semester;    ", module_obj)
+            # print(semester, " semester;    ", module_obj)
 
     def create_module(self, epp_module, program, term):
         # term = TrainingTerms.objects.filter(title="4 года").first()
@@ -107,9 +107,9 @@ class Command(BaseCommand):
                 program_module.save()
 
             for discipline in Discipline.objects.filter(module=module_obj):
-                epp_discipline = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']][0]
+                epp_discipline = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']]
                 training_semester = epp_discipline["firstSemester"]
-                print(epp_discipline["titleheaderCell"], training_semester)
+                print(epp_discipline, training_semester)
                 # semester_obj = Semester(discipline=discipline,
                 #                         training_semester=training_semester,
                 #                         program=program,
