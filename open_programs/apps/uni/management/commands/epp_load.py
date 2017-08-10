@@ -75,7 +75,8 @@ class Command(BaseCommand):
         for epp_module in epp["modules"]:
             module_obj, semester = self.create_module(epp_module, program, term)
 
-    def create_module(self, epp_module, program, term):
+    @staticmethod
+    def create_module(epp_module, program, term):
         semester = min([int(d["firstSemester"]) for d in epp_module["disciplines"]])
         module_obj = Module.objects.filter(uni_number=epp_module["disciplineNumberheaderCell"]).first()
 
