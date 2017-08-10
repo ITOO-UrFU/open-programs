@@ -121,7 +121,9 @@ class Command(BaseCommand):
                         else:
                             form = "z"
 
-                        parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'], module=module_obj).first()
+                        parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
+                                                                      module=module_obj, status="p",
+                                                                      archived=False).first()
 
                         if not parted_discipline:
                             parted_discipline = Discipline.objects.create(
@@ -135,7 +137,8 @@ class Command(BaseCommand):
                                 uni_discipline=discipline.uni_discipline,
                                 uni_number=discipline.uni_number,
                                 uni_section=discipline.uni_section,
-                                uni_file=discipline.uni_file
+                                uni_file=discipline.uni_file,
+                                status="p"
                             )
                         print()
 
@@ -148,6 +151,8 @@ class Command(BaseCommand):
                         #                         term=term,
                         #                         )
                         # semester_obj.save()
+
+            Discipline.objects.filter(id__in=for_delete).delete()
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
 
