@@ -120,8 +120,8 @@ class Command(BaseCommand):
                 else:
                     form = "z"
 
-                if "атематика" in epp_discipline['titleheaderCell']:
-                    print(epp_discipline['titleheaderCell'])
+
+                print(epp_discipline['titleheaderCell'])
                 parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                               module=module_obj, status="p",
                                                               archived=False).first()
