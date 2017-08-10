@@ -36,7 +36,7 @@ class Command(BaseCommand):
         stage = epp["stage"]
         displayableTitle = epp["version"]
         number = epp["number"]
-        active = epp["active"]
+        active = None if "active" not in epp.keys() else epp["active"]
         title = epp["title"]
 
         term = epp["term"]
@@ -72,7 +72,8 @@ class Command(BaseCommand):
         if term == 8:
             term = TrainingTerms.objects.filter(title="4 года").first()
             for epp_module in epp["modules"]:
-                module_obj, semester = self.create_module(epp_module, program)
+                # module_obj, semester = self.create_module(epp_module, program)
+                pass
 
     def create_module(self, module, program):
         semester = min([int(d["firstSemester"]) for d in module["disciplines"]])
