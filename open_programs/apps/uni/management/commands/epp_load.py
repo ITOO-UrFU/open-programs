@@ -106,19 +106,42 @@ class Command(BaseCommand):
                                                 status="p")
                 program_module.save()
 
+            for_delete = []
             for discipline in Discipline.objects.filter(module=module_obj):
                 epp_disciplines = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']]
+                if len(epp_disciplines) > 1:
+                    for_delete.append(discipline.id)
                 for epp_discipline in epp_disciplines:
                     training_semester = epp_discipline["firstSemester"]
-                    print(epp_discipline['titleheaderCell'], training_semester)
-                    # semester_obj = Semester(discipline=discipline,
-                    #                         training_semester=training_semester,
-                    #                         program=program,
-                    #                         year='2017',
-                    #                         admission_semester="0",
-                    #                         term=term,
-                    #                         )
-                    # semester_obj.save()
+                    if not discipline.title == epp_discipline['titleheaderCell']:
+                        if epp_discipline["exam"] > epp_discipline["credit"]:
+                            form = "e"
+                        elif epp_discipline["exam"] < epp_discipline["credit"]:
+                            form = "z"
+
+                        parted_discipline = Discipline.objects.create(
+                            title=epp_discipline['titleheaderCell'],
+                            description=discipline.description,
+                            module=module_obj,
+                            labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
+                            period=training_semester - semester + 1,
+                            form=form,
+                            uni_uid=discipline.uni_uid,
+                            uni_discipline=discipline.uni_discipline,
+                            uni_number=discipline.uni_number,
+                            uni_section=discipline.uni_section,
+                            uni_file=discipline.uni_file
+                        )
+
+
+                        # semester_obj = Semester(discipline=discipline,
+                        #                         training_semester=training_semester,
+                        #                         program=program,
+                        #                         year='2017',
+                        #                         admission_semester="0",
+                        #                         term=term,
+                        #                         )
+                        # semester_obj.save()
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
 
