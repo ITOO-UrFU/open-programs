@@ -112,8 +112,9 @@ class Command(BaseCommand):
                 if len(epp_disciplines) > 1:
                     for_delete.append(discipline.id)
                 for epp_discipline in epp_disciplines:
+                    print(epp_discipline['titleheaderCell'], discipline.title)
                     training_semester = int(epp_discipline["firstSemester"])
-                    if not discipline.title == epp_discipline['titleheaderCell']:
+                    if discipline.title != epp_discipline['titleheaderCell']:
                         print(epp_discipline['titleheaderCell'])
                         if epp_discipline["exam"] > epp_discipline["credit"]:
                             form = "e"
@@ -133,6 +134,7 @@ class Command(BaseCommand):
                             uni_section=discipline.uni_section,
                             uni_file=discipline.uni_file
                         )
+                        print()
 
 
                         # semester_obj = Semester(discipline=discipline,
