@@ -121,19 +121,22 @@ class Command(BaseCommand):
                         else:
                             form = "z"
 
-                        parted_discipline = Discipline.objects.create(
-                            title=epp_discipline['titleheaderCell'],
-                            description=discipline.description,
-                            module=module_obj,
-                            labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
-                            period=training_semester - semester + 1,
-                            form=form,
-                            uni_uid=discipline.uni_uid,
-                            uni_discipline=discipline.uni_discipline,
-                            uni_number=discipline.uni_number,
-                            uni_section=discipline.uni_section,
-                            uni_file=discipline.uni_file
-                        )
+                        parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'], module=module_obj).first()
+
+                        if not parted_discipline:
+                            parted_discipline = Discipline.objects.create(
+                                title=epp_discipline['titleheaderCell'],
+                                description=discipline.description,
+                                module=module_obj,
+                                labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
+                                period=training_semester - semester + 1,
+                                form=form,
+                                uni_uid=discipline.uni_uid,
+                                uni_discipline=discipline.uni_discipline,
+                                uni_number=discipline.uni_number,
+                                uni_section=discipline.uni_section,
+                                uni_file=discipline.uni_file
+                            )
                         print()
 
 
