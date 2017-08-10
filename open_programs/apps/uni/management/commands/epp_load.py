@@ -106,7 +106,6 @@ class Command(BaseCommand):
             for discipline in Discipline.objects.filter(module=module_obj):
                 epp_disciplines = []
                 for d in epp_module["disciplines"]:
-                    print(discipline.title, d['titleheaderCell'])
                     if discipline.title in d['titleheaderCell']:
                         epp_disciplines.append(d)
 
