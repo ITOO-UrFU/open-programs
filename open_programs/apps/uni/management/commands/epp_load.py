@@ -110,7 +110,7 @@ class Command(BaseCommand):
                 epp_disciplines = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']]
                 for epp_discipline in epp_disciplines:
                     training_semester = epp_discipline["firstSemester"]
-                    print(epp_discipline, training_semester)
+                    print(epp_discipline['titleheaderCell'], training_semester)
                     # semester_obj = Semester(discipline=discipline,
                     #                         training_semester=training_semester,
                     #                         program=program,
