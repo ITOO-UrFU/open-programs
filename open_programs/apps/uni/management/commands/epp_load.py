@@ -111,10 +111,9 @@ class Command(BaseCommand):
                 if not discipline:
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
+                    for_delete.append(discipline.id)
 
                 training_semester = int(epp_discipline["firstSemester"])
-                if Discipline.objects.filter(module=module_obj, title=epp_discipline['titleheaderCell']).count() == 0:
-                    for_delete.append(discipline.id)
 
                 try:
                     if epp_discipline["exam"] > epp_discipline["credit"]:
