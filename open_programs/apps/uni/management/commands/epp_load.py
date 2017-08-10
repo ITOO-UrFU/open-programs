@@ -64,6 +64,7 @@ class Command(BaseCommand):
                               status="p"
                               )
             lp.save()
+            print(lp.id)
             program.learning_plans.add(lp)
             program.save()
 
