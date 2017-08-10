@@ -105,7 +105,7 @@ class Command(BaseCommand):
             for_delete = []
 
             for epp_discipline in epp_module["disciplines"]:
-                print(epp_discipline['titleheaderCell'])
+                print("first", epp_discipline['titleheaderCell'])
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell']).first()
                 if not discipline:
