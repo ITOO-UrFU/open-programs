@@ -109,8 +109,7 @@ class Command(BaseCommand):
                 print("first", epp_discipline['titleheaderCell'])
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell']).first()
-                print(discipline)
-                if not discipline:
+                if not discipline and any(ext in epp_discipline["titleheaderCell"] for ext in ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII", "XIII", "XIV", "XV"]):
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
                     print(epp_discipline['titleheaderCell'])
