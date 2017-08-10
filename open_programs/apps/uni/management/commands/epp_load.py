@@ -81,15 +81,15 @@ class Command(BaseCommand):
         module_obj = Module.objects.filter(uni_number=epp_module["disciplineNumberheaderCell"]).first()
         if module_obj:
             module_obj.uni_uuid = epp_module["uuid"]
-            module_obj.uni_number = epp_module["number"]
+            module_obj.uni_number = epp_module["disciplineNumberheaderCell"]
             module_obj.uni_coordinator = epp_module["coordinator"]
             module_obj.uni_type = epp_module["type"]
             module_obj.uni_title = epp_module["title"]
-            module_obj.uni_competence = epp_module["competence"]
+            # module_obj.uni_competence = epp_module["competence"]
             module_obj.uni_testUnits = epp_module["testUnits"]
             module_obj.uni_priority = epp_module["priority"]
             module_obj.uni_state = epp_module["state"]
-            module_obj.uni_approvedDate = epp_module["approvedDate"]
+            # module_obj.uni_approvedDate = epp_module["approvedDate"]
             module_obj.uni_comment = epp_module["comment"]
             module_obj.uni_file = epp_module["file"]
             module_obj.uni_specialities = epp_module["specialities"]
