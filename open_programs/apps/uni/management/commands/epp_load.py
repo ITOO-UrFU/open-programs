@@ -120,16 +120,15 @@ class Command(BaseCommand):
                     except:
                         discipline = Discipline.objects.create(
                             title=epp_discipline['titleheaderCell'],
-                            description=discipline.description,
                             module=module_obj,
                             labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
                             period=training_semester - semester + 1,
                             form=form,
-                            uni_uid=discipline.uni_uid,
-                            uni_discipline=discipline.uni_discipline,
-                            uni_number=discipline.uni_number,
-                            uni_section=discipline.uni_section,
-                            uni_file=discipline.uni_file,
+                            uni_uid=epp_discipline["uuid"],
+                            uni_discipline=epp_discipline["discipline"],
+                            uni_number=epp_discipline["number"],
+                            uni_section=epp_discipline["section"],
+                            uni_file=epp_discipline["file"],
                             status="p"
                         )
 
