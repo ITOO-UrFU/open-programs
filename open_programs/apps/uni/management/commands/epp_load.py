@@ -108,4 +108,18 @@ class Command(BaseCommand):
                                             status="p")
             program_module.save()
 
+        for discipline in Discipline.objects.filter(module=module_obj):
+            epp_discipline = filter(lambda d: d['title'] == discipline.title, epp_module["disciplines"])[0]
+            training_semester = epp_discipline["firstSemester"]
+            print(discipline.title, training_semester)
+            # semester_obj = Semester(discipline=discipline,
+            #                         training_semester=training_semester,
+            #                         program=program,
+            #                         year='2017',
+            #                         admission_semester="0",
+            #                         term=term,
+            #                         )
+            # semester_obj.save()
+
+
         return module_obj, semester
