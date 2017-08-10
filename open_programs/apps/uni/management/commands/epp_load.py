@@ -111,6 +111,7 @@ class Command(BaseCommand):
                 if not discipline:
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
+                    print(epp_discipline['titleheaderCell'])
                     for_delete.append(discipline.id)
 
                 training_semester = int(epp_discipline["firstSemester"])
