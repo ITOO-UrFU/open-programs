@@ -20,16 +20,11 @@ class Command(BaseCommand):
         parser.add_argument('program_title', nargs=1)
 
     def handle(self, *args, **options):
-
-        start_time = time.time()
         epp_json = options["epp_json"][0]
         program_title = options["program_title"][0]
 
-        try:
-            with open(epp_json, encoding='utf-8') as epp_json:
-                epp = json.loads('\n'.join(epp_json.readlines()))
-        except:
-            raise FileNotFoundError
+        with open(epp_json, encoding='utf-8') as epp_json:
+            epp = json.loads('\n'.join(epp_json.readlines()))
 
         try:
             program = Program.objects.filter(title=program_title).first()
@@ -38,197 +33,51 @@ class Command(BaseCommand):
         except:
             raise NotImplementedError
 
-            stage = epp["stage"]
-            displayableTitle = epp["version"]
-            number = epp["number"]
-            active = epp["active"]
-            title = epp["title"]
+        stage = epp["stage"]
+        displayableTitle = epp["version"]
+        number = epp["number"]
+        active = epp["active"]
+        title = epp["title"]
 
-            term = epp["term"]
+        term = epp["term"]
 
-            lps = LearningPlan.objects.filter(uni_number=number, status="p")
-            if len(lps) > 0:
-                for lp in lps:
-                    lp.uni_displayableTitle = displayableTitle
-                    lp.uni_number = number
-                    lp.uni_active = active
-                    lp.uni_title = title
-                    lp.uni_stage = stage
-                    lp.uni_loadTimeType = loadTimeType
-                    lp.uni_html = json.dumps(epp)
-                    lp.save()
-                    if lp not in program.learning_plans.all():
-                        program.learning_plans.add(lp)
-                        program.save()
-            else:
-                lp = LearningPlan(uni_displayableTitle=displayableTitle,
-                                  uni_number=number,
-                                  uni_active=active,
-                                  uni_title=title,
-                                  uni_stage=stage,
-                                  uni_loadTimeType=loadTimeType,
-                                  uni_html=json.dumps(epp),
-                                  status="p"
-                                  )
+        lps = LearningPlan.objects.filter(uni_number=number, status="p")
+        if len(lps) > 0:
+            for lp in lps:
+                lp.uni_displayableTitle = displayableTitle
+                lp.uni_number = number
+                lp.uni_active = active
+                lp.uni_title = title
+                lp.uni_stage = stage
+                lp.uni_html = json.dumps(epp)
                 lp.save()
-                program.learning_plans.add(lp)
-                program.save()
+                if lp not in program.learning_plans.all():
+                    program.learning_plans.add(lp)
+                    program.save()
+        else:
+            lp = LearningPlan(uni_displayableTitle=displayableTitle,
+                              uni_number=number,
+                              uni_active=active,
+                              uni_title=title,
+                              uni_stage=stage,
+                              uni_html=json.dumps(epp),
+                              status="p"
+                              )
+            lp.save()
+            program.learning_plans.add(lp)
+            program.save()
 
-                #Добавили учебный план
+            # Добавили учебный план
 
-            if term == 8:
-                term = TrainingTerms.objects.filter(title="4 года").first()
-                for epp_module in epp["modules"]:
-                    module_obj, semester = self.create_module(epp_module, program)
-
-
-                    semester = self.create_disciplines(find_row_index_id, module, module_obj, row, rows, semester,
-                                                       program, term)
-
-            else:
-                years = 0
-                for module in [m for m in modules]:
-                    try:
-                        for i in range(1, 10):
-                            try:
-                                ze = module["row"][
-                                    find_row_index_id(
-                                        f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                                try:
-                                    if int(ze) > 0:
-                                        latest_semester = i
-                                except:
-                                    latest_semester = i - 1
-                            except:
-                                pass
-                        if latest_semester / float(2) > years:
-                            years = latest_semester / float(2)
-                    except:
-                        pass
-
-                if years == 5:
-                    term = TrainingTerms.objects.filter(title="5 лет").first()
-                else:
-                    term = TrainingTerms.objects.filter(title="3,5 года").first()
-                for module in [m for m in modules if m["disciplines"]]:
-                    module_obj, semester = self.create_module_not_save(find_row_index_id, module, program)
-                    self.create_disciplines_not_save(find_row_index_id, module, module_obj, row, rows, semester,
-                                                     program, term)
-        print(f"{self.bcolors.BOLD}--- {time.time() - start_time} секунд ---{self.bcolors.ENDC}")
-
-    def create_semester(self, program, discipline, module, find_row_index_id, term):
-        """
-        1. ИД дисциплины
-        2. Дисциплина.Программа
-        3. Год текущий?
-        4. Семестр: 0?
-        5. Срок обучения (парсим)
-        6. Семестр изучения (парсим как семестр модуля)
-        :param program:
-        :param discipline:
-        :return:
-        """
-        for i in range(10, 0, -1):
-            try:
-                ze = module["row"][
-                    find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                try:
-                    if int(ze) > 0:
-                        training_semester = i
-                except:
-                    pass
-            except:
-                training_semester = 99
-
-        try:
-            print(
-                f"{self.bcolors.BOLD}Есть ли семестр дисциплины {discipline.title} / {training_semester} семестр ?{self.bcolors.ENDC}")
-            semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester).first()
-            if semester_obj:
-                print(f"{self.bcolors.OKGREEN}Ага.{self.bcolors.ENDC}")
-        except:
-            semester_obj = Semester(discipline=discipline,
-                                    training_semester=training_semester,
-                                    program=program,
-                                    year='2017',
-                                    admission_semester="0",
-                                    term=term,
-                                    )
-            semester_obj.save()
-
-    def create_disciplines(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
-        for d in module["disciplines"]:
-            if int(d["testUnits"]) > 0:
-                for row in rows:
-                    if d["title"] in row:
-                        break
-
-                print(
-                    f"{self.bcolors.BOLD}Ищем дисциплину \"{d['title']}\" модуля \"{module_obj.title}\"!{self.bcolors.ENDC}")
-                discipline = Discipline.objects.filter(title=d["title"],
-                                                       module__in=Module.objects.filter(uni_uuid=module["uuid"]),
-                                                       module__program=program).first()
-                print(discipline)
-                if discipline:
-                    print(f"{self.bcolors.OKGREEN}Существует дисциплина {discipline.title}!{self.bcolors.ENDC}")
-                else:
-                    print(f"{self.bcolors.FAIL}Не существует дисциплины {d['title']}!!{self.bcolors.ENDC}")
-                    discipline = Discipline(title=d["title"])
-
-                for i in range(10, 0, -1):
-                    try:
-                        ze = row[
-                            find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                        try:
-                            if int(ze) > 0:
-                                semester = i
-                        except:
-                            pass
-                    except:
-                        pass
-
-                discipline.module = module_obj
-                discipline.labor = d["testUnits"]
-                discipline.uni_uid = d["uid"]
-                discipline.uni_discipline = d["discipline"]
-                discipline.uni_number = d["number"]
-                discipline.uni_section = d["section"]
-                discipline.uni_file = d["file"]
-                discipline.period = semester - module_obj.semester + 1
-                try:
-                    try:
-                        if int(max(row[5].split("-"))):
-                            discipline.form = "z"
-                    except:
-                        pass
-                    try:
-                        if int(max(row[4].split("-"))):
-                            discipline.form = "e"
-                    except:
-                        pass
-                except:
-                    pass
-
-                discipline.status = "p"
-                discipline.save()
-                self.create_semester(program, discipline, module, find_row_index_id, term)
-                print(f"{self.bcolors.OKBLUE}{discipline.title}{self.bcolors.ENDC}")
-        return semester
+        if term == 8:
+            term = TrainingTerms.objects.filter(title="4 года").first()
+            for epp_module in epp["modules"]:
+                module_obj, semester = self.create_module(epp_module, program)
 
     def create_module(self, module, program):
-        for i in range(10, 0, -1):
-            try:
-                ze = module["row"][
-                    find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                try:
-                    if int(ze) > 0:
-                        semester = i
-                except:
-                    pass
-            except:
-                semester = 99
+        semester = min([int(d["firstSemester"]) for d in module["disciplines"]])
         try:
-            module_obj = Module.objects.filter(title=module["title"]).first()
+            module_obj = Module.objects.filter(uni_number=module["title"]).first()
             module_obj.uni_uuid = module["uuid"]
             module_obj.uni_number = module["number"]
             module_obj.uni_coordinator = module["coordinator"]
@@ -274,55 +123,3 @@ class Command(BaseCommand):
             program_module.save()
 
         return module_obj, semester
-
-    def create_disciplines_not_save(self, find_row_index_id, module, module_obj, row, rows, semester, program, term):
-        if module_obj is not None:
-            for d in module["disciplines"]:
-                discipline = None
-                if int(d["testUnits"]) > 0:
-                    for row in rows:
-                        if d["title"] in row:
-                            break
-                    try:
-                        discipline = Discipline.objects.get(title=d["title"])
-                    except:
-                        print("Unknown discipline: ", d["title"])
-
-                    for i in range(10, 0, -1):
-                        try:
-                            ze = row[
-                                find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                            try:
-                                if int(ze) > 0:
-                                    semester = i
-                            except:
-                                pass
-                        except:
-                            pass
-
-                    if discipline:
-                        self.create_semester(program, discipline, module, find_row_index_id, term)
-            return semester
-
-    def create_module_not_save(self, find_row_index_id, module, program):
-        for i in range(10, 0, -1):
-            try:
-                ze = module["row"][
-                    find_row_index_id(f"EduVersionPlanTab.EduDisciplineList.__term{i}.__term{i}headerCell")]
-                try:
-                    if int(ze) > 0:
-                        semester = i
-                except:
-                    pass
-            except:
-                pass
-        try:
-            module_obj = Module.objects.filter(title=module["title"]).first()
-
-        except:
-            print("Unknown module: ", module["title"])
-
-        return module_obj, semester
-
-    def decompose(self, soup, tag, classname):
-        [el.decompose() for el in soup.find_all(tag, {'class': classname})]
