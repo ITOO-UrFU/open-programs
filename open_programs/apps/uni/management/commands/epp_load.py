@@ -74,10 +74,8 @@ class Command(BaseCommand):
 
         for epp_module in epp["modules"]:
             module_obj, semester = self.create_module(epp_module, program, term)
-            # print(semester, " semester;    ", module_obj)
 
     def create_module(self, epp_module, program, term):
-        # term = TrainingTerms.objects.filter(title="4 года").first()
         semester = min([int(d["firstSemester"]) for d in epp_module["disciplines"]])
         module_obj = Module.objects.filter(uni_number=epp_module["disciplineNumberheaderCell"]).first()
 
@@ -87,11 +85,9 @@ class Command(BaseCommand):
             module_obj.uni_coordinator = epp_module["coordinator"]
             module_obj.uni_type = epp_module["type"]
             module_obj.uni_title = epp_module["title"]
-            # module_obj.uni_competence = epp_module["competence"]
             module_obj.uni_testUnits = epp_module["testUnits"]
             module_obj.uni_priority = epp_module["priority"]
             module_obj.uni_state = epp_module["state"]
-            # module_obj.uni_approvedDate = epp_module["approvedDate"]
             module_obj.uni_comment = epp_module["comment"]
             module_obj.uni_file = epp_module["file"]
             module_obj.uni_specialities = epp_module["specialities"]
@@ -140,17 +136,24 @@ class Command(BaseCommand):
                                 uni_file=discipline.uni_file,
                                 status="p"
                             )
-                        print()
 
+                        if term == 8:
+                            cur_term = TrainingTerms.objects.filter(title="4 года").first()
+                        elif term == 10:
+                            cur_term = TrainingTerms.objects.filter(title="5 лет").first()
+                        elif term == 7:
+                            cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-                        # semester_obj = Semester(discipline=discipline,
-                        #                         training_semester=training_semester,
-                        #                         program=program,
-                        #                         year='2017',
-                        #                         admission_semester="0",
-                        #                         term=term,
-                        #                         )
-                        # semester_obj.save()
+                        semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester,
+                                                       program=program, term=cur_term).first()
+                        if not semester_obj:
+                            semester_obj = Semester.objects.create(discipline=discipline,
+                                                                   training_semester=training_semester,
+                                                                   program=program,
+                                                                   year='2017',
+                                                                   admission_semester="0",
+                                                                   term=cur_term,
+                                                                   )
 
             Discipline.objects.filter(id__in=for_delete).delete()
         else:
