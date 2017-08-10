@@ -104,8 +104,11 @@ class Command(BaseCommand):
 
             for_delete = []
             for discipline in Discipline.objects.filter(module=module_obj):
-                epp_disciplines = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']]
-                print( len(epp_disciplines))
+                epp_disciplines = []
+                for d in epp_module["disciplines"]:
+                    if discipline.title in d['titleheaderCell']:
+                        epp_disciplines.append(d)
+                print(len(epp_disciplines))
                 for epp_discipline in epp_disciplines:
                     training_semester = int(epp_discipline["firstSemester"])
                     if discipline.title != epp_discipline['titleheaderCell']:
