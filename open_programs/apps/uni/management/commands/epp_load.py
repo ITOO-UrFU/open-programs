@@ -115,6 +115,7 @@ class Command(BaseCommand):
                     print("second", epp_discipline['titleheaderCell'])
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
+                    print(discipline)
                     for_delete.append(discipline.id)
 
                 training_semester = int(epp_discipline["firstSemester"])
