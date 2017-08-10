@@ -106,10 +106,10 @@ class Command(BaseCommand):
 
             for epp_discipline in epp_module["disciplines"]:
                 discipline = Discipline.objects.filter(module=module_obj,
-                                                       title=epp_discipline['titleheaderCell'])
+                                                       title=epp_discipline['titleheaderCell']).first()
                 if not discipline:
                     discipline = Discipline.objects.filter(module=module_obj,
-                                                           title__contains=epp_discipline['titleheaderCell'])
+                                                           title__contains=epp_discipline['titleheaderCell']).first()
 
                 training_semester = int(epp_discipline["firstSemester"])
                 if Discipline.objects.filter(module=module_obj, title=epp_discipline['titleheaderCell']).count() == 0:
