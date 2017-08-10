@@ -99,7 +99,7 @@ class Command(BaseCommand):
             program_module = ProgramModules.objects.filter(program=program, module=module_obj)
             if not program_module:
                 program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
-                                                status="p")
+                                                status="p", index=epp_module["indexheaderCell"])
                 program_module.save()
 
             for_delete = []
@@ -110,11 +110,11 @@ class Command(BaseCommand):
                     if discipline.title != epp_discipline['titleheaderCell']:
                         for_delete.append(discipline.id)
 
-                    print(epp_discipline['titleheaderCell'])
-                    if epp_discipline["exam"] > epp_discipline["credit"]:
-                        form = "e"
-                    else:
-                        form = "z"
+                        print(epp_discipline['titleheaderCell'])
+                        if epp_discipline["exam"] > epp_discipline["credit"]:
+                            form = "e"
+                        else:
+                            form = "z"
 
                     parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                                   module=module_obj, status="p",
@@ -143,7 +143,7 @@ class Command(BaseCommand):
                     elif term == 7:
                         cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-                    semester_obj = Semester.filter(discipline=discipline, training_semester=training_semester,
+                    semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
                                                    program=program, term=cur_term).first()
                     if not semester_obj:
                         semester_obj = Semester.objects.create(discipline=discipline,

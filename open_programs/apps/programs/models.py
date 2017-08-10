@@ -134,6 +134,7 @@ class ProgramModules(ObjectBaseClass):
     choice_group = models.ForeignKey("ChoiceGroup", blank=True, null=True)
     competence = models.ForeignKey(ProgramCompetence, blank=True, null=True)
     semester = models.PositiveIntegerField(blank=True, null=True)
+    index = models.CharField(_('Индекс в учебном плане'), blank=False, max_length=16, default='')
 
     def get_all_disciplines(self):
         return Discipline.objects.filter(module=self.module)
