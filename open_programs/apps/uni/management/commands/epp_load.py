@@ -105,6 +105,7 @@ class Command(BaseCommand):
             for_delete = []
 
             for epp_discipline in epp_module["disciplines"]:
+                print(epp_discipline['titleheaderCell'])
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell']).first()
                 if not discipline:
@@ -123,7 +124,7 @@ class Command(BaseCommand):
                 except:
                     print(epp_discipline)
 
-                print(epp_discipline['titleheaderCell'])
+
                 parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                               module=module_obj, status="p",
                                                               archived=False).first()
