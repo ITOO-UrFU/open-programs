@@ -117,7 +117,7 @@ class Command(BaseCommand):
                         print(epp_discipline['titleheaderCell'])
                         if epp_discipline["exam"] > epp_discipline["credit"]:
                             form = "e"
-                        elif epp_discipline["exam"] < epp_discipline["credit"]:
+                        else:
                             form = "z"
 
                         parted_discipline = Discipline.objects.create(
