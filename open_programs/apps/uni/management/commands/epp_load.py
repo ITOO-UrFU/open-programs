@@ -110,12 +110,14 @@ class Command(BaseCommand):
                     if discipline.title != epp_discipline['titleheaderCell']:
                         for_delete.append(discipline.id)
 
-                    print(epp_discipline['titleheaderCell'])
+                    # print(epp_discipline['titleheaderCell'])
                     if epp_discipline["exam"] > epp_discipline["credit"]:
                         form = "e"
                     else:
                         form = "z"
 
+                    if "атематика" in epp_discipline['titleheaderCell']:
+                        print(epp_discipline['titleheaderCell'])
                     parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                                   module=module_obj, status="p",
                                                                   archived=False).first()
