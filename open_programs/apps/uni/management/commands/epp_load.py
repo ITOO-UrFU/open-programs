@@ -115,8 +115,23 @@ class Command(BaseCommand):
                     print("second", epp_discipline['titleheaderCell'])
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
-                    print(discipline)
-                    for_delete.append(discipline.id)
+                    try:
+                        for_delete.append(discipline.id)
+                    except:
+                        discipline = Discipline.objects.create(
+                            title=epp_discipline['titleheaderCell'],
+                            description=discipline.description,
+                            module=module_obj,
+                            labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
+                            period=training_semester - semester + 1,
+                            form=form,
+                            uni_uid=discipline.uni_uid,
+                            uni_discipline=discipline.uni_discipline,
+                            uni_number=discipline.uni_number,
+                            uni_section=discipline.uni_section,
+                            uni_file=discipline.uni_file,
+                            status="p"
+                        )
 
                 training_semester = int(epp_discipline["firstSemester"])
 
