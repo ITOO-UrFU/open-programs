@@ -107,9 +107,9 @@ class Command(BaseCommand):
                 program_module.save()
 
             for discipline in Discipline.objects.filter(module=module_obj):
-                epp_discipline = [d for d in epp_module["disciplines"] if d['titleheaderCell'] == discipline.title][0]
+                epp_discipline = [d for d in epp_module["disciplines"] if discipline.title in d['titleheaderCell']][0]
                 training_semester = epp_discipline["firstSemester"]
-                print(discipline.title, training_semester)
+                print(epp_discipline["titleheaderCell"], training_semester)
                 # semester_obj = Semester(discipline=discipline,
                 #                         training_semester=training_semester,
                 #                         program=program,
