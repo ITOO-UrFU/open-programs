@@ -73,8 +73,7 @@ class Command(BaseCommand):
         if term == 8:
             term = TrainingTerms.objects.filter(title="4 года").first()
             for epp_module in epp["modules"]:
-                # module_obj, semester = self.create_module(epp_module, program)
-                pass
+                module_obj, semester = self.create_module(epp_module, program)
 
     def create_module(self, module, program):
         semester = min([int(d["firstSemester"]) for d in module["disciplines"]])
@@ -97,6 +96,7 @@ class Command(BaseCommand):
             module_obj.semester = semester
             module_obj.status = 'p'
             module_obj.save()
+            print(module_obj)
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
 
