@@ -78,8 +78,8 @@ class Command(BaseCommand):
 
     def create_module(self, module, program):
         semester = min([int(d["firstSemester"]) for d in module["disciplines"]])
-        try:
-            module_obj = Module.objects.filter(uni_number=module["title"]).first()
+        module_obj = Module.objects.filter(uni_number=module["title"]).first()
+        if module_obj:
             module_obj.uni_uuid = module["uuid"]
             module_obj.uni_number = module["number"]
             module_obj.uni_coordinator = module["coordinator"]
@@ -97,26 +97,8 @@ class Command(BaseCommand):
             module_obj.semester = semester
             module_obj.status = 'p'
             module_obj.save()
-        except:
-            module_obj = Module(title=module["title"],
-                                uni_uuid=module["uuid"],
-                                uni_number=module["number"],
-                                uni_coordinator=module["coordinator"],
-                                uni_type=module["type"],
-                                uni_title=module["title"],
-                                uni_competence=module["competence"],
-                                uni_testUnits=module["testUnits"],
-                                uni_priority=module["priority"],
-                                uni_state=module["state"],
-                                uni_approvedDate=module["approvedDate"],
-                                uni_comment=module["comment"],
-                                uni_file=module["file"],
-                                uni_specialities=module["specialities"],
-                                program=program,
-                                semester=semester,
-                                status='p',
-                                )
-            module_obj.save()  # Создали модуль
+        else:
+            print("Модуль не найден! Загрузите новую версию modules.json")
 
         program_module = ProgramModules.objects.filter(program=program, module=module_obj)
         if not program_module:
