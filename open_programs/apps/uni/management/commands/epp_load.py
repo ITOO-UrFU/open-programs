@@ -33,13 +33,13 @@ class Command(BaseCommand):
         except:
             raise NotImplementedError
 
-        stage = epp["stage"]
-        displayableTitle = epp["version"]
-        number = epp["number"]
+        stage = False if "stage" not in epp.keys() else True if "утверждено" in epp["stage"].lower() else False
+        displayableTitle = None if "version" not in epp.keys() else epp["version"]
+        number = None if "number" not in epp.keys() else epp["number"]
         active = None if "active" not in epp.keys() else epp["active"]
-        title = epp["title"]
+        title = None if "title" not in epp.keys() else epp["title"]
 
-        term = epp["term"]
+        term = None if "term" not in epp.keys() else epp["term"]
 
         lps = LearningPlan.objects.filter(uni_number=number, status="p")
         if len(lps) > 0:
