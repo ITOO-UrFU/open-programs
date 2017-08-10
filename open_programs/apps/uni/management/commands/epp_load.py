@@ -109,6 +109,7 @@ class Command(BaseCommand):
                 print("first", epp_discipline['titleheaderCell'])
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell']).first()
+                print(discipline)
                 if not discipline:
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
