@@ -13,7 +13,7 @@ class Discipline(ObjectBaseClass):
     FORMS = (
         ('e', _('Экзамен')),
         ('z', _('Зачет'))
-        )
+    )
     title = models.CharField(_('Название дисциплины'), max_length=256, blank=False, default='')
     description = models.TextField(_("Короткое описание"), max_length=16384, blank=True, null=True)
     module = models.ForeignKey("modules.Module", blank=True, null=True)
@@ -99,8 +99,13 @@ class Diagram(ObjectBaseClass):
         verbose_name = 'график варианта'
         verbose_name_plural = 'графики варианта'
 
+    SYNC = (('0', 'Слабо'), ('50', 'Средне'), ('100', 'Сильно'))
+    CAMPUS = (('0', '0%'), ('50', '50%'), ('100', '100%'))
+
     title = models.CharField(_("Название графика"), max_length=512)
     diagram = JSONField(verbose_name=_("График"), null=True, blank=True)
+    sync = models.CharField(_("Синхронность"), max_length=3, choices=SYNC, null=True, blank=True)
+    campus = models.CharField(_("Присутствие в кампусе"), max_length=3, choices=CAMPUS, null=True, blank=True)
 
     def get_diagram(self):
         lists = []
@@ -168,7 +173,6 @@ class Diagram(ObjectBaseClass):
 
 
 class WorkingType(models.Model):
-
     class Meta:
         verbose_name = 'вид работы'
         verbose_name_plural = 'виды работ'
