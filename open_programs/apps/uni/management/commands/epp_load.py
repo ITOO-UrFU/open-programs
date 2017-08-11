@@ -140,7 +140,7 @@ class Command(BaseCommand):
                     form = "z"
 
                 parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
-                                                              module=module_obj, status="p",
+                                                              module=module_obj,
                                                               archived=False).first()
 
                 if not parted_discipline:
@@ -150,11 +150,25 @@ class Command(BaseCommand):
                         labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
                         period=training_semester - semester + 1,
                         form=form,
-                        uni_uid=discipline.uni_uid,
-                        uni_discipline=discipline.uni_discipline,
-                        uni_number=discipline.uni_number,
-                        uni_section=discipline.uni_section,
-                        uni_file=discipline.uni_file,
+                        uni_uid=epp_discipline['uuid'],
+                        uni_discipline=epp_discipline['discipline'],
+                        uni_number=epp_discipline['number'],
+                        uni_section=epp_discipline['section'],
+                        uni_file=epp_discipline['file'],
+                        status="p"
+                    )
+                else:
+                    parted_discipline.objects.create(
+                        title=epp_discipline['titleheaderCell'],
+                        module=module_obj,
+                        labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
+                        period=training_semester - semester + 1,
+                        form=form,
+                        uni_uid=epp_discipline['uuid'],
+                        uni_discipline=epp_discipline['discipline'],
+                        uni_number=epp_discipline['number'],
+                        uni_section=epp_discipline['section'],
+                        uni_file=epp_discipline['file'],
                         status="p"
                     )
 
