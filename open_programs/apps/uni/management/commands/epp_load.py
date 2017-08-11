@@ -174,28 +174,27 @@ class Command(BaseCommand):
                     parted_discipline.status = "p"
                     parted_discipline.save()
 
-            if term == 8:
-                cur_term = TrainingTerms.objects.filter(title="4 года").first()
-            elif term == 10:
-                cur_term = TrainingTerms.objects.filter(title="5 лет").first()
-            elif term == 7:
-                cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
+                if term == 8:
+                    cur_term = TrainingTerms.objects.filter(title="4 года").first()
+                elif term == 10:
+                    cur_term = TrainingTerms.objects.filter(title="5 лет").first()
+                elif term == 7:
+                    cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-            semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
-                                                   program=program, term=cur_term).first()
-            if not semester_obj:
-                semester_obj = Semester.objects.create(discipline=discipline,
-                                                       training_semester=training_semester,
-                                                       program=program,
-                                                       year='2017',
-                                                       admission_semester="0",
-                                                       term=cur_term,
-                                                       )
+                semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
+                                                       program=program, term=cur_term).first()
+                if not semester_obj:
+                    semester_obj = Semester.objects.create(discipline=discipline,
+                                                           training_semester=training_semester,
+                                                           program=program,
+                                                           year='2017',
+                                                           admission_semester="0",
+                                                           term=cur_term,
+                                                           )
 
-        Discipline.objects.filter(id__in=for_delete).delete()
+            Discipline.objects.filter(id__in=for_delete).delete()
 
-    else:
-    print("Модуль не найден! Загрузите новую версию modules.json")
+        else:
+            print("Модуль не найден! Загрузите новую версию modules.json")
 
-
-return module_obj, semester
+        return module_obj, semester
