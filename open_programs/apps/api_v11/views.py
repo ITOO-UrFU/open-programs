@@ -608,6 +608,7 @@ def get_variants(request, program_id, discipline_id):
     response = []
     for variant in variants:
         if variant.diagram:
+
             if "очно-заочн" in variant.diagram.title.lower():
                 presence = "oz"
             elif 'заоч' in variant.diagram.title.lower():
@@ -625,6 +626,8 @@ def get_variants(request, program_id, discipline_id):
         response.append(
             {
                 "id": variant.id,
+                "sync": None if not variant.diagram else variant.diagram.sync,
+                "campus": None if not variant.diagram else variant.diagram.campus,
                 "diagram": None if not variant.diagram else
                 {
                     "id": variant.diagram.id,
@@ -776,6 +779,8 @@ def get_program_variants(request, program_id):
             variants[discipline.id].append(
                 {
                     "id": variant.id,
+                    "sync": None if not variant.diagram else variant.diagram.sync,
+                    "campus": None if not variant.diagram else variant.diagram.campus,
                     "diagram": None if not variant.diagram else
                     {
                         "id": variant.diagram.id,
@@ -825,6 +830,8 @@ def get_program_variants_constructor(request, program_id):
             variants[discipline.id].append(
                 {
                     "id": variant.id,
+                    "sync": None if not variant.diagram else variant.diagram.sync,
+                    "campus": None if not variant.diagram else variant.diagram.campus,
                     "diagram": None if not variant.diagram else
                     {
                         "id": variant.diagram.id,
