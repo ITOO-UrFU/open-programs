@@ -7,6 +7,7 @@ from django.utils.translation import ugettext_lazy as _
 # from cms.admin import JSONEditor
 
 from django.forms.widgets import Textarea
+
 try:
     from django.forms.util import flatatt
 except ImportError:
@@ -22,6 +23,8 @@ from modules.models import Module
 
 def make_published(modeladmin, request, queryset):
     queryset.update(status='p')
+
+
 make_published.short_description = _("Опубликовать")
 
 
@@ -32,12 +35,21 @@ class JSONEditor(Textarea):
             getattr(settings, "JQUERY_UI", settings.STATIC_URL + 'jquery-ui.min.js'),
             getattr(settings, "JQUERY_EVENT_DRAG", settings.STATIC_URL + 'jquery.event.drag.js'),
 
-            getattr(settings, "SLICK_JS_CORE", settings.STATIC_URL+'slickgrid/slick.core.js'),
+            getattr(settings, "SLICK_JS_CORE", settings.STATIC_URL + 'slickgrid/slick.core.js'),
             getattr(settings, "SLICK_JS_FORMATTERS", settings.STATIC_URL + 'slickgrid/slick.formatters.js'),
             getattr(settings, "SLICK_JS_EDITORS", settings.STATIC_URL + 'slickgrid/slick.editors.js'),
             getattr(settings, "SLICK_JS_GRID", settings.STATIC_URL + 'slickgrid/slick.grid.js'),
         )
-        css = {'all': (getattr(settings, "SLICK_CSS", settings.STATIC_URL+'slickgrid/slick.grid.css'),)}
+        css = {'all': (getattr(settings, "SLICK_CSS", settings.STATIC_URL + 'slickgrid/slick.grid.css'),)}
+
+    def build_attrs(self, attrs=None, extra_attrs=None, **kwargs):
+        attrs = dict(attrs, **kwargs)
+        if extra_attrs:
+            attrs.update(extra_attrs)
+        classes = attrs.setdefault('class', '').split()
+        classes.append('diagrams')
+        attrs['class'] = ' '.join(classes)
+        return attrs
 
     def render(self, name, value, attrs=None):
         data = []
@@ -80,7 +92,7 @@ class JSONEditor(Textarea):
         r = super(JSONEditor, self).render(name, value, input_attrs)
         div_attrs = {}
         div_attrs.update(attrs)
-        div_attrs.update({'id': (attrs['id']+'_jsoneditor')})
+        div_attrs.update({'id': (attrs['id'] + '_jsoneditor')})
         final_attrs = self.build_attrs(div_attrs=div_attrs, extra_attrs={"name": name})
         r += '''
         <style>
@@ -147,7 +159,8 @@ class JSONEditor(Textarea):
 
 @admin.register(Discipline)
 class DisciplineAdmin(VersionAdmin):
-    fields = ("title", "description", "module", "period",  "labor", "form", "status", "archived", "results", "results_text")
+    fields = (
+    "title", "description", "module", "period", "labor", "form", "status", "archived", "results", "results_text")
     list_display = ("id", "title", "description", "module", "period", "labor", "form", "status", "archived")
     filter_horizontal = ("results",)
     list_filter = ("archived", "created", "updated", "status", "form")
@@ -163,7 +176,7 @@ class TrainingTermsAdmin(VersionAdmin):
 
 @admin.register(Semester)
 class SemesterAdmin(VersionAdmin):
-    list_display = ("__str__", )
+    list_display = ("__str__",)
     search_fields = ("id", "discipline__title", "discipline__module__title", "program__title")
     form = make_ajax_form(Semester, {'discipline': 'discipline'})
 
@@ -192,5 +205,3 @@ class DiagramAdmin(VersionAdmin):
 @admin.register(WorkingType)
 class WorkingTypeAdmin(VersionAdmin):
     list_display = ("title", "color")
-
-
