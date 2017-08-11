@@ -623,8 +623,8 @@ def get_variants(request, program_id, discipline_id):
                 presence = "oz"
             elif 'заоч' in variant.diagram.title.lower():
                 presence = "z"
-            elif 'лайн' in variant.technology.title.lower():
-                presence = 'online'
+            # elif 'лайн' in variant.technology.title.lower():
+            #     presence = 'online'
             else:
                 presence = "o"
 
@@ -784,8 +784,8 @@ def get_program_variants(request, program_id):
             if variant.diagram:
                 if 'заоч' in variant.diagram.title.lower():
                     presence = "z"
-                elif 'лайн' in variant.technology.title.lower():
-                    presence = 'online'
+                # elif 'лайн' in variant.diagram.title.lower():
+                #     presence = 'online'
                 else:
                     presence = "o"
 
