@@ -158,21 +158,6 @@ class Command(BaseCommand):
                         uni_file=epp_discipline['file'],
                         status="p"
                     )
-                else:
-                    parted_discipline.title = epp_discipline['titleheaderCell']
-                    parted_discipline.module = module_obj
-                    parted_discipline.labor = epp_discipline["gosLoadInTestUnitsheaderCell"]
-                    parted_discipline.period = training_semester - semester + 1
-                    parted_discipline.form = form
-                    parted_discipline.uni_uid = epp_discipline['uuid']
-                    parted_discipline.uni_discipline = epp_discipline['discipline']
-                    parted_discipline.uni_number = None if "_" in epp_discipline['disciplineNumberheaderCell'] else \
-                        epp_discipline[
-                            'disciplineNumberheaderCell']
-                    parted_discipline.uni_section = epp_discipline['section']
-                    parted_discipline.uni_file = epp_discipline['file']
-                    parted_discipline.status = "p"
-                    parted_discipline.save()
 
                 if term == 8:
                     cur_term = TrainingTerms.objects.filter(title="4 года").first()
