@@ -147,13 +147,17 @@ class Command(BaseCommand):
                                                               archived=False).first()
 
                 if not parted_discipline:
+                    try:
+                        uuid = epp_discipline['uuid']
+                    except:
+                        uuid = None
                     parted_discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
                         module=module_obj,
                         labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
                         period=training_semester - semester + 1,
                         form=form,
-                        uni_uid=epp_discipline['uuid'],
+                        uni_uid=uuid,
                         uni_discipline=epp_discipline['discipline'],
                         uni_number=None if "_" in epp_discipline['disciplineNumberheaderCell'] else epp_discipline[
                             'disciplineNumberheaderCell'],
