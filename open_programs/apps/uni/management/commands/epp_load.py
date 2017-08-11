@@ -159,7 +159,7 @@ class Command(BaseCommand):
                         status="p"
                     )
                 else:
-                    parted_discipline.objects.create(
+                    parted_discipline.update(
                         title=epp_discipline['titleheaderCell'],
                         module=module_obj,
                         labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
