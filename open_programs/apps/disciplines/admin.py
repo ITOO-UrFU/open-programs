@@ -43,7 +43,7 @@ class JSONEditor(Textarea):
         css = {'all': (getattr(settings, "SLICK_CSS", settings.STATIC_URL + 'slickgrid/slick.grid.css'),)}
 
     def build_attrs(self, attrs=None, extra_attrs=None, **kwargs):
-        attrs = dict(attrs)
+        # attrs = dict(attrs)
         if extra_attrs:
             attrs.update(extra_attrs)
         classes = attrs.setdefault('class', '').split()
