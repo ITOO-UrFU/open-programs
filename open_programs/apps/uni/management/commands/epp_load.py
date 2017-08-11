@@ -149,8 +149,12 @@ class Command(BaseCommand):
                 if not parted_discipline:
                     try:
                         uuid = epp_discipline['uuid']
+                        discipline = epp_discipline['discipline']
+                        section = epp_discipline['section']
+                        file = epp_discipline['file']
                     except:
                         uuid = None
+                        discipline = None
                     parted_discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
                         module=module_obj,
@@ -158,11 +162,11 @@ class Command(BaseCommand):
                         period=training_semester - semester + 1,
                         form=form,
                         uni_uid=uuid,
-                        uni_discipline=epp_discipline['discipline'],
+                        uni_discipline=discipline,
                         uni_number=None if "_" in epp_discipline['disciplineNumberheaderCell'] else epp_discipline[
                             'disciplineNumberheaderCell'],
-                        uni_section=epp_discipline['section'],
-                        uni_file=epp_discipline['file'],
+                        uni_section=section,
+                        uni_file=file,
                         status="p"
                     )
 
