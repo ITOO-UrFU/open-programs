@@ -773,13 +773,11 @@ def get_program_variants(request, program_id):
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
 
             if variant.semester:
-                mobility = 0
+                mobility = "0"
             elif variant.parity:
-                mobility = 50
+                mobility = "50"
             elif variant.course:
-                mobility = 100
-            else:
-                print("mobility: ", variant)
+                mobility = "100"
 
             if variant.diagram:
                 if 'заоч' in variant.diagram.title.lower():
