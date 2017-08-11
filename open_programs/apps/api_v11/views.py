@@ -649,7 +649,7 @@ def get_variants(request, program_id, discipline_id):
                 {
                     "sync": None if not variant.diagram else variant.diagram.sync,
                     "campus": None if not variant.diagram else variant.diagram.campus,
-                    "mobility": None if not mobility else mobility,
+                    "mobility": mobility,
                     "presence": presence,
                     "technology_type": technology_type,
 
@@ -773,11 +773,11 @@ def get_program_variants(request, program_id):
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
 
             if variant.semester:
-                mobility = "0"
+                mobility = 0
             elif variant.parity:
-                mobility = "50"
+                mobility = 50
             elif variant.course:
-                mobility = "100"
+                mobility = 100
 
             if variant.diagram:
                 if 'заоч' in variant.diagram.title.lower():
@@ -809,7 +809,7 @@ def get_program_variants(request, program_id):
                     {
                         "sync": None if not variant.diagram else str(variant.diagram.sync),
                         "campus": None if not variant.diagram else str(variant.diagram.campus),
-                        "mobility": None if not mobility else mobility,
+                        "mobility": mobility,
                         "presence": presence,
                         "technology_type": technology_type,
 
@@ -864,7 +864,7 @@ def get_program_variants_constructor(request, program_id):
                     {
                         "sync": None if not variant.diagram else variant.diagram.sync,
                         "campus": None if not variant.diagram else variant.diagram.campus,
-                        "mobility": None if not mobility else mobility,
+                        "mobility": mobility,
                     },
                     "semester": None if not variant.semester else
                     {
