@@ -155,6 +155,9 @@ class Command(BaseCommand):
                     except:
                         uuid = None
                         discipline = None
+                        section = None
+                        file = None
+
                     parted_discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
                         module=module_obj,
