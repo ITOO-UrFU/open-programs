@@ -159,41 +159,43 @@ class Command(BaseCommand):
                         status="p"
                     )
                 else:
-                    parted_discipline.update(
-                        title=epp_discipline['titleheaderCell'],
-                        module=module_obj,
-                        labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
-                        period=training_semester - semester + 1,
-                        form=form,
-                        uni_uid=epp_discipline['uuid'],
-                        uni_discipline=epp_discipline['discipline'],
-                        uni_number=None if "_" in epp_discipline['disciplineNumberheaderCell'] else epp_discipline[
-                            'disciplineNumberheaderCell'],
-                        uni_section=epp_discipline['section'],
-                        uni_file=epp_discipline['file'],
-                        status="p"
-                    )
+                    parted_discipline.title = epp_discipline['titleheaderCell']
+                    parted_discipline.module = module_obj
+                    parted_discipline.labor = epp_discipline["gosLoadInTestUnitsheaderCell"]
+                    parted_discipline.period = training_semester - semester + 1
+                    parted_discipline.form = form
+                    parted_discipline.uni_uid = epp_discipline['uuid']
+                    parted_discipline.uni_discipline = epp_discipline['discipline']
+                    parted_discipline.uni_number = None if "_" in epp_discipline['disciplineNumberheaderCell'] else \
+                        epp_discipline[
+                            'disciplineNumberheaderCell']
+                    parted_discipline.uni_section = epp_discipline['section']
+                    parted_discipline.uni_file = epp_discipline['file']
+                    parted_discipline.status = "p"
+                    parted_discipline.save()
 
-                if term == 8:
-                    cur_term = TrainingTerms.objects.filter(title="4 года").first()
-                elif term == 10:
-                    cur_term = TrainingTerms.objects.filter(title="5 лет").first()
-                elif term == 7:
-                    cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
+            if term == 8:
+                cur_term = TrainingTerms.objects.filter(title="4 года").first()
+            elif term == 10:
+                cur_term = TrainingTerms.objects.filter(title="5 лет").first()
+            elif term == 7:
+                cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-                semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
-                                                       program=program, term=cur_term).first()
-                if not semester_obj:
-                    semester_obj = Semester.objects.create(discipline=discipline,
-                                                           training_semester=training_semester,
-                                                           program=program,
-                                                           year='2017',
-                                                           admission_semester="0",
-                                                           term=cur_term,
-                                                           )
+            semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
+                                                   program=program, term=cur_term).first()
+            if not semester_obj:
+                semester_obj = Semester.objects.create(discipline=discipline,
+                                                       training_semester=training_semester,
+                                                       program=program,
+                                                       year='2017',
+                                                       admission_semester="0",
+                                                       term=cur_term,
+                                                       )
 
-            Discipline.objects.filter(id__in=for_delete).delete()
-        else:
-            print("Модуль не найден! Загрузите новую версию modules.json")
+        Discipline.objects.filter(id__in=for_delete).delete()
 
-        return module_obj, semester
+    else:
+    print("Модуль не найден! Загрузите новую версию modules.json")
+
+
+return module_obj, semester
