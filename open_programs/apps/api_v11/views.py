@@ -608,7 +608,9 @@ def get_variants(request, program_id, discipline_id):
     response = []
     for variant in variants:
         if variant.diagram:
-            if 'заоч' in variant.diagram.title.lower():
+            if "очно-заочн" in variant.diagram.title.lower():
+                presence = "oz"
+            elif 'заоч' in variant.diagram.title.lower():
                 presence = "z"
             elif 'лайн' in variant.technology.title.lower():
                 presence = 'online'
