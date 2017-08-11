@@ -771,15 +771,15 @@ def get_program_variants(request, program_id):
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+
+            if variant.semester:
+                mobility = 0
+            elif variant.parity:
+                mobility = 50
+            elif variant.course:
+                mobility = 100
+
             if variant.diagram:
-
-                if variant.semester:
-                    mobility = 0
-                elif variant.parity:
-                    mobility = 50
-                elif variant.course:
-                    mobility = 100
-
                 if 'заоч' in variant.diagram.title.lower():
                     presence = "z"
                 elif 'лайн' in variant.technology.title.lower():
