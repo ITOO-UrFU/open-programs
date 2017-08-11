@@ -67,6 +67,7 @@ class IsStudent(BasePermission):
 
 IsAuthorized = IsStudent
 
+
 class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
@@ -626,8 +627,7 @@ def get_variants(request, program_id, discipline_id):
         response.append(
             {
                 "id": variant.id,
-                "sync": None if not variant.diagram else variant.diagram.sync,
-                "campus": None if not variant.diagram else variant.diagram.campus,
+
                 "diagram": None if not variant.diagram else
                 {
                     "id": variant.diagram.id,
@@ -638,13 +638,10 @@ def get_variants(request, program_id, discipline_id):
                 {
                     "title": variant.course.title
                 },
-                "technology": None if not variant.technology else
+                "technology": None if not variant.diagram else
                 {
-                    "id": variant.technology.id,
-                    "title": variant.technology.title,
-                    "description": variant.technology.description,
-                    "contact_work_category": variant.technology.contact_work_category,
-                    "color": variant.technology.color,
+                    "sync": None if not variant.diagram else variant.diagram.sync,
+                    "campus": None if not variant.diagram else variant.diagram.campus,
                     "presence": presence,
                     "technology_type": technology_type,
 
@@ -737,14 +734,17 @@ class CreateVariant(APIView):
                                       diagram=diagram, link=link, status="p").first():
                 return Response(status=409)
 
-            variant = Variant.objects.create(discipline=discipline, program=program, semester=semester, technology=technology,
-                                   diagram=diagram, link=link, status="p")
+            variant = Variant.objects.create(discipline=discipline, program=program, semester=semester,
+                                             technology=technology,
+                                             diagram=diagram, link=link, status="p")
         elif course:
             variant = Variant.objects.create(discipline=discipline, program=program, technology=technology,
-                                   course=Course.objects.get(id=course), diagram=diagram, link=link, status="p")
+                                             course=Course.objects.get(id=course), diagram=diagram, link=link,
+                                             status="p")
         elif parity:
-            variant = Variant.objects.create(discipline=discipline, program=program, parity=parity, technology=technology,
-                                   diagram=diagram, link=link, status="p")
+            variant = Variant.objects.create(discipline=discipline, program=program, parity=parity,
+                                             technology=technology,
+                                             diagram=diagram, link=link, status="p")
         # _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
         # _activate_trigger(f"get_program_variants_constructor:{request.data['program_id']}")
         # _activate_trigger(f"get_program_variants:{request.data['program_id']}")
@@ -779,8 +779,6 @@ def get_program_variants(request, program_id):
             variants[discipline.id].append(
                 {
                     "id": variant.id,
-                    "sync": None if not variant.diagram else variant.diagram.sync,
-                    "campus": None if not variant.diagram else variant.diagram.campus,
                     "diagram": None if not variant.diagram else
                     {
                         "id": variant.diagram.id,
@@ -791,13 +789,10 @@ def get_program_variants(request, program_id):
                     {
                         "title": variant.course.title
                     },
-                    "technology": None if not variant.technology else
+                    "technology": None if not variant.diagram else
                     {
-                        "id": variant.technology.id,
-                        "title": variant.technology.title,
-                        "description": variant.technology.description,
-                        "contact_work_category": variant.technology.contact_work_category,
-                        "color": variant.technology.color,
+                        "sync": None if not variant.diagram else variant.diagram.sync,
+                        "campus": None if not variant.diagram else variant.diagram.campus,
                         "presence": presence,
                         "technology_type": technology_type,
 
@@ -842,13 +837,10 @@ def get_program_variants_constructor(request, program_id):
                     {
                         "title": variant.course.title
                     },
-                    "technology": None if not variant.technology else
+                    "technology": None if not variant.diagram else
                     {
-                        "id": variant.technology.id,
-                        "title": variant.technology.title,
-                        "description": variant.technology.description,
-                        "contact_work_category": variant.technology.contact_work_category,
-                        "color": variant.technology.color
+                        "sync": None if not variant.diagram else variant.diagram.sync,
+                        "campus": None if not variant.diagram else variant.diagram.campus,
                     },
                     "semester": None if not variant.semester else
                     {
@@ -1001,7 +993,6 @@ def copy_trajectory(request):
             return Response(status=403)
     else:
         return Response(status=403)
-
 
 
 change_target_module = ChangeTargetModule.as_view()
