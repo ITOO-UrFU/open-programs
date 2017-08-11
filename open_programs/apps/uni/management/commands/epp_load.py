@@ -134,10 +134,13 @@ class Command(BaseCommand):
 
                 training_semester = int(epp_discipline["firstSemester"])
 
-                if epp_discipline["exam"] > epp_discipline["credit"]:
-                    form = "e"
-                else:
-                    form = "z"
+                try:
+                    if epp_discipline["exam"] > epp_discipline["credit"]:
+                        form = "e"
+                    else:
+                        form = "z"
+                except:
+                    form = None
 
                 parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                               module=module_obj,
