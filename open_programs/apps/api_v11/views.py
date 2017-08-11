@@ -807,8 +807,8 @@ def get_program_variants(request, program_id):
                     },
                     "technology": None if not variant.diagram else
                     {
-                        "sync": None if not variant.diagram else variant.diagram.sync,
-                        "campus": None if not variant.diagram else variant.diagram.campus,
+                        "sync": None if not variant.diagram else str(variant.diagram.sync),
+                        "campus": None if not variant.diagram else str(variant.diagram.campus),
                         "mobility": None if not mobility else mobility,
                         "presence": presence,
                         "technology_type": technology_type,
