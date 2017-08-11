@@ -536,6 +536,7 @@ def get_program_disciplines(request, program_id):
 
         response.append({
             "id": discipline.id,
+            "index": discipline.index,
             "title": discipline.title,
             "module": discipline.module.title,
             "module_uni_number": None if not discipline.module.uni_number else discipline.module.uni_number,
@@ -545,7 +546,7 @@ def get_program_disciplines(request, program_id):
             "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
         })
 
-    response = sorted(response, key=lambda k: (k["priority"], k["title"]))
+    response = sorted(response, key=lambda k: (k["index"], k["priority"], k["title"]))
     # _cache(f"get_program_disciplines:{program_id}", response)
     return Response(response)
 
