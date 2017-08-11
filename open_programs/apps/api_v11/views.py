@@ -610,6 +610,13 @@ def get_variants(request, program_id, discipline_id):
     for variant in variants:
         if variant.diagram:
 
+            if variant.semester:
+                mobility = 0
+            elif variant.parity:
+                mobility = 50
+            elif variant.course:
+                mobility = 100
+
             if "очно-заочн" in variant.diagram.title.lower():
                 presence = "oz"
             elif 'заоч' in variant.diagram.title.lower():
@@ -642,6 +649,7 @@ def get_variants(request, program_id, discipline_id):
                 {
                     "sync": None if not variant.diagram else variant.diagram.sync,
                     "campus": None if not variant.diagram else variant.diagram.campus,
+                    "mobility": None if not mobility else mobility,
                     "presence": presence,
                     "technology_type": technology_type,
 
