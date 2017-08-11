@@ -140,7 +140,7 @@ class Command(BaseCommand):
                     else:
                         form = "z"
                 except:
-                    form = None
+                    form = "z"
 
                 parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                               module=module_obj,
