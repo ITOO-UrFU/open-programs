@@ -146,7 +146,6 @@ class Command(BaseCommand):
                 if not parted_discipline:
                     parted_discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
-                        description=discipline.description,
                         module=module_obj,
                         labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
                         period=training_semester - semester + 1,
