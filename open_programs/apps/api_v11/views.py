@@ -772,6 +772,14 @@ def get_program_variants(request, program_id):
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
             if variant.diagram:
+
+                if variant.semester:
+                    mobility = 0
+                elif variant.parity:
+                    mobility = 50
+                elif variant.course:
+                    mobility = 100
+
                 if 'заоч' in variant.diagram.title.lower():
                     presence = "z"
                 elif 'лайн' in variant.technology.title.lower():
@@ -801,6 +809,7 @@ def get_program_variants(request, program_id):
                     {
                         "sync": None if not variant.diagram else variant.diagram.sync,
                         "campus": None if not variant.diagram else variant.diagram.campus,
+                        "mobility": None if not mobility else mobility,
                         "presence": presence,
                         "technology_type": technology_type,
 
@@ -830,6 +839,12 @@ def get_program_variants_constructor(request, program_id):
     for discipline in disciplines:
         variants[discipline.id] = []
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+            if variant.semester:
+                mobility = 0
+            elif variant.parity:
+                mobility = 50
+            elif variant.course:
+                mobility = 100
             variants[discipline.id].append(
                 {
                     "id": variant.id,
@@ -849,6 +864,7 @@ def get_program_variants_constructor(request, program_id):
                     {
                         "sync": None if not variant.diagram else variant.diagram.sync,
                         "campus": None if not variant.diagram else variant.diagram.campus,
+                        "mobility": None if not mobility else mobility,
                     },
                     "semester": None if not variant.semester else
                     {
