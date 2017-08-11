@@ -778,6 +778,8 @@ def get_program_variants(request, program_id):
                 mobility = 50
             elif variant.course:
                 mobility = 100
+            else:
+                print("mobility: ", variant)
 
             if variant.diagram:
                 if 'заоч' in variant.diagram.title.lower():
