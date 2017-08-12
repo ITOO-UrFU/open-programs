@@ -6,7 +6,7 @@ import time
 from django.core.management.base import BaseCommand
 
 from programs.models import Program, ProgramModules, LearningPlan
-from disciplines.models import Discipline, Semester, TrainingTerms
+from disciplines.models import Discipline, Semester, TrainingTerms, Variant
 from modules.models import Module
 
 
@@ -142,11 +142,11 @@ class Command(BaseCommand):
                 except:
                     form = "z"
 
-                parted_discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
+                discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
                                                               module=module_obj,
                                                               archived=False).first()
 
-                if not parted_discipline:
+                if not discipline:
                     try:
                         uuid = epp_discipline['uuid']
                         section = epp_discipline['section']
@@ -156,14 +156,14 @@ class Command(BaseCommand):
                         section = None
                         file = None
 
-                    parted_discipline = Discipline.objects.create(
+                    discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
                         module=module_obj,
                         labor=epp_discipline["gosLoadInTestUnitsheaderCell"],
                         period=training_semester - semester + 1,
                         form=form,
                         uni_uid=uuid,
-                        uni_discipline=discipline,
+                        uni_discipline=epp_discipline['discipline'],
                         uni_number=None if "_" in epp_discipline['disciplineNumberheaderCell'] else epp_discipline[
                             'disciplineNumberheaderCell'],
                         uni_section=section,
@@ -178,7 +178,6 @@ class Command(BaseCommand):
                 elif term == 7:
                     cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
-                print( discipline, training_semester, cur_term)
                 semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
                                                        program=program, term=cur_term).first()
                 if not semester_obj:
@@ -189,6 +188,9 @@ class Command(BaseCommand):
                                                            admission_semester="0",
                                                            term=cur_term,
                                                            )
+                variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term).count()
+                if variants == 0:
+                    Variant.objects.create(discipline=discipline, program=program, semester__term=cur_term)
 
             Discipline.objects.filter(id__in=for_delete).delete()
 
