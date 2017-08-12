@@ -97,7 +97,7 @@ class Command(BaseCommand):
             module_obj.status = 'p'
             module_obj.save()
 
-            program_module = ProgramModules.objects.filter(program=program, module=module_obj)
+            program_module = ProgramModules.objects.filter(program=program, module=module_obj).first()
             print("PM:   ", program_module.id, program.title, module_obj)
             if not program_module:
                 program_module = ProgramModules.objects.create(program=program, module=module_obj,
