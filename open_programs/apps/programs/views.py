@@ -27,7 +27,7 @@ class ProgramBackup(APIView):
                         },
                         "parity": v.parity,
                         "link": v.link,
-                        "diagram": v.diagram.title,
+                        "diagram": None if not v.diagram else v.diagram.title,
                     })
                 terms = {}
                 for term in TrainingTerms.objects.all().order_by("title"):
