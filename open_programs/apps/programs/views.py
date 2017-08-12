@@ -51,7 +51,7 @@ class ProgramBackup(APIView):
             response.append({
                 "module": pm.module.uni_number,
                 "choice_group": None if not pm.choice_group else pm.choice_group.title,
-                "choice_group_type": None if not pm.choice_group else pm.choice_group.get_choice_group_type_display,
+                "choice_group_type": None if not pm.choice_group else pm.choice_group.get_choice_group_type_display(),
                 "competence": None if not pm.competence else pm.competence.title,
                 "semester": pm.semester,
                 "index": pm.index
