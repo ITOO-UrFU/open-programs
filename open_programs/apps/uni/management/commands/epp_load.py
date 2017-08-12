@@ -6,7 +6,7 @@ import time
 from django.core.management.base import BaseCommand
 
 from programs.models import Program, ProgramModules, LearningPlan
-from disciplines.models import Discipline, Semester, TrainingTerms, Variant
+from disciplines.models import Discipline, Semester, TrainingTerms, Variant, Diagram
 from modules.models import Module
 
 
@@ -189,8 +189,10 @@ class Command(BaseCommand):
                                                            term=cur_term,
                                                            )
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term).count()
+                if term == 8:
+                    diagram = Diagram.objects.filter(title="Традиционная заочная форма").first()
                 if variants == 0:
-                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj)
+                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj, diagram=diagram)
 
             Discipline.objects.filter(id__in=for_delete).delete()
 
