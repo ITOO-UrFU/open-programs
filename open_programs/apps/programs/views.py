@@ -2,40 +2,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Program, TrainingTarget, ProgramModules, ChoiceGroup, ProgramCompetence
-
-
-class ProgramCompetenceSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ProgramCompetence
-        fields = ("id", "title", "number")
-
-
-class ChoiceGroupSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = ChoiceGroup
-        fields = ("id", "title", "labor", "get_choice_group_type_display", "number")
-
-
-class ProgramModulesSerializer(serializers.ModelSerializer):
-    competence = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='title'
-    )
-    choice_group = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='title'
-    )
-    module = serializers.SlugRelatedField(
-        many=False,
-        read_only=True,
-        slug_field='uni_number'
-    )
-
-    class Meta:
-        model = ProgramModules
-        fields = ("module", "choice_group", "competence", "semester", "index")
+from disciplines.models import Discipline
 
 
 class ProgramBackup(APIView):
@@ -48,13 +15,19 @@ class ProgramBackup(APIView):
 
         response = []
         for pm in pms:
+            disciplines = []
+            for d in Discipline.objects.filter(module=pm.module, status="p",archived=False):
+                disciplines.append({
+                    "title": d.title
+                })
             response.append({
                 "module": pm.module.uni_number,
                 "choice_group": None if not pm.choice_group else pm.choice_group.title,
                 "choice_group_type": None if not pm.choice_group else pm.choice_group.get_choice_group_type_display(),
                 "competence": None if not pm.competence else pm.competence.title,
                 "semester": pm.semester,
-                "index": pm.index
+                "index": pm.index,
+                "disciplines": disciplines
             })
 
         return Response(response)
