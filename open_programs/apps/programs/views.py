@@ -17,6 +17,15 @@ class ProgramBackup(APIView):
         for pm in pms:
             disciplines = []
             for d in Discipline.objects.filter(module=pm.module, status="p", archived=False).iterator():
+                variants = []
+                for v in Variant.objects.filter(discipline=d, program=program).iterator():
+                    variants.append({
+                        "course": v.course,
+                        "semester": v.semester,
+                        "parity": v.parity,
+                        "link": v.link,
+                        "diagram": "",
+                    })
                 terms = {}
                 for term in TrainingTerms.objects.all().order_by("title"):
                     semesters = [s.training_semester for s in
@@ -28,7 +37,8 @@ class ProgramBackup(APIView):
                     "labor": d.labor,
                     "period": d.period,
                     "terms": terms,
-                    "priority": None if not d.module.uni_priority else d.module.uni_priority
+                    "priority": None if not d.module.uni_priority else d.module.uni_priority,
+                    "variants": variants,
                 })
             response.append({
                 "module": pm.module.uni_number,
