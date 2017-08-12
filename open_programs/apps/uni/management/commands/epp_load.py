@@ -98,7 +98,7 @@ class Command(BaseCommand):
             module_obj.save()
 
             program_module = ProgramModules.objects.filter(program=program, module=module_obj)
-            print(program_module)
+            print("PM:   ", program_module, program.title)
             if not program_module:
                 program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
                                                 status="p", index=epp_module["indexheaderCell"])
