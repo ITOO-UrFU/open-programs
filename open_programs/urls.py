@@ -30,6 +30,8 @@ from .apps.api_v11 import auth_serializers
 from .apps.api_v11.views import *
 from persons.views import change_person, get_user, change_password
 
+from programs.views import ProgramBackup
+
 permission.autodiscover()
 
 router_10 = routers.DefaultRouter()
@@ -158,4 +160,9 @@ urlpatterns += [
     url(r'^api/v11/containers/$', get_containers, name="get_containers"),
     url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
     url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug")
+
+
+    #### BACKUP ####
+    url(r'^api/v11/backup/(?P<id>.*)/$', ProgramBackup.as_view(), name="program_backup"),
+
 ]
