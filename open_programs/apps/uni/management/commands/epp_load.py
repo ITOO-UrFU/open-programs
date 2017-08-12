@@ -190,7 +190,7 @@ class Command(BaseCommand):
                                                            )
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term).count()
                 if variants == 0:
-                    Variant.objects.create(discipline=discipline, program=program, semester__term=cur_term)
+                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj)
 
             Discipline.objects.filter(id__in=for_delete).delete()
 
