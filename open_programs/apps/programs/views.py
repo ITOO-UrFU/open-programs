@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Program, TrainingTarget, ProgramModules, ChoiceGroup, ProgramCompetence
-from disciplines.models import Discipline
+from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
 
 
 class ProgramBackup(APIView):
@@ -16,9 +16,19 @@ class ProgramBackup(APIView):
         response = []
         for pm in pms:
             disciplines = []
-            for d in Discipline.objects.filter(module=pm.module, status="p",archived=False):
+            for d in Discipline.objects.filter(module=pm.module, status="p", archived=False):
+                terms = {}
+                for term in TrainingTerms.objects.all().order_by("title"):
+                    semesters = [s.training_semester for s in
+                                 Semester.objects.filter(discipline=d, term=term, program=program)]
+                    terms[term.title] = 0 if len(semesters) == 0 else min(semesters)
+
                 disciplines.append({
-                    "title": d.title
+                    "title": d.title,
+                    "labor": d.labor,
+                    "period": d.period,
+                    "terms": terms,
+                    "priority": None if not d.module.uni_priority else d.module.uni_priority
                 })
             response.append({
                 "module": pm.module.uni_number,
