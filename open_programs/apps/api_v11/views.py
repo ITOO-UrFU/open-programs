@@ -68,7 +68,7 @@ class IsStudent(BasePermission):
 IsAuthorized = IsStudent
 
 
-class ProgramList(CacheResponseMixin, viewsets.ModelViewSet):
+class ProgramList(viewsets.ModelViewSet): #CacheResponseMixin,
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
