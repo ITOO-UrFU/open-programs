@@ -38,6 +38,6 @@ class ProgramBackup(APIView):
         cgs = ChoiceGroup.objects.filter(program=program)
         comps = ProgramCompetence.objects.filter(program=program)
 
-        serializer = ProgramModulesSerializer(pms)
+        serializer = ProgramModulesSerializer(pms, many=True)
 
         return Response(serializer.data)
