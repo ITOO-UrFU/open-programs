@@ -6,6 +6,6 @@ from .models import Program, TrainingTarget
 class ProgramBackup(APIView):
 
     def get(self, request, id):
-        program = Program.objects.get(td=id)
+        program = Program.objects.get(id=id)
         targets = TrainingTarget.objects.filter(program=program)
         return Response([target.title for target in targets])
