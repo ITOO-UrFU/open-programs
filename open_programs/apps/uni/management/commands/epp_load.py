@@ -189,13 +189,16 @@ class Command(BaseCommand):
                                                            term=cur_term,
                                                            )
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term).count()
+                for variant in Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term):
+                    variant.status = "p"
+                    variant.save()
                 if term == 8:
                     diagram = Diagram.objects.filter(title="Традиционная очная форма").first()
                 else:
                     diagram = Diagram.objects.filter(title="Традиционная заочная форма").first()
 
                 if variants == 0:
-                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj, diagram=diagram)
+                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj, diagram=diagram, status="p")
 
             Discipline.objects.filter(id__in=for_delete).delete()
 
