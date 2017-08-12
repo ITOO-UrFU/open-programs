@@ -16,7 +16,7 @@ class ProgramBackup(APIView):
         response = []
         for pm in pms:
             disciplines = []
-            for d in Discipline.objects.filter(module=pm.module, status="p", archived=False):
+            for d in Discipline.objects.filter(module=pm.module, status="p", archived=False).iterator():
                 terms = {}
                 for term in TrainingTerms.objects.all().order_by("title"):
                     semesters = [s.training_semester for s in
