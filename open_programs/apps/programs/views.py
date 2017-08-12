@@ -19,10 +19,15 @@ class ChoiceGroupSerializer(serializers.ModelSerializer):
 class ProgramModulesSerializer(serializers.ModelSerializer):
     choice_group = ChoiceGroupSerializer
     competence = ProgramCompetenceSerializer
+    uni_number = serializers.SlugRelatedField(
+        many=True,
+        read_only=True,
+        slug_field='uni_number'
+    )
 
     class Meta:
         model = ProgramModules
-        fields = ("id", "module__uni_number", "choice_group", "competence", "semester", "index")
+        fields = ("id", "uni_number", "choice_group", "competence", "semester", "index")
 
 
 class ProgramBackup(APIView):
