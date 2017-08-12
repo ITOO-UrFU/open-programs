@@ -628,10 +628,10 @@ def get_variants(request, program_id, discipline_id):
             else:
                 presence = "o"
 
-            if "традиционная" in variant.technology.title.lower():
-                technology_type = "t"
-            else:
-                technology_type = "d"
+            # if "традиционная" in variant.technology.title.lower():
+            technology_type = "t"
+            # else:
+            #     technology_type = "d"
 
         response.append(
             {
@@ -789,10 +789,10 @@ def get_program_variants(request, program_id):
                 else:
                     presence = "o"
 
-                if "традиционная" in variant.technology.title.lower():
-                    technology_type = "t"
-                else:
-                    technology_type = "d"
+                # if "традиционная" in variant.technology.title.lower():
+                technology_type = "t"
+                # else:
+                #     technology_type = "d"
 
             variants[discipline.id].append(
                 {

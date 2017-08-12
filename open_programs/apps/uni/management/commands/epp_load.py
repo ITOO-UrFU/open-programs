@@ -180,6 +180,7 @@ class Command(BaseCommand):
                 elif term == 7:
                     cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
+                print( discipline, training_semester, cur_term)
                 semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
                                                        program=program, term=cur_term).first()
                 if not semester_obj:
