@@ -43,7 +43,7 @@ class Module(ObjectBaseClass):
     uni_approvedDate = models.CharField(max_length=265, null=True, blank=True)
     uni_comment = models.CharField(max_length=4096, null=True, blank=True)
     uni_file = models.CharField(max_length=265, null=True, blank=True)
-    uni_specialities =models.TextField(null=True, blank=True)
+    uni_specialities = models.TextField(null=True, blank=True)
 
     def get_labor(self):
         return Discipline.objects.filter(module=self, status="p", archived=False).aggregate(Sum('labor'))["labor__sum"]
@@ -61,5 +61,3 @@ class Module(ObjectBaseClass):
     def get_disciplines(self):
         disciplines = Discipline.objects.filter(module=self)
         return disciplines
-
-
