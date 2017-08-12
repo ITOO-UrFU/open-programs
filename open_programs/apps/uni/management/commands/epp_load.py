@@ -102,6 +102,7 @@ class Command(BaseCommand):
                 program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
                                                 status="p", index=epp_module["indexheaderCell"])
                 program_module.save()
+                print(program_module)
 
             for_delete = []
 
