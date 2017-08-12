@@ -46,6 +46,15 @@ class ProgramBackup(APIView):
         cgs = ChoiceGroup.objects.filter(program=program)
         comps = ProgramCompetence.objects.filter(program=program)
 
-        serializer = ProgramModulesSerializer(pms, many=True)
+        response = []
+        for pm in pms:
+            response.append({
+                "module": pm.module.uni_number,
+                "choice_group": pm.choice_group.title,
+                "choice_group_type": pm.choice_group.get_choice_group_type_display,
+                "competence": pm.competence.title,
+                "semester": pm.semester,
+                "index": pm.index
+            })
 
-        return Response(serializer.data)
+        return Response(response)
