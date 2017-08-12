@@ -149,12 +149,10 @@ class Command(BaseCommand):
                 if not parted_discipline:
                     try:
                         uuid = epp_discipline['uuid']
-                        discipline = epp_discipline['discipline']
                         section = epp_discipline['section']
                         file = epp_discipline['file']
                     except:
                         uuid = None
-                        discipline = None
                         section = None
                         file = None
 
