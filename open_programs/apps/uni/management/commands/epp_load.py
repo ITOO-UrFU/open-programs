@@ -113,7 +113,7 @@ class Command(BaseCommand):
                                           ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
                                            "XIII", "XIV", "XV"]):
                     discipline = Discipline.objects.filter(module=module_obj,
-                                                           title__contains=epp_discipline['titleheaderCell']).first()
+                                                           title__contains=epp_discipline['titleheaderCell'], status="p").first()
                     try:
                         for_delete.append(discipline.id)
                     except:
