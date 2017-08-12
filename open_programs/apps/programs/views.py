@@ -21,7 +21,7 @@ class ProgramBackup(APIView):
                 for v in Variant.objects.filter(discipline=d, program=program).iterator():
                     variants.append({
                         "course": v.course,
-                        "semester": {
+                        "semester": None if not v.semester else {
                             "training_semester": v.semester.training_semester,
                             "term": v.semester.term.title,
                         },
