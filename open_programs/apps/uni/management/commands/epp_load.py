@@ -108,7 +108,7 @@ class Command(BaseCommand):
             for epp_discipline in epp_module["disciplines"]:
                 print("first", epp_discipline['titleheaderCell'])
                 discipline = Discipline.objects.filter(module=module_obj,
-                                                       title=epp_discipline['titleheaderCell']).first()
+                                                       title=epp_discipline['titleheaderCell'], status="p").first()
                 if not discipline and any(ext in epp_discipline["titleheaderCell"] for ext in
                                           ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
                                            "XIII", "XIV", "XV"]):
@@ -142,7 +142,7 @@ class Command(BaseCommand):
                     form = "z"
 
                 discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
-                                                       module=module_obj,
+                                                       module=module_obj, status="p",
                                                        archived=False).first()
 
                 if not discipline:
