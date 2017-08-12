@@ -98,12 +98,10 @@ class Command(BaseCommand):
             module_obj.save()
 
             program_module = ProgramModules.objects.filter(program=program, module=module_obj).first()
-            print("PM:   ", program_module.id, program.title, module_obj)
             if not program_module:
                 program_module = ProgramModules.objects.create(program=program, module=module_obj,
                                                                semester=module_obj.semester,
                                                                status="p", index=epp_module["indexheaderCell"])
-                print(program_module)
 
             for_delete = []
 
@@ -114,7 +112,6 @@ class Command(BaseCommand):
                 if not discipline and any(ext in epp_discipline["titleheaderCell"] for ext in
                                           ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
                                            "XIII", "XIV", "XV"]):
-                    print("second", epp_discipline['titleheaderCell'])
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell']).first()
                     try:
@@ -182,6 +179,7 @@ class Command(BaseCommand):
 
                 semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
                                                        program=program, term=cur_term).first()
+                print(semester_obj)
                 if not semester_obj:
                     semester_obj = Semester.objects.create(discipline=discipline,
                                                            training_semester=training_semester,
