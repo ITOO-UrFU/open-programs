@@ -98,11 +98,11 @@ class Command(BaseCommand):
             module_obj.save()
 
             program_module = ProgramModules.objects.filter(program=program, module=module_obj)
-            print("PM:   ", program_module, program.title)
+            print("PM:   ", program_module.id, program.title, module_obj)
             if not program_module:
-                program_module = ProgramModules(program=program, module=module_obj, semester=module_obj.semester,
-                                                status="p", index=epp_module["indexheaderCell"])
-                program_module.save()
+                program_module = ProgramModules.objects.create(program=program, module=module_obj,
+                                                               semester=module_obj.semester,
+                                                               status="p", index=epp_module["indexheaderCell"])
                 print(program_module)
 
             for_delete = []
@@ -145,8 +145,8 @@ class Command(BaseCommand):
                     form = "z"
 
                 discipline = Discipline.objects.filter(title=epp_discipline['titleheaderCell'],
-                                                              module=module_obj,
-                                                              archived=False).first()
+                                                       module=module_obj,
+                                                       archived=False).first()
 
                 if not discipline:
                     try:
@@ -197,7 +197,8 @@ class Command(BaseCommand):
                     diagram = Diagram.objects.filter(title="Традиционная заочная форма").first()
 
                 if variants.count() == 0:
-                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj, diagram=diagram, status="p")
+                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
+                                           diagram=diagram, status="p")
                     print("!!!", discipline.title)
 
             Discipline.objects.filter(id__in=for_delete).delete()
