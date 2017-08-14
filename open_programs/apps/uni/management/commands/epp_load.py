@@ -200,6 +200,8 @@ class Command(BaseCommand):
                     print("!!!", discipline.title)
 
             Discipline.objects.filter(id__in=for_delete).delete()
+        elif term == 10 or term == 7:
+            print(term)
 
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
