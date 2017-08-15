@@ -2,8 +2,8 @@ import uuid
 import json
 from django.db import models
 
-from django.db.models.signals import post_save
-from django.dispatch import receiver
+# from django.db.models.signals import post_save
+# from django.dispatch import receiver
 
 from django.utils.safestring import mark_safe
 from base.models import ObjectBaseClass
@@ -206,7 +206,7 @@ class Technology(ObjectBaseClass):
     contact_work_category = models.CharField(_("Категория контактной работы"), max_length=512, blank=True, null=True)
     color = models.CharField(_("Цвет технологии"), max_length=16, blank=True, null=True)
 
-
-@receiver(post_save, sender=Variant, dispatch_uid="update_variant_semesters")
-def variant_added(sender, instance, **kwargs):
-    if instance
+#
+# @receiver(post_save, sender=Variant, dispatch_uid="update_variant_semesters")
+# def variant_added(sender, instance, **kwargs):
+#     if instance
