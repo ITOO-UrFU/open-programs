@@ -1094,7 +1094,7 @@ def add_default_variants(request):
 
     else:
         return Response(status=403)
-    return Response(status=200)
+    return Response({"message": "ok"})
 
 
 change_target_module = ChangeTargetModule.as_view()
