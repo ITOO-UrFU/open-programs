@@ -1035,7 +1035,6 @@ def remove_discipline(request):
 @api_view(('POST',))
 @permission_classes((IsManager,))
 def add_default_variants(request):
-    import copy
     discipline_id = request.data.get("discipline_id", "")
     program_id = request.data.get("program_id", "")
     if id != "":
@@ -1044,7 +1043,7 @@ def add_default_variants(request):
         semesters = Semester.objects.filter(discipline=discipline, program=program)
 
         _terms = []
-        for semester in copy(semesters):
+        for semester in semesters:
             if semester.term in _terms:
                 semester.delete()
             else:
