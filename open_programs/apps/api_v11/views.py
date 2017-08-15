@@ -772,7 +772,6 @@ def get_program_variants(request, program_id):
     disciplines = program.get_all_disciplines()
     for discipline in disciplines:
         variants[discipline.id] = []
-        print(Variant.objects.filter(program=program, discipline=discipline).count())
         for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
 
             if variant.semester:
