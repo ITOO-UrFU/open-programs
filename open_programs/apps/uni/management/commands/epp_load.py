@@ -207,7 +207,7 @@ class Command(BaseCommand):
 
                 if not discipline:
                     discipline = Discipline.objects.filter(module=module_obj,
-                                                           title_contains=epp_discipline['titleheaderCell'][0:-3],
+                                                           title__contains=epp_discipline['titleheaderCell'][0:-3],
                                                            status="p").first()
 
                 semester_obj = Semester.objects.filter(discipline=discipline,
