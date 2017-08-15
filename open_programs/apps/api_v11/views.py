@@ -1040,16 +1040,15 @@ def add_default_variants(request):
     if id != "":
         discipline = Discipline.objects.get(pk=discipline_id)
         program = Program.objects.get(pk=program_id)
-        semesters = Semester.objects.filter(discipline=discipline, program=program)
 
         _terms = []
-        for semester in semesters:
+        for semester in Semester.objects.filter(discipline=discipline, program=program):
             if semester.term in _terms:
                 semester.delete()
             else:
                 _terms.append(semester.term)
 
-        for semester in semesters:
+        for semester in Semester.objects.filter(discipline=discipline, program=program):
             print(semester.term.title)
             if "4 года" in semester.term.title:
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester=semester)
