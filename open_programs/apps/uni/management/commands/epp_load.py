@@ -205,6 +205,8 @@ class Command(BaseCommand):
                 elif term == 7:
                     cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
 
+                print(discipline)
+
                 semester_obj = Semester.objects.filter(discipline=discipline,
                                                        training_semester=epp_discipline["firstSemester"],
                                                        program=program, term=cur_term).first()
