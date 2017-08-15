@@ -1041,9 +1041,10 @@ def add_default_variants(request):
         discipline = Discipline.objects.get(pk=discipline_id)
         program = Program.objects.get(pk=program_id)
         semesters = Semester.objects.filter(discipline=discipline, program=program)
-        variants = Variant.objects.filter(discipline=discipline, program=program)
+
         for semester in semesters:
             if "4" in semester.term.title:
+                variants = Variant.objects.filter(discipline=discipline, program=program, semester=semester)
                 if "Традиционная очная форма" not in [variant.diagram.title for variant in variants]:
                     Variant.objects.create(
                         discipline=discipline,
@@ -1062,6 +1063,7 @@ def add_default_variants(request):
                         semester=semester
                     )
             else:
+                variants = Variant.objects.filter(discipline=discipline, program=program, semester=semester)
                 if "Традиционная заочная форма" not in [variant.diagram.title for variant in variants]:
                     Variant.objects.create(
                         discipline=discipline,
