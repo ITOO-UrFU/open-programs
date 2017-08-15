@@ -1039,7 +1039,7 @@ def add_default_variants(request):
     program_id = request.data.get("program_id", "")
     if id != "":
         discipline = Discipline.objects.get(pk=discipline_id)
-        program = Discipline.objects.get(pk=program_id)
+        program = Program.objects.get(pk=program_id)
         semesters = Semester.objects.filter(discipline=discipline, program=program)
         variants = Variant.objects.filter(discipline=discipline, program=program)
         for semester in semesters:
