@@ -1042,6 +1042,13 @@ def add_default_variants(request):
         program = Program.objects.get(pk=program_id)
         semesters = Semester.objects.filter(discipline=discipline, program=program)
 
+        _terms = []
+        for semester in semesters:
+            if semester.term in _terms:
+                semester.remove()
+            else:
+                _terms.append(semester.term)
+
         for semester in semesters:
             print(semester.term.title)
             if "4 года" in semester.term.title:
@@ -1059,7 +1066,6 @@ def add_default_variants(request):
                     )
                 if "Очная форма с применением ЭО и ДОТ без выезда в кампус" not in [variant.diagram.title for variant in
                                                                                     variants]:
-                    print("added", semester.term.title, "Очная форма с применением ЭО и ДОТ без выезда в кампус")
                     Variant.objects.create(
                         discipline=discipline,
                         program=program,
@@ -1070,7 +1076,6 @@ def add_default_variants(request):
             else:
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester=semester)
                 if "Традиционная заочная форма" not in [variant.diagram.title for variant in variants]:
-                    print("added", semester.term.title, "Традиционная заочная форма")
                     Variant.objects.create(
                         discipline=discipline,
                         program=program,
@@ -1080,7 +1085,6 @@ def add_default_variants(request):
                     )
                 if "Заочная форма с применением ЭО и ДОТ без выезда в кампус" not in [variant.diagram.title for variant
                                                                                       in variants]:
-                    print("added", semester.term.title, "Заочная форма с применением ЭО и ДОТ без выезда в кампус" )
                     Variant.objects.create(
                         discipline=discipline,
                         program=program,
