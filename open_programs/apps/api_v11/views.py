@@ -68,7 +68,7 @@ class IsStudent(BasePermission):
 IsAuthorized = IsStudent
 
 
-class ProgramList(viewsets.ModelViewSet): #CacheResponseMixin,
+class ProgramList(viewsets.ModelViewSet):  # CacheResponseMixin,
     queryset = Program.objects.filter(status="p", archived=False)
     serializer_class = ProgramSerializer
     permission_classes = (IsAuthenticatedOrReadOnly, DjangoModelPermissionsOrAnonReadOnly,)
@@ -1030,6 +1030,60 @@ def remove_discipline(request):
     else:
         return Response(status=403)
     return Response(status=200)
+
+
+@api_view(('POST',))
+@permission_classes((IsManager,))
+def add_default_variants(request):
+    discipline_id = request.data.get("discipline_id", "")
+    program_id = request.data.get("program_id", "")
+    if id != "":
+        discipline = Discipline.objects.get(pk=discipline_id)
+        program = Discipline.objects.get(pk=program_id)
+        semesters = Semester.objects.filter(discipline=discipline, program=program)
+        variants = Variant.objects.filter(discipline=discipline, program=program)
+        for semester in semesters:
+            if "4" in semester.term.title:
+                if "Традиционная очная форма" not in [variant.diagram.title for variant in variants]:
+                    Variant.objects.create(
+                        discipline=discipline,
+                        program=program,
+                        diagram=Diagram.objects.filter(title="Традиционная очная форма", status="p",
+                                                       archived=False).first(),
+                        semester=semester
+                    )
+                if "Очная форма с применением ЭО и ДОТ без выезда в кампус" not in [variant.diagram.title for variant in
+                                                                                    variants]:
+                    Variant.objects.create(
+                        discipline=discipline,
+                        program=program,
+                        diagram=Diagram.objects.filter(title="Очная форма с применением ЭО и ДОТ без выезда в кампус",
+                                                       status="p", archived=False).first(),
+                        semester=semester
+                    )
+            else:
+                if "Традиционная заочная форма" not in [variant.diagram.title for variant in variants]:
+                    Variant.objects.create(
+                        discipline=discipline,
+                        program=program,
+                        diagram=Diagram.objects.filter(title="Традиционная заочная форма", status="p",
+                                                       archived=False).first(),
+                        semester=semester
+                    )
+                if "Заочная форма с применением ЭО и ДОТ без выезда в кампус" not in [variant.diagram.title for variant
+                                                                                      in variants]:
+                    Variant.objects.create(
+                        discipline=discipline,
+                        program=program,
+                        diagram=Diagram.objects.filter(title="Заочная форма с применением ЭО и ДОТ без выезда в кампус",
+                                                       status="p", archived=False).first(),
+                        semester=semester
+                    )
+
+    else:
+        return Response(status=403)
+    return Response(status=200)
+
 
 change_target_module = ChangeTargetModule.as_view()
 change_choice_group = ChangeChoiceGroup.as_view()

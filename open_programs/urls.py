@@ -138,6 +138,7 @@ urlpatterns += [
     url(r'^api/v11/change_variant/$', change_variant, name="change_variant"),
     url(r'^api/v11/delete_variant/$', delete_variant, name="delete_variant"),
     url(r'^api/v11/create_variant/$', create_variant, name="create_variant"),
+    url(r'^api/v11/add_default_variants/$', add_default_variants, name="add_default_variants"),
 
     url(r'^api/v11/new_trajectory/$', new_trajectory, name="new_trajectory"),
     url(r'^api/v11/save_trajectory/$', save_trajectory, name="save_trajectory"),
