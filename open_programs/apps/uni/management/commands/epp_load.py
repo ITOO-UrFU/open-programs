@@ -184,15 +184,15 @@ class Command(BaseCommand):
                                                            term=cur_term,
                                                            )
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
-                if term == 8:
-                    diagram = Diagram.objects.filter(title="Традиционная очная форма").first()
-                else:
-                    diagram = Diagram.objects.filter(title="Традиционная заочная форма").first()
+
+                diagrams = [Diagram.objects.filter(title="Традиционная очная форма").first(),
+                            Diagram.objects.filter(
+                                title="Очная форма с применением ЭО и ДОТ без выезда в кампус").first()]
 
                 if variants.count() == 0:
-                    Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
-                                           diagram=diagram, status="p")
-                    print("!!!", discipline.title)
+                    for diagram in diagrams:
+                        Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
+                                               diagram=diagram, status="p")
 
             Discipline.objects.filter(id__in=for_delete).delete()
         elif module_obj and (term == 10 or term == 7):
@@ -225,7 +225,8 @@ class Command(BaseCommand):
                                                                )
                     variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
                     diagrams = [Diagram.objects.filter(title="Традиционная заочная форма").first(),
-                                Diagram.objects.filter(title="Заочная форма с применением ЭО и ДОТ без выезда в кампус").first()]
+                                Diagram.objects.filter(
+                                    title="Заочная форма с применением ЭО и ДОТ без выезда в кампус").first()]
 
                     if variants.count() == 0:
                         for diagram in diagrams:
