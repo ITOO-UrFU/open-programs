@@ -607,7 +607,7 @@ def get_variants(request, program_id, discipline_id):
     # response = _check_trigger(f"get_variants:{program_id}:{discipline_id}")
     # if response:
     #     return response
-    variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id).order_by("term")
+    variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id).order_by("semester__term")
     response = []
     for variant in variants:
         if variant.diagram:
