@@ -772,7 +772,7 @@ def get_program_variants(request, program_id):
     disciplines = program.get_all_disciplines()
     for discipline in disciplines:
         variants[discipline.id] = []
-        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id).order_by("semester__term"):
 
             if variant.semester:
                 mobility = 0
@@ -840,7 +840,7 @@ def get_program_variants_constructor(request, program_id):
     disciplines = program.get_all_disciplines()
     for discipline in disciplines:
         variants[discipline.id] = []
-        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id):
+        for variant in Variant.objects.filter(program=program, discipline__id=discipline.id).order_by("semester__term"):
             if variant.semester:
                 mobility = 0
             elif variant.parity:
