@@ -210,7 +210,7 @@ class Command(BaseCommand):
                                                        program=program, term=cur_term).first()
                 if not semester_obj:
                     semester_obj = Semester.objects.create(discipline=discipline,
-                                                           training_semester=training_semester,
+                                                           training_semester=epp_discipline["firstSemester"],
                                                            program=program,
                                                            year='2017',
                                                            admission_semester="0",
