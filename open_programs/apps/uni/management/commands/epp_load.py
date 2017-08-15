@@ -212,7 +212,6 @@ class Command(BaseCommand):
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell'][0:-3],
                                                            status="p").first()
-                    print(discipline)
 
                 if discipline:
 
@@ -227,6 +226,7 @@ class Command(BaseCommand):
                                                                admission_semester="0",
                                                                term=cur_term,
                                                                )
+                    print(semester_obj)
                     variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
                     diagrams = [Diagram.objects.filter(title="Традиционная заочная форма").first(),
                                 Diagram.objects.filter(
