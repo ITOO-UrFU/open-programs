@@ -151,10 +151,12 @@ class Command(BaseCommand):
                         uuid = epp_discipline['uuid']
                         section = epp_discipline['section']
                         file = epp_discipline['file']
+                        uni_discipline = epp_discipline['discipline']
                     except:
                         uuid = None
                         section = None
                         file = None
+                        uni_discipline = None
 
                     discipline = Discipline.objects.create(
                         title=epp_discipline['titleheaderCell'],
@@ -163,7 +165,7 @@ class Command(BaseCommand):
                         period=training_semester - semester + 1,
                         form=form,
                         uni_uid=uuid,
-                        uni_discipline=epp_discipline['discipline'],
+                        uni_discipline=uni_discipline,
                         uni_number=None if "_" in epp_discipline['disciplineNumberheaderCell'] else epp_discipline[
                             'disciplineNumberheaderCell'],
                         uni_section=section,
