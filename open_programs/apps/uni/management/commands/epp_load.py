@@ -210,25 +210,27 @@ class Command(BaseCommand):
                                                            title__contains=epp_discipline['titleheaderCell'][0:-3],
                                                            status="p").first()
 
-                semester_obj = Semester.objects.filter(discipline=discipline,
-                                                       training_semester=epp_discipline["firstSemester"],
-                                                       program=program, term=cur_term).first()
-                if not semester_obj:
-                    semester_obj = Semester.objects.create(discipline=discipline,
-                                                           training_semester=epp_discipline["firstSemester"],
-                                                           program=program,
-                                                           year='2017',
-                                                           admission_semester="0",
-                                                           term=cur_term,
-                                                           )
-                variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
-                diagrams = [Diagram.objects.filter(title="Традиционная заочная форма").first(),
-                            Diagram.objects.filter(title="Заочная форма с применением ЭО и ДОТ без выезда в кампус").first()]
+                if discipline:
 
-                if variants.count() == 0:
-                    for diagram in diagrams:
-                        Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
-                                               diagram=diagram, status="p")
+                    semester_obj = Semester.objects.filter(discipline=discipline,
+                                                           training_semester=epp_discipline["firstSemester"],
+                                                           program=program, term=cur_term).first()
+                    if not semester_obj:
+                        semester_obj = Semester.objects.create(discipline=discipline,
+                                                               training_semester=epp_discipline["firstSemester"],
+                                                               program=program,
+                                                               year='2017',
+                                                               admission_semester="0",
+                                                               term=cur_term,
+                                                               )
+                    variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
+                    diagrams = [Diagram.objects.filter(title="Традиционная заочная форма").first(),
+                                Diagram.objects.filter(title="Заочная форма с применением ЭО и ДОТ без выезда в кампус").first()]
+
+                    if variants.count() == 0:
+                        for diagram in diagrams:
+                            Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
+                                                   diagram=diagram, status="p")
 
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")
