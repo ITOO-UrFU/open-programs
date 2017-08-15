@@ -1020,6 +1020,18 @@ def copy_trajectory(request):
         return Response(status=403)
 
 
+@api_view(('POST',))
+@permission_classes((IsManager,))
+def remove_discipline(request):
+    id = request.data.get("id", "")
+    if id != "":
+        d = Discipline.objects.get(pk=id)
+        d.archived = True
+        d.save()
+    else:
+        return Response(status=403)
+    return Response(status=200)
+
 change_target_module = ChangeTargetModule.as_view()
 change_choice_group = ChangeChoiceGroup.as_view()
 change_competence = ChangeCompetence.as_view()

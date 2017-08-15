@@ -128,6 +128,8 @@ urlpatterns += [
 
     url(r'^api/v11/get_program_discipline/(?P<program_id>.*)/(?P<discipline_id>.*)/$', get_program_discipline,
         name="get_program_discipline"),
+    url(r'^api/v11/remove_discipline/(?P<id>.*)/$', remove_discipline,
+        name="remove_discipline"),
 
     url(r'^api/v11/change_discipline_semester/$', change_discipline_semester,
         name="change_discipline_semester"),
@@ -160,7 +162,6 @@ urlpatterns += [
     url(r'^api/v11/containers/$', get_containers, name="get_containers"),
     url(r'^api/v11/containers_by_type/(?P<slug>.*)/$', containers_by_type, name="containers_by_type"),
     url(r'^api/v11/container_by_slug/(?P<slug>.*)/$', container_by_slug, name="container_by_slug"),
-
 
     #### BACKUP ####
     url(r'^api/v11/backup/(?P<id>.*)/$', ProgramBackup.as_view(), name="program_backup"),
