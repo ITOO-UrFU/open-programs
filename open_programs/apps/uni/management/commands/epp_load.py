@@ -201,7 +201,7 @@ class Command(BaseCommand):
             for epp_discipline in epp_module["disciplines"]:
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell'],
-                                                       status="p").first()
+                                                       status="p", archived=False).first()
                 print(discipline)
                 if term == 10:
                     cur_term = TrainingTerms.objects.filter(title="5 лет").first()
