@@ -93,7 +93,7 @@ class Variant(ObjectBaseClass):
     semester = models.ForeignKey("Semester", null=True, blank=True)
     parity = models.CharField(_("Четность семестра дисциплины"), max_length=2, choices=PARITY, null=True, blank=True)
     link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
-    positions = models.CharField(max_length=1024, blank=True, null=True)
+    # positions = models.CharField(max_length=1024, blank=True, null=True)
 
 
 class Diagram(ObjectBaseClass):
