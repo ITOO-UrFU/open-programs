@@ -202,6 +202,7 @@ class Command(BaseCommand):
                 discipline = Discipline.objects.filter(module=module_obj,
                                                        title=epp_discipline['titleheaderCell'],
                                                        status="p").first()
+                print(discipline)
                 if term == 10:
                     cur_term = TrainingTerms.objects.filter(title="5 лет").first()
                 elif term == 7:
@@ -211,6 +212,7 @@ class Command(BaseCommand):
                     discipline = Discipline.objects.filter(module=module_obj,
                                                            title__contains=epp_discipline['titleheaderCell'][0:-3],
                                                            status="p").first()
+                    print(discipline)
 
                 if discipline:
 
