@@ -1044,10 +1044,12 @@ def add_default_variants(request):
 
         for semester in semesters:
             print(semester.term.title)
-            if "4" in semester.term.title:
+            if "4 года" in semester.term.title:
                 variants = Variant.objects.filter(discipline=discipline, program=program, semester=semester)
                 if "Традиционная очная форма" not in [variant.diagram.title for variant in variants]:
                     print("added", semester.term.title, "Традиционная очная форма")
+                    print("\n".join([variant.diagram.title for variant in variants]))
+                    print()
                     Variant.objects.create(
                         discipline=discipline,
                         program=program,
