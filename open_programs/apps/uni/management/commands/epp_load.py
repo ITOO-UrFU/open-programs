@@ -113,7 +113,8 @@ class Command(BaseCommand):
                                           ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII",
                                            "XIII", "XIV", "XV"]):
                     discipline = Discipline.objects.filter(module=module_obj,
-                                                           title__contains=epp_discipline['titleheaderCell'], status="p").first()
+                                                           title__contains=epp_discipline['titleheaderCell'],
+                                                           status="p").first()
                     try:
                         for_delete.append(discipline.id)
                     except:
@@ -170,13 +171,7 @@ class Command(BaseCommand):
                         status="p"
                     )
 
-                if term == 8:
-                    cur_term = TrainingTerms.objects.filter(title="4 года").first()
-                elif term == 10:
-                    cur_term = TrainingTerms.objects.filter(title="5 лет").first()
-                elif term == 7:
-                    cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
-
+                cur_term = TrainingTerms.objects.filter(title="4 года").first()
                 semester_obj = Semester.objects.filter(discipline=discipline, training_semester=training_semester,
                                                        program=program, term=cur_term).first()
                 print(semester_obj)
@@ -201,7 +196,34 @@ class Command(BaseCommand):
 
             Discipline.objects.filter(id__in=for_delete).delete()
         elif module_obj and (term == 10 or term == 7):
-            print(term)
+            for epp_discipline in epp_module["disciplines"]:
+                discipline = Discipline.objects.filter(module=module_obj,
+                                                       title=epp_discipline['titleheaderCell'],
+                                                       status="p").first()
+                if term == 10:
+                    cur_term = TrainingTerms.objects.filter(title="5 лет").first()
+                elif term == 7:
+                    cur_term = TrainingTerms.objects.filter(title="3,5 года").first()
+
+                semester_obj = Semester.objects.filter(discipline=discipline,
+                                                       training_semester=epp_discipline["firstSemester"],
+                                                       program=program, term=cur_term).first()
+                if not semester_obj:
+                    semester_obj = Semester.objects.create(discipline=discipline,
+                                                           training_semester=training_semester,
+                                                           program=program,
+                                                           year='2017',
+                                                           admission_semester="0",
+                                                           term=cur_term,
+                                                           )
+                variants = Variant.objects.filter(discipline=discipline, program=program, semester__term=cur_term)
+                diagrams = [Diagram.objects.filter(title="Традиционная заочная форма").first(),
+                            Diagram.objects.filter(title="Заочная форма с применением ЭО и ДОТ без выезда в кампус").first()]
+
+                if variants.count() == 0:
+                    for diagram in diagrams:
+                        Variant.objects.create(discipline=discipline, program=program, semester=semester_obj,
+                                               diagram=diagram, status="p")
 
         else:
             print("Модуль не найден! Загрузите новую версию modules.json")

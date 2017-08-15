@@ -1,6 +1,10 @@
 import uuid
 import json
 from django.db import models
+
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+
 from django.utils.safestring import mark_safe
 from base.models import ObjectBaseClass
 from django.utils.translation import ugettext_lazy as _
@@ -89,6 +93,7 @@ class Variant(ObjectBaseClass):
     semester = models.ForeignKey("Semester", null=True, blank=True)
     parity = models.CharField(_("Четность семестра дисциплины"), max_length=2, choices=PARITY, null=True, blank=True)
     link = models.CharField(_("Ссылка на страницу дисциплины"), max_length=512, blank=True, null=True)
+    positions = models.CharField(max_length=1024, blank=True, null=True)
 
 
 class Diagram(ObjectBaseClass):
@@ -200,3 +205,8 @@ class Technology(ObjectBaseClass):
     description = models.TextField(_("Описание технологии"), max_length=16384, blank=True, null=True)
     contact_work_category = models.CharField(_("Категория контактной работы"), max_length=512, blank=True, null=True)
     color = models.CharField(_("Цвет технологии"), max_length=16, blank=True, null=True)
+
+
+@receiver(post_save, sender=Variant, dispatch_uid="update_variant_semesters")
+def variant_added(sender, instance, **kwargs):
+    if instance
