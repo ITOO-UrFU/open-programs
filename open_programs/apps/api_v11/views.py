@@ -656,6 +656,9 @@ def get_variants(request, program_id, discipline_id):
                     "technology_type": technology_type,
 
                 },
+                "sync": None if not variant.diagram.sync else int(variant.diagram.sync),
+                "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                "mobility": mobility,
                 "semester": None if not variant.semester else
                 {
                     "term": variant.semester.term.title,
@@ -731,7 +734,6 @@ class CreateVariant(APIView):
         discipline = Discipline.objects.get(id=request.data["discipline_id"])
         term_title = request.data.get("term_title", None)
 
-        technology = request.data.get("technology_id", None)
         diagram = request.data.get("diagram_id", None)
         course = request.data.get("course_id", None)
         parity = request.data.get("parity_id", None)
@@ -740,20 +742,18 @@ class CreateVariant(APIView):
         if term_title:
             semester = Semester.objects.filter(program=program, discipline=discipline, term__title=term_title).first()
 
-            if Variant.objects.filter(discipline=discipline, program=program, semester=semester, technology=technology,
+            if Variant.objects.filter(discipline=discipline, program=program, semester=semester,
                                       diagram=diagram, link=link, status="p").first():
                 return Response(status=409)
 
             variant = Variant.objects.create(discipline=discipline, program=program, semester=semester,
-                                             technology=technology,
                                              diagram=diagram, link=link, status="p")
         elif course:
-            variant = Variant.objects.create(discipline=discipline, program=program, technology=technology,
+            variant = Variant.objects.create(discipline=discipline, program=program,
                                              course=Course.objects.get(id=course), diagram=diagram, link=link,
                                              status="p")
         elif parity:
             variant = Variant.objects.create(discipline=discipline, program=program, parity=parity,
-                                             technology=technology,
                                              diagram=diagram, link=link, status="p")
         # _activate_trigger(f"get_variants:{request.data['program_id']}:{request.data['discipline_id']}")
         # _activate_trigger(f"get_program_variants_constructor:{request.data['program_id']}")
@@ -816,6 +816,9 @@ def get_program_variants(request, program_id):
                         "technology_type": technology_type,
 
                     },
+                    "sync": None if not variant.diagram.campus else int(variant.diagram.sync),
+                    "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                    "mobility": mobility,
                     "semester": None if not variant.semester else
                     {
                         "term": variant.semester.term.title,
@@ -866,6 +869,9 @@ def get_program_variants_constructor(request, program_id):
                         "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
                         "mobility": mobility,
                     },
+                    "sync": None if not variant.diagram.sync else int(variant.diagram.sync),
+                    "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                    "mobility": mobility,
                     "semester": None if not variant.semester else
                     {
                         "term": variant.semester.term.title,
