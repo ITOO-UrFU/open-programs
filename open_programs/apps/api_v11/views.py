@@ -649,8 +649,8 @@ def get_variants(request, program_id, discipline_id):
                 },
                 "technology": None if not variant.diagram else
                 {
-                    "sync": None if not variant.diagram.sync else int(variant.diagram.sync),
-                    "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                    "sync": None if not variant.diagram else int(variant.diagram.sync),
+                    "campus": None if not variant.diagram else int(variant.diagram.campus),
                     "mobility": mobility,
                     "presence": presence,
                     "technology_type": technology_type,
@@ -816,8 +816,8 @@ def get_program_variants(request, program_id):
                         "technology_type": technology_type,
 
                     },
-                    "sync": None if not variant.diagram.campus else int(variant.diagram.sync),
-                    "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                    "sync": None if not variant.diagram else int(variant.diagram.sync),
+                    "campus": None if not variant.diagram else int(variant.diagram.campus),
                     "mobility": mobility,
                     "semester": None if not variant.semester else
                     {
@@ -869,8 +869,8 @@ def get_program_variants_constructor(request, program_id):
                         "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
                         "mobility": mobility,
                     },
-                    "sync": None if not variant.diagram.sync else int(variant.diagram.sync),
-                    "campus": None if not variant.diagram.campus else int(variant.diagram.campus),
+                    "sync": None if not variant.diagram else int(variant.diagram.sync),
+                    "campus": None if not variant.diagram else int(variant.diagram.campus),
                     "mobility": mobility,
                     "semester": None if not variant.semester else
                     {
