@@ -313,6 +313,7 @@ CORS_ORIGIN_WHITELIST = (
     '127.0.0.1:4200',
     "http://openprograms.ru",
     "openprograms.ru",
+    "http://openedu.urfu.ru",
 )
 
 CORS_URLS_REGEX = r'^/api/v11/.*$'
