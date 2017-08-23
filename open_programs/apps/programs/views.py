@@ -13,7 +13,7 @@ class ProgramBackup(APIView):
         cgs = ChoiceGroup.objects.filter(program=program)
         comps = ProgramCompetence.objects.filter(program=program)
 
-        response = []
+        modules = []
         for pm in pms:
             disciplines = []
             for d in Discipline.objects.filter(module=pm.module, status="p", archived=False).iterator():
@@ -46,7 +46,7 @@ class ProgramBackup(APIView):
                     "priority": None if not d.module.uni_priority else d.module.uni_priority,
                     "variants": variants,
                 })
-            response.append({
+            modules.append({
                 "module": pm.module.uni_number,
                 "choice_group": None if not pm.choice_group else pm.choice_group.title,
                 "choice_group_type": None if not pm.choice_group else pm.choice_group.get_choice_group_type_display(),
@@ -56,4 +56,12 @@ class ProgramBackup(APIView):
                 "disciplines": disciplines
             })
 
+            response = {
+                "program": program.title,
+                "choice_groups": [cg.title for cg in cgs],
+                "competences": [c.title for c in comps],
+                "targets": [t.title for t in targets],
+                "modules": modules,
+
+            }
         return Response(response)
