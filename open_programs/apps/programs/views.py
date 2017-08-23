@@ -77,7 +77,7 @@ class RestoreBackup(APIView):
     @staticmethod
     def get(request, id):
         pb = PB.objects.get(pk=id)
-        data = json.loads(pb.json)
+        data = pb.json
         program = Program.objects.filter(title=data["program"], archived=False).first()
 
         #Restore choice groups
