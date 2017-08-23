@@ -87,4 +87,6 @@ class RestoreBackup(APIView):
                 print(f"Need create CG {cgb}")
                 ChoiceGroup.objects.create(title=cgb, program=program, status="p")
 
+        return Response({"status": "ok"})
+
 
