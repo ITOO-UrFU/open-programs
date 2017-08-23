@@ -30,7 +30,7 @@ from .apps.api_v11 import auth_serializers
 from .apps.api_v11.views import *
 from persons.views import change_person, get_user, change_password
 
-from programs.views import ProgramBackup
+from programs.views import ProgramBackup, RestoreBackup
 
 permission.autodiscover()
 
@@ -166,5 +166,6 @@ urlpatterns += [
 
     #### BACKUP ####
     url(r'^api/v11/backup/(?P<id>.*)/$', ProgramBackup.as_view(), name="program_backup"),
+    url(r'^api/v11/restore/(?P<id>.*)/$', RestoreBackup.as_view(), name="restore_backup")
 
 ]

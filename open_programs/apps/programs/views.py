@@ -1,3 +1,5 @@
+import json
+
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -7,7 +9,8 @@ from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Tec
 
 
 class ProgramBackup(APIView):
-    def get(self, request, id):
+    @staticmethod
+    def get(request, id):
         program = Program.objects.get(id=id)
         targets = TrainingTarget.objects.filter(program=program)
         pms = ProgramModules.objects.filter(program=program)
@@ -65,6 +68,23 @@ class ProgramBackup(APIView):
                 "modules": modules,
 
             }
-        pb = PB(title=program.title, json=response)
+        pb = PB(title=program.title, json=response, status="p")
         pb.save()
         return Response(response)
+
+
+class RestoreBackup(APIView):
+    @staticmethod
+    def get(request, id):
+        pb = PB.objects.get(pk=id)
+        data = json.loads(pb.json)
+        program = Program.objects.filter(title=data["program"], archived=False).first()
+
+        #Restore choice groups
+        for cgb in data["choice_groups"]:
+            cg = ChoiceGroup.objects.filter(title=cgb, program=program).exists()
+            if not cg:
+                print(f"Need create CG {cgb}")
+                ChoiceGroup.objects.create(title=cgb, program=program, status="p")
+
+
