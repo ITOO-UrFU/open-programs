@@ -87,6 +87,13 @@ class RestoreBackup(APIView):
                 print(f"Need create CG {cgb}")
                 ChoiceGroup.objects.create(title=cgb, program=program, status="p")
 
+        # Restore competences
+        for cb in data["competences"]:
+            c = ProgramCompetence.objects.filter(title=cb, program=program).exists()
+            if not c:
+                print(f"Need create CG {cb}")
+                ProgramCompetence.objects.create(title=cb, program=program, status="p")
+
         return Response({"status": "ok"})
 
 
