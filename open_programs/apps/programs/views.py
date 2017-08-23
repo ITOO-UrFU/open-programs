@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import Program, TrainingTarget, ProgramModules, ChoiceGroup, ProgramCompetence
+from .models import Program, TrainingTarget, ProgramModules, ChoiceGroup, ProgramCompetence, ProgramBackup
 from disciplines.models import Discipline, Semester, TrainingTerms, Diagram, Technology, Variant
 
 
@@ -64,4 +64,5 @@ class ProgramBackup(APIView):
                 "modules": modules,
 
             }
+            ProgramBackup.objects.create(title=program.title, json=response)
         return Response(response)

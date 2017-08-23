@@ -3,7 +3,8 @@ from reversion.admin import VersionAdmin
 from ajax_select.admin import AjaxSelectAdmin
 from ajax_select import make_ajax_form
 
-from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, ChoiceGroupType, LearningPlan, StudentProgram
+from .models import Program, TrainingTarget, ProgramCompetence, ProgramModules, TargetModules, ChoiceGroup, \
+    ChoiceGroupType, LearningPlan, StudentProgram, ProgramBackup
 
 
 @admin.register(Program)
@@ -20,7 +21,7 @@ class ProgramAdmin(VersionAdmin):
 
     )
     list_filter = ("level", 'created', 'updated', 'status', 'archived',)
-    filter_horizontal = ("learning_plans", )
+    filter_horizontal = ("learning_plans",)
     save_as = True
 
 
@@ -41,22 +42,22 @@ class TrainingTargetAdmin(VersionAdmin):
 class ProgramCompetenceAdmin(VersionAdmin):
     list_display = ("title", "number", "program", "color")
     list_filter = ("title", "number", "color")
-    search_fields = ("title", )
+    search_fields = ("title",)
     form = make_ajax_form(ChoiceGroup, {'program': 'program'})
     save_as = True
 
 
 @admin.register(ProgramModules)
 class ProgramModulesAdmin(VersionAdmin):
-    list_display = ("id",  "semester", "module", "program", "choice_group", "competence")
+    list_display = ("id", "semester", "module", "program", "choice_group", "competence")
     list_filter = ("program", "semester",)
-    raw_id_fields = ("module", )
+    raw_id_fields = ("module",)
     save_as = True
 
 
 @admin.register(TargetModules)
 class TargetModulesAdmin(VersionAdmin):
-    list_display = ("id", )  # TODO: "choice_group", "program_module", "target"
+    list_display = ("id",)  # TODO: "choice_group", "program_module", "target"
 
 
 @admin.register(ChoiceGroup)
@@ -68,7 +69,7 @@ class ChoiceGroupAdmin(VersionAdmin, AjaxSelectAdmin):
 
 @admin.register(ChoiceGroupType)
 class ChoiceGroupTypeAdmin(VersionAdmin):
-    list_display = ("title", )
+    list_display = ("title",)
     save_as = True
 
 
@@ -82,5 +83,11 @@ class LearningPlanAdmin(VersionAdmin):
 class StudentProgramAdmin(VersionAdmin):
     list_display = ("link", "program", "user")
     fields = ("link", "user", "program", "json")
-    readonly_fields = ("link", )
+    readonly_fields = ("link",)
     save_as = True
+
+
+@admin.register(ProgramBackup)
+class ProgramBackupAdmin(VersionAdmin):
+    list_display = ("title", "created")
+    readonly_fields = ("title", "json")

@@ -329,3 +329,9 @@ class StudentProgram(ObjectBaseClass):
         return f"{self.user} - {self.program}"
 
 
+class ProgramBackup(ObjectBaseClass):
+    title = models.CharField(_('Наименование образовательной программы'), blank=False, max_length=256, default=_(''))
+    json = JSONField(verbose_name=_("JSON"), null=True, blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+
