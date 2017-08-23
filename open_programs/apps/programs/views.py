@@ -65,6 +65,6 @@ class ProgramBackup(APIView):
                 "modules": modules,
 
             }
-            pb = PB(title=program.title, json=response)
-            pb.save()
+        pb = PB(title=program.title, json=response)
+        pb.save()
         return Response(response)
