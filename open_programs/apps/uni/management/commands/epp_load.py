@@ -116,7 +116,8 @@ class Command(BaseCommand):
                                                            title__contains=epp_discipline['titleheaderCell'],
                                                            status="p").first()
                     try:
-                        for_delete.append(discipline.id)
+                        if discipline:
+                            for_delete.append(discipline.id)
                     except:
                         discipline = Discipline.objects.create(
                             title=epp_discipline['titleheaderCell'],
