@@ -618,6 +618,8 @@ def get_variants(request, program_id, discipline_id):
                 mobility = 50
             elif variant.course:
                 mobility = 100
+            else:
+                mobility = None
 
             if "очно-заочн" in variant.diagram.title.lower():
                 presence = "oz"
