@@ -48,6 +48,7 @@ class Program(ObjectBaseClass):
     competences = models.ManyToManyField(Competence, blank=True)
     chief = models.ForeignKey(Person, verbose_name=_('Руководитель образовательной программы'), blank=True, null=True)
     learning_plans = models.ManyToManyField("LearningPlan", blank=True)
+    # filters = JSONField()
 
     class Meta:
         verbose_name = 'программа'
