@@ -20,7 +20,7 @@ class LearningPlan(ObjectBaseClass):
     uni_displayableTitle = models.CharField(_("Версия"), max_length=32, blank=True, null=True)
     uni_number = models.CharField(_("Номер УП"), max_length=32, blank=True, null=True)
     uni_active = models.CharField(_("Текущая версия"), max_length=32, blank=True, null=True)
-    uni_title = models.CharField(_("Название"), max_length=32, blank=True, null=True)
+    uni_title = models.CharField(_("Название"), max_length=1024, blank=True, null=True)
     uni_stage = models.BooleanField(_("План утверждён"), default=True)
     uni_loadTimeType = models.CharField(_("Единица измерения нагрузки"), max_length=32, blank=True, null=True)
     uni_html = models.TextField(blank=True, null=True)
