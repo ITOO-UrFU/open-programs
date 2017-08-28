@@ -35,7 +35,7 @@ class Module(ObjectBaseClass):
     uni_number = models.IntegerField(null=True, blank=True)
     uni_coordinator = models.CharField(max_length=265, null=True, blank=True)
     uni_type = models.CharField(max_length=265, null=True, blank=True)
-    uni_title = models.CharField(max_length=265, null=True, blank=True)
+    uni_title = models.CharField(max_length=2048, null=True, blank=True)
     uni_competence = models.CharField(max_length=265, null=True, blank=True)
     uni_testUnits = models.IntegerField(null=True, blank=True)
     uni_priority = models.IntegerField(null=True, blank=True)
