@@ -610,6 +610,8 @@ def get_variants(request, program_id, discipline_id):
     variants = Variant.objects.filter(program__id=program_id, discipline__id=discipline_id).order_by("semester__term")
     response = []
     for variant in variants:
+        mobility = None
+
         if variant.diagram:
 
             if variant.semester:
@@ -618,8 +620,6 @@ def get_variants(request, program_id, discipline_id):
                 mobility = 50
             elif variant.course:
                 mobility = 100
-            else:
-                mobility = None
 
             if "очно-заочн" in variant.diagram.title.lower():
                 presence = "oz"
