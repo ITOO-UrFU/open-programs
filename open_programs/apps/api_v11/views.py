@@ -404,6 +404,7 @@ def get_competences_by_program(request, program_id):
     response = [{"id": c.id,
                  "title": c.title,
                  "number": c.number,
+                 "color": c.color,
                  } for c in ProgramCompetence.objects.filter(program__id=program_id)]
     return Response(sorted(response, key=lambda k: k['number']))
 
