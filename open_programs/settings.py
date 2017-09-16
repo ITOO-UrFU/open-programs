@@ -308,12 +308,12 @@ DEFAULT_FROM_EMAIL = "no-reply@openedu.urfu.ru"
 
 #### CORS ####
 CORS_ORIGIN_WHITELIST = (
-    '192.168.0.100:4200',
-    'localhost:4200',
-    '127.0.0.1:4200',
-    "http://openprograms.ru",
-    "openprograms.ru",
-    "http://openedu.urfu.ru",
+    # '192.168.0.100:4200',
+    # 'localhost:4200',
+    # '127.0.0.1:4200',
+    # "http://openprograms.ru",
+    # "openprograms.ru",
+    # "http://openedu.urfu.ru",
     "openedu.urfu.ru",
 )
 
@@ -353,7 +353,7 @@ AJAX_LOOKUP_CHANNELS = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
-        'LOCATION': '_cache',
+        'BACKEND': 'django.core.cache.backends.memcached',
+        # 'LOCATION': '_cache',
     }
 }
