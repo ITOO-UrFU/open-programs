@@ -171,5 +171,5 @@ main_urlpatterns += [
 ]
 
 urlpatterns = [
-    url(r'^oop/', include(main_main_urlpatterns)),
+    url(r'^oop/', include(main_urlpatterns)),
 ]
