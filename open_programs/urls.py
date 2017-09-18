@@ -1,17 +1,17 @@
 """open_programs URL Configuration
 
-The `urlpatterns` list routes URLs to views. For more information please see:
+The `main_urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.9/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  url(r'^$', views.home, name='home')
+    2. Add a URL to main_urlpatterns:  url(r'^$', views.home, name='home')
 Class-based views
     1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
+    2. Add a URL to main_urlpatterns:  url(r'^$', Home.as_view(), name='home')
 Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
-    2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
+    2. Add a URL to main_urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 import permission
 from ajax_select import urls as ajax_select_urls
@@ -73,7 +73,7 @@ router_11.register(r'variants', VariantList)
 
 schema_view = get_swagger_view(title='Open programs')
 
-urlpatterns = [
+main_urlpatterns = [
     url(r'^$', RedirectView.as_view(url='/constructor/', permanent=False), name='index'),
 
     url(r'^admin/', include('smuggler.urls')),
@@ -92,24 +92,24 @@ urlpatterns = [
 ]
 
 if 'rosetta' in settings.INSTALLED_APPS:
-    urlpatterns += [url(r'^rosetta/', include('rosetta.urls')),
+    main_urlpatterns += [url(r'^rosetta/', include('rosetta.urls')),
                     url(r'^i18n/', include('django.conf.urls.i18n')),
                     ]
 
 if settings.DEBUG is True:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    main_urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+    main_urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 #### APPS ####
 
-urlpatterns += [
+main_urlpatterns += [
     url(r'^constructor/', include('open_programs.apps.constructor.urls')),
     url(r'^constructor_v2/', include('open_programs.apps.constructor_v2.urls')),
     url(r'^stat/', include('open_programs.apps.stat.urls')),
 ]
 
 #### API rewrite
-urlpatterns += [
+main_urlpatterns += [
     url(r'^api/v11/heartbeat/$', heartbeat, name="heartbeat"),
     url(r'^api/v11/get_program_choice_groups/(?P<program_id>.*)/$', get_choice_groups_by_program,
         name="get_choice_groups_by_program"),
@@ -168,4 +168,8 @@ urlpatterns += [
     url(r'^api/v11/backup/(?P<id>.*)/$', ProgramBackup.as_view(), name="program_backup"),
     url(r'^api/v11/restore/(?P<id>.*)/$', RestoreBackup.as_view(), name="restore_backup")
 
+]
+
+urlpatterns = [
+    url(r'^oop/', include(main_main_urlpatterns)),
 ]
