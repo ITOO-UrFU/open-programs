@@ -156,6 +156,7 @@ STATIC_URL = '/oop/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
+STATIC_ROOT = '/usr/local/itoo/var/openprograms/staticfiles'
 
 #### FIXTURES ####
 
