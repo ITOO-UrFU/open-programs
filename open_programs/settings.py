@@ -20,7 +20,6 @@ sys.path.insert(0, os.path.join(PROJECT_ROOT, 'apps'))
 
 DEBUG = True
 # Application definition
-
 INSTALLED_APPS = [
     'persons',
     'django.contrib.admin',
@@ -117,9 +116,9 @@ SITE_ID = 1
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'open_programs',
-        'USER': 'root',
-        'PASSWORD': 'ye;yj,jkmitrjlfmysql'
+        'NAME': 'openprograms',
+        'USER': 'openprogramsuser',
+        'PASSWORD': 'openprogramspassword'
     }
 }
 
@@ -353,7 +352,7 @@ AJAX_LOOKUP_CHANNELS = {
 
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.memcached',
-        # 'LOCATION': '_cache',
+        'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+        'LOCATION': '127.0.0.1:11211',
     }
 }
