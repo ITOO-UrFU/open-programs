@@ -415,7 +415,7 @@ def get_program_modules(request, program_id):
     # response = _check_trigger(f"get_program_modules:{program_id}")
     # if response:
     #     return response
-    # response = []
+    response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
         response.append({
             "id": mod.id,
