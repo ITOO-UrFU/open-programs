@@ -804,7 +804,7 @@ def get_program_variants(request, program_id):
                     {
                         "id": variant.diagram.id,
                         "title": variant.diagram.title,
-                        # "diagram": variant.diagram.diagram
+                        "diagram": variant.diagram.diagram
                     },
                     "course": None if not variant.course else
                     {
