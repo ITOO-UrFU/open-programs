@@ -372,9 +372,9 @@ def _cache(cache_key=None, response=None):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_targets_by_program(request, program_id):
-    response = _check_trigger(f"get_targets_by_program:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_targets_by_program:{program_id}")
+    # if response:
+    #     return response
     response = []
     program = Program.objects.get(id=program_id)
 
@@ -393,7 +393,7 @@ def get_targets_by_program(request, program_id):
             "choice_groups": choice_groups,
         })
 
-    _cache(f"get_targets_by_program:{program_id}", response)
+    # _cache(f"get_targets_by_program:{program_id}", response)
 
     return Response(response)
 
@@ -412,10 +412,10 @@ def get_competences_by_program(request, program_id):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_modules(request, program_id):
-    response = _check_trigger(f"get_program_modules:{program_id}")
-    if response:
-        return response
-    response = []
+    # response = _check_trigger(f"get_program_modules:{program_id}")
+    # if response:
+    #     return response
+    # response = []
     for mod in ProgramModules.objects.filter(program__id=program_id, status="p", archived=False):
         response.append({
             "id": mod.id,
@@ -431,7 +431,7 @@ def get_program_modules(request, program_id):
             "disciplines": mod.get_all_discipline_custom()
         })
     response = sorted(response, key=lambda k: (k["semester"], k["priority"], k["title"]))
-    _cache(f"get_program_modules:{program_id}", response)
+    # _cache(f"get_program_modules:{program_id}", response)
     return Response(response)
 
 
@@ -520,10 +520,10 @@ def heartbeat(request):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_disciplines(request, program_id):
-    response = _check_trigger(f"get_program_disciplines:{program_id}")
-    if response:
-        return response
-    response = []
+    # response = _check_trigger(f"get_program_disciplines:{program_id}")
+    # if response:
+    #     return response
+    # response = []
     disciplines = (Discipline.objects.filter(module__id__in=[mod.module.id for mod in
                                                              ProgramModules.objects.filter(program__id=program_id,
                                                                                            status="p",
@@ -549,16 +549,16 @@ def get_program_disciplines(request, program_id):
         })
 
     response = sorted(response, key=lambda k: (k["priority"], k["title"]))
-    _cache(f"get_program_disciplines:{program_id}", response)
+    # _cache(f"get_program_disciplines:{program_id}", response)
     return Response(response)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_discipline(request, program_id, discipline_id):
-    response = _check_trigger(f"get_program_discipline:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_discipline:{program_id}")
+    # if response:
+    #     return response
 
     discipline = Discipline.objects.get(id=discipline_id)
     terms = {}
@@ -577,7 +577,7 @@ def get_program_discipline(request, program_id, discipline_id):
         "terms": terms,
         "priority": 9999 if not discipline.module.uni_priority else discipline.module.uni_priority
     }
-    _cache(f"get_program_discipline:{program_id}", response)
+    # _cache(f"get_program_discipline:{program_id}", response)
     return Response(response)
 
 
@@ -767,9 +767,9 @@ class CreateVariant(APIView):
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants(request, program_id):
-    response = _check_trigger(f"get_program_variants:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_variants:{program_id}")
+    # if response:
+    #     return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -831,16 +831,16 @@ def get_program_variants(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants:{program_id}", variants)
+    # _cache(f"get_program_variants:{ program_id}", variants)
     return Response(variants)
 
 
 @api_view(('GET',))
 @permission_classes((IsAuthenticatedOrReadOnly,))
 def get_program_variants_constructor(request, program_id):
-    response = _check_trigger(f"get_program_variants_constructor:{program_id}")
-    if response:
-        return response
+    # response = _check_trigger(f"get_program_variants_constructor:{program_id}")
+    # if response:
+    #     return response
     variants = {}
     program = Program.objects.get(id=program_id)
     disciplines = program.get_all_disciplines()
@@ -884,7 +884,7 @@ def get_program_variants_constructor(request, program_id):
                     "link": variant.link
                 }
             )
-    _cache(f"get_program_variants_constructor:{program_id}", variants)
+    # _cache(f"get_program_variants_constructor:{program_id}", variants)
     return Response(variants)
 
 
